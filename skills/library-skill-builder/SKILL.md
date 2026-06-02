@@ -16,7 +16,7 @@ A good skill is:
 - **Composable** — routes to `docs/` files instead of dumping everything inline
 - **Progressively disclosed** — SKILL.md covers the 80% case, depth lives in `docs/`
 - **Harness-agnostic** — works regardless of which AI tool loads it
-- **Well-documented** — the skill itself explains its own structure and routing table
+- **Well-documented** — a `humans.md` companion explains the skill's structure, decisions, and how to maintain it; SKILL.md contains none of this — it is written for a model, not a reader
 - **Portable** — no assumptions about the consumer's project structure
 - **Secure** — never instructs the model to output secrets, tokens, or credentials; redacts sensitive values in examples
 - **Affirmative** — describes what the library does, not what it doesn't have
@@ -131,7 +131,33 @@ Do not include:
 
 **The test:** if a developer has never used this library before, does the skill give them enough to write correct code? If yes, it is ready.
 
-### Step 7 — Write the trigger description
+### Step 7 — Write for the model, not for a human reader
+
+SKILL.md is consumed as context tokens by a language model. Every word that doesn't help the model produce correct output is waste that competes with actual instruction.
+
+**Token efficiency rules:**
+
+- Code over prose — a correct example teaches faster than a paragraph explaining it
+- No transitional sentences ("Now that we've covered X, let's look at Y")
+- No motivational framing ("This is important because...")
+- No restating what a heading already says
+- Tables over lists when structure is parallel
+- One blank line between sections, not two
+- Inline comments in code blocks instead of paragraphs before them
+
+**What belongs in SKILL.md vs humans.md:**
+
+| SKILL.md | humans.md |
+|---|---|
+| Import paths | Why subpaths exist |
+| Working examples | How to extend the examples |
+| Footgun + correct version | Why this specific pattern was chosen |
+| Routing table links | How the docs/ structure was decided |
+| API signatures | Where the signatures were verified |
+
+**The compression test:** read a section and ask — does every sentence change what code the model writes next? If a sentence only helps a human understand the context, it goes in `humans.md`.
+
+### Step 8 — Write the trigger description
 
 The `description` field in the frontmatter controls when the skill auto-activates. It should name:
 - The library's package name
@@ -151,7 +177,8 @@ Specific enough to not false-trigger on unrelated sessions. Generic phrases like
 
 ```
 skills/<library-name>/
-├── SKILL.md              ← trigger, identity, install, 80% patterns, footgun, routes
+├── SKILL.md              ← model-facing: trigger, identity, install, 80% patterns, footgun, routes
+├── humans.md             ← human-facing: structure rationale, maintenance guide, decision log
 └── docs/
     ├── imports.md        ← full export reference by entry point
     ├── antipatterns.md   ← (optional) grounded antipatterns when list > 3
@@ -160,9 +187,10 @@ skills/<library-name>/
     └── ...
 ```
 
-SKILL.md target: 100–180 lines  
-Each docs file target: 60–100 lines  
-Total cap: ~600 lines across all files
+SKILL.md target: 100–180 lines — dense, token-efficient, no explanatory prose  
+humans.md target: as long as needed — prose welcome, explains the why  
+Each docs/ file target: 60–100 lines  
+Total SKILL.md + docs/ cap: ~600 lines
 
 ---
 
@@ -175,6 +203,24 @@ At the end of each section in SKILL.md that has a corresponding `docs/` file, ad
 ```
 
 Points to the file. Describes what's there in 5–10 words so the model knows whether to follow it.
+
+---
+
+## humans.md — the companion file
+
+`humans.md` sits alongside `SKILL.md` and is never loaded as model context. It exists for the person who writes, reviews, or maintains the skill.
+
+What it contains:
+
+- **Why this structure** — the reasoning behind what's in SKILL.md vs each docs/ file
+- **Source of truth** — where the API signatures and examples were verified, and when
+- **Footgun rationale** — why this specific pattern was chosen as the one footgun
+- **Antipattern rationale** — why each antipattern passed the inclusion test
+- **Known gaps** — APIs or behaviors not yet documented, and why
+- **Maintenance notes** — what to check when the library releases a new version
+- **Decision log** — any tradeoffs made (e.g. "left out X because it's deprecated in v4")
+
+Format: plain prose. No token constraints. Written for a human who has never seen this skill before and needs to understand, extend, or audit it.
 
 ---
 
