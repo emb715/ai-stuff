@@ -204,6 +204,18 @@ At the end of each section in SKILL.md that has a corresponding `docs/` file, ad
 
 Points to the file. Describes what's there in 5–10 words so the model knows whether to follow it.
 
+**No orphan rule: every `docs/` file must have exactly one routing link in SKILL.md.** A docs file with no link is undiscoverable — the model reads SKILL.md in one pass and has no other mechanism to find it. Before committing a skill, verify the mapping is complete:
+
+```
+docs/imports.md        → linked from ## Import paths
+docs/variants.md       → linked from ### Variants
+docs/theming.md        → linked from ## Theming
+docs/responsive.md     → linked from ## Responsive
+docs/antipatterns.md   → linked from ## <relevant section>
+```
+
+If a docs file has no natural section to link from, that is a signal the file's concern is not represented in SKILL.md at all — either add the section or merge the content into an existing docs file.
+
 ---
 
 ## humans.md — the companion file
