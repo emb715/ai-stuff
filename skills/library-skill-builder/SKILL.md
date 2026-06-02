@@ -20,6 +20,7 @@ A good skill is:
 - **Portable** — no assumptions about the consumer's project structure
 - **Secure** — never instructs the model to output secrets, tokens, or credentials; redacts sensitive values in examples
 - **Affirmative** — describes what the library does, not what it doesn't have
+- **Grounded** — antipatterns shown are patterns the model will naturally produce from plausible reasoning, not invented failure modes; each pairs the wrong version with the correct alternative
 
 ---
 
@@ -61,7 +62,29 @@ Examples by category:
 
 One footgun per skill. If you find more than one, rank by severity and document only the worst in SKILL.md. The rest go in `docs/`.
 
-### Step 3 — Audit existing docs or skill (if rewriting)
+### Step 3 — Identify grounded antipatterns (optional)
+
+Antipatterns belong in a skill when the model will confidently produce the wrong version from plausible reasoning about the API. They do not belong when the model would only write them out of pure ignorance — that is a documentation gap, not an antipattern.
+
+**The test for inclusion:** could the model write this wrong version while believing it is correct? If yes, it earns a place. If the model would only write it because it doesn't know the API at all, add a better example instead.
+
+Each antipattern must:
+- Show the wrong version with a one-line explanation of why it fails
+- Immediately follow with the correct version
+- Name the failure mode, not just the fix
+
+```md
+// ✗ — triggers a full remount on every render, destroying state and refs
+// ✓ — define at module scope; use props for values that change at runtime
+```
+
+Where antipatterns live:
+- **One severe case** → SKILL.md alongside the footgun (Step 2)
+- **Longer tail** → `docs/antipatterns.md`, linked from SKILL.md
+
+If you find fewer than three grounded antipatterns, skip the `docs/antipatterns.md` file and fold them into the relevant section of SKILL.md or the appropriate `docs/` file. A dedicated antipattern file only earns its place when the list is long enough to fragment the reading flow elsewhere.
+
+### Step 4 — Audit existing docs or skill (if rewriting)
 
 If a skill or documentation already exists, compare every claim against the source of truth gathered in Step 1.
 
@@ -75,7 +98,7 @@ Look for:
 
 Do not carry forward any claim you cannot verify.
 
-### Step 4 — Decide the structure
+### Step 5 — Decide the structure
 
 **SKILL.md** covers:
 - One-sentence identity — what the library does, for whom
@@ -97,7 +120,7 @@ Name files by concern:
 - `docs/configuration.md` — config options and defaults
 - `docs/testing.md` — testing utilities and patterns
 
-### Step 5 — Write affirmatively
+### Step 6 — Write affirmatively
 
 Every sentence describes what the library does and how to use it correctly.
 
@@ -108,7 +131,7 @@ Do not include:
 
 **The test:** if a developer has never used this library before, does the skill give them enough to write correct code? If yes, it is ready.
 
-### Step 6 — Write the trigger description
+### Step 7 — Write the trigger description
 
 The `description` field in the frontmatter controls when the skill auto-activates. It should name:
 - The library's package name
@@ -131,6 +154,7 @@ skills/<library-name>/
 ├── SKILL.md              ← trigger, identity, install, 80% patterns, footgun, routes
 └── docs/
     ├── imports.md        ← full export reference by entry point
+    ├── antipatterns.md   ← (optional) grounded antipatterns when list > 3
     ├── <concern-a>.md    ← depth for feature A
     ├── <concern-b>.md    ← depth for feature B
     └── ...
