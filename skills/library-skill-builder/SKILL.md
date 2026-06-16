@@ -1,6 +1,6 @@
 ---
 name: library-skill-builder
-description: Use when creating or rewriting an opencode skill for a software library, framework, or tool. Triggers on "create a skill for X", "write a skill for Y", "generate a skill from the docs", or "refactor this skill".
+description: Creates and refactors opencode skills for software libraries, frameworks, and tools. Activates when the task involves writing a SKILL.md, generating a skill from documentation, or improving an existing skill's structure, token efficiency, or coverage.
 ---
 
 # library-skill-builder
@@ -131,7 +131,41 @@ Do not include:
 
 **The test:** if a developer has never used this library before, does the skill give them enough to write correct code? If yes, it is ready.
 
-### Step 7 — Write for the model, not for a human reader
+### Step 7 — Add at least one skill output example
+
+Provide one before/after pair showing a bad SKILL.md section and its corrected version. Output quality in skill writing depends on seeing the target style — this is the examples pattern from the Claude skill best practices.
+
+The pair must be drawn from the library being documented, not invented:
+
+```markdown
+## Bad — prose that doesn't change model output
+
+useTheme() is a hook provided by the library's theme system. It gives you
+access to the currently active theme object. The theme system is optional,
+meaning you don't have to use it if you don't want to. When you do use it,
+the return type is unknown, so you'll need to cast it to your own type.
+
+## Good — code that shows the same thing in fewer tokens
+
+```tsx
+const theme = useTheme() as AppTheme; // returns unknown — always cast
+```
+```
+
+One pair is sufficient. The goal is to anchor the model's output style, not provide exhaustive documentation.
+
+### Step 8 — Evaluate before shipping
+
+Before committing a skill, run the model on three representative tasks *without* the skill loaded. Document what it gets wrong or what context it repeatedly asks for. The skill should close exactly those gaps — nothing more.
+
+**Minimum evaluation:**
+1. Run a representative task without the skill — note failures and missing context
+2. Run the same task with the skill — confirm the gaps close
+3. Run a different task in the same domain — confirm the skill doesn't over-trigger or inject irrelevant context
+
+A skill that passes all three is ready. A skill that helps task 1 but adds noise to task 3 needs to be narrowed.
+
+### Step 9 — Write for the model, not for a human reader
 
 SKILL.md is consumed as context tokens by a language model. Every word that doesn't help the model produce correct output is waste that competes with actual instruction.
 
@@ -157,7 +191,7 @@ SKILL.md is consumed as context tokens by a language model. Every word that does
 
 **The compression test:** read a section and ask — does every sentence change what code the model writes next? If a sentence only helps a human understand the context, it goes in `humans.md`.
 
-### Step 8 — Write the trigger description
+### Step 10 — Write the trigger description
 
 The `description` field in the frontmatter controls when the skill auto-activates. It should name:
 - The library's package name
@@ -236,19 +270,12 @@ Format: plain prose. No token constraints. Written for a human who has never see
 
 ---
 
-## Applying this to a library
+## Applying this process
 
-**React 19**
-1. Source: react.dev/reference, `@types/react`, react.dev/blog for recent changes
-2. Footgun: calling `use()` conditionally — violates Rules of Hooks in a non-obvious way
-3. Structure: SKILL.md covers hooks + `use()` + actions; refs/ covers server components, transitions, `useOptimistic`, `useFormStatus`
+For any library or framework, the process is the same:
 
-**Expo Router**
-1. Source: docs.expo.dev/router, file-system routing conventions, `expo-router` package types
-2. Footgun: `router.push()` with hardcoded strings — breaks silently at rename, no TS error without typed routes configured
-3. Structure: SKILL.md covers file conventions + `Link` + `useRouter`; refs/ covers layouts, groups, dynamic segments, API routes, typed routes
+1. **Source**: official docs → changelog → type definitions → source (when local/private)
+2. **Footgun**: the pattern the docs warn about most, or what the migration guide flags as a common mistake
+3. **Structure**: mirror the library's own conceptual groupings — if the official docs have sections, the refs/ files should match them
 
-**Any published npm library**
-1. Source: official docs site → changelog → TypeScript definitions
-2. Footgun: whatever pattern the docs warn about most, or whatever the library's own migration guide flags as a common mistake
-3. Structure: mirror the library's own conceptual groupings — if the docs have sections, the refs/ files should match them
+The process produces the same output structure regardless of language, ecosystem, or library size.
