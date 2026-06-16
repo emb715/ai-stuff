@@ -138,6 +138,35 @@ This ADR records the decisions made for the skill-authoring process and the skil
 
 ---
 
+### 10. Markdown decoration policy — strip separators, bold, and decorative arrows
+
+**Decision:** SKILL.md and all refs/ files strip decorative markdown: `---` horizontal rules, `**bold**` outside code blocks, and `→` arrow prefixes on routing links. Headings (`#`, `##`, `###`), tables, code blocks, and `[link](path)` are kept.
+
+**Rationale:** Markdown rendering is for humans reading in a UI. A model consuming a skill as context tokens sees raw text — `**bold**`, `---`, and `→` cost tokens and carry no instruction value. The words carry the meaning; the decorators do not. The exception is structural markdown (headings, tables, code fences, links) which the model uses for navigation and semantic parsing, not visual rendering.
+
+**Consequences:**
+- No `---` horizontal rules anywhere in SKILL.md or refs/ files
+- No `**bold**` outside code blocks — emphasis is carried by word choice and position
+- No `→` arrow prefixes on routing links — the link text already conveys direction
+- humans.md is exempt — it is for human readers and may use any markdown freely
+- docs/ files are exempt — they are human research documents, not model context
+
+---
+
+### 11. Headings over CAPS — hierarchy is load-bearing
+
+**Decision:** Section labels use markdown headings (`##`, `###`) not ALL-CAPS text. Heading levels are preserved as written — do not flatten to a single level.
+
+**Rationale:** A model consuming raw text parses `##` and `###` as structural signals, not visual decoration. Heading levels communicate nesting: `### Style props` under `## createComponent` tells the model style props are a sub-concern of createComponent, not a peer section. ALL-CAPS conveys the same information at the top level but loses hierarchy. The token cost difference between `## Color mode` and `COLOR MODE` is 1–2 tokens per heading — not a meaningful saving relative to the structural loss. Headings are kept; decorators are stripped.
+
+**Consequences:**
+- `##` for top-level sections in SKILL.md
+- `###` for sub-sections (e.g. features within a top-level API)
+- No ALL-CAPS section labels
+- Heading levels must reflect actual nesting — do not use `###` for a section that is not a child of the preceding `##`
+
+---
+
 ## Alternatives considered
 
 **Single SKILL.md file, no refs/**  
