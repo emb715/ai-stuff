@@ -73,6 +73,8 @@ Each antipattern must:
 - Immediately follow with the correct version
 - Name the failure mode, not just the fix
 
+**Never show ✗ without ✓.** A wrong example with no correction and no explanation of the failure risks the model retrieving the wrong pattern in a different context. The pairing is the protection — omit either half and the antipattern becomes a liability.
+
 ```md
 // ✗ — triggers a full remount on every render, destroying state and refs
 // ✓ — define at module scope; use props for values that change at runtime

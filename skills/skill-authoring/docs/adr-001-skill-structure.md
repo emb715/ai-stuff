@@ -78,6 +78,7 @@ This ADR records the decisions made for the skill-authoring process and the skil
 - SKILL.md has at most one ✗/✓ footgun block
 - refs/antipatterns.md is created only when there are three or more grounded antipatterns
 - Antipatterns that fail the inclusion test are not documented
+- Every ✗ must be immediately followed by ✓ with the failure mode named — a ✗ without a paired ✓ and explanation is removed, not kept
 
 ---
 
