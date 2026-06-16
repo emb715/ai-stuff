@@ -13,8 +13,8 @@ A good skill is:
 
 - **Concise** — every line earns its place
 - **Responsible for one thing** — not a multi-step workflow
-- **Composable** — routes to `docs/` files instead of dumping everything inline
-- **Progressively disclosed** — SKILL.md covers the 80% case, depth lives in `docs/`
+- **Composable** — routes to `refs/` files instead of dumping everything inline
+- **Progressively disclosed** — SKILL.md covers the 80% case, depth lives in `refs/`
 - **Harness-agnostic** — works regardless of which AI tool loads it
 - **Well-documented** — a `humans.md` companion explains the skill's structure, decisions, and how to maintain it; SKILL.md contains none of this — it is written for a model, not a reader
 - **Portable** — no assumptions about the consumer's project structure
@@ -60,7 +60,7 @@ Examples by category:
 - **State**: reading a value once instead of subscribing to it
 - **Types**: using a cast to bypass an `unknown` return without validating shape
 
-One footgun per skill. If you find more than one, rank by severity and document only the worst in SKILL.md. The rest go in `docs/`.
+One footgun per skill. If you find more than one, rank by severity and document only the worst in SKILL.md. The rest go in `refs/`.
 
 ### Step 3 — Identify grounded antipatterns (optional)
 
@@ -80,9 +80,9 @@ Each antipattern must:
 
 Where antipatterns live:
 - **One severe case** → SKILL.md alongside the footgun (Step 2)
-- **Longer tail** → `docs/antipatterns.md`, linked from SKILL.md
+- **Longer tail** → `refs/antipatterns.md`, linked from SKILL.md
 
-If you find fewer than three grounded antipatterns, skip the `docs/antipatterns.md` file and fold them into the relevant section of SKILL.md or the appropriate `docs/` file. A dedicated antipattern file only earns its place when the list is long enough to fragment the reading flow elsewhere.
+If you find fewer than three grounded antipatterns, skip the `refs/antipatterns.md` file and fold them into the relevant section of SKILL.md or the appropriate `refs/` file. A dedicated antipattern file only earns its place when the list is long enough to fragment the reading flow elsewhere.
 
 ### Step 4 — Audit existing docs or skill (if rewriting)
 
@@ -105,20 +105,20 @@ Do not carry forward any claim you cannot verify.
 - Install or import — the first thing any developer needs
 - The 3–5 most-used APIs with minimal working examples
 - The one footgun with a correct alternative shown
-- Explicit `→ See docs/X.md` routes for anything requiring more depth
+- Explicit `→ See refs/X.md` routes for anything requiring more depth
 
-**`docs/` files** cover (one file per concern, not per API):
+**`refs/` files** cover (one file per concern, not per API):
 - Full export/API tables
 - Detailed feature walkthroughs
 - Configuration reference
 - Patterns that only appear once a developer is already past the basics
 
 Name files by concern:
-- `docs/imports.md` — full export reference by entry point
-- `docs/routing.md` — routing patterns
-- `docs/data-fetching.md` — fetching and mutation patterns
-- `docs/configuration.md` — config options and defaults
-- `docs/testing.md` — testing utilities and patterns
+- `refs/imports.md` — full export reference by entry point
+- `refs/routing.md` — routing patterns
+- `refs/data-fetching.md` — fetching and mutation patterns
+- `refs/configuration.md` — config options and defaults
+- `refs/testing.md` — testing utilities and patterns
 
 ### Step 6 — Write affirmatively
 
@@ -152,7 +152,7 @@ SKILL.md is consumed as context tokens by a language model. Every word that does
 | Import paths | Why subpaths exist |
 | Working examples | How to extend the examples |
 | Footgun + correct version | Why this specific pattern was chosen |
-| Routing table links | How the docs/ structure was decided |
+| Routing table links | How the refs/ structure was decided |
 | API signatures | Where the signatures were verified |
 
 **The compression test:** read a section and ask — does every sentence change what code the model writes next? If a sentence only helps a human understand the context, it goes in `humans.md`.
@@ -179,7 +179,7 @@ Specific enough to not false-trigger on unrelated sessions. Generic phrases like
 skills/<library-name>/
 ├── SKILL.md              ← model-facing: trigger, identity, install, 80% patterns, footgun, routes
 ├── humans.md             ← human-facing: structure rationale, maintenance guide, decision log
-└── docs/
+└── refs/
     ├── imports.md        ← full export reference by entry point
     ├── antipatterns.md   ← (optional) grounded antipatterns when list > 3
     ├── <concern-a>.md    ← depth for feature A
@@ -189,29 +189,29 @@ skills/<library-name>/
 
 SKILL.md target: 100–180 lines — dense, token-efficient, no explanatory prose  
 humans.md target: as long as needed — prose welcome, explains the why  
-Each docs/ file target: 60–100 lines  
-Total SKILL.md + docs/ cap: ~600 lines
+Each refs/ file target: 60–100 lines  
+Total SKILL.md + refs/ cap: ~600 lines
 
 ---
 
 ## Routing table pattern
 
-At the end of each section in SKILL.md that has a corresponding `docs/` file, add one line:
+At the end of each section in SKILL.md that has a corresponding `refs/` file, add one line:
 
 ```md
-→ See [docs/routing.md](docs/routing.md) for dynamic segments, layouts, and typed routes.
+→ See [refs/routing.md](refs/routing.md) for dynamic segments, layouts, and typed routes.
 ```
 
 Points to the file. Describes what's there in 5–10 words so the model knows whether to follow it.
 
-**No orphan rule: every `docs/` file must have exactly one routing link in SKILL.md.** A docs file with no link is undiscoverable — the model reads SKILL.md in one pass and has no other mechanism to find it. Before committing a skill, verify the mapping is complete:
+**No orphan rule: every `refs/` file must have exactly one routing link in SKILL.md.** A docs file with no link is undiscoverable — the model reads SKILL.md in one pass and has no other mechanism to find it. Before committing a skill, verify the mapping is complete:
 
 ```
-docs/imports.md        → linked from ## Import paths
-docs/variants.md       → linked from ### Variants
-docs/theming.md        → linked from ## Theming
-docs/responsive.md     → linked from ## Responsive
-docs/antipatterns.md   → linked from ## <relevant section>
+refs/imports.md        → linked from ## Import paths
+refs/variants.md       → linked from ### Variants
+refs/theming.md        → linked from ## Theming
+refs/responsive.md     → linked from ## Responsive
+refs/antipatterns.md   → linked from ## <relevant section>
 ```
 
 If a docs file has no natural section to link from, that is a signal the file's concern is not represented in SKILL.md at all — either add the section or merge the content into an existing docs file.
@@ -224,7 +224,7 @@ If a docs file has no natural section to link from, that is a signal the file's 
 
 What it contains:
 
-- **Why this structure** — the reasoning behind what's in SKILL.md vs each docs/ file
+- **Why this structure** — the reasoning behind what's in SKILL.md vs each refs/ file
 - **Source of truth** — where the API signatures and examples were verified, and when
 - **Footgun rationale** — why this specific pattern was chosen as the one footgun
 - **Antipattern rationale** — why each antipattern passed the inclusion test
@@ -241,14 +241,14 @@ Format: plain prose. No token constraints. Written for a human who has never see
 **React 19**
 1. Source: react.dev/reference, `@types/react`, react.dev/blog for recent changes
 2. Footgun: calling `use()` conditionally — violates Rules of Hooks in a non-obvious way
-3. Structure: SKILL.md covers hooks + `use()` + actions; docs/ covers server components, transitions, `useOptimistic`, `useFormStatus`
+3. Structure: SKILL.md covers hooks + `use()` + actions; refs/ covers server components, transitions, `useOptimistic`, `useFormStatus`
 
 **Expo Router**
 1. Source: docs.expo.dev/router, file-system routing conventions, `expo-router` package types
 2. Footgun: `router.push()` with hardcoded strings — breaks silently at rename, no TS error without typed routes configured
-3. Structure: SKILL.md covers file conventions + `Link` + `useRouter`; docs/ covers layouts, groups, dynamic segments, API routes, typed routes
+3. Structure: SKILL.md covers file conventions + `Link` + `useRouter`; refs/ covers layouts, groups, dynamic segments, API routes, typed routes
 
 **Any published npm library**
 1. Source: official docs site → changelog → TypeScript definitions
 2. Footgun: whatever pattern the docs warn about most, or whatever the library's own migration guide flags as a common mistake
-3. Structure: mirror the library's own conceptual groupings — if the docs have sections, the docs/ files should match them
+3. Structure: mirror the library's own conceptual groupings — if the docs have sections, the refs/ files should match them
