@@ -1,6 +1,6 @@
 ---
 name: skill-authoring
-description: Creates and maintains opencode skills for software libraries, frameworks, and tools. Activates when the task involves writing a SKILL.md, generating a skill from documentation, or improving an existing skill's structure, token efficiency, or coverage.
+description: Creates and maintains agent skills for software libraries, frameworks, and tools. Activates when the task involves writing a SKILL.md, generating a skill from documentation, or improving an existing skill's structure, token efficiency, or coverage.
 ---
 
 # skill-authoring
