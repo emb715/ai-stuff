@@ -16,7 +16,7 @@ skill-name/
 └── ...               # Any additional files
 ```
 
-> **Note:** The official spec uses `references/` for documentation files. The library-skill-builder convention uses `refs/` (shortened) for the same purpose. Both are valid — pick one and stay consistent within a skill.
+> **Note:** The official spec uses `references/` for documentation files. The skill-authoring convention uses `refs/` (shortened) for the same purpose. Both are valid — pick one and stay consistent within a skill.
 
 ---
 
@@ -159,9 +159,9 @@ Source: https://github.com/agentskills/agentskills/tree/main/skills-ref
 
 ---
 
-## Key constraints vs. library-skill-builder conventions
+## Key constraints vs. skill-authoring conventions
 
-| Spec says | library-skill-builder uses | Notes |
+| Spec says | skill-authoring uses | Notes |
 |---|---|---|
 | `references/` for docs | `refs/` | Shortened, same purpose |
 | No format restriction on body | Affirmative, token-efficient prose | Stricter than spec for quality |

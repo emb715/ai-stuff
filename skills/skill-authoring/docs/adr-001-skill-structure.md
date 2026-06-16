@@ -2,7 +2,7 @@
 
 **Status:** Accepted  
 **Date:** 2025-06  
-**Context:** library-skill-builder — the process skill for generating opencode skills from library documentation
+**Context:** skill-authoring — the process skill for generating opencode skills from library documentation
 
 ---
 
@@ -10,7 +10,7 @@
 
 When generating opencode skills for software libraries and frameworks, there are many valid choices: how to structure files, how much to put in SKILL.md vs. separate files, how to write descriptions, how to handle antipatterns, and what to document for maintainers. Without explicit decisions, each generated skill will make different choices, making the collection incoherent and hard to maintain.
 
-This ADR records the decisions made for the library-skill-builder process and the skills it generates.
+This ADR records the decisions made for the skill-authoring process and the skills it generates.
 
 ---
 
@@ -115,7 +115,7 @@ This ADR records the decisions made for the library-skill-builder process and th
 - humans.md: no cap — prose for humans has no token cost
 - Total SKILL.md + refs/ combined: 600 lines (soft cap)
 
-**Rationale:** The agentskills.io spec allows 500 lines for SKILL.md. The library-skill-builder enforces a stricter target because skills that approach 500 lines have almost certainly failed to progressively disclose. The 80% case should fit in 180 lines. Anything beyond that should be a refs/ file.
+**Rationale:** The agentskills.io spec allows 500 lines for SKILL.md. The skill-authoring process enforces a stricter target because skills that approach 500 lines have almost certainly failed to progressively disclose. The 80% case should fit in 180 lines. Anything beyond that should be a refs/ file.
 
 **Consequences:**
 - Skills approaching 250 lines in SKILL.md must be refactored before shipping
@@ -126,7 +126,7 @@ This ADR records the decisions made for the library-skill-builder process and th
 
 ### 9. Skill is harness-agnostic — no library-specific content in process steps
 
-**Decision:** The library-skill-builder SKILL.md contains no references to specific libraries, frameworks, languages, or ecosystems.
+**Decision:** The skill-authoring SKILL.md contains no references to specific libraries, frameworks, languages, or ecosystems.
 
 **Rationale:** The process applies identically to any library. Specific examples in the process steps anchor the reader's mental model to one library and obscure the generality of the method. Library-specific examples belong in the generated skills, not in the process that generates them.
 
@@ -149,7 +149,7 @@ Rejected. A top-level index lists files with no context. A model that hasn't rea
 Rejected. Mixing human research with model-accessible references creates an unclear boundary. The model should never need to navigate docs/ — that's a signal it has the wrong purpose. refs/ is the model's space; docs/ is the maintainer's space.
 
 **Gerund naming only (processing-pdfs, building-skills)**  
-Partially adopted. Gerund form is preferred but noun-phrase alternatives (pdf-processing, skill-builder) are acceptable. The library-skill-builder name itself uses noun-phrase form and is grandfathered.
+Partially adopted. Gerund form is preferred but noun-phrase alternatives (pdf-processing, skill-authoring) are acceptable. The skill-authoring name itself uses noun-phrase form.
 
 ---
 

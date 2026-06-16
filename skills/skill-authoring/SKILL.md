@@ -1,9 +1,9 @@
 ---
-name: library-skill-builder
-description: Creates and refactors opencode skills for software libraries, frameworks, and tools. Activates when the task involves writing a SKILL.md, generating a skill from documentation, or improving an existing skill's structure, token efficiency, or coverage.
+name: skill-authoring
+description: Creates and maintains opencode skills for software libraries, frameworks, and tools. Activates when the task involves writing a SKILL.md, generating a skill from documentation, or improving an existing skill's structure, token efficiency, or coverage.
 ---
 
-# library-skill-builder
+# skill-authoring
 
 A process for turning any library or framework into a well-structured opencode skill.
 

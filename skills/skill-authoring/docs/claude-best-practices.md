@@ -180,7 +180,7 @@ bigquery-skill/
 **For OOXML details**: See [OOXML.md](OOXML.md)
 ```
 
-### No orphan rule (library-skill-builder addition)
+### No orphan rule (skill-authoring addition)
 
 Every `refs/` file must have exactly one routing link in SKILL.md. A file with no link is undiscoverable.
 
@@ -421,9 +421,9 @@ When inputs can be rendered as images (PDFs, diagrams):
 
 ---
 
-## Alignment with library-skill-builder principles
+## Alignment with skill-authoring principles
 
-| Best practice doc says | library-skill-builder enforces |
+| Best practice doc says | skill-authoring enforces |
 |---|---|
 | Concise is key | Token efficiency step (Step 7), compression test |
 | Description = what + when, third person | Trigger description step (Step 8) |
