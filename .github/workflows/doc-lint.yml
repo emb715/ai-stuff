@@ -1,0 +1,32 @@
+name: Doc Lint
+
+on:
+  pull_request:
+    paths:
+      - "**/*.md"
+      - "scripts/doc_lint.py"
+      - ".github/workflows/doc-lint.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "**/*.md"
+      - "scripts/doc_lint.py"
+      - ".github/workflows/doc-lint.yml"
+
+jobs:
+  doc-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run documentation lint
+        run: python scripts/doc_lint.py

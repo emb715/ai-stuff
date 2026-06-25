@@ -1,0 +1,35 @@
+---
+title: "Docs Index"
+status: validated
+confidence: high
+last_tested: 2026-06-24
+scope: personal
+tooling:
+  - "repo-process/v1"
+tags:
+  - index
+  - docs
+owner: "@ezequielbenitez"
+---
+
+# docs/
+
+Standards, architecture decisions, principles, and reference material.
+
+## standards/
+
+Binding rules for this repo. All artifacts must pass these.
+
+| File | Purpose |
+|---|---|
+| [vetting-rubric.md](standards/vetting-rubric.md) | Scored rubric for promoting artifacts to `vetted/` |
+| [doc-lint-spec.md](standards/doc-lint-spec.md) | Machine-checkable lint rules (DL001–DL008) |
+| [artifact-structure.md](standards/artifact-structure.md) | Three-file folder convention for prompts, tools, skills, commands |
+
+## references/
+
+External research and reference material that grounds work in this repo.
+
+| Topic | Sources |
+|---|---|
+| [loop-engineering](references/loop-engineering/) | Addy Osmani, Forward Future Loop Library |
