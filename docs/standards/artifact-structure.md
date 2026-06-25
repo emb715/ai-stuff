@@ -88,13 +88,25 @@ Interpretation:
 
 Any experiment that involves building a tool, MCP server, CLI, or any coded artifact must include the following **before writing code**:
 
-- **Source docs** — official documentation for every external dependency captured in `docs/references/<dependency>/`. Minimum: API reference, quickstart, and any SDK-specific patterns.
-- **Scaffolding reference** — the canonical CLI command or template to initialize the project captured in the same reference folder.
+- **Source docs** — for every external dependency, capture canonical URLs in `docs/references/<dependency>/README.md`. Required entries: official repo, SDK repo, specification, official docs, quickstart. URLs first — working notes are secondary and optional.
+- **Scaffolding reference** — capture the canonical CLI scaffold command(s) alongside the source URLs in the same reference folder.
 - **Dependency artifacts** — any skill, prompt, or tool the experiment depends on must exist as a canonical artifact in this repo (not just referenced by name).
+
+Source URL format (in reference README.md):
+
+```md
+| Resource | URL |
+|---|---|
+| Official repo | https://github.com/... |
+| SDK repo | https://github.com/... |
+| Specification | https://... |
+| Docs | https://... |
+| Quickstart | https://... |
+```
 
 These are not optional. They are the pre-flight gate before the Build step of any experiment.
 
-Rationale: building without grounded reference docs produces hallucinated APIs, incorrect scaffolding, and wasted sessions. The research cost is always lower than the debugging cost.
+Rationale: building without grounded source URLs produces hallucinated APIs, incorrect scaffolding, and wasted sessions. Canonical URLs are the only reliable source — summarized notes decay, the source does not.
 
 ## Evidence / Results
 
