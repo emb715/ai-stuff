@@ -51,26 +51,26 @@ Plan: <plan name or path>
 
 Choose a prompt type — and shape if shown:
 
-1) implementation   D) default   F) fast   S) strict
-2) handoff
+1) plan-refine
+2) implementation   D) default   F) fast   S) strict
 3) review
-4) debug
-5) plan-refine
+4) handoff
+5) debug
 
-Reply with number + letter for shaped types (e.g. 1F), or just the number for others.
+Reply with number + letter for shaped types (e.g. 2F), or just the number for others.
 ```
 
 Wait for one reply. Valid inputs:
-- `1D` or `1d` → implementation, default shape
-- `1F` or `1f` → implementation, fast shape
-- `1S` or `1s` → implementation, strict shape
-- `2` → handoff
+- `1` → plan-refine
+- `2D` or `2d` → implementation, default shape
+- `2F` or `2f` → implementation, fast shape
+- `2S` or `2s` → implementation, strict shape
 - `3` → review
-- `4` → debug
-- `5` → plan-refine
+- `4` → handoff
+- `5` → debug
 - Type names also accepted: `implementation-default`, `implementation-fast`, `handoff`, `plan-refine`, etc.
 
-If `1` alone (no shape letter) is given for implementation, respond:
+If `2` alone (no shape letter) is given for implementation, respond:
 
 ```text
 Implementation requires a shape:
@@ -79,7 +79,7 @@ Implementation requires a shape:
   S) strict  — phased, checkpoint after each phase
 ```
 
-If `1S` is chosen, proceed to generate using the strict shape.
+If `2S` is chosen, proceed to generate using the strict shape.
 
 If input is invalid, repeat the menu once with:
 

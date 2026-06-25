@@ -100,16 +100,16 @@ Do not use for planned refactors or improvements. That is `implementation`. Debu
 ## A complete development cycle with prompt-factory
 
 **1. You have a plan.**
-Run `/prompt-factory plan.md` → select `5` (plan-refine).
+Run `/prompt-factory plan.md` → select `1` (plan-refine).
 Loop runs until no P0/P1 remain and both reviews agree.
 When done: proceed to implementation.
 
 **2. Start implementation.**
-Run `/prompt-factory plan.md` → select `1D` (first session, blockers likely).
+Run `/prompt-factory plan.md` → select `2D` (first session, blockers likely).
 Paste into fresh session. Execute.
 
 **3. Context window fills mid-task.**
-Run `/prompt-factory plan.md` → select `2` (handoff).
+Run `/prompt-factory plan.md` → select `4` (handoff).
 Paste into fresh session. Continue from exact state.
 
 **4. Implementation complete. Want to verify.**
@@ -117,11 +117,11 @@ Run `/prompt-factory plan.md` → select `3` (review).
 Paste into fresh session. Review the diff.
 
 **5. Something breaks.**
-Run `/prompt-factory plan.md` → select `4` (debug).
+Run `/prompt-factory plan.md` → select `5` (debug).
 Paste into fresh session. Diagnose and fix.
 
 **6. Risky phase coming up.**
-Run `/prompt-factory plan.md` → select `1S` (strict, phased).
+Run `/prompt-factory plan.md` → select `2S` (strict, phased).
 Paste into fresh session. One phase at a time.
 
 ---
