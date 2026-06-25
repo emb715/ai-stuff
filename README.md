@@ -148,7 +148,7 @@ Update this table when you add or promote artifacts.
 
 | Experiment | Purpose | Status |
 |---|---|---|
-| — | _empty_ | — |
+| [workflow-engine](experiments/workflow-engine/) | Web-based workflow engine for multi-session AI dev cycles: MCP state, prompt-factory integration, composable UI modules | draft |
 
 ## Operating cadence (weekly)
 
