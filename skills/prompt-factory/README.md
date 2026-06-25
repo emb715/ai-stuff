@@ -76,7 +76,7 @@ Canonical command name: `/prompt-factory`.
 
 Validation evidence summary:
 - Core implementation prompt generation path is validated from prior prompt-factory runs.
-- Additional prompt-type contracts (`handoff`, `review`, `debug`, `readiness-check`) are defined and structured for iterative validation.
+- Additional prompt-type contracts (`handoff`, `review`, `debug`, `plan-refine`) are defined and structured for iterative validation.
 
 # Failure Modes / Boundaries
 
@@ -95,7 +95,7 @@ Validation evidence summary:
 - `skills/prompt-factory/templates/types/handoff.md`
 - `skills/prompt-factory/templates/types/review.md`
 - `skills/prompt-factory/templates/types/debug.md`
-- `skills/prompt-factory/templates/types/readiness-check.md`
+- `skills/prompt-factory/templates/types/plan-refine.md`
 
 ## V2 skeleton status
 
@@ -104,6 +104,6 @@ Prompt-factory v2 type-system skeletons exist for:
 - `handoff`
 - `review`
 - `debug`
-- `readiness-check`
+- `plan-refine`
 
 These are structure placeholders only. Type gates and full per-type contracts are pending definition.

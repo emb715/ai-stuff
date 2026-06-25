@@ -11,6 +11,6 @@ Parse `$ARGUMENTS`:
 - `$1` is a shorthand (`implementation-default`, `implementation-fast`, `handoff`, etc.) → skip menu, generate
 - `$1` is a shorthand + `$2` is a file path → use both, skip menu, generate
 
-Valid shorthands: `implementation-default`, `implementation-fast`, `implementation-strict`, `handoff`, `review`, `debug`, `readiness-check`
+Valid shorthands: `implementation-default`, `implementation-fast`, `implementation-strict`, `handoff`, `review`, `debug`, `plan-refine`
 
 Delegate all flow logic to the linked skill.

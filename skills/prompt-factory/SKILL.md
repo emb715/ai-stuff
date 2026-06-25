@@ -55,7 +55,7 @@ Choose a prompt type — and shape if shown:
 2) handoff
 3) review
 4) debug
-5) readiness-check
+5) plan-refine
 
 Reply with number + letter for shaped types (e.g. 1F), or just the number for others.
 ```
@@ -67,8 +67,8 @@ Wait for one reply. Valid inputs:
 - `2` → handoff
 - `3` → review
 - `4` → debug
-- `5` → readiness-check
-- Type names also accepted: `implementation-default`, `implementation-fast`, `handoff`, etc.
+- `5` → plan-refine
+- Type names also accepted: `implementation-default`, `implementation-fast`, `handoff`, `plan-refine`, etc.
 
 If `1` alone (no shape letter) is given for implementation, respond:
 
@@ -99,7 +99,7 @@ Load template based on type + shape:
 | handoff           | —       | `skills/prompt-factory/templates/types/handoff.md` |
 | review            | —       | `skills/prompt-factory/templates/types/review.md` |
 | debug             | —       | `skills/prompt-factory/templates/types/debug.md` |
-| readiness-check   | —       | `skills/prompt-factory/templates/types/readiness-check.md` |
+| plan-refine       | —       | `skills/prompt-factory/templates/types/plan-refine.md` |
 
 Populate all required sections from extracted plan data.
 Return exactly one fenced markdown code block.

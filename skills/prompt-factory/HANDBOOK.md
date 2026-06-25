@@ -19,9 +19,9 @@ Hand-written prompts are inconsistent, miss context, and waste the first few tur
 ## Where it fits in a development cycle
 
 ```
-idea → plan → readiness check → implement → review → handoff/continue → debug (if broken)
-               ↑                 ↑             ↑        ↑                  ↑
-         readiness-check    implementation   review   handoff             debug
+idea → plan → refine plan → implement → review → handoff/continue → debug (if broken)
+               ↑              ↑             ↑        ↑                  ↑
+         plan-refine    implementation   review   handoff             debug
 ```
 
 Each arrow is a moment where `/prompt-factory` produces the right prompt for that transition.
@@ -30,17 +30,18 @@ Each arrow is a moment where `/prompt-factory` produces the right prompt for tha
 
 ## Type selection guide
 
-### `readiness-check`
+### `plan-refine`
 **Before you start building.**
 
-Use when you have a plan but are not sure it is implementation-ready. The generated prompt evaluates the plan for gaps, ambiguities, unresolved forks, and missing acceptance criteria.
+Use when you have a plan that needs to reach implementation readiness. The generated prompt drives the doc through iterative rounds — each round resolves the highest-risk gap with the smallest change, runs two independent reviews, and stops only when both agree and no P0/P1 unknowns remain.
 
 When to use:
-- Plan was just written and has not been reviewed
-- You are inheriting someone else's spec
+- Plan was just written and has known gaps or conflicts
+- You are inheriting someone else's spec and need to validate it
 - You sense something is off but can't name it
+- You want to confirm a plan is truly implementation-ready before starting
 
-Do not use when the plan has already been through readiness review and you just want to build.
+Do not use when the plan is already solid and you just want to build — go straight to `implementation`.
 
 ---
 
@@ -99,9 +100,9 @@ Do not use for planned refactors or improvements. That is `implementation`. Debu
 ## A complete development cycle with prompt-factory
 
 **1. You have a plan.**
-Run `/prompt-factory plan.md` → select `5` (readiness-check).
-If blocked: fix the plan, re-run.
-If ready: proceed.
+Run `/prompt-factory plan.md` → select `5` (plan-refine).
+Loop runs until no P0/P1 remain and both reviews agree.
+When done: proceed to implementation.
 
 **2. Start implementation.**
 Run `/prompt-factory plan.md` → select `1D` (first session, blockers likely).
@@ -141,7 +142,7 @@ Once you know what you want, skip the menu:
 
 - Not a plan writer. It reads plans, does not create them.
 - Not a task tracker. It generates prompts, does not track execution.
-- Not a substitute for a good plan. Garbage in, garbage out. Run `readiness-check` first if the plan is uncertain.
+- Not a substitute for a good plan. Garbage in, garbage out. Run `plan-refine` first if the plan is uncertain.
 - Not for one-off questions. If you can type the instruction in one sentence, just type it.
 
 ---
