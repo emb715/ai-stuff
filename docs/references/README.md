@@ -45,3 +45,4 @@ docs/references/
 |---|---|---|
 | [loop-engineering](loop-engineering/) | Addy Osmani, Forward Future Loop Library | `prompts/loop-prd-readiness/` |
 | [commands](commands/) | OpenCode Commands docs, Claude Code Commands docs | prompt/command invocation standards |
+| [mcp](mcp/) | MCP architecture, TypeScript SDK quickstart | `experiments/workflow-engine/` |

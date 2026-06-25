@@ -84,6 +84,18 @@ Interpretation:
 - Minimum structure is three files (`README.md`, consumable file, `humans.md`).
 - Additional files/folders are allowed when needed (for example `commands/`, `templates/`, `refs/`, assets).
 
+### Experiment dependency rule (build-ready standard)
+
+Any experiment that involves building a tool, MCP server, CLI, or any coded artifact must include the following **before writing code**:
+
+- **Source docs** — official documentation for every external dependency captured in `docs/references/<dependency>/`. Minimum: API reference, quickstart, and any SDK-specific patterns.
+- **Scaffolding reference** — the canonical CLI command or template to initialize the project captured in the same reference folder.
+- **Dependency artifacts** — any skill, prompt, or tool the experiment depends on must exist as a canonical artifact in this repo (not just referenced by name).
+
+These are not optional. They are the pre-flight gate before the Build step of any experiment.
+
+Rationale: building without grounded reference docs produces hallucinated APIs, incorrect scaffolding, and wasted sessions. The research cost is always lower than the debugging cost.
+
 ## Evidence / Results
 
 Applied in `prompts/loop-prd-readiness/` — three-file structure produced a prompt that is copy-paste ready (`prompt.md`), fully documented for agents and reviewers (`README.md`), and maintainable without re-reading the prompt body (`humans.md`). Observed: no need to edit the prompt file to remove metadata before use.

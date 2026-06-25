@@ -14,6 +14,14 @@ tags:
 owner: "@ezequielbenitez"
 ---
 
+# Dependency artifacts
+
+| Dependency | Location | Purpose |
+|---|---|---|
+| MCP architecture | `docs/references/mcp/architecture.md` | Protocol concepts, tool schema, lifecycle |
+| MCP TypeScript SDK | `docs/references/mcp/typescript-server.md` | Scaffold, tool registration, stdio transport |
+| prompt-factory skill | `skills/prompt-factory/` | Generates prompts per workflow step |
+
 # Context / Problem
 
 AI development sessions are discrete and stateless. Each session starts from zero. The prompt-factory skill can generate the right prompt for any phase of a development cycle, but there is no engine to sequence phases, track what happened, hold state between sessions, or advance a plan end-to-end without manual coordination overhead.
@@ -142,13 +150,45 @@ Inconclusive — experiment not yet run.
 
 # Next step
 
-1. Design MCP server tool interface in detail (input/output schemas for each tool)
-2. Design workflow schema in full (all step types, advancement rules, validation)
-3. Design web UI module architecture (component contracts, state sharing between modules)
-4. Build minimal MCP server with `get_current_step` + `report_step_output` + `advance_step`
-5. Run one real workflow manually against a real plan using the MCP server for state
-6. Record: did state tracking eliminate re-investigation overhead? did advancement logic hold?
-7. If successful: design web UI in detail and scope build
+## MVP scope (validate core hypothesis with minimum code)
+
+Web UI, module composer, tool registry, schema validation, multi-workflow support, and parallel/conditional steps are all deferred. None of them validate the core hypothesis.
+
+### Before writing code
+
+1. Fetch and save MCP official docs → `docs/references/mcp/`
+2. Fetch and save MCP TypeScript SDK docs + scaffolding template → `docs/references/mcp/`
+3. Define MCP tool interface (input/output schemas for all 4 tools) in this file
+4. Define workflow schema (step definition format, advancement rules) in this file
+5. Confirm state model is sufficient for a linear 3-step workflow
+
+### Build
+
+6. Scaffold MCP server using TypeScript SDK (stdio transport, local JSON state file)
+7. Implement 4 tools only:
+   - `get_current_step` → returns step type + generated prompt
+   - `report_step_output` → session posts result
+   - `advance_step` → evaluates output, advances or blocks
+   - `get_workflow_status` → returns full state snapshot
+8. Hardcode one workflow definition in a local JSON/YAML file — no builder, no UI
+
+### Validate
+
+9. Run one real workflow end-to-end through the MCP server:
+   - Step 1: plan-refine
+   - Step 2: implementation (default)
+   - Step 3: review
+10. Record after each step:
+    - Did the session receive the right prompt without manual work?
+    - Did state persist correctly between sessions?
+    - Did advancement logic hold?
+    - Did re-investigation overhead drop?
+
+### Decision gate
+
+- If all 3 steps pass → hypothesis confirmed → scope web UI design
+- If state or advancement breaks → iterate on state model before web UI
+- If prompt quality degrades through MCP → investigate prompt-factory integration path
 
 # Failure Modes / Boundaries
 
