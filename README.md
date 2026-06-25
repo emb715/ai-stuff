@@ -148,7 +148,7 @@ Update this table when you add or promote artifacts.
 
 | Experiment | Purpose | Status |
 |---|---|---|
-| [prompt-factory](experiments/prompt-factory/) | Generate ready-to-paste session prompts from in-context plans across default/strict/fast modes | validated |
+| — | _empty_ | — |
 
 ## Operating cadence (weekly)
 

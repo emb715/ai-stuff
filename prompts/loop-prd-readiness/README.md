@@ -60,4 +60,4 @@ Output was usable as a handoff to an implementation session.
 
 # Related prompts
 
-- [`experiments/prompt-factory/`](../../experiments/prompt-factory/README.md) — generate implementation execution prompts once readiness is achieved
+- [`skills/prompt-factory/`](../../skills/prompt-factory/README.md) — generate implementation execution prompts once readiness is achieved
