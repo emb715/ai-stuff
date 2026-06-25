@@ -15,12 +15,21 @@ owner: "@ezequielbenitez"
 
 # docs/references/mcp/
 
-Reference documentation for the Model Context Protocol (MCP). Captured for use in the workflow-engine experiment and any future MCP server builds.
+Official sources for the Model Context Protocol (MCP). Required reading before building any MCP server in this repo.
 
-## Sources
+## Official sources
 
-- Architecture: https://modelcontextprotocol.io/docs/concepts/architecture
-- TypeScript quickstart: https://modelcontextprotocol.io/quickstart/server
+| Resource | URL |
+|---|---|
+| MCP org (all SDKs and specs) | https://github.com/modelcontextprotocol |
+| TypeScript SDK | https://github.com/modelcontextprotocol/typescript-sdk |
+| Python SDK | https://github.com/modelcontextprotocol/python-sdk |
+| MCP specification | https://modelcontextprotocol.io/specification/latest |
+| MCP docs | https://modelcontextprotocol.io/docs |
+| Architecture overview | https://modelcontextprotocol.io/docs/concepts/architecture |
+| Server quickstart (TypeScript) | https://modelcontextprotocol.io/quickstart/server |
+| MCP Inspector (debug tool) | https://github.com/modelcontextprotocol/inspector |
+| Reference server implementations | https://github.com/modelcontextprotocol/servers |
 
 ## Index
 
@@ -28,15 +37,6 @@ Reference documentation for the Model Context Protocol (MCP). Captured for use i
 |---|---|
 | [architecture.md](architecture.md) | Core concepts: hosts, clients, servers, primitives, transports |
 | [typescript-server.md](typescript-server.md) | TypeScript SDK: scaffold, tool registration, stdio transport |
-
-## Key facts (quick reference)
-
-- Protocol: JSON-RPC 2.0
-- Transports: stdio (local) or Streamable HTTP (remote)
-- Server primitives: Tools, Resources, Prompts
-- For STDIO servers: never write to stdout — use `console.error()` only
-- Tool registration: `server.registerTool(name, { description, inputSchema }, handler)`
-- State is not built into MCP — must be managed externally (file, DB, memory)
 
 ## Relevant to
 
