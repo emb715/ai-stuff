@@ -102,6 +102,7 @@ Load template based on type + shape:
 | plan-refine       | —       | `skills/prompt-factory/templates/types/plan-refine.md` |
 
 Populate all required sections from extracted plan data.
+Format the content inside the code block using markdown — headers (`##`) for sections, bold (`**label**`) for field labels, bullet lists for items.
 Return exactly one fenced markdown code block.
 No text before or after the code block.
 
