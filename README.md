@@ -132,10 +132,10 @@ Update this table when you add or promote artifacts.
 | Playbook | Purpose | Status |
 |---|---|---|
 | [brainstorming](playbooks/brainstorming/) | Facilitate interactive brainstorming sessions using 61 techniques across 10 categories; standalone, no framework dependencies | validated |
-| [product-brief](playbooks/product-brief/) | Turn brainstorm output or a rough idea into a structured product brief; fills the brainstorm→plan gap | validated |
-| [adversarial-code-review](playbooks/adversarial-code-review/) | Adversarial code review on git changes; cross-references claims vs reality, minimum 3 findings, fix menu | validated |
+| [product-brief](playbooks/product-brief/) | Turn brainstorm output or a rough idea into a structured product brief; fills the brainstorm→plan gap | pending |
+| [adversarial-code-review](playbooks/adversarial-code-review/) | Adversarial code review on git changes; cross-references claims vs reality, minimum 3 findings, fix menu | pending |
 | [quick-spec](playbooks/quick-spec/) | Create implementation-ready specs through discovery + code investigation; enforces 5-criterion Ready-for-Dev standard | validated |
-| [retrospective](playbooks/retrospective/) | Run a retrospective on completed work; lessons, follow-through check, readiness assessment, SMART action items | validated |
+| [retrospective](playbooks/retrospective/) | Run a retrospective on completed work; lessons, follow-through check, readiness assessment, SMART action items | pending |
 
 ### Skills
 
