@@ -1,43 +1,36 @@
 ---
-title: "MCP Reference"
+title: "MCP References Index"
 status: validated
 confidence: high
-last_tested: 2026-06-25
+last_tested: 2026-06-27
 scope: personal
 tooling:
-  - "modelcontextprotocol.io"
+  - "repo-process/v1"
 tags:
   - references
   - mcp
-  - tools
 owner: "@ezequielbenitez"
 ---
 
-# docs/references/mcp/
+# MCP References
 
-Official sources for the Model Context Protocol (MCP). Required reading before building any MCP server in this repo.
+Reference documentation captured from the Model Context Protocol official docs. Grounds the `experiments/workflow-engine/` experiment.
 
-## Official sources
+## Sources
 
-| Resource | URL |
-|---|---|
-| MCP org (all SDKs and specs) | https://github.com/modelcontextprotocol |
-| TypeScript SDK | https://github.com/modelcontextprotocol/typescript-sdk |
-| Python SDK | https://github.com/modelcontextprotocol/python-sdk |
-| MCP specification | https://modelcontextprotocol.io/specification/latest |
-| MCP docs | https://modelcontextprotocol.io/docs |
-| Architecture overview | https://modelcontextprotocol.io/docs/concepts/architecture |
-| Server quickstart (TypeScript) | https://modelcontextprotocol.io/quickstart/server |
-| MCP Inspector (debug tool) | https://github.com/modelcontextprotocol/inspector |
-| Reference server implementations | https://github.com/modelcontextprotocol/servers |
+| File | Source | Purpose |
+|---|---|---|
+| [architecture.md](architecture.md) | modelcontextprotocol.io/docs/concepts/architecture | Protocol architecture, primitives, transport, lifecycle |
+| [typescript-server.md](typescript-server.md) | modelcontextprotocol.io/docs/develop/build-server | TypeScript SDK scaffold, tool registration, stdio transport |
 
-## Index
+Note: tool schemas specific to `workflow-engine` live in `experiments/workflow-engine/tool-schemas.md`, not here.
 
-| File | Purpose |
-|---|---|
-| [architecture.md](architecture.md) | Core concepts: hosts, clients, servers, primitives, transports |
-| [typescript-server.md](typescript-server.md) | TypeScript SDK: scaffold, tool registration, stdio transport |
+## Key takeaways
 
-## Relevant to
-
-- `experiments/workflow-engine/`
+- MCP is client-server, JSON-RPC 2.0, stateful protocol
+- Three server primitives: **Tools** (executable functions), **Resources** (data), **Prompts** (templates)
+- Two transports: **stdio** (local, zero overhead) and **Streamable HTTP** (remote)
+- Tool schema uses JSON Schema for `inputSchema`
+- stdio transport: **never write to stdout** — only stderr safe for logging
+- State is held server-side; clients discover tools via `tools/list` then call via `tools/call`
+- Tool results return `content` array (text, image, resource links) and optional `structuredContent`

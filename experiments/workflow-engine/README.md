@@ -154,23 +154,55 @@ Inconclusive — experiment not yet run.
 
 Web UI, module composer, tool registry, schema validation, multi-workflow support, and parallel/conditional steps are all deferred. None of them validate the core hypothesis.
 
-### Before writing code
+### Pre-build steps — STATUS
 
-1. Fetch and save MCP official docs → `docs/references/mcp/`
-2. Fetch and save MCP TypeScript SDK docs + scaffolding template → `docs/references/mcp/`
-3. Define MCP tool interface (input/output schemas for all 4 tools) in this file
-4. Define workflow schema (step definition format, advancement rules) in this file
-5. Confirm state model is sufficient for a linear 3-step workflow
+1. ✅ Fetch and save MCP official docs → `docs/references/mcp/architecture.md`
+2. ✅ Fetch and save MCP TypeScript SDK docs + scaffold → `docs/references/mcp/typescript-server.md`
+3. ✅ Define MCP tool interface (all 4 tools with input schemas) → `experiments/workflow-engine/tool-schemas.md`
+4. ✅ Working TypeScript scaffold for all 4 tools → `docs/references/mcp/typescript-server.md` (reusable scaffold, not experiment-specific)
+5. State model confirmed sufficient for linear 3-step workflow (see below)
 
-### Build
+### State model — confirmed sufficient
 
-6. Scaffold MCP server using TypeScript SDK (stdio transport, local JSON state file)
-7. Implement 4 tools only:
-   - `get_current_step` → returns step type + generated prompt
-   - `report_step_output` → session posts result
-   - `advance_step` → evaluates output, advances or blocks
-   - `get_workflow_status` → returns full state snapshot
-8. Hardcode one workflow definition in a local JSON/YAML file — no builder, no UI
+Per workflow: id, plan path, step sequence, current step index, status.
+Per step: type, shape, status, output, advancement decision.
+JSON file as local state store. Sufficient for linear 3-step workflow.
+
+### Build — STATUS
+
+6. ✅ Scaffold MCP server — `experiments/workflow-engine/server/` (TypeScript, stdio, local JSON state)
+7. ✅ Implemented 5 tools:
+   - `create_workflow` — initializes a 3-step workflow from a plan path
+   - `get_current_step` — returns step type, status, generated prompt
+   - `report_step_output` — session posts output, marks step done
+   - `advance_step` — approves or blocks advancement to next step
+   - `get_workflow_status` — full state snapshot
+8. ✅ Hardcoded 3-step workflow: `plan-refine → implementation → review`
+
+### Validate (next)
+
+9. Register server in OpenCode/Claude Desktop config:
+   ```json
+   {
+     "mcpServers": {
+       "workflow-engine": {
+         "command": "node",
+         "args": ["/absolute/path/to/experiments/workflow-engine/server/build/index.js"]
+       }
+     }
+   }
+   ```
+10. Run one real workflow end-to-end:
+    - `create_workflow` with a real plan path
+    - `get_current_step` → paste prompt into fresh session
+    - Session runs plan-refine → `report_step_output`
+    - `advance_step` → move to implementation
+    - Repeat through all 3 steps
+11. Record after each step:
+    - Did the session receive the right prompt without manual work?
+    - Did state persist correctly between sessions?
+    - Did advancement logic hold?
+    - Did re-investigation overhead drop?
 
 ### Validate
 

@@ -23,6 +23,8 @@ Reusable skill for generating ready-to-paste prompts. Guides the user through pl
 - You have a plan doc path in the current message, arguments, or session context.
 - You want deterministic mode selection and pre-flight checks before prompt generation.
 
+For `plan-refine` specifically: the factory generates a customized loop prompt with the plan's context, status, and blockers inlined. If you want a generic plan-refinement loop without running the factory, there is a static copy-paste version of the same prompt in this repo's `prompts/` folder.
+
 # Inputs
 
 All inputs are guided interactively. Optional shorthand arguments:

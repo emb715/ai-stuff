@@ -19,12 +19,16 @@ Hand-written prompts are inconsistent, miss context, and waste the first few tur
 ## Where it fits in a development cycle
 
 ```
-idea → plan → refine plan → implement → review → handoff/continue → debug (if broken)
-               ↑              ↑             ↑        ↑                  ↑
-         plan-refine    implementation   review   handoff             debug
+brainstorm → brief → plan → refine plan → spec → implement → review → handoff/continue → debug → retrospective
+     ↑           ↑      ↑        ↑           ↑          ↑          ↑          ↑              ↑          ↑
+ [playbook]  [playbook]  ·   plan-refine  [playbook] implementation review   handoff        debug    [playbook]
+                                                      (default/fast/  (type)  (type)        (type)
+                                                       strict shapes)
 ```
 
-Each arrow is a moment where `/prompt-factory` produces the right prompt for that transition.
+Items marked `[playbook]` are interactive procedures — brainstorming, product-brief, quick-spec, and retrospective run as direct facilitation, not generated prompts. All other transitions are prompt-factory types.
+
+Each arrow is a moment where `/prompt-factory` produces the right prompt for that transition — except the three interactive playbooks, which are run directly, not via the factory.
 
 ---
 

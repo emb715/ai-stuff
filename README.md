@@ -125,12 +125,17 @@ Update this table when you add or promote artifacts.
 | Prompt | Purpose | Status |
 |---|---|---|
 | [loop-prd-readiness](prompts/loop-prd-readiness/) | Drive planning docs to implementation readiness via iterative loop | validated |
+| [knowledge-extraction](prompts/knowledge-extraction/) | Mine a completed session and propose durable knowledge writes; user approves before write | validated |
 
 ### Playbooks
 
 | Playbook | Purpose | Status |
 |---|---|---|
-| — | _empty_ | — |
+| [brainstorming](playbooks/brainstorming/) | Facilitate interactive brainstorming sessions using 61 techniques across 10 categories; standalone, no framework dependencies | validated |
+| [product-brief](playbooks/product-brief/) | Turn brainstorm output or a rough idea into a structured product brief; fills the brainstorm→plan gap | validated |
+| [adversarial-code-review](playbooks/adversarial-code-review/) | Adversarial code review on git changes; cross-references claims vs reality, minimum 3 findings, fix menu | validated |
+| [quick-spec](playbooks/quick-spec/) | Create implementation-ready specs through discovery + code investigation; enforces 5-criterion Ready-for-Dev standard | validated |
+| [retrospective](playbooks/retrospective/) | Run a retrospective on completed work; lessons, follow-through check, readiness assessment, SMART action items | validated |
 
 ### Skills
 

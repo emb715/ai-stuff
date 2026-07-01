@@ -27,7 +27,10 @@ EXCLUDE_GLOBS = [
     "templates/**/*.md",
     "archive/**/*.md",
     "_meta/**/*.md",
-    "skills/skill-authoring/docs/**/*.md",
+    "**/node_modules/**/*.md",
+    "**/build/**/*.md",
+    "experiments/*/server/**/*.md",
+    "skills/*/docs/**/*.md",
 ]
 
 # Files within three-file artifact folders that intentionally have no frontmatter.

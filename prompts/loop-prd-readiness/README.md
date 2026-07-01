@@ -24,6 +24,8 @@ You have a planning doc that needs to be code-ready — atomic requirements trac
 
 Not for docs already implementation-ready. Not for one-shot review.
 
+This is a static, copy-paste-ready version of the plan-refinement loop — `{{DOC}}` is the only variable. When you want a prompt that is customized to a specific plan's context, status, and blockers inlined, use the `prompt-factory` skill's `plan-refine` type instead. When you want to paste and go without running the factory, use this.
+
 # Inputs
 
 `{{DOC}}` — path to the target document, or confirm it is present in the current session.

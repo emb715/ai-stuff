@@ -1,81 +1,97 @@
+---
+title: "MCP Architecture"
+status: validated
+confidence: high
+last_tested: 2026-06-27
+scope: personal
+tooling:
+  - "repo-process/v1"
+tags:
+  - references
+  - mcp
+  - architecture
+owner: "@ezequielbenitez"
+---
+
 # MCP Architecture
 
-Source: https://modelcontextprotocol.io/docs/concepts/architecture
-Captured: 2026-06-25
+**Source:** https://modelcontextprotocol.io/docs/concepts/architecture
+**Captured:** 2026-06-27
+
+---
 
 ## Participants
 
-| Role | Description |
-|---|---|
-| MCP Host | AI application (e.g. Claude Code, OpenCode) — manages one or more MCP clients |
-| MCP Client | Component inside the host — maintains a dedicated connection to one MCP server |
-| MCP Server | Program that provides context to MCP clients |
+- **MCP Host** — AI application (Claude Desktop, OpenCode, VS Code). Creates and manages one or more clients.
+- **MCP Client** — Maintains a dedicated connection to one MCP server.
+- **MCP Server** — Exposes context and tools to clients. Can be local (stdio) or remote (HTTP).
 
-One host → many clients → one server each.
+One host, many clients, many servers. Each client-server connection is dedicated.
+
+---
 
 ## Two layers
 
-**Data layer** — JSON-RPC 2.0 protocol:
-- Lifecycle management (initialize, negotiate capabilities, terminate)
-- Server primitives: Tools, Resources, Prompts
-- Client primitives: Sampling, Elicitation, Logging
+### Data layer
+JSON-RPC 2.0 protocol. Defines:
+- Lifecycle management (init, capability negotiation, termination)
+- Server primitives: **Tools**, **Resources**, **Prompts**
+- Client primitives: **Sampling**, **Elicitation**, **Logging**
+- Utility: notifications, progress tracking, Tasks (experimental)
 
-**Transport layer** — communication channel:
-- `stdio` — standard I/O, local only, single client, no network overhead
-- Streamable HTTP — remote, multiple clients, supports OAuth
+### Transport layer
+Communication channels:
+- **Stdio** — stdin/stdout, local only, zero network overhead. Best for local servers.
+- **Streamable HTTP** — HTTP POST + SSE, supports remote servers, supports OAuth.
 
-## Server primitives
+---
 
-| Primitive | Description | Discovery |
-|---|---|---|
-| Tools | Executable functions the LLM can call | `tools/list` → `tools/call` |
-| Resources | Data sources (files, DB records, API responses) | `resources/list` → `resources/read` |
-| Prompts | Reusable templates | `prompts/list` → `prompts/get` |
+## Three server primitives
 
-## Tool schema
+| Primitive | What it is | Discovery | Execution |
+|---|---|---|---|
+| Tools | Executable functions (file ops, API calls, DB queries) | `tools/list` | `tools/call` |
+| Resources | Data sources (file contents, DB records) | `resources/list` | `resources/get` |
+| Prompts | Reusable interaction templates | `prompts/list` | `prompts/get` |
+
+---
+
+## Lifecycle
+
+1. Client sends `initialize` with `protocolVersion` and `capabilities`
+2. Server responds with its own `protocolVersion` and `capabilities`
+3. Client sends `notifications/initialized`
+4. Session is live
+
+Capabilities declared at init determine what each party can do. Server must declare `tools` capability to expose tools.
+
+---
+
+## JSON-RPC 2.0 message structure
 
 ```json
 {
-  "name": "tool_name",
-  "description": "What it does",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "param": { "type": "string", "description": "..." }
-    },
-    "required": ["param"]
-  }
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/list"
 }
 ```
 
-## Lifecycle (initialize handshake)
+Notifications (no response expected) omit `id`:
 
 ```json
-// Client → Server
-{ "jsonrpc": "2.0", "id": 1, "method": "initialize",
-  "params": { "protocolVersion": "2025-06-18", "capabilities": {}, "clientInfo": { "name": "...", "version": "..." } } }
-
-// Server → Client
-{ "jsonrpc": "2.0", "id": 1, "result": { "protocolVersion": "2025-06-18", "capabilities": { "tools": {} }, "serverInfo": { "name": "...", "version": "..." } } }
-
-// Client notification
-{ "jsonrpc": "2.0", "method": "notifications/initialized" }
+{
+  "jsonrpc": "2.0",
+  "method": "notifications/tools/list_changed"
+}
 ```
 
-## Tool call pattern
+---
 
-```json
-// Request
-{ "jsonrpc": "2.0", "id": 3, "method": "tools/call",
-  "params": { "name": "tool_name", "arguments": { "param": "value" } } }
+## Relevant to workflow-engine
 
-// Response
-{ "jsonrpc": "2.0", "id": 3, "result": { "content": [{ "type": "text", "text": "result" }] } }
-```
-
-## Important constraints
-
-- MCP is stateful (requires lifecycle management) but provides no built-in state persistence
-- State between sessions must be handled externally
-- STDIO servers must never write to stdout — corrupts JSON-RPC stream
-- Notifications are one-way (no response): `{ "jsonrpc": "2.0", "method": "notifications/..." }`
+- Server holds state (workflow state file) between sessions — correct model
+- stdio transport is right for local MVP (no network, no auth complexity)
+- `tools/list` → client discovers available tools at session start
+- `tools/call` → client invokes a tool with typed arguments
+- Tool list can change dynamically via `notifications/tools/list_changed` — useful for future workflow state changes

@@ -43,6 +43,7 @@ docs/references/
 
 | Topic | Sources | Relevant to |
 |---|---|---|
+| [change-impact-checklist](change-impact-checklist.md) | Extracted from sprint change management workflow | `playbooks/retrospective/`, `playbooks/adversarial-code-review/` |
 | [loop-engineering](loop-engineering/) | Addy Osmani, Forward Future Loop Library | `prompts/loop-prd-readiness/` |
 | [commands](commands/) | OpenCode Commands docs, Claude Code Commands docs | prompt/command invocation standards |
 | [mcp](mcp/) | MCP architecture, TypeScript SDK quickstart | `experiments/workflow-engine/` |

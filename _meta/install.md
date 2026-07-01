@@ -4,7 +4,9 @@ How vault commands are registered for this repo.
 
 ## How it works
 
-Commands are registered in `opencode.json` at the repo root. OpenCode loads this automatically when you open a session in this directory. No installation steps needed — the commands are active as soon as you open OpenCode here.
+Commands live in `.opencode/commands/` as `.md` files with a `description` frontmatter field. OpenCode discovers them automatically when you open a session in this directory.
+
+The `.opencode/commands/` files are the source of truth for the TUI. The `_meta/commands/*/command.md` files are the repo-documented versions — keep them in sync when updating commands.
 
 ## Available commands
 
