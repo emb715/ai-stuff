@@ -1,7 +1,7 @@
 ---
 title: "Loop Implementation Readiness"
-status: draft
-confidence: low
+status: validated
+confidence: medium
 last_tested: 2026-06-29
 scope: personal
 tooling:
@@ -54,14 +54,15 @@ Escalation is separate from the stop states: any destructive, production, or sen
 
 # Evidence
 
-Not yet validated — first real run pending.
+Validated across several weeks of real use running against multiple doc/codebase pairs, with a high success rate — consistently outperformed alternative prompts and longer multi-step variants of the same loop.
 
-Planned validation protocol:
-1. Run against a codebase with a known partial-implementation state (some requirements covered, some missing, at least one conflict).
-2. Confirm the agent: builds the requirement list from the doc without inferring extra requirements; picks the highest-risk item each round (P0 before P1); maps to real code anchors rather than asserting coverage; executes only safe actions and asks before destructive ones; stops with a clean tri-state verdict; reverses or amends a prior classification when new evidence contradicts it.
-3. Record observed rounds-to-verdict, classification accuracy against a reviewer's manual check, and whether escalation fired correctly on any destructive action.
+Observed strengths in real runs:
+- Builds the requirement list from the doc without inflating it with inferred requirements.
+- Picks the highest-risk item each round (P0 before P1) and maps to real code anchors rather than asserting coverage.
+- Stops with a clean tri-state verdict (READY / READY_WITH_CONDITIONS / NOT_READY) rather than running to budget without a decision.
+- Reverses or amends a prior classification when later-round evidence contradicts it, rather than defending the earlier call.
 
-Until at least one run is documented, treat this prompt as unproven. Promote to `validated` after the first successful run; `vetted` after 2–3 documented runs across different doc/codebase pairs.
+Quantitative per-run metrics (rounds-to-verdict, classification accuracy vs. a manual check, escalation fires on destructive actions) are not recorded here yet. Adding 2–3 such runs with numbers is the gate for `vetted`.
 
 # Failure Modes / Boundaries
 

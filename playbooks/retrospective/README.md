@@ -1,7 +1,7 @@
 ---
 title: "Retrospective"
-status: validated
-confidence: medium
+status: draft
+confidence: low
 last_tested: 2026-06-27
 scope: personal
 tooling:

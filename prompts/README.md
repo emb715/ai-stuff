@@ -75,5 +75,6 @@ If a command wrapper exists, keep it in the same prompt folder so runtime behavi
 | Prompt | Tags | Status |
 |---|---|---|
 | [loop-prd-readiness](loop-prd-readiness/) | loop, planning, implementation-readiness | validated |
-| [loop-implementation-readiness](loop-implementation-readiness/) | loop, validation, implementation-readiness, codebase-review | draft |
+| [loop-implementation-readiness](loop-implementation-readiness/) | loop, validation, implementation-readiness, codebase-review | validated |
 | [knowledge-extraction](knowledge-extraction/) | one-shot, extraction, knowledge-management, post-session | validated |
+| [repo-primitive-audit](repo-primitive-audit/) | one-shot, review, audit, codebase-review, repo-mapping | validated |

@@ -1,7 +1,7 @@
 ---
 title: "Adversarial Code Review"
 status: validated
-confidence: medium
+confidence: low
 last_tested: 2026-06-27
 scope: personal
 tooling:
@@ -41,11 +41,9 @@ See [`playbook.md`](playbook.md) — standalone copy-paste procedure.
 
 # Evidence
 
-<!-- GATE 3 PLACEHOLDER — required: at least one documented outcome. -->
-<!-- Based on adversarial code review workflow, validated externally in that framework. -->
-<!-- Standalone rewrite not yet tested in this repo. -->
+**Status note:** `validated` reflects that the source workflow was used in production in an external framework. This standalone rewrite has not been run as a playbook in this repo. `confidence: low` is the honest signal. The four-track review plan, git-vs-claims mechanic, and minimum-findings rule are structurally sound but untested in this form.
 
-_TODO: Document at least one real run — what was reviewed, how many findings, severity distribution, whether findings were accurate, what was fixed vs flagged. Quantitative preferred (e.g. "reviewed 12-file diff, found 2 P0, 4 P2, 3 P3; 1 false claim caught, 5 issues fixed")._
+_TODO: Document at least one real standalone run — what was reviewed, how many findings, severity distribution, whether findings were accurate, what was fixed vs flagged. Quantitative preferred (e.g. "reviewed 12-file diff, found 2 P0, 4 P2, 3 P3; 1 false claim caught, 5 issues fixed"). Replace this block when done._
 
 # Failure Modes / Boundaries
 

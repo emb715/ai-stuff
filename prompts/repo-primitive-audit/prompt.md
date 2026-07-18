@@ -1,0 +1,1 @@
+What are the primitives of this repo, use the source code. The goal is to do a breakdown of each piece of the repo to perform a review of each section and the primitives if is not the same. So before review start we need the mapping and the breakdown. {{REVIEW_PLAYBOOK}}

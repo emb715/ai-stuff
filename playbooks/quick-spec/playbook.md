@@ -121,4 +121,3 @@ Once approved, the spec is ready for implementation — by the current agent, a 
 ## References
 
 - Pair with `prompts/loop-prd-readiness/` to drive planning docs to readiness before speccing
-- Pair with `playbooks/adversarial-code-review/` to review the implementation after development
