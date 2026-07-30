@@ -1,0 +1,402 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Integrating Lean UX and Agile</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:5cc72288-f65d-4d72-ae69-46735af03bdf" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 7. Integrating Lean UX and Agile" data-type="chapter" epub:type="chapter"><div class="chapter" id="integrating_lean_ux_and_agile">
+<h1><span class="label">Chapter 7. </span>Integrating Lean UX and Agile</h1>
+
+<p>Agile methods are mainstream now.<a contenteditable="false" data-primary="Agile software development" data-secondary="integrating Lean UX with" data-type="indexterm" id="ix_AgileLeanUX"/><a contenteditable="false" data-primary="Lean UX" data-secondary="integrating with Agile" data-type="indexterm" id="ix_LeanUXAgile"/> At the same time, thanks to the huge success of products like Amazon’s Kindle and Apple’s iPhone, so is User Experience (UX) design. But making Agile work with UX continues to be a challenge for many companies. In this chapter, we review how Lean UX methods can fit within the most popular flavor of Agile—Scrum—and <a contenteditable="false" data-primary="Scrum" data-type="indexterm" id="idm140697247786176"/>discuss how blending Lean UX and Agile can create a more productive team and a more collaborative process. Here’s what this chapter covers:</p>
+
+<dl>
+	<dt><dfn>Definition of terms</dfn></dt>
+	<dd>Just to make sure we’re all on the same page when we say certain words like “sprint” and “story.”</dd>
+	
+	<dt><dfn>Staggered sprints</dfn></dt>
+	<dd>The once-savior of Agile/UX integration is now just a stepping stone to true team cohesion.</dd>
+	
+	<dt><dfn>Sprint zero and design sprints</dfn></dt>
+	<dd>How much, if any, upfront work should we do?</dd>
+	
+	<dt><dfn>Dual-track Agile</dfn></dt>
+	<dd>How to plan product discovery activities along with delivery.</dd>
+	
+	<dt><dfn>Listening to Scrum’s rhythms</dfn></dt>
+	<dd>The meeting cadences of Scrum make for clear guide posts for Lean UX integration.</dd>
+
+	<dt><dfn>Participation</dfn></dt>
+	<dd>A truly cross-functional process requires that everyone be a part of it.</dd>
+	
+<dt><dfn>Design is a team sport</dfn></dt>
+<dd>Opening up the design process to all team members.</dd>
+
+<dt><dfn>Coordinating multiple Lean UX teams</dfn></dt>
+<dd>How to encourage sharing and reduce duplicate work.</dd>
+
+	<dt><dfn>Managing up and out</dfn></dt>
+	<dd>Clear obstacles to your team’s progress by being proactive with your communications.</dd>
+</dl>
+
+<p>Let’s get started.</p>
+
+<section data-pdf-bookmark="Some Definitions" data-type="sect1"><div class="sect1" id="some_definitions">
+<h1>Some Definitions</h1>
+
+<p>Agile processes like Scrum use many proprietary terms.<a contenteditable="false" data-primary="Agile software development" data-secondary="integrating Lean UX with" data-tertiary="definition of Agile terms" data-type="indexterm" id="idm140697247770816"/> Over time, many of these terms have taken on a life of their own. To ensure that the way we’re using them is clear, we’ve taken the time to define a few of them here. (If you’re familiar with Agile, you can skip this section.)</p>
+
+<dl>
+	<dt><dfn>Scrum</dfn></dt>
+	<dd>An Agile methodology promoting time-boxed cycles,<a contenteditable="false" data-primary="Scrum" data-secondary="defined" data-type="indexterm" id="idm140697247767072"/> team self-organization, and high team accountability. Scrum is the most popular form of Agile.</dd>
+	<dt><dfn>User story</dfn></dt>
+	<dd>The smallest unit of work expressed as a benefit to the end user. <a contenteditable="false" data-primary="user stories (Agile)" data-type="indexterm" id="idm140697247763920"/>Typical user stories are written using the following syntax:
+	<ul class="simplelist">
+		<li>
+		<p><em>As a</em> <strong>[user type]</strong></p>
+		</li>
+		<li>
+		<p><em>I want to</em> <strong>[accomplish something]</strong></p>
+		</li>
+		<li>
+		<p><em>So that</em> <strong>[some benefit happens]</strong></p>
+		</li>
+	</ul>
+	</dd>
+	<dt><dfn>Backlog</dfn></dt>
+	<dd>A prioritized list of user stories.<a contenteditable="false" data-primary="backlogs" data-type="indexterm" id="idm140697247757152"/> The backlog is the most powerful project management tool in Agile. It is through the active grooming of the backlog that the team manages their daily workload and refocuses their efforts based on incoming learnings. It is how the team stays Agile.</dd>
+	<dt><dfn>Sprint</dfn></dt>
+	<dd>A single cycle of work for a team. <a contenteditable="false" data-primary="sprints" data-type="indexterm" id="idm140697247755072"/>The goal of each sprint is to deliver working software. Most Scrum teams work in two-week sprints.</dd>
+	<dt><dfn>Stand-up</dfn></dt>
+	<dd>A daily, short team meeting during which each member addresses the day’s challenges.<a contenteditable="false" data-primary="stand-up" data-type="indexterm" id="idm140697247751136"/> This is one of Scrum’s self-accountability tools. Every day, members must declare to their teammates what they’re doing and what’s getting in their way.</dd>
+	<dt><dfn>Retrospective</dfn></dt>
+	<dd>A meeting at the end of each sprint that <a contenteditable="false" data-primary="retrospectives" data-secondary="defined" data-type="indexterm" id="idm140697247749488"/>takes an honest look at what went well, what went poorly, and how the team will try to improve process in the next sprint. Your process is as iterative as your product. Retrospectives give your team the chance to optimize your process with every sprint.</dd>
+	<dt><dfn>Iteration planning meeting</dfn></dt>
+	<dd>A meeting at the beginning of each sprint during which the team plans what they’ll be doing during the upcoming sprint.<a contenteditable="false" data-primary="iteration planning meetings" data-type="indexterm" id="idm140697247744960"/> Sometimes, this meeting includes estimation and story gathering. This is the meeting that determines the initial prioritization of the backlog.</dd>
+	<dt><dfn>Product discovery</dfn></dt>
+	<dd>A term used to describe any learning activities the team undertakes to help them determine what to deliver. <a contenteditable="false" data-primary="product discovery" data-type="indexterm" id="idm140697247746960"/>Lean UX powers the product discovery process.</dd>
+	<dt><dfn>Sprint zero</dfn></dt>
+	<dd>This is the time before product delivery begins that many organizations set aside for product discovery.<a contenteditable="false" data-primary="sprint zero" data-type="indexterm" id="idm140697247746032"/> It can extend beyond one sprint. Our goal is to ensure that, even if you’re using the sprint-zero model, it is not the only time that testing, learning, and validation take place.</dd>
+	<dt><dfn>Design sprint</dfn></dt>
+	<dd>A term popularized by the design team <a contenteditable="false" data-primary="design sprints" data-type="indexterm" id="idm140697247739664"/>at Google Ventures used to describe a time-boxed collection of collaborative activities that help a team move quickly from ideas to prototypes. Running a design sprint as “sprint zero” is an increasingly common practice.</dd>
+	<dt><dfn>Dual-track Agile</dfn></dt>
+	<dd>Popularized by product <a contenteditable="false" data-primary="dual-track Agile" data-type="indexterm" id="idm140697247737264"/>management guru Marty Cagan, dual-track Agile is an attempt to build a continuous product discovery and delivery model for Scrum teams. It champions a process in which teams manage two backlogs—a discovery backlog and a delivery backlog. They work through their discovery backlogs with only validated items graduating into the delivery cycle. In many ways, if executed well, this is the end state most teams should strive for; however, it is not without its challenges.</dd>
+</dl>
+</div></section>
+
+<section class="pagebreak-before" data-pdf-bookmark="Staggered Sprints and Their Modern Offshoots" data-type="sect1"><div class="sect1" id="staggered_sprints_and_their_modern_offsh">
+<h1>Staggered Sprints and Their Modern Offshoots</h1>
+
+<p>In May 2007, Desiree Sy and Lynn<a contenteditable="false" data-primary="sprints" data-secondary="staggered sprints and modern offshoots" data-type="indexterm" id="idm140697247735648"/> Miller <a contenteditable="false" data-primary="Agile software development" data-secondary="integrating Lean UX with" data-tertiary="staggered sprints and modern offshoots" data-type="indexterm" id="idm140697247733312"/>published<a contenteditable="false" data-primary="“Adapting Usability Investigations for Agile User-centered Design”" data-primary-sortas="Adapting Usability Investigations" data-type="indexterm" id="idm140697247731664"/> “Adapting Usability Investigations for Agile User-centered Design” in the <em>Journal of Usability Studies.</em><sup><a data-type="noteref" href="ch07.html#ch07fn1" id="ch07fn1-marker">1</a></sup> Sy and Miller <a contenteditable="false" data-primary="Miller, Lynn" data-type="indexterm" id="idm140697247725952"/><a contenteditable="false" data-primary="Sy, Desiree" data-type="indexterm" id="idm140697247724560"/>were some of the first people to try to combine Agile and UX, and many of us were excited by the solutions they were proposing. In the 2007 article, Sy and Miller describe in detail their idea of a productive integration of Agile and User-Centered Design.<a contenteditable="false" data-primary="user-centered design, integrating with Agile" data-type="indexterm" id="idm140697247723712"/> They called it <em>cycle 0</em> (though it has come to be referred to popularly<a contenteditable="false" data-primary="staggered sprints" data-type="indexterm" id="idm140697247720688"/> as either “sprint zero” or sometimes “staggered sprints”).</p>
+
+<p>In short, Sy and Miller described a process in which design activity<a contenteditable="false" data-primary="design sprints" data-type="indexterm" id="idm140697247718496"/> takes place one sprint ahead of development. <a contenteditable="false" data-primary="design" data-secondary="sprint zero or staggered sprints" data-type="indexterm" id="idm140697247717360"/>Work is designed and validated during the “design sprint” and then passed off into the development stream to be implemented during the development sprint, as is illustrated in <a data-type="xref" href="#sy_and_millerapostrophes_quotation_marks">Figure 7-1</a>.</p>
+
+<figure><div class="figure" id="sy_and_millerapostrophes_quotation_marks"><img alt="" src="assets/lux2_0701.png"/>
+<h6><span class="label">Figure 7-1. </span>Sy and Miller’s “Staggered Sprints” model</h6>
+</div></figure>
+
+<p>Many teams have misinterpreted this model, though. Sy and Miller always advocated strong collaboration between designers and developers during <em>both</em> the design <em>and</em> development sprints. <a contenteditable="false" data-primary="collaboration" data-secondary="in Sy and Miller's staggered sprints model" data-type="indexterm" id="idm140697247712080"/>Many teams have missed this critical point and instead have created workflows in which designers and developers communicate by handoff—creating a kind of mini-waterfall process.</p>
+
+<p>Staggered sprints can work well for some teams.<a contenteditable="false" data-primary="deployment" data-secondary="environments not allowing for frequent releases" data-type="indexterm" id="idm140697247709056"/> If your development environment does not allow for frequent releases (for example, you work on embedded software, or deliver software to an environment in which continuous deployment is difficult or impossible),<sup><a data-type="noteref" href="ch07.html#ch07fn2" id="ch07fn2-marker">2</a></sup> the premium on getting the design right is higher. (In these cases, Lean UX might not be a great fit for your team because you’ll need to work hard to get the market feedback you need to make many of these techniques work.) For these teams, staggered sprints can allow for more validation of design work—provided you are still working in a very collaborative manner. And teams transitioning from waterfall to Agile can benefit from working this way, as well, because it teaches you to work in shorter cycles, and to divide your work into sequential pieces. However, this model works best as a transition. It is not where you want your team to end up.</p>
+
+<p>Here’s why: it becomes very easy to create a situation in which the entire team is never working on the same thing at the same time. You never realize the benefits of cross-functional collaboration because the different disciplines are focused on different things. Without that collaboration, you don’t build shared understanding, so you end up relying heavily on documentation and handoffs for communication.</p>
+
+<p>There’s another reason this process is less than ideal: it can create unnecessary waste. <a contenteditable="false" data-primary="waste, removing" data-secondary="staggered sprints and" data-type="indexterm" id="idm140697247699856"/>You waste time creating documentation to describe what happened during the design sprints. And, if developers haven’t participated in the design sprint, they haven’t had a chance to assess the work for feasibility or scope. That conversation doesn’t happen until handoff. Can they actually build the specified designs in the next two weeks? If not, the work that went into designing those elements is wasted.</p>
+
+<section data-pdf-bookmark="Evolving the Design Sprint" data-type="sect2"><div class="sect2" id="evolving_the_design_sprint">
+<h2>Evolving the Design Sprint</h2>
+
+<p>These days, the term “design sprint” has taken on a new meaning. <a contenteditable="false" data-primary="design sprints" data-secondary="evolution of" data-type="indexterm" id="idm140697247700864"/>The term is now associated with the ideas in the book <em>Sprint</em> by Jake Knapp, John Zeratsky, and Braden Kowitz (Simon &amp; Schuster). <a contenteditable="false" data-primary="Zeratsky, John" data-type="indexterm" id="idm140697247706192"/><a contenteditable="false" data-primary="Kowitz, Braden" data-type="indexterm" id="idm140697247700512"/><a contenteditable="false" data-primary="Sprint (Knapp, Zeratsky, and Kowitz)" data-type="indexterm" id="idm140697247704912"/><a contenteditable="false" data-primary="Knapp, Jake" data-type="indexterm" id="idm140697247697600"/>They describe a design sprint as a way to bring together all the key stakeholders on a new project or initiative. Working closely together over the course of five days, this cross-functional team brainstorms, iterates, and works their way through a series of ideas.<a contenteditable="false" data-primary="prototypes" data-secondary="produced from design sprints" data-type="indexterm" id="idm140697247696592"/> The week culminates with a prototype. In most cases, the resulting prototype has even had a round or two of customer research applied to it.</p>
+
+<p>This is a technique that we’ve used many times in our own practice (based on the time-honored Design Studio method, described in <a data-type="xref" href="ch04.html#collaborative_design">Chapter 4</a>). It is highly effective at bringing together a diverse set of colleagues, exposing their assumptions and biases about the business problem at hand and injecting these opinions with a dose of market reality. In our experience, the ideal result of a design sprint is a backlog of hypotheses. <a contenteditable="false" data-primary="hypotheses" data-secondary="backlog of, from design sprints" data-type="indexterm" id="idm140697247692224"/>This prioritized list of risks defines the work that the team must continue to validate throughout the project lifecycle. Design sprints also help us to better define the scope of our work—at least for the foreseeable future—allowing teams, both in-house and consulting, to provide their stakeholders with a more accurate timeline for product launch.</p>
+
+<p>There are a few pitfalls to watch out for when running a<a contenteditable="false" data-primary="design sprints" data-secondary="pitfalls to watch out for" data-type="indexterm" id="idm140697247684544"/> full five-day design sprint:</p>
+
+<dl>
+	<dt><dfn>Use them on the right projects</dfn></dt>
+	<dd>Ensure that the problem space you’re exploring is big enough to warrant putting your entire team in a room for five days. New projects, initiatives, or business lines are worthy of this process. Smaller changes to existing workflows might be too small to warrant a full design sprint.</dd>
+	<dt><dfn>Keep the team size small</dfn></dt>
+	<dd>Design sprints are touted as a great tool for collaboration. This is true, but collaboration can get diluted if too many people are involved. Run these sprints with the core team and their immediate stakeholders. Try to keep the participant number to about 10 people.</dd>
+	<dt><dfn>Adapt the recipe to your needs</dfn></dt>
+	<dd>There are many detailed descriptions of exactly how to facilitate a design sprint. These are phenomenal resources for early practitioners of this technique. But don’t become stuck following the rules. As you gain experience with design sprints, ask yourself which elements of the design sprint add value given your current project and time constraints, and which can be discarded to save time.</dd>
+	<dt><dfn>Learning doesn’t end at the end of the design sprint</dfn></dt>
+	<dd>Design sprints are exciting, high-energy bursts of work.<a contenteditable="false" data-primary="learning" data-secondary="design sprints and" data-type="indexterm" id="idm140697247678176"/> But it’s hard to sustain that energy. We’ve seen teams emerge energized and motivated to get building. But learning shouldn’t end when the design sprint ends. As the product progresses and evolves, new questions will come up, and they require further discovery. Ensure that elements of the design sprint make their way into future sprints so that your team doesn’t end up implementing blindly.</dd>
+</dl>
+</div></section>
+</div></section>
+
+<section class="pagebreak-before" data-pdf-bookmark="Dual-Track Agile" data-type="sect1"><div class="sect1" id="dual-track_agile">
+<h1>Dual-Track Agile</h1>
+
+<p>In many ways, dual-track Agile is what Sy and Miller were trying to convey with their staggered-sprint model. <a contenteditable="false" data-primary="Agile software development" data-secondary="integrating Lean UX with" data-tertiary="dual-track Agile" data-type="indexterm" id="idm140697247687760"/><a contenteditable="false" data-primary="dual-track Agile" data-type="indexterm" id="idm140697247686832"/>Marty Cagan, Jeff Patton, and others <a contenteditable="false" data-primary="Patton, Jeff" data-type="indexterm" id="idm140697247673616"/><a contenteditable="false" data-primary="Cagan, Marty" data-type="indexterm" id="idm140697247672720"/>advocate for a process in which a single team manages two backlogs: a discovery backlog and a delivery backlog. <a contenteditable="false" data-primary="discovery backlog" data-type="indexterm" id="idm140697247671744"/><a contenteditable="false" data-primary="backlogs" data-secondary="in dual-track Agile" data-type="indexterm" id="idm140697247670880"/><a contenteditable="false" data-primary="delivery backlog" data-type="indexterm" id="idm140697247668464"/>The team splits into two units to do the work: a discovery unit and a delivery unit. The discovery unit works through the discovery items, running experiments and speaking to customers in an effort to discover which ideas merit further exploration and which don’t. Ideas that graduate from discovery to delivery are built by the delivery unit of the team. This reduces the amount of documentation necessary to drive the delivery process because the people who validated the feature are in close contact with, or in some cases are, the same people who design and implement it. <a data-type="xref" href="#marty_caganapostrophes_dual-track_agile">Figure 7-2</a> offers an overview of the process.</p>
+
+<figure><div class="figure" id="marty_caganapostrophes_dual-track_agile"><img alt="" src="assets/lux2_0702.png"/>
+<h6><span class="label">Figure 7-2. </span>Marty Cagan’s dual-track Agile process diagram (image courtesy of Marty Cagan)</h6>
+</div></figure>
+
+<p>Theoretically, dual-track Agile promises to manage <a contenteditable="false" data-primary="Cagan, Marty" data-secondary="dual-track Agile process diagram" data-type="indexterm" id="idm140697247665840"/>learning and delivery in a transparent way. It allows the team to prioritize their work based on evidence while using that same evidence to provide their stakeholders with regular updates, directional shifts, and data. In practice though, we’ve seen teams hit the following speed bumps:</p>
+
+<dl>
+	<dt><dfn>Separate discovery and delivery teams</dfn></dt>
+	<dd>One antipattern we’ve witnessed several times is teams splitting up who does the discovery and who does the delivery on their team.<a contenteditable="false" data-primary="teams" data-secondary="separate discovery and delivery teams" data-type="indexterm" id="idm140697247663872"/><a contenteditable="false" data-primary="discovery" data-secondary="separate discovery and delivery teams" data-type="indexterm" id="idm140697247663552"/> Often the UX designer and/or the product manager take on the bulk of the discovery work. The engineers are delegated early delivery work. This effectively recreates the mini-waterfalls of staggered sprints, as described earlier. The shared understanding breaks down, slowing the pace of decision-making and reducing the team’s cohesion, productivity, and learning. Our recommendation is to have as many team members involved in discovery as possible, especially early on in an initiative, so that the core decisions about your project are made with everyone’s participation. As the project continues, there will certainly be situations in which not everyone is available for research work. In these cases, those who do the research are responsible for bringing it back to the team as soon as it’s over and discussing their findings while they’re fresh.</dd>
+	<dt><dfn>Limited knowledge of how to do discovery</dfn></dt>
+	<dd>Building a dual-track Agile process assumes that your team knows how to do discovery. <a contenteditable="false" data-primary="discovery" data-secondary="in dual-track Agile" data-type="indexterm" id="idm140697247654544"/>There are many tools that you can use to build feedback loops into a discovery backlog. Without a broader knowledge of these tools, teams resort to the ones they’re most familiar with, and often pick suboptimal tactics for learning. If you have access to researchers, try to add them to your team. At the very least, seek out their input as new discovery initiatives begin. Seasoned practitioners can teach your team the best method for your needs and can help you plan your discovery work.</dd>
+	<dt><dfn>Not feeding back evidence from the delivery work to the discovery backlog</dfn></dt>
+	<dd>This challenge is symptomatic of an organization that is still thinking incrementally. <a contenteditable="false" data-primary="discovery backlog" data-secondary="problems with" data-type="indexterm" id="idm140697247644720"/>After a feature makes it from discovery to delivery, the team will implement it as designed and ship it. The great thing about that is that, as soon as it’s live, this new feature begins to provide a new set of data about how well it’s working and where to focus your next discovery activities. Ensure that your team is continuing to collect feedback on shipped features and using that information to regularly assess the prioritization of their discovery work.</dd>
+</dl>
+</div></section>
+
+<section class="pagebreak-before" data-pdf-bookmark="Exploiting the Rhythms of Scrum to Build a Lean UX Practice" data-type="sect1"><div class="sect1" id="exploiting_the_rhythms_of_scrum_to_build">
+<h1>Exploiting the Rhythms of Scrum to Build a Lean UX Practice</h1>
+
+<p>Over the years, we’ve found some useful ways to integrate Lean UX approaches with the rhythms of Scrum.<a contenteditable="false" data-primary="Scrum" data-secondary="using in building a lean UX practice" data-type="indexterm" id="ix_Scrum"/><a contenteditable="false" data-primary="Agile software development" data-secondary="integrating Lean UX with" data-tertiary="using Scrum to build lean UX practice" data-type="indexterm" id="ix_AgileLeanUXScrum"/> Let’s take a look at how you can use Scrum’s meeting cadence and Lean UX to build an efficient process.</p>
+
+<section data-pdf-bookmark="Themes" data-type="sect2"><div class="sect2" id="themes">
+<h2>Themes</h2>
+
+<p>Scrum has a lot of meetings.<a contenteditable="false" data-primary="themes" data-type="indexterm" id="idm140697247651552"/><a contenteditable="false" data-primary="meetings (in Scrum)" data-type="indexterm" id="idm140697247650608"/><a contenteditable="false" data-primary="Scrum" data-secondary="using in building a lean UX practice" data-tertiary="themes" data-type="indexterm" id="idm140697247639232"/> Many people frown on meetings, but if you use them as mileposts during your sprint you can create an integrated Lean UX and Agile process in which the entire team is working on the same thing at the same time.</p>
+
+<p>Let’s assume that you’ve chosen a risky hypothesis as the early focus of your project. You can use that hypothesis to create a theme that guides the work you’ll do over the next set of sprints, as demonstrated in <a data-type="xref" href="#sprints_tied_together_with_a_theme">Figure 7-3</a>.</p>
+
+<figure><div class="figure" id="sprints_tied_together_with_a_theme"><img alt="" src="assets/lux2_0703.png"/>
+<h6><span class="label">Figure 7-3. </span>Sprints tied together with a theme</h6>
+</div></figure>
+</div></section>
+
+<section data-pdf-bookmark="Kick Off the Theme with a Design Sprint" data-type="sect2"><div class="sect2" id="kick_off_the_theme_with_a_design_sprint">
+<h2>Kick Off the Theme with a Design Sprint</h2>
+
+<p>Start work on each theme with some version of  a Design Studio<a contenteditable="false" data-primary="design sprints" data-secondary="kicking off themes with" data-type="indexterm" id="idm140697247632000"/> or <a contenteditable="false" data-primary="themes" data-secondary="kicking off with a design sprint" data-type="indexterm" id="idm140697247631248"/>design sprint. (See <a data-type="xref" href="#timing_and_scope_of_design_sprints">Figure 7-4</a>.) <a contenteditable="false" data-primary="Scrum" data-secondary="using in building a lean UX practice" data-tertiary="kicking off themes with a design sprint" data-type="indexterm" id="idm140697247627440"/>Depending on the scope of the hypothesis, the design sprint can be as short as an afternoon or as long as a week. You can do them with your immediate team but should include a broader group if it’s a larger-scale effort. (See <a data-type="xref" href="ch04.html#collaborative_design">Chapter 4</a> for details on how to run a Design Studio.) The point<a contenteditable="false" data-primary="sketching/ideation in design sprints" data-type="indexterm" id="idm140697247624208"/> of this kickoff is to get the entire team sketching, ideating, and speaking to customers together, creating a backlog of ideas from which to test and learn. In addition, this activity will help define the scope of your theme a bit better—assuming that you’ve built in some customer feedback loops.</p>
+
+<p>After you’ve started your regular sprints, your ideas will be tested, validated, and developed: new insights will come in, and you’ll need to decide what to do with them. You make these decisions by running subsequent shorter brainstorming sessions and collaborative discovery activities before each new sprint begins. This allows the team to use the latest insight to create the backlog for the next sprint.</p>
+
+<figure><div class="figure" id="timing_and_scope_of_design_sprints"><img alt="" src="assets/lux2_0704.png"/>
+<h6><span class="label">Figure 7-4. </span>Timing and scope of design sprints</h6>
+</div></figure>
+</div></section>
+
+<section data-pdf-bookmark="Iteration Planning Meeting" data-type="sect2"><div class="sect2" id="iteration_planning_meeting">
+<h2>Iteration Planning Meeting</h2>
+
+<p>Bring the output of<a contenteditable="false" data-primary="Scrum" data-secondary="using in building a lean UX practice" data-tertiary="iteration planning meeting" data-type="indexterm" id="idm140697247622288"/> your design<a contenteditable="false" data-primary="IPMs" data-see="iteration planning meetings" data-type="indexterm" id="idm140697247619840"/> sprint to the iteration planning meeting (IPM).<a contenteditable="false" data-primary="iteration planning meetings" data-type="indexterm" id="idm140697247615936"/> Your mess of sticky notes, sketches, wireframes, paper prototypes, and any other artifacts might seem useless to outside observers but will be meaningful to your team. You made these artifacts together and because of that you have the shared understanding necessary to extract stories from them. Use them in your IPM to write user stories together, and then estimate and prioritize the stories. (See <a data-type="xref" href="#hold_iteration_planning_meetings_immedia">Figure 7-5</a>.)</p>
+
+<figure><div class="figure" id="hold_iteration_planning_meetings_immedia"><img alt="" src="assets/lux2_0705.png"/>
+<h6><span class="label">Figure 7-5. </span>Hold iteration planning meetings immediately after brainstorming sessions</h6>
+</div></figure>
+</div></section>
+
+<section data-pdf-bookmark="Experiment Stories" data-type="sect2"><div class="sect2" id="experiment_stories">
+<h2>Experiment Stories</h2>
+
+<p>As you plan your iteration, there might be additional discovery work that needs to be done during the iteration that wasn’t covered in the design sprint or collaborative discovery activities.<a contenteditable="false" data-primary="Scrum" data-secondary="using in building a lean UX practice" data-tertiary="experiment stories" data-type="indexterm" id="idm140697247606272"/><a contenteditable="false" data-primary="experiment stories" data-type="indexterm" id="idm140697247608528"/> Or, there might be work in your discovery backlog that you know is coming up that needs to happen by a certain time frame. To accommodate this in your sprint cadence use experiment stories. Captured by using the same method as your user stories,<a contenteditable="false" data-primary="user stories (Agile)" data-secondary="experiment stories and" data-type="indexterm" id="idm140697247605120"/> experiment stories have two distinct benefits:</p>
+
+<dl>
+	<dt><dfn>They visualize discovery work</dfn></dt>
+	<dd>Discovery work is not inherently tangible as delivery work can be. Experiment stories solve that by leveling the playing field. Everything your team works on—discovery or delivery—goes on the backlog as a story.</dd>
+	<dt><dfn>They force its prioritization against delivery work</dfn></dt>
+	<dd>After those stories are in the backlog, you need to put them in priority order. This forces conversations around <em>when</em> to run the experiment and, equally as important, what we <em>won’t</em> be working on during that same time.</dd>
+</dl>
+
+<p>Experiment stories look just like user stories, as illustrated in <a data-type="xref" href="#experiment_stories-id00018">Figure 7-6</a>.</p>
+
+<figure><div class="figure" id="experiment_stories-id00018"><img alt="" src="assets/lux2_0706.png"/>
+<h6><span class="label">Figure 7-6. </span>Experiment stories</h6>
+</div></figure>
+
+<p>Experiment stories contain the following elements:</p>
+
+<ul>
+	<li>
+	<p>The hypothesis you’re testing or the thing you’re<a contenteditable="false" data-primary="experiment stories" data-secondary="elements contained in" data-type="indexterm" id="idm140697247593568"/> trying to learn</p>
+	</li>
+	<li>
+	<p>Tactic(s) for learning (e.g., customer interviews, A/B tests, and prototypes)</p>
+	</li>
+	<li>
+	<p>Who will do the work</p>
+	</li>
+	<li>
+	<p>A level of effort estimate (if you do estimations) for how much work you expect this to be</p>
+	</li>
+</ul>
+
+<p>After they are written, experiment stories go into your backlog. When their time comes up in the sprint, that’s the assigned person’s main focus. When the experiment is over, bring the findings to the team immediately and discuss them to determine the impact of these findings. Your team should be ready to change course, even within the current sprint, if the outcome of the experiment stories reveals insights that invalidate your current prioritization.</p>
+</div></section>
+
+<section data-pdf-bookmark="User Validation Schedule" data-type="sect2"><div class="sect2" id="user_validation_schedule">
+<h2>User Validation Schedule</h2>
+
+<p>Finally, to ensure that you have a constant stream of <a contenteditable="false" data-primary="users" data-secondary="user validation schedule" data-type="indexterm" id="idm140697247581104"/>customer<a contenteditable="false" data-primary="Scrum" data-secondary="using in building a lean UX practice" data-tertiary="user validation schedule" data-type="indexterm" id="idm140697247581728"/> feedback to use for your experiments, plan user research sessions every single week. (See <a data-type="xref" href="#conversations_with_users_happen_every_we">Figure 7-7</a>.)  This way your team is never more than five business days away from customer feedback and has ample time to react prior to the end of the sprint. This weekly research cadence provides a good rhythm for your experiment stories as well as a natural learning point in the sprint.</p>
+
+<p>Use the artifacts you created in the ideation sessions as the base material for your user tests. Remember that when the ideas are raw, you are testing for value (that is, <em>do people want to use my product?</em>). After you have established that there is a desire for your product, subsequent tests with higher-fidelity artifacts will reveal whether your solution is usable.</p>
+
+<figure><div class="figure" id="conversations_with_users_happen_every_we"><img alt="" src="assets/lux2_0707.png"/>
+<h6><span class="label">Figure 7-7. </span>Conversations with users happen every week</h6>
+</div></figure>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Participation" data-type="sect1"><div class="sect1" id="participation">
+<h1>Participation</h1>
+
+<p>Agile<a contenteditable="false" data-primary="Agile software development" data-secondary="integrating Lean UX with" data-startref="ix_AgileLeanUXScrum" data-tertiary="using Scrum to build lean UX practice" data-type="indexterm" id="idm140697247576944"/> methods <a contenteditable="false" data-primary="Scrum" data-secondary="using in building a lean UX practice" data-startref="ix_Scrum" data-type="indexterm" id="idm140697247574880"/>can create a lot of time pressure on designers. <a contenteditable="false" data-primary="Agile software development" data-secondary="integrating Lean UX with" data-tertiary="participation in processes" data-type="indexterm" id="idm140697247572416"/>Some work fits easily into the context of a user story. <a contenteditable="false" data-primary="designers" data-secondary="participation in Agile processes" data-type="indexterm" id="idm140697247570416"/>Other work needs more time to get right. Two-week cycles of concurrent development and design offer few opportunities for designers to ruminate on big problems. And although some Agile methods take a more flexible approach to time than Scrum does (for example, Kanban does away with the notion of a two-week batch of work, and places the emphasis on continuous flow), most designers feel pressure to fit their work into the time-box of the sprint. For this reason, designers need to participate in the sprint-planning process.</p>
+
+<p>The major reason designers feel pressure in Agile processes is that they don’t (for whatever reason) fully participate in the process. This is typically not their fault: when Agile is understood as simply a way to build software, there doesn’t appear to be any reason to include nontechnologists in the process. However, without designer participation, their concerns and needs are not taken into account in project plans. As a result, many Agile teams don’t make plans that allow designers to do their best work.</p>
+
+<p>For Lean UX to work in Agile, the entire team<a contenteditable="false" data-primary="teams" data-secondary="participation of all members in Agile processes" data-type="indexterm" id="idm140697247569264"/> must participate in all activities—stand-ups, retrospectives, IPMs, brainstorming sessions—they all require everyone’s attendance to be successful. Besides negotiating the complexity of certain features, cross-functional participation allows designers and developers to create effective backlog prioritization.</p>
+
+<p>For example, imagine at the beginning of a sprint that the first story a team prioritizes has a heavy design component to it. Imagine that the designer was not there to voice her concern. That team will fail as soon as they meet for their stand-up the next day. The designer will cry out that the story has not been designed. She will say that it will take at least two to three days to complete the design before the story is ready for development. Imagine instead that the designer had participated in the prioritization of the backlog. Her concern would have been raised at planning time. The team could have selected a story card that needed less design preparation to work on first—which would have bought the designer the time she needed to complete the work.</p>
+
+<p>The other casualty of sparse participation is shared understanding. Teams make decisions in meetings. Those decisions are based on discussions. Even if 90 percent of a meeting is not relevant to your immediate need, the 10 percent that is relevant will save hours of time downstream explaining what happened at the meeting and why certain decisions were made.</p>
+
+<p>Participation gives you the ability to negotiate for the time you need to do your work. This is true for UX designers as much as it is for everyone else on the team.</p>
+
+<section data-pdf-bookmark="Design Is a Team Sport" data-type="sect2"><div class="sect2" id="design_is_a_team_sport">
+<h2>Design Is a Team Sport</h2>
+
+<p>In the following case study, designer and coach Lane Goldstone <a contenteditable="false" data-primary="Goldstone, Lane" data-type="indexterm" id="idm140697247561712"/>details how she brought to the table all the players—development, design, marketing, stakeholders—to create a tablet game.</p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Case Study: Knowsy (by Lane Goldstone)" data-type="sect2"><div class="sect2" id="case_study_knowsy_left_parenthesisby_lan">
+<h2>Case Study: <em>Knowsy</em> (by Lane Goldstone)</h2>
+
+<p>In my work as a product<a contenteditable="false" data-primary="Knowsy case study" data-type="indexterm" id="ix_Knowsy"/> designer, I use Lean UX practices on a <a contenteditable="false" data-primary="Agile software development" data-secondary="integrating Lean UX with" data-tertiary="case study, Knowsy" data-type="indexterm" id="ix_AgileLeanUXcase"/>variety of projects. Recently I’ve worked on entertainment, ecommerce, and social-media products for different platforms, including iPad, iPhone, and the Web. The teams have been small, ranging from three to seven people. Most of my projects also share the following characteristics:</p>
+
+<ul>
+	<li>
+	<p>The project is run within an Agile framework (focus on the customer, continuous delivery, team sits together, lightweight documentation, team ownership of decisions, shared rituals like stand-ups, retrospectives, and so on).</p>
+	</li>
+	<li>
+	<p>The team contains people with a mix of skills (frontend and backend development, user experience and information architecture, product management and marketing, graphic design, and copywriting).</p>
+	</li>
+	<li>
+	<p>The people on the team generally performed in their area of expertise/strength, but were supportive of other specialties and interested in learning new skills.</p>
+	</li>
+</ul>
+
+<p>Most of the teams I work with create entirely new products or services. They are not working within an existing product framework or structure. In “green fields” projects like these, we are simultaneously trying to discover how this new product or service will be used, how it will behave, and how we are going to build it. It’s an environment of continual change, and there isn’t a lot of time or patience for planning or up-front design.</p>
+
+<section data-pdf-bookmark="The Innovation Games Company" data-type="sect2"><div class="sect2" id="innovation_games_company">
+<h2>The Innovation Games Company</h2>
+
+<p>The Innovation Games Company (TIGC) produces<a contenteditable="false" data-primary="Knowsy case study" data-secondary="The Innovation Games Company (TIGC)" data-type="indexterm" id="idm140697247546688"/> serious <a contenteditable="false" data-primary="TIGC (The Innovation Games Company)" data-type="indexterm" id="idm140697247545280"/>games—online and in-person—for market research. TIGC helps organizations get actionable insights into customer needs and preferences to improve performance through collaborative play. In 2010, I was invited to help TIGC create a new game for the consumer market.</p>
+
+<p>I was part of the team that created <em>Knowsy</em> for iPad (<a data-type="xref" href="#knowsy_team_with_the_wall_of_artifacts_b">Figure 7-8</a>), a pass-‘n’-play game that’s all about learning what you know about your friends, family, and coworkers—while simultaneously testing how well they know you. The person who knows the other players best wins the game. It is fast, fun, and a truly “social” game for up to six players.</p>
+
+<p>It was our first iPad application, and we had an ambitious deadline: one month to create the game and have it accepted to the Apple Store. Our small team had a combination of subject-matter expertise and skills in frontend and backend development as well as visual and interaction design. We also drew on the help of other people to help us play-test the game at various stages of development.</p>
+
+<figure><div class="figure" id="knowsy_team_with_the_wall_of_artifacts_b"><img alt="" src="assets/lux2_0708.png"/>
+<h6><span class="label">Figure 7-8. </span>The <em>Knowsy</em> team with the wall of artifacts behind them</h6>
+</div></figure>
+
+</div></section>
+
+<section data-pdf-bookmark="A Shared Vision Empowers Independent Work" data-type="sect2"><div class="sect2" id="shared_vision_empowers_independent_work">
+<h2>A Shared Vision Empowers Independent Work</h2>
+
+<p>Until a new product is coded, it’s difficult<a contenteditable="false" data-primary="Knowsy case study" data-secondary="shared vision empowering independent work" data-type="indexterm" id="idm140697247536416"/> for people to work within the same product vision. <em>You can recognize a lack of shared vision when the team argues about what features are important or what should be done first</em>. There can also be a general sense of tension that the team is not “moving fast enough” or it feels like the team is going back over the same issues again and again.</p>
+
+<p>While working on <em>Knowsy</em>, I looked for ways that I could make my UX practice more quick, visual, collaborative, and continuous. I looked for opportunities to work in real time with other people on the team (such as developers and the product manager) and rough things out as quickly as possible at the lowest responsible level of fidelity.</p>
+
+<p>As we found the appropriate solutions and the team understood and bought into the design concept, I was able to increase fidelity of the design artifacts, confident that we shared a product vision.</p>
+</div></section>
+
+<section class="pagebreak-before" data-pdf-bookmark="Breaking the Design Bottleneck" data-type="sect2"><div class="sect2" id="breaking_the_design_bottleneck">
+<h2>Breaking the Design Bottleneck</h2>
+
+<p>Early in the project, I sat with the frontend developer to talk <a contenteditable="false" data-primary="Knowsy case study" data-secondary="breaking the design bottleneck" data-type="indexterm" id="idm140697247529200"/>about the game design. We created a high-level game flow together on paper (<a data-type="xref" href="#paper_prototype_begins_to_take_shape">Figure 7-9</a>), passing the marker back and forth as we talked. This was my opportunity to listen and learn what he was thinking. As we sketched, I was able to point out inconsistencies by asking questions like, “What do we do when <em>this</em> happens?” This approach had the benefit of changing the dialog from, “I’m right-you’re wrong,” to “How do we solve this problem?”</p>
+
+<p>After we had this basic agreement, I was able to create a paper prototype <a contenteditable="false" data-primary="paper prototypes" data-secondary="in Knowsy case study" data-type="indexterm" id="idm140697247522416"/>of the game based on the flow and we play tested it with the team. The effect on the team was immediate. Suddenly, everyone “got it” and was excited about what we were doing. People began to contribute ideas that fit well together, and we were able to identify what parts we could each work on that supported the whole.</p>
+
+<p>When we were all on the same page, it was easier for me to take some time away from the team and document what we’d agreed in a clickable prototype.</p>
+
+<figure><div class="figure" id="paper_prototype_begins_to_take_shape"><img alt="" src="assets/lux2_0709.png"/>
+<h6><span class="label">Figure 7-9. </span>The paper prototype begins to take shape</h6>
+</div></figure>
+</div></section>
+
+<section data-pdf-bookmark="The Outcome" data-type="sect2"><div class="sect2" id="outcome">
+<h2>The Outcome</h2>
+
+<p><em>Knowsy</em>’s foray into Lean UX proved a success. <a contenteditable="false" data-primary="Knowsy case study" data-secondary="outcome of Knowsy's foray into Lean UX" data-type="indexterm" id="idm140697247519152"/>We got the app to the Apple Store in time for the deadline. I was called back later to help the team do another variant of the product. For that go-around, I used a similar process. Because I was working remotely and the development team was not as available to collaborate, I had to make heavier deliverables. Nevertheless, the basic principle of iterating our way to higher fidelity continued.</p>
+
+<figure><div class="figure" id="lane_updating_the_prototype_and_artifact"><img alt="" src="assets/lux2_0710.png"/>
+<h6><span class="label">Figure 7-10. </span>Lane updating the prototype and artifact wall in real time</h6>
+</div></figure>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Beyond the Scrum Team" data-type="sect1"><div class="sect1" id="beyond_the_scrum_team">
+<h1>Beyond the Scrum Team</h1>
+
+<p>Management <a contenteditable="false" data-primary="Agile software development" data-secondary="integrating Lean UX with" data-startref="ix_AgileLeanUXcase" data-tertiary="case study, Knowsy" data-type="indexterm" id="idm140697247513712"/>check-ins<a contenteditable="false" data-primary="Knowsy case study" data-startref="ix_Knowsy" data-type="indexterm" id="idm140697247511632"/> are one of the biggest obstacles <a contenteditable="false" data-primary="Agile software development" data-secondary="integrating Lean UX with" data-tertiary="communicating with stakeholders" data-type="indexterm" id="idm140697247509616"/>to maintaining team momentum.<a contenteditable="false" data-primary="management check-ins and team momentum" data-type="indexterm" id="idm140697247507712"/><a contenteditable="false" data-primary="teams" data-secondary="management check-in and team momentum" data-type="indexterm" id="idm140697247506640"/> Designers are used to doing design reviews, but unfortunately, check-ins don’t end there. Product owners, stakeholders, CEOs, and clients all want to know how things are going. They all want to bless the project plan going forward. The challenge for outcome-focused teams is that their project plans are dependent on what they are learning. They are responsive, so their typical plan lays out only small batches of work at a time. At most, these teams plan an iteration or two ahead. This perceived “short-sightedness” tends not to satisfy most high-level managers. How then do you keep the check-ins at bay while maintaining the pace of your Lean UX and Scrum processes?<a contenteditable="false" data-primary="proactive communication" data-type="indexterm" id="idm140697247505328"/></p>
+
+<p>Two words: <em>proactive communication</em>.</p>
+
+<p>Jeff once managed a team that radically altered the workflow for an existing product that had thousands of paying customers. The team was so excited by the changes they’d made that they went ahead with the launch without alerting anyone else in the organization. Within an hour of the new product going live the vice president of customer service was at Jeff’s desk, fuming and demanding to know why she wasn’t told of this change. The issue was this: when customers have problems with the product, they call in for help. Call center representatives use scripts to troubleshoot customer problems and to offer solutions—except they didn’t have a script for this new product. Because they didn’t know it was going to change.</p>
+
+<p>This healthy slice of humble pie served as a valuable lesson.<a contenteditable="false" data-primary="stakeholders" data-secondary="proactive communication with" data-type="indexterm" id="idm140697247501824"/> If you want your stakeholders—both those managing you and those dependent on you—to stay out of your way, make sure that they are aware of your plans. Here are a few tips:</p>
+
+<ul>
+	<li>
+	<p>Maintain a “Problem Roadmap.” Instead of using a feature roadmap to communicate with stakeholders, transform the roadmap to communicate the <em>problems</em> you’ll be working on. Use this Problem Roadmap to drive planning and check-in meetings with stakeholders.</p>
+	</li>
+	<li>
+	<p>Proactively reach out to your product owners and executives to keep them updated on your plans.</p>
+	</li>
+	<li>
+	<p>Let them know:</p>
+
+	<ul>
+		<li>
+		<p>how the project is going;</p>
+		</li>
+		<li>
+		<p>what you tried so far and learned;</p>
+		</li>
+		<li>
+		<p>what you’ll be trying next;</p>
+		</li>
+		<li>
+		<p>what risks you see in the product and how you plan to address them.</p>
+		</li>
+	</ul>
+	</li>
+	<li>
+	<p>Keep the conversations focused on outcomes (how you’re trending toward your goal) not feature sets.</p>
+	</li>
+	<li>
+	<p>Ensure dependent departments (customer service, marketing, operations, etc.) are aware of upcoming changes that can affect their world.</p>
+	</li>
+	<li>
+	<p>Provide them with plenty of time to update their workflows if necessary.</p>
+	</li>
+</ul>
+</div></section>
+
+<section data-pdf-bookmark="Lean UX and Agile in the Enterprise" data-type="sect1"><div class="sect1" id="lean_ux_and_agile_in_the_enterprise">
+<h1>Lean UX and Agile in the Enterprise</h1>
+
+<p>Many of the tactics covered in this book are focused on one team.<a contenteditable="false" data-primary="Agile software development" data-secondary="integrating Lean UX with" data-tertiary="in the enterprise" data-type="indexterm" id="idm140697247485184"/> But in the real world, enterprise organizations <a contenteditable="false" data-primary="enterprise organizations" data-secondary="lean UX and Agile in" data-type="indexterm" id="idm140697247483600"/>have multiple product development teams working in parallel.<a contenteditable="false" data-primary="teams" data-secondary="in enterprise organizations" data-type="indexterm" id="idm140697247481824"/> How does Lean UX scale when the number of teams grows to tens or even hundreds of concurrent workstreams? This is the question of the moment in the Agile community. As Lean and Agile methods have become more mainstream, and as they have become the default working style for technology teams across industries, many people have become focused on this question. Large organizations have a legitimate need to coordinate the activity of multiple teams—processes based on <em>learning your way forward</em> present a challenge to most traditional project management methods.</p>
+
+<p>A full discussion of how to create a truly Agile and Lean organization is beyond the scope of this book. It requires leadership to radically rethink the way it sets strategy, assembles teams, and plans and assigns work. That said, there are a few techniques that can help Lean UX scale in enterprise Agile environments and even take advantage of that scale. Here are just a few issues that typically arise and ways to manage for them:</p>
+
+<dl>
+	<dt><dfn>Issue</dfn></dt>
+	<dd class="strong">As projects grow bigger, more teams are assigned to them. How do you ensure that all teams are aligned to the same vision and not optimizing locally?</dd>
+	<dt><dfn>Solution</dfn></dt>
+	<dd>The concept of managing to outcomes applies to a set of teams as much as it does to individual ones.<a contenteditable="false" data-primary="outcomes" data-secondary="managing to, with multiple teams in enterprises" data-type="indexterm" id="idm140697247476416"/> To ensure that all the teams working on the same project have a shared vision, assign them all the same success metric. Working together, they can define the leading indicators that drive that metric and divide those leading metrics between the teams on the project. But teams must not be allowed to focus on leading metrics to the exclusion of the larger outcome: the entire set of teams succeeds only if they hit the overarching outcome together.</dd>
+	<dt><dfn>Issue</dfn></dt>
+	<dd class="strong">How do you ensure that teams are sharing what they’re learning and minimizing duplicate effort to learn the same things?</dd>
+	<dt><dfn>Solution</dfn></dt>
+	<dd>Although there’s no silver bullet to solve for this issue, the successful practices we’ve seen include a central knowledge management tool (like a wiki), regular team leadership meetings (like a Scrum of Scrums), and open-communication tools that focus on research (like a dedicated channel on Slack or your internal chat tool).</dd>
+	<dt><dfn>Issue</dfn></dt>
+	<dd class="strong">Cross-team dependencies can keep progress at a crawl. How do you maintain a regular pace of learning and delivery in a multiteam environment?</dd>
+	<dt><dfn>Solution</dfn></dt>
+	<dd>Create self-sufficient “full-stack” teams. Full-stack teams have every capability needed for them to do their work on the team. This doesn’t mean that they need a person from each department—just that there is someone on the team who can do one or more of the things the team might need. The specific disciplines on the team—designers, content people, frontend developers, backend developers, product managers—coordinate with one another at discipline-specific meetings to ensure that they are up-to-date on their practice, but the work takes place locally.</dd>
+</dl>
+
+<section data-pdf-bookmark="Wrapping Up" data-type="sect2"><div class="sect2" id="wrapping_up-id00019">
+<h2>Wrapping Up</h2>
+
+<p>This chapter took a closer look at how Lean UX fits into an Agile process. In addition, we looked at how cross-functional collaboration allows a team to move forward at a brisk pace, and how to handle stakeholders and managers who always want to know what’s going on. We discussed why having everyone participate in all activities is critical and how the staggered-sprint model, once considered the path to true agility, has evolved into design sprints and dual-track product discovery and delivery.</p>
+
+<p>In the next chapter, we take a look at the organizational shifts that need to be made to support Lean UX. This chapter can serve as a primer for managers on what they’ll need to do to set teams up for success.<a contenteditable="false" data-primary="Lean UX" data-secondary="integrating with Agile" data-startref="ix_LeanUXAgile" data-type="indexterm" id="idm140697247468704"/><a contenteditable="false" data-primary="Agile software development" data-secondary="integrating Lean UX with" data-startref="ix_AgileLeanUX" data-type="indexterm" id="idm140697247467824"/></p>
+</div></section>
+</div></section>
+<div data-type="footnotes"><p data-type="footnote" id="ch07fn1"><sup><a href="ch07.html#ch07fn1-marker">1</a></sup> <a href="http://www.upassoc.org/upa_publications/jus/2007may/agile-ucd.pdf">Desirée Sy, “Adapting Usability Investigations for Agile User-centered Design”, <em>Journal of Usability Studies</em>, May 2007</a>.</p><p data-type="footnote" id="ch07fn2"><sup><a href="ch07.html#ch07fn2-marker">2</a></sup> Teams that work on mobile apps fall into a gray zone here. You can update frequently, but not continuously, so you’ll need to become crafty with your techniques. Using feature flags to turn some features on and off can help. You can also deliver experimental features inside apps by using a browser container within the app itself. Finally, it’s possible to test really early versions of features on the mobile web.</p></div></div></section></body></html>

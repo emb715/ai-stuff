@@ -1,0 +1,535 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><head><title>Driving Vision with Outcomes</title><link href="epub.css" rel="stylesheet" type="text/css"/>
+<meta content="urn:uuid:5cc72288-f65d-4d72-ae69-46735af03bdf" name="Adept.expected.resource"/></head><body data-type="book"><section data-pdf-bookmark="Chapter 3. Driving Vision with Outcomes" data-type="chapter" epub:type="chapter"><div class="chapter" id="driving_vision_with_outcomes">
+<h1><span class="label">Chapter 3. </span>Driving Vision with Outcomes</h1>
+
+<blockquote data-type="epigraph" epub:type="epigraph">
+<p><em>If it disagrees with experiment, it’s wrong.</em></p>
+
+<p data-type="attribution">—Dr. Richard Feynman</p>
+</blockquote>
+
+<p>Traditionally, software projects are framed by requirements and <a contenteditable="false" data-primary="vision, driving with outcomes" data-type="indexterm" id="ix_vision"/>deliverables.<a contenteditable="false" data-primary="outcomes" data-secondary="driving vision with" data-type="indexterm" id="ix_outcomes"/> Teams are given requirements and are expected to produce deliverables that describe how the features that satisfy those requirements will look, behave, and perform. In many cases, the strategic context for those requirements is not communicated, is missing, or is simply not considered. Lean UX radically shifts the way we frame our work by introducing back the strategic context for our feature and design choices and, more important, how we—the entire team, not just the design department—define success. Our goal is not to create a deliverable or a feature: it’s to positively affect customer behavior or change in the world—to create an outcome.</p>
+
+<p>Why focus on outcomes instead of features?<a contenteditable="false" data-primary="features" data-secondary="focusing on outcomes instead of" data-type="indexterm" id="idm140697249072960"/> It’s because we’ve learned that it’s hard—and in many cases impossible—to predict whether the features we design and build will create both the strategic as well as tactical value we want to create. <em>Will this button encourage people to purchase? Will this feature create more engagement? Will people use this feature in ways we didn’t predict? Will we successfully shift the way people interact with our service?</em> So, rather than focus on the feature, it’s better to focus on the value we’re trying to create, and keep testing solutions until we find one that delivers the value—<em>the outcome</em>—that we desire.</p>
+
+<p>This reframing requires an organization-wide position of humility. It requires teams and managers to use their knowledge and skills and creativity as scientists might: they propose their best solution and then they test to see if they’re right. To reduce the risk of investing too heavily in the wrong features, designs, and engineering implementations, we soften our stance from what is “required” to what is “assumed” to be true.<a contenteditable="false" data-primary="assumptions" data-type="indexterm" id="ix_assume"/> These assumptions—still very much loaded with risk—are our best guess given our current state of knowledge. We know that as we begin to research, design, develop, and test, new information will be revealed, and this new information will undoubtedly force course corrections. It’s for these reasons that we begin with outcomes and assumptions instead of features and requirements.</p>
+
+<section data-pdf-bookmark="Using the Right Words" data-type="sect1"><div class="sect1" id="using_the_right_words">
+<h1>Using the Right Words</h1>
+
+<p>Language, in this case, is important.<a contenteditable="false" data-primary="outcomes" data-secondary="driving vision with" data-tertiary="using the right words" data-type="indexterm" id="idm140697249071264"/><a contenteditable="false" data-primary="vision, driving with outcomes" data-secondary="using the right words" data-type="indexterm" id="idm140697249065968"/> Requirements present a seemingly immutable path forward.<a contenteditable="false" data-primary="requirements" data-type="indexterm" id="idm140697249063456"/>  Assumptions explicitly admit that we might be wrong. We use our assumptions to create and test hypotheses. <a contenteditable="false" data-primary="hypotheses" data-type="indexterm" id="idm140697249070912"/>If you’re familiar with Test-Driven Development (TDD), hypotheses are very similar.<a contenteditable="false" data-primary="test-driven development (TDD)" data-type="indexterm" id="idm140697249057808"/> They are, in a way, a form of Test-Driven Product Design and Development. We write the test first—the hypothesis. We design and/or develop just enough product (i.e., experiments and Minimum Viable Products [MVPs]) to see if the hypothesis is true.<a contenteditable="false" data-primary="minimum viable products (MVPs)" data-type="indexterm" id="idm140697249059264"/> These small tests reduce the risk of going too far forward in the wrong direction. We use objective measures of customer behavior to determine if we’ve achieved our desired outcomes. It is these outcomes that are our definition of progress and ultimately, our new definition of done. <a data-type="xref" href="#lean_ux_process-id00003">Figure 3-1</a> offers an overview of the process.</p>
+
+<p>This chapter digs into the main tool of outcome-focused work: the <em>hypothesis statement</em>.<a contenteditable="false" data-primary="hypothesis statement" data-type="indexterm" id="idm140697249051232"/> The hypothesis statement is the starting point for a project. <a contenteditable="false" data-primary="process" data-secondary="diagram of lean UX process" data-type="indexterm" id="idm140697249054384"/>It states a clear strategic vision for the work and shifts the conversation between teams, managers, and stakeholders from outputs (e.g., “We will build an iPhone app”) to outcomes (e.g., “We want to increase the amount of commerce that comes through our mobile channels.”)</p>
+
+<figure><div class="figure" id="lean_ux_process-id00003"><img alt="" src="assets/lux2_0301.png"/>
+<h6><span class="label">Figure 3-1. </span>The Lean UX process</h6>
+</div></figure>
+</div></section>
+
+<section data-pdf-bookmark="Assumptions" data-type="sect1"><div class="sect1" id="assumptions">
+<h1>Assumptions</h1>
+
+<p>Assumptions are our best guess based on what we know today. <a contenteditable="false" data-primary="outcomes" data-secondary="driving vision with" data-tertiary="assumptions" data-type="indexterm" id="idm140697249046240"/><a contenteditable="false" data-primary="vision, driving with outcomes" data-secondary="assumptions" data-type="indexterm" id="idm140697249047440"/>They are also filled with risk. <a contenteditable="false" data-primary="risk mitigation" data-type="indexterm" id="idm140697249043312"/>Your goal as Lean UX practitioners is to reduce risk.</p>
+
+<p>“We believe our primary user base should be middle school and high school students who would rather use their mobile device over any other to access school content.”</p>
+
+<p>“We believe integrating the default calendar application on our users’ mobile devices is a feature they will value and use often.”</p>
+
+<p>“If our users communicate with one another regularly using our app, it’s an indication that we built and designed the right features.”</p>
+
+<p>Without the evidence to confirm these statements, they are all assumptions, filled with risk. Every downstream decision we make based on untested assumptions increases the risk of failure in our product. So when we find an assumption, we need to ask, <em>How might we ensure that these statements are true as quickly (and cheaply) as possible so that future decisions stand a better chance of succeeding?</em></p>
+
+<p>To do so, the first step in the Lean UX process is to explicitly declare your assumptions. Every project starts with assumptions, but mostly we don’t acknowledge this fact. Instead, we try to ignore assumptions, or worse, treat them as facts.</p>
+
+<p>Declaring your assumptions allows your team to create a common starting point. By doing this as a team, you give every team member—designer and nondesigner alike—the opportunity to ask questions about your target audience, what problems you’re solving for those people, and how best to solve the problem. It allows the broader group to include concerns about things that might have been missed when the project was framed. This could include technical dependencies, competitive market concerns, or long-term service sustainability issues such as sourcing content. Most important, declaring your assumptions brings a group perspective to what success looks like.</p>
+
+<section class="pagebreak-before" data-pdf-bookmark="Assumptions: The Big Four" data-type="sect2"><div class="sect2" id="assumptions_the_big_four">
+<h2>Assumptions: The Big Four</h2>
+
+<p>There are four types of assumptions that are particularly<a contenteditable="false" data-primary="assumptions" data-secondary="types of, important to lean UX" data-type="indexterm" id="idm140697249040832"/> important in Lean UX:</p>
+
+<dl>
+	<dt><dfn>Business outcomes</dfn></dt>
+	<dd>Our success metric and definition of “done.” Business outcomes<a contenteditable="false" data-primary="business outcomes" data-type="indexterm" id="idm140697249031968"/> describe a measurable change we want to see in the world or in customer behavior. They are the signal we seek from the market to help us validate or invalidate our hypotheses. These are often quantitative but can also be qualitative.</dd>
+	<dt><dfn>Users</dfn></dt>
+	<dd>The people for whom we believe we are solving a problem, <a contenteditable="false" data-primary="users" data-type="indexterm" id="idm140697249025696"/>often modeled as personas.</dd>
+	<dt><dfn>User outcomes</dfn></dt>
+	<dd>The goals of the people for whom we are building products.<a contenteditable="false" data-primary="user outcomes" data-type="indexterm" id="idm140697249029392"/> These can be end goals (e.g., completing a specific task), emotional or experience goals (e.g., not feeling like a technological luddite), or long-term goals (e.g., keep as much of my money so I can retire comfortably).</dd>
+	<dt><dfn>Features</dfn></dt>
+	<dd>These are the product changes, additions, or improvements<a contenteditable="false" data-primary="features" data-type="indexterm" id="idm140697249024000"/> we believe will help our customers achieve their goals and drive the business outcomes we seek.</dd>
+</dl>
+
+<p>Each of these elements is critical to writing a testable hypothesis, as we’ll see later. For now, let’s take a detailed look at one way to find assumptions together as a team. </p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Method: Declaring Assumptions" data-type="sect1"><div class="sect1" id="method_declaring_assumptions">
+<h1>Method: Declaring Assumptions</h1>
+
+<section data-pdf-bookmark="Who" data-type="sect2"><div class="sect2" id="who">
+<h2>Who</h2>
+
+<p>Declaring assumptions is best done as a group exercise.<a contenteditable="false" data-primary="vision, driving with outcomes" data-secondary="assumptions" data-tertiary="declaring" data-type="indexterm" id="idm140697249020160"/><a contenteditable="false" data-primary="assumptions" data-secondary="declaring" data-type="indexterm" id="idm140697249019328"/> Gather your team, making sure that all disciplines are represented—including any subject matter experts that could have vital knowledge about your project.<a contenteditable="false" data-primary="assumptions" data-secondary="declaring" data-tertiary="who to involve" data-type="indexterm" id="idm140697249016768"/> For example, if you’re handling a frequent customer complaint, it might be beneficial to include a customer service representative from your call center. Call center reps speak to more customers than anyone else in the organization and will likely have insight the rest of the team won’t.  By working together in this cross-functional capacity you are raising the <em>Product IQ</em> of the entire team.<a contenteditable="false" data-primary="teams" data-secondary="raising Product IQ of members" data-type="indexterm" id="idm140697249014432"/><a contenteditable="false" data-primary="Product IQ, raising for team members" data-type="indexterm" id="idm140697249012592"/> Team members not only get to voice their opinions and concerns, but equally as important, they get to hear other points of view. This moves team members away from discipline-specific views of the product to a more holistic, product-focused one.</p>
+</div></section>
+
+<section data-pdf-bookmark="Preparation" data-type="sect2"><div class="sect2" id="preparation">
+<h2>Preparation</h2>
+
+<p>Give the team advance notice of the problem they will be taking on.<a contenteditable="false" data-primary="assumptions" data-secondary="declaring" data-tertiary="preparation for" data-type="indexterm" id="idm140697249009024"/> Provide them the strategic context for the work to ensure that their tactics agree with the broader goals of the organization. This gives everyone a chance to prepare any material they need, ask questions, or do any research before you begin. Important things to prepare in advance include the following:</p>
+
+<ul>
+	<li>
+	<p>Analytics reports that show how the current product is being used</p>
+	</li>
+	<li>
+	<p>Usability reports that illustrate why customers are taking certain actions in your product</p>
+	</li>
+	<li>
+	<p>Information about past attempts to fix this issue and their successes and failures</p>
+	</li>
+	<li>
+	<p>Justification from the business as to how solving this problem will affect the company’s performance</p>
+	</li>
+	<li>
+	<p>Competitive analyses that show how your competition is tackling the same issues</p>
+	</li>
+</ul>
+</div></section>
+
+<section data-pdf-bookmark="Problem Statement" data-type="sect2"><div class="sect2" id="problem_statement">
+<h2>Problem Statement</h2>
+
+<p>The team needs to have a starting point for the exercise. We’ve found it helpful to begin with a<a contenteditable="false" data-primary="assumptions" data-secondary="declaring" data-tertiary="problem statement" data-type="indexterm" id="idm140697248997520"/> problem statement.<a contenteditable="false" data-primary="problem statements" data-type="indexterm" id="idm140697248998608"/> (See the templates for this statement that follow.) These statements are created by key stakeholders as they begin to address the strategic vision for the business. The problem statement gives your team a clear focus for their work. It also defines any important constraints. You need constraints for group work. They provide the guardrails that keep the team grounded and aligned. Creativity thrives in the constraints.</p>
+
+<p>Problem statements take on slightly different flavors depending on whether you are working on an existing product or creating a brand new one. Let’s take a look at each.</p>
+
+<section data-pdf-bookmark="Existing product: problem statement template" data-type="sect3"><div class="sect3" id="existing_product_problem_statement_templ">
+<h3>Existing product: problem statement template</h3>
+
+<p>Problem statements for existing products are<a contenteditable="false" data-primary="problem statements" data-secondary="for existing products" data-type="indexterm" id="idm140697248992848"/> made up of three elements:</p>
+
+<ul>
+	<li>
+	<p>The current goals of the product or system</p>
+	</li>
+	<li>
+	<p>The problem the business wants addressed (i.e., where the goals aren’t being met)</p>
+	</li>
+	<li>
+	<p>An explicit request for improvement that doesn’t dictate a specific solution</p>
+	</li>
+</ul>
+
+<p>You can use the template shown in <a data-type="xref" href="#problem_statement_template_for_existing">Figure 3-2</a> to express your problem statement. Keep in mind though that there’s nothing magical about this template—or really any of the templates we share in this book. You should adapt the templates so that they make sense to you, your team, and your context.</p>
+
+<figure><div class="figure" id="problem_statement_template_for_existing"><img alt="" src="assets/lux2_0302.png"/>
+<h6><span class="label">Figure 3-2. </span>Problem statement template for existing products and services</h6>
+</div></figure>
+
+<p>All too often, teams are tasked with poorly worded business problem statements. In fact, these are rarely problem statements at all. They are typically poorly hidden requirements requests. Take this “problem statement,” for example:</p>
+
+<blockquote>
+<p>Our competitors have all shipped mobile applications in the past 12 months and are advertising them heavily. With the ongoing need to stay competitive, we too must develop more mobile products.</p>
+
+<p>To achieve this, we intend to launch an iOS application by Q2 of this year and ensure that all of our marketing sites are mobile-friendly by the beginning of Q3. In addition, we will launch a Facebook mobile ad campaign to ensure that our acquisition targets are hit this year.</p>
+</blockquote>
+
+<p>This statement fails to declare a real business problem (other than feature parity concerns with our competition) nor does it indicate the impact (good or bad) this is having on the product or service. Finally, instead of providing a clear business measure of success, it lists a specific set of features and tactics the team is expected to deliver. This way of assigning work to a team does very little to raise their Product IQ or inspire any creativity in finding the right solutions. The team is tasked with a solution to implement rather than a problem to solve.</p>
+
+<p>Here is an alternative version for a hypothetical company working in the educational technology space:</p>
+
+<blockquote>
+<p>Our Learning Management System (LMS) was intended to provide a central platform to facilitate communication, student body management, and assessment for parents, students, and teachers in most educational contexts.</p>
+
+<p>We have observed new students both in the United States and abroad entering schools with a mobile-first or mobile-only mindset. We have also observed a significant rise in funding for competing educational technology startups catering to this new behavior model. Our products are heavy and not mobile-friendly which increases our risk of losing incoming cohorts of new students through decreased usage and dependency on the LMS.</p>
+
+<p>How might we create more capable and compelling mobile offerings so that our high school and university students increase their usage of the LMS through their preferred mobile device?</p>
+</blockquote>
+
+<p>This version of the problem statement sets a clear issue for the team to solve. It provides the source of the concern and a sense of the impact it might have on the company’s business and ultimate success. Finally, it provides clear guidelines for how the team should proceed without dictating a specific set of features for them to build, instead opting for an outcome, a change in customer behavior, for them to achieve.</p>
+</div></section>
+
+<section data-pdf-bookmark="New product: problem statement template" data-type="sect3"><div class="sect3" id="new_product_problem_statement_template">
+<h3>New product: problem statement template</h3>
+
+<p>Problem statements for new products are also made up of<a contenteditable="false" data-primary="problem statements" data-secondary="for new products and services" data-type="indexterm" id="idm140697248969824"/> three elements (see <a data-type="xref" href="#problem_statement_template_for_new_produ">Figure 3-3</a>):</p>
+
+<ul>
+	<li>
+	<p>The current state of the market</p>
+	</li>
+	<li>
+	<p>The opportunity the business wants to exploit (i.e., where current solutions are failing)</p>
+	</li>
+	<li>
+	<p>A strategic vision for a product or service to address the market gap</p>
+	</li>
+</ul>
+
+<figure><div class="figure" id="problem_statement_template_for_new_produ"><img alt="" src="assets/lux2_0303.png"/>
+<h6><span class="label">Figure 3-3. </span>Problem statement template for new products and services</h6>
+</div></figure>
+
+<p>Let’s continue our example from the educational technology space and write a new product problem statement:</p>
+
+<blockquote>
+<p>The current state of the educational technology market has focused primarily on selling large installations to school systems focused on making teachers’ and administrators’ lives simpler. These services were created in a desktop world and serve only the providers of education, not the students. These services fail to capture the way incoming students use technology today—a mobile-first or, in some cases, mobile-only consumption pattern. Our new Learning Management System product will address this gap by building mobile-friendly learning experiences tailored to the way primary and secondary school students use technology today as well as how they learn.</p>
+</blockquote>
+
+<p>Regardless of which type of product you’re working on or who created them, problem statements are also filled with assumptions. The team’s job is to dissect the problem statement into its core assumptions. Here’s how to do that.</p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Running the Exercise: Business Assumptions Exercise" data-type="sect2"><div class="sect2" id="running_the_exercise_business_assumption">
+<h2>Running the Exercise: Business Assumptions Exercise</h2>
+
+<p>We like to use this exercise (created by our friend Giff Constable) to facilitate the assumptions discussion.<a contenteditable="false" data-primary="business assumptions exercise" data-type="indexterm" id="idm140697248964432"/><a contenteditable="false" data-primary="vision, driving with outcomes" data-secondary="assumptions" data-tertiary="running business assumptions exercise" data-type="indexterm" id="idm140697248963536"/><a contenteditable="false" data-primary="assumptions" data-secondary="running business assumptions exercise" data-type="indexterm" id="idm140697248956272"/></p>
+
+<dl>
+	<dt><dfn>Step 1: Complete the assumptions exercise individually</dfn></dt>
+	<dd>Each member of your team should prepare answers for the questions that follow on their own. This includes your clients.</dd>
+	<dt><dfn>Step 2: Share your answers</dfn></dt>
+	<dd>Get together with your team (and client) to kick off the new initiative. Go around the table sharing everyone’s answers to the assumptions exercise, question by question.</dd>
+	<dt><dfn>Step 3: Collect, organize, prioritize</dfn></dt>
+	<dd>Collect these answers on sticky notes or a whiteboard and sort them into themes. As a team, attempt to prioritize which themes are most important for each question. Don’t worry if you get to the end of the exercise without clear agreement on all of the answers. The goal is to collect statements that reflect what you and your team <em>think might be true</em>. If you have strong disagreement on a point, capture the different perspectives.</dd>
+</dl>
+</div></section>
+
+<aside class="pagebreak-before" data-type="sidebar" epub:type="sidebar"><div class="sidebar" id="assumptions_worksheets">
+<h5>Assumptions Worksheets</h5>
+
+<figure class="informal"><div class="figure">
+<img alt="" src="assets/lux2_03in01.png"/>
+<h6/>
+</div></figure>
+
+<p>You might discover that some of these questions don’t apply to your project. That’s OK—you can adapt the questions to your situation as you see fit. If you’re early in the life of your product, you’ll probably spend more time on the business assumptions. If you’ve got a mature product, you’ll probably focus your energies on the user assumptions. The point is to cast a broad net and look for assumptions in all dimensions of your project.</p>
+
+<p>When you’ve completed the exercise, you will have a list of assumptions. Your next step is to assemble these assumptions into hypotheses.<a contenteditable="false" data-primary="assumptions" data-startref="ix_assume" data-type="indexterm" id="idm140697248947776"/></p>
+</div></aside>
+</div></section>
+
+<section data-pdf-bookmark="Hypotheses" data-type="sect1"><div class="sect1" id="hypotheses">
+<h1>Hypotheses</h1>
+
+<p>With our assumptions in hand, we’re ready to move to the next step: writing hypotheses.<a contenteditable="false" data-primary="hypotheses" data-secondary="transforming business assumptions into" data-type="indexterm" id="idm140697248943472"/><a contenteditable="false" data-primary="assumptions" data-secondary="turning into hypothesis statement" data-type="indexterm" id="idm140697248944000"/> To do that, we transform our assumptions into a format that is easier to test: the hypothesis statement.</p>
+
+<p>Generally, hypothesis statements use this format:</p>
+
+<ul class="simplelist">
+	<li>
+	<p><em>We believe</em> <strong>[this statement is true]</strong>.</p>
+	</li>
+	<li>
+	<p><em>We will know we’re</em> <strong>[right/wrong]</strong> <em>when we see the following feedback from the market:</em></p>
+	<p><strong>[qualitative feedback]</strong> <em>and/or</em> <strong>[quantitative feedback]</strong> <em>and/or</em> <strong>[key performance indicator change]</strong>.</p>
+	</li>
+</ul>
+
+<p>You can see that this format has two parts. A statement of what you believe to be true, and statement of the market feedback you’re looking for to confirm that you’re right.</p>
+
+<p>Expressing your assumptions this way turns out to be a powerful technique. It takes much of the subjective and political conversation out of the decision-making process and instead orients the team toward evidence collected from the market. In other words, it orients the team toward their users and customers.</p>
+
+<aside data-type="sidebar" epub:type="sidebar"><div class="sidebar" id="data-informed_design_versus_data-driven">
+<h5>Data-Informed Design versus Data-Driven Design</h5>
+
+<p>There’s been a lot of backlash in the design <a contenteditable="false" data-primary="data-informed versus data-driven design" data-type="indexterm" id="idm140697248933040"/><a contenteditable="false" data-primary="design" data-secondary="data-informed versus data-driven" data-type="indexterm" id="idm140697248928496"/>world about data-driven design. The argument is that by reducing every design decision to factors that can be measured, it takes the delight and soul out of our products. We actually agree with this perspective, which is why we think it’s so important to include qualitative targets in your success criteria. Qualitative insight helps us to understand the emotional aspects of product design. It provides the “why” to give context to the quantitative “what” insights provided by analytics tools. It gives us a sense of what’s driving the behavior and provides guidance for design improvements that improve the experience. This makes our customers as well as our business more successful. By balancing qualitative and quantitative insights, we are using data to inform rather than dictate our design decisions.</p>
+</div></aside>
+
+<section data-pdf-bookmark="Hypotheses: Tactical and Testable" data-type="sect2"><div class="sect2" id="hypotheses_tactical_and_testable">
+<h2>Hypotheses: Tactical and Testable</h2>
+
+<p>At their highest levels, hypotheses can seem daunting. <a contenteditable="false" data-primary="hypotheses" data-secondary="tactical and testable" data-type="indexterm" id="idm140697248925808"/>Where do you begin? What do you test first? In these situations, we’ve found it helpful to focus our hypothesis writing on features. <a data-type="xref" href="#feature_hypothesis_template">Figure 3-4</a> presents <a contenteditable="false" data-primary="features" data-secondary="hypothesis statment focused on" data-type="indexterm" id="idm140697248926528"/>the format we recommend for articulating tactical, testable hypothesis statements.</p>
+
+<figure><div class="figure" id="feature_hypothesis_template"><img alt="" src="assets/lux2_0304.png"/>
+<h6><span class="label">Figure 3-4. </span>Feature hypothesis template</h6>
+</div></figure>
+
+<p>The first field is completed with the outcome you’ve determined is your measure of success. This is the business outcome you’d like to achieve. The second field describes exactly which of your target users you believe you should focus on first. The third field speaks to the end goal, benefit, or the emotional state those customers will get if we design and implement our feature well. The final field speaks to the way we believe we should improve our product or the new features we’d like to build.</p>
+
+<p>It’s easy to jump to features first. Most teams do this. By structuring your conversations with hypotheses you force the team to think through the context first, and especially, the problem you’re trying to solve. This constrains the space for determining which features to work on. Each assumption you put in place increasingly confines the team’s thinking to a more accurate set of potential features. This focus makes any feature discussion more productive, more targeted, and ultimately more relevant to your customers.</p>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Getting from Problem Statement to Hypothesis" data-type="sect1"><div class="sect1" id="getting_from_problem_statement_to_hypoth">
+<h1>Getting from Problem Statement to Hypothesis</h1>
+
+<p>Let’s take a look at an example <a contenteditable="false" data-primary="problem statements" data-secondary="getting from problem statement to hypothesis" data-type="indexterm" id="idm140697248912544"/>of how this <a contenteditable="false" data-primary="hypotheses" data-secondary="getting from problem statement to hypothesis" data-type="indexterm" id="idm140697248910976"/>works by going <a contenteditable="false" data-primary="vision, driving with outcomes" data-secondary="getting from problem statement to hypothesis" data-type="indexterm" id="idm140697248919568"/>back<a contenteditable="false" data-primary="outcomes" data-secondary="driving vision with" data-tertiary="from problem statement to hypothesis" data-type="indexterm" id="idm140697248918032"/> to the problem statement we looked at earlier:</p>
+
+<blockquote>
+<p>Our Learning Management System (LMS) was intended to provide a central platform to facilitate communication, student body management, and assessment for parents, students, and teachers in most educational contexts. We have observed new students both in the United States and abroad entering schools with a mobile-first or mobile-only mindset. We have also observed a significant rise in funding for competing educational technology startups catering to this new behavior model. Our products are heavy and not mobile-friendly which increases our risk of losing incoming cohorts of new students through decreased usage and dependency on the LMS.</p>
+
+<p>How might we create more capable and compelling mobile offerings so that our high school and university students increase their usage of the LMS through their preferred mobile device?</p>
+</blockquote>
+
+<p>The team working on this problem knows that if they don’t meet the needs of an increasingly mobile user base, they will lose business. They need to figure out how to increase mobile use of the system by students. The team’s first step is to declare their assumptions and then write a set of testable hypotheses for this problem.</p>
+
+<section data-pdf-bookmark="Completing Your Hypothesis Statements" data-type="sect2"><div class="sect2" id="completing_your_hypothesis_statements">
+<h2>Completing Your Hypothesis Statements</h2>
+
+<p>To create your hypothesis statements, you will need to<a contenteditable="false" data-primary="hypotheses" data-secondary="getting from problem statement to hypothesis" data-tertiary="completing your hypothesis statements" data-type="indexterm" id="idm140697248905520"/> begin assembling the building blocks. Here is what you are going to want to put together:</p>
+
+<ul>
+	<li>
+	<p>The <em>business outcomes</em> you are trying to achieve</p>
+	</li>
+	<li>
+	<p>The <em>users</em> you are trying to service</p>
+	</li>
+	<li>
+	<p>The <em>user outcomes</em> that motivate them</p>
+	</li>
+	<li>
+	<p>The <em>features</em> you believe might work in this situation</p>
+	</li>
+</ul>
+
+<p>After you have all of this raw material, you can put them all together into a set of statements. Let’s take a closer look at each of these elements.</p>
+
+<section data-pdf-bookmark="Running the exercise: business outcomes" data-type="sect3"><div class="sect3" id="running_the_exercise_business_outcomes">
+<h3>Running the exercise: business outcomes</h3>
+
+<p>Business outcomes are your definition of done.<a contenteditable="false" data-primary="business outcomes" data-seealso="outcomes" data-type="indexterm" id="idm140697248892640"/> They are the result your business seeks, and the measuring stick for success. When you manage with outcomes, the question isn’t, “Did you ship it?” Instead, the question is, “How did this create a good result for us, for the customer, or for us both?” When you’re creating hypotheses to test, you want to try to be very specific regarding the outcomes you are trying to create. We discussed earlier how Lean UX teams focus less <a contenteditable="false" data-primary="output" data-secondary="focusing on outcomes instead of" data-type="indexterm" id="idm140697248893296"/>on output (the documents, sketches, products, and features that we create) and more on the outcomes that these outputs create. <em>Can we make it easier for people to log in to our site? Can we encourage more people to sign up? Can we encourage greater collaboration among system users?</em></p>
+
+<p>Together with your team, look at the problem you are trying to solve. You probably have a few high-level outcomes that you are trying to create (increasing sign-ups, increasing usage, etc.). Consider how you can break down these high-level outcomes into smaller parts. What behaviors will predict greater usage? More visitors to the site? More downloads of your app? Increasing number of items in the shopping cart? Sometimes, it’s helpful to run a team brainstorm to create a list <a contenteditable="false" data-primary="business outcomes" data-secondary="brainstorming possible outcomes" data-type="indexterm" id="idm140697248888192"/>of possible outcomes that you believe will predict the larger outcome you seek.</p>
+
+<p>In the example in <a data-type="xref" href="#brainstorming_a_list_of_possible_outcome">Figure 3-5</a> (from Giff Constable), an executive leadership team brainstormed and then voted on which Key Performance Indicators (KPIs) the company should pursue next. <a contenteditable="false" data-primary="key performance indicators (KPIs)" data-type="indexterm" id="idm140697248883264"/>After consolidating down to the list shown in the photo, each executive was given four M&amp;M’s. As long as they managed not to eat their votes, these executives were able to vote with candy for each metric they felt was most important. Ties were broken by the CEO.</p>
+
+<figure><div class="figure" id="brainstorming_a_list_of_possible_outcome"><img alt="" src="assets/lux2_0305.png"/>
+<h6><span class="label">Figure 3-5. </span>Brainstorming a list of possible outcomes</h6>
+</div></figure>
+
+<p>Another way to get to your initial business outcomes is to use a framework called “Startup Metrics for Pirates.” <a contenteditable="false" data-primary="McClure, Dave" data-type="indexterm" id="idm140697248882528"/>Created by Dave McClure, an early<a contenteditable="false" data-primary="“Startup Metrics for Pirates”" data-primary-sortas="Startup Metrics for Pirates" data-type="indexterm" id="idm140697248881712"/> employee of PayPal and the founder of 500 Startups, this framework is based on a customer lifecycle funnel (<a data-type="xref" href="#dave_mcclureapostrophes_startup_metrics">Figure 3-6</a>). New customers come into the top of the funnel and move through increasing stages of engagement with a business. It also talks about pirates, which is fun.</p>
+
+<figure><div class="figure" id="dave_mcclureapostrophes_startup_metrics"><img alt="" src="assets/lux2_0306.png"/>
+<h6><span class="label">Figure 3-6. </span>Dave McClure’s Startup Metrics for Pirates</h6>
+</div></figure>
+
+<p>The Startup Metrics for Pirates framework is condensed into the acronym AARRR (Pirates!) and, when <a contenteditable="false" data-primary="customers" data-secondary="AARRR in Startup Metrics for Pirates" data-type="indexterm" id="idm140697248873088"/>expanded,<a contenteditable="false" data-primary="AARRR (Startup Metrics for Pirates)" data-type="indexterm" id="idm140697248874304"/> looks like this:</p>
+
+<dl>
+	<dt><dfn><strong>A</strong>cquisition</dfn></dt>
+	<dd>Can we get customers to our new feature or product?</dd>
+	<dt><dfn><strong>A</strong>ctivation</dfn></dt>
+	<dd>After we get them there, can we get them to use it?</dd>
+	<dt><dfn><strong>R</strong>etention</dfn></dt>
+	<dd>Can we get them to use it again? And again?</dd>
+	<dt><dfn><strong>R</strong>eferral</dfn></dt>
+	<dd>Can we get them to tell their friends, colleagues, bosses, or others about it?</dd>
+	<dt><dfn><strong>R</strong>evenue</dfn></dt>
+	<dd>Can we get them to pay us for this feature?</dd>
+</dl>
+
+<p>Each step in this framework indicates a greater level of engagement from your customers. And, in a digital product or service, these are all measurable behaviors, which means they serve as great business outcomes to determine the initial traction of your efforts and where to focus your optimization efforts.</p>
+
+<aside data-type="sidebar" epub:type="sidebar"><div class="sidebar" id="outputcomma_outcomecomma_and_impact">
+<h5>Output, Outcome, and Impact</h5>
+
+<p>We’ve talked a lot in this chapter about outcomes as the measure of success for your product.<a contenteditable="false" data-primary="outcomes" data-secondary="output, outcome, and impact" data-type="indexterm" id="idm140697248860352"/> One challenge <a contenteditable="false" data-primary="output" data-secondary="output, outcome, and impact" data-type="indexterm" id="idm140697248859360"/>we’ve observed with the teams we’ve worked with is finding the right level of granularity in determining the right outcomes to measure. To help with that, let’s look at three different measures of success:</p>
+
+<dl>
+	<dt><dfn>Output</dfn></dt>
+	<dd>These are features we design, implement, and ship. As a measure of success they are very common because they are clearly visible and easy to measure (you either shipped the feature or you didn’t). What they don’t measure is value to the customer. They only capture the team’s delivery performance.</dd>
+	<dt><dfn>Outcome</dfn></dt>
+	<dd>This is the change in the world we hope to see after we’ve created the output. As a measure of success, these are rare primarily because they are not binary and instead operate on a sliding scale. If a team is asked to improve retention by 50% but only manages to improve it by 42%, does that mean they’ve failed? It’s not always clear.</dd>
+	<dt><dfn>Impact</dfn></dt>
+	<dd><p>These are high-level measures of business health. <a contenteditable="false" data-primary="impact" data-type="indexterm" id="idm140697248857280"/>Most companies measure these in the form of revenue, profits, sales, Net Promoter Score, and so on. As a measure of team-level success, these are usually too high level because it is often difficult to attribute a direct correlation between the launch of a tactical feature or a system optimization and an impact-level improvement. There are far too many factors that regularly affect these measures.</p>
+	<p>It is therefore in your best interest to ask your teams to work on outcome-level metrics. It’s at this level of granularity that teams can draw direct correlation between work they are doing and explicit changes in customer behavior.</p></dd>
+</dl>
+</div></aside>
+</div></section>
+
+<section data-pdf-bookmark="Running the exercise: users" data-type="sect3"><div class="sect3" id="running_the_exercise_users">
+<h3>Running the exercise: users</h3>
+
+<p>If your team already has a well-defined set<a contenteditable="false" data-primary="personas" data-type="indexterm" id="idm140697248850864"/> of personas,<a contenteditable="false" data-primary="users" data-secondary="in hypothesis statement exercise" data-type="indexterm" id="idm140697248849728"/> the only thing you need to consider at this point is which ones you will be using in your hypothesis statements. If it’s been a while since you last reviewed your personas, things might have changed. This makes for a great opportunity to ensure that they are still relevant and that you and your colleagues still believe they are representative of your target audience. If you don’t have personas yet, though, this section will tell you how we like to create personas for the Lean UX process.</p>
+</div></section>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Proto-Personas" data-type="sect1"><div class="sect1" id="proto-personas">
+<h1>Proto-Personas</h1>
+
+<p>Designers have long been advocates for the end user. Lean UX doesn’t change that. As we make assumptions about our business and the outcomes we’d like to achieve, we still need to keep the user front and center in our thinking.<a contenteditable="false" data-primary="personas" data-secondary="developing in lean UX" data-type="indexterm" id="idm140697248841296"/></p>
+
+<p>Most of us learned to think about <a contenteditable="false" data-primary="users" data-secondary="personas, development of" data-type="indexterm" id="idm140697248846496"/>personas as a tool to represent what we learned in our research. And it was often the case that we created personas as the output of lengthy, expensive research studies. There are a few problems with personas that are created this way. First, we tend to regard them as untouchable because of all of the work that went into creating them. In addition, it’s often the case that these personas were created by a research team or third-party vendor. This creates a risky knowledge gap between the people who conducted the research and those who are using the personas.</p>
+
+<p>In Lean UX, we change the order of operations in the persona process. We also change persona-creation from a one-time activity to an ongoing process—one that takes place whenever we learn something new about our users.</p>
+
+<p>When creating personas in this approach, we <em>start</em> with assumptions and <em>then</em> do research to validate our assumption. <a contenteditable="false" data-primary="proto-personas" data-type="indexterm" id="idm140697248831008"/>Instead of spending months in the field interviewing people, we spend a few hours creating proto-personas. Proto-personas are our best guess as to who is using (or will use) our product and why. We sketch them on paper (<a data-type="xref" href="#proto-persona_sketch">Figure 3-7</a>) with the entire team contributing—we want to capture everyone’s assumptions. Then, as we conduct ongoing research, we quickly find out how accurate our initial guesses are and we adjust our personas in response.</p>
+
+<figure><div class="figure" id="proto-persona_sketch"><img alt="" class="width_set_75" src="assets/lux2_0307.png"/>
+<h6><span class="label">Figure 3-7. </span>A proto-persona sketch</h6>
+</div></figure>
+
+<p>Besides putting the customer front and center for a diverse product development team, proto-personas serve two more key purposes:</p>
+
+<dl>
+	<dt><dfn>Shared understanding</dfn></dt>
+	<dd>Imagine your team sitting around a table and <a contenteditable="false" data-primary="understanding, shared" data-secondary="proto-personas and" data-type="indexterm" id="idm140697248833856"/>someone<a contenteditable="false" data-primary="shared understanding" data-secondary="proto-personas and" data-type="indexterm" id="idm140697248834800"/> says the word “dog.” What image comes to your mind? Is it the same image that comes to your colleagues’ minds (<a data-type="xref" href="#dogleft_parenthesisgright_parenthesissdo">Figure 3-8</a>)? How do you know?</dd>
+	<dd>The same thing happens when someone says “the customer.” The proto-persona approach ensures that everyone has the same image in their head when “the user” is invoked.</dd>
+	<dd>
+	<figure><div class="figure" id="dogleft_parenthesisgright_parenthesissdo"><img alt="" src="assets/lux2_0308.png"/>
+	<h6><span class="label">Figure 3-8. </span>Dogs. (We are indebted to our esteemed colleague Adrian Howard <br/>for this concept.)</h6>
+	</div></figure>
+	</dd>
+	<dt><dfn>Remembering we are not the user</dfn></dt>
+	<dd>It is often easy to assume our users are like us—especially <a contenteditable="false" data-primary="users" data-secondary="remembering we are not the user" data-type="indexterm" id="idm140697248821696"/>if we consume the products we make. The reality is that we have a level of understanding and tolerance for the digital ecosystem that our customers rarely share. Going through a proto-persona exercise puts the focus on external users, pushing the team further away from their personal preferences for the product.</dd>
+</dl>
+
+<aside data-type="sidebar" epub:type="sidebar"><div class="sidebar" id="using_proto-personas">
+<h5>Using Proto-Personas</h5>
+
+<p>A team we were working with in New York was building <a contenteditable="false" data-primary="proto-personas" data-secondary="example of use, CSA project in NYC" data-type="indexterm" id="idm140697248818672"/>an app that improved the Community Supported Agriculture (CSA) experience for New York City residents. CSA is a program that allows city residents to pool their money and purchase an entire season’s worth of produce from a local farmer. The farmer then delivers his crops, weekly, to the members of the CSA. Many subscribers to the CSA are men and women in their late 20s and early 30s who need to juggle a busy work life, an active social life, and a desire to participate in the CSA.</p>
+
+<p>The team assumed that most CSA consumers were women who liked to cook. They spent about an hour creating a persona named Susan. But when they went out into the field to do research, they quickly learned that the overwhelming majority of cooks, and hence potential users of their app, were young men. They returned to the office and revised their persona to create Anthony.</p>
+
+<p>Anthony proved to be a far more accurate target user. The team had not wasted any more time refining ideas for the wrong audience. They were now focused on an audience that, while still not perfect, was far more correct than their initial assumptions.</p>
+</div></aside>
+
+<section data-pdf-bookmark="Persona Format" data-type="sect2"><div class="sect2" id="persona_format">
+<h2>Persona Format</h2>
+
+<p>We like to sketch proto-personas on paper using <a contenteditable="false" data-primary="personas" data-secondary="sketching proto-personas on paper" data-type="indexterm" id="idm140697248816272"/>three hand-drawn sections (<a data-type="xref" href="#persona_template">Figure 3-9</a>). The upper-left quadrant holds a rough sketch of the persona along with her (or his) name and role. The upper-right box holds basic <a contenteditable="false" data-primary="behavioral infomation (personas)" data-type="indexterm" id="idm140697248813312"/><a contenteditable="false" data-primary="demographic information (personas)" data-type="indexterm" id="idm140697248814496"/>demographic and behavioral information.  Try to focus on information that predicts a specific type of behavior—behavior relevant to our product or service. For example, there might be cases for which the persona’s age is totally irrelevant, whereas her access to a specific device, like an iPhone, will completely change the way she interacts with your product.</p>
+
+<figure><div class="figure" id="persona_template"><img alt="" src="assets/lux2_0309.png"/>
+<h6><span class="label">Figure 3-9. </span>The persona template</h6>
+</div></figure>
+
+<p>The bottom half of the proto-persona is where we put the meat of the information. Here we capture the high-level needs of the persona along<a contenteditable="false" data-primary="needs, obstacles, and desires (personas)" data-type="indexterm" id="idm140697248803552"/> with the obstacles that keep her from achieving these needs. Remember that users rarely need “features.” What they need is to attain some kind of goal. (It’s not always a concrete goal: sometimes it’s an emotional goal, an unarticulated desire, etc.) It is our job to decide how best to get them to their goals.</p>
+</div></section>
+
+<section data-pdf-bookmark="The Persona Creation Process" data-type="sect2"><div class="sect2" id="persona_creation_process">
+<h2>The Persona Creation Process</h2>
+
+<p>As with the other elements of the hypothesis statement, <a contenteditable="false" data-primary="personas" data-secondary="creation process" data-type="indexterm" id="idm140697248801136"/>we like to start the persona creation process with a brainstorm. Team members offer up their opinions on who the project should be targeting and how that would affect their use of the product. When the brainstorming is complete, the team should narrow down the ideas to an initial set of three to four personas they believe are most likely to be their target audience. You should try to differentiate the personas around needs and roles rather than by demographic information.</p>
+
+<p>After you’ve narrowed down the list of potential users, have the team complete the template for each one. Review this internally and, upon agreement, share with your colleagues beyond the team for their initial input. At this point in the process, you can begin to validate some of your early assumptions. Use your personas as recruiting targets to begin your research. Immediately, there are three things you can determine based on your proto-personas:</p>
+
+<dl>
+	<dt><dfn>Does the customer exist?</dfn></dt>
+	<dd>By recruiting for the personas you created you can quickly<a contenteditable="false" data-primary="customers" data-secondary="determinations about, using proto-personas" data-type="indexterm" id="idm140697248797712"/> determine how realistic your team’s assumptions are. If you can’t find the people you sketched, they probably don’t exist. Learn from that and edit your personas.</dd>
+	<dt><dfn>Do they have the needs and obstacles you think they do?</dfn></dt>
+	<dd>In other words, are we solving real problems? You can gauge this simply by observing and speaking with the individuals you recruit. If they don’t, you’re building solutions for problems that don’t exist—and that rarely ends well.</dd>
+	<dt><dfn>Would they value a solution to this problem?</dfn></dt>
+	<dd>Just because a customer is real and has the pain points you’re solving for, this doesn’t actually mean they’ll value a new way to solve that problem. In other words, just because they eat bananas on their cereal every day and they don’t like slicing bananas, it doesn’t mean that they’ll buy your banana slicer (<a data-type="xref" href="#banana_slicer">Figure 3-10</a>). It’s important to understand how your customers are currently solving these needs and how likely your idea is to displace the incumbent solution. If you’re trying to displace long-held tools like email or spreadsheets, you might be in for a tough fight. It’s good to get that information sooner rather than later.</dd>
+</dl>
+
+<figure><div class="figure" id="banana_slicer"><img alt="" class="width_set_75" src="assets/lux2_0310.png"/>
+<h6><span class="label">Figure 3-10. </span>The banana slicer</h6>
+</div></figure>
+
+<div data-type="note" epub:type="note">
+<p>Many teams we’ve worked with and heard from over the years run this proto-persona exercise; however, far fewer of them actually go back and adjust their thinking after the initial creation exercise. <em>It is important that you consider proto-personas to be living documents</em>. Each time you conduct customer conversations or usability studies, ask yourself how many of the team’s current beliefs about their target audience are still true. As new information is revealed, bring it up for discussion and adjust the personas so that future research efforts can be more targeted and more successful.</p>
+</div>
+
+<section data-pdf-bookmark="Running the exercise: user outcomes" data-type="sect3"><div class="sect3" id="running_the_exercise_user_outcomes">
+<h3>Running the exercise: user outcomes</h3>
+
+<p>Despite the proliferation of Agile techniques like user stories, the user and their goals often become lost in the lengthy debates over features, designs, and implementations. Empathy is at the heart of great products and services. Designers often have been responsible for advocating for the user from an empathetic point of view. As we now know, this is not uniquely a designer’s responsibility. To achieve broader shared understanding of users and a deeper sense of empathy for what they are trying to achieve, we ask our teams to declare their assumptions about what users are trying to do, in the form <a contenteditable="false" data-primary="user outcomes" data-type="indexterm" id="idm140697248783024"/>of <em>user outcomes</em>.</p>
+
+<p>To do that, ask your teams the following:</p>
+
+<ul>
+	<li>
+	<p>What is the user trying to accomplish? <em>Example: I want to buy a new phone</em>.</p>
+	</li>
+	<li>
+	<p>How does the user want to feel during and after this process? <em>Example: I want to feel like I got the phone I need at a good price and that I’m keeping up technologically with my peers (i.e., I want to feel cool)</em>.</p>
+	</li>
+	<li>
+	<p>How does our product or service get the user closer to a life goal or dream? <em>Example: I want to feel tech-savvy and respected for it</em>.</p>
+	</li>
+</ul>
+
+<p>Note that not every user outcome exists at all three levels. But thinking about outcomes in these terms can help you to find important dimensions of your solution to work on, from the functional, task-oriented outcomes to the more emotional experience-oriented outcomes.</p>
+
+<p><strong>User outcome brainstorming process:</strong> Again, sticky notes and whiteboards are our preferred tools here (see <a data-type="xref" href="#team_brainstorming_together">Figure 3-11</a>). Allow individuals on the team to generate many ideas in silence and then organize those ideas with an affinity mapping exercise to drive the team toward convergence.</p>
+
+<figure><div class="figure" id="team_brainstorming_together"><img alt="" src="assets/lux2_0311.png"/>
+<h6><span class="label">Figure 3-11. </span>A team brainstorming together</h6>
+</div></figure>
+</div></section>
+
+<section data-pdf-bookmark="Running the exercise: features" data-type="sect3"><div class="sect3" id="running_the_exercise_features">
+<h3>Running the exercise: features</h3>
+
+<p>After you have a list of business outcomes in mind and have set your focus on a group of users and their needs,<a contenteditable="false" data-primary="features" data-secondary="determining, exercise in" data-type="indexterm" id="idm140697248770848"/> it’s time to begin thinking about what tactics, features, products, and services you can put in place to achieve them. This is typically the part where everyone on the team has a strong opinion—after all, features are the most concrete things we work with, so it’s often easiest for us to express our ideas in terms of features. Too often, though, our design process begins when someone has a feature idea, and we forget to investigate whether the feature will create meaningful results for the business, or for its customers and users. In Lean UX, features exist to serve the needs of the customer and the business.</p>
+
+<p><strong>Feature brainstorming process:</strong> Employing the same techniques described earlier, we like to create feature lists by brainstorming them as a team. We’re looking for features we think will help users achieve the <em>user outcomes</em> they seek.<a contenteditable="false" data-primary="user outcomes" data-secondary="features that help in achievement of" data-type="indexterm" id="idm140697248769056"/> If the feature is just a cool idea, but not in service of a user outcome, it’s unlikely to create value. For example, if you’re trying to drive greater collaboration between users of your product and the team comes up with the idea of using a scan to match people with similar eye color into collaboration groups, that is unlikely to achieve the desired outcome and instead is simply an excuse for the team to solve for new technologies.</p>
+
+<p>Have each team member write each idea, using a thick felt pen, on a sticky note. When time is up, ask everyone to post their notes to the wall. Finally, have the group arrange them into themes.</p>
+</div></section>
+
+<section data-pdf-bookmark="Running the exercise: assembling your feature hypotheses" data-type="sect3"><div class="sect3" id="running_the_exercise_assembling_your_fea">
+<h3>Running the exercise: assembling your feature hypotheses</h3>
+
+<p>With all of your raw material created, you’re ready to organize this material into a set of tactical, testable hypotheses. <a contenteditable="false" data-primary="hypotheses" data-secondary="for features" data-type="indexterm" id="idm140697248766400"/><a contenteditable="false" data-primary="features" data-secondary="assembling your feature hypotheses" data-type="indexterm" id="idm140697248767296"/>We like to create a table like the one in <a data-type="xref" href="#hypothesis_chart">Figure 3-12</a> and then complete it by using the material we’ve brainstormed. If you’ve been creating all of this raw material in a workshop context, you’ll need a lot of material on sticky notes. Physically move your notes into the appropriate boxes to make rows of related ideas.</p>
+
+<figure><div class="figure" id="hypothesis_chart"><img alt="" src="assets/lux2_0312.png"/>
+<h6><span class="label">Figure 3-12. </span>A hypothesis table</h6>
+</div></figure>
+
+<p>You’ll find during this exercise that there are gaps in your initial brainstorms. Some business outcomes might have no features created for them, whereas some features might not drive any value for the customer or the business. That’s the point of this exercise: to make sense of your initial round of thinking. After you’ve identified the gaps in your brainstorms, fill them in with new sticky notes or leave the less relevant ideas off the chart, as depicted in <a data-type="xref" href="#working_on_the_hypothesis_chart">Figure 3-13</a>. This will help make sense of the undoubtedly large number of ideas your team generates.</p>
+
+<figure><div class="figure" id="working_on_the_hypothesis_chart"><img alt="" src="assets/lux2_0313.png"/>
+<h6><span class="label">Figure 3-13. </span>Working on the hypothesis chart</h6>
+</div></figure>
+
+<p>After you’ve completed the chart—7 to 10 rows are a good initial target—begin extracting feature hypotheses from it. Use the hypothesis template shown in <a data-type="xref" href="#feature_hypothesis_template">Figure 3-4</a> to ensure you’re including all the relevant components of the hypothesis statement.</p>
+
+<p>As you write your hypotheses, consider which persona(s) you’re serving with your proposed solutions.<a contenteditable="false" data-primary="personas" data-secondary="considering in feature hypothesis construction" data-type="indexterm" id="idm140697248750816"/> It’s not unusual to find solutions that serve more than one at a time. It’s also not unusual to create a hypothesis in which multiple features drive similar outcomes. When you see that happening, refine the hypothesis to focus on just one feature. Hypotheses with multiple features are not easy to test. The important thing to remember in this entire process is to keep your ideas specific enough so that you can create meaningful tests to see if your ideas hold water.</p>
+
+<aside class="pagebreak-before" data-type="sidebar" epub:type="sidebar"><div class="sidebar" id="whatapostrophes_the_difference_between_h">
+<h5>What’s the Difference Between Hypotheses and Agile User Stories?</h5>
+
+<p>We’re often asked to differentiate between hypothesis <a contenteditable="false" data-primary="hypotheses" data-secondary="hypothesis statements versus Agile user stories" data-type="indexterm" id="idm140697248745632"/>statements and classic Agile (or Scrum) user stories. <a contenteditable="false" data-primary="user stories (Agile)" data-secondary="difference between hypotheses and" data-type="indexterm" id="idm140697248744224"/><a contenteditable="false" data-primary="Agile software development" data-secondary="user stories versus hypotheses" data-type="indexterm" id="idm140697248744544"/>The difference is subtle but powerful. Traditional Agile user stories look like this:<sup><a data-type="noteref" href="ch03.html#ch03fn1" id="ch03fn1-marker">1</a></sup></p>
+
+<ul class="simplelist">
+	<li>
+	<p>As a &lt;<em>type of user</em>&gt;,</p>
+	</li>
+	<li>
+	<p>I want &lt;<em>some goal</em>&gt;</p>
+	</li>
+	<li>
+	<p>so that &lt;<em>some reason</em>&gt;.</p>
+	</li>
+</ul>
+
+<p>You’ll notice that the user and user outcome are present in this story. Most teams we’ve worked with replace “some goal” with “this feature.” After the user story is written, most teams discard the pieces around “some goal” and begin implementing the feature. The user is quickly forgotten as the team works diligently to drive up their velocity and deliver the feature. The team’s acceptance criteria (i.e., their definition of success) is that the system allows the user to complete a task. There is no discussion as to whether the solution is usable or desirable, much less delightful. The only testing being done is whether the system “works as designed.”</p>
+
+<p>Hypotheses have behavior change (outcomes) as their definition of success. Shipping a working feature is table stakes. It’s the beginning of the conversation. Our team’s success is not measured in how fast they can get features launched. Instead we measure success by how well our customers can achieve “some goal” initially and ongoing.</p>
+
+<p>This is the key difference between user stories and hypotheses. They refocus the team on what’s really important—making the customer successful and thus achieving a business goal—as opposed to measuring team productivity as success.</p>
+</div></aside>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Prioritizing Hypotheses" data-type="sect2"><div class="sect2" id="prioritizing_hypotheses">
+<h2>Prioritizing Hypotheses</h2>
+
+<p>Lean UX is an exercise in ruthless prioritization.<a contenteditable="false" data-primary="hypotheses" data-secondary="prioritizing" data-type="indexterm" id="idm140697248725584"/> It’s rare to have a project budget focused strictly on learning. In most cases, we need to ship product at some point, as well. <a contenteditable="false" data-primary="risk mitigation" data-secondary="risk prioritization matrix" data-type="indexterm" id="idm140697248726544"/>The reason we declare our assumptions at the outset of our work is so that we can identify project risks.  After we string them together into hypotheses we create a backlog of potential work. Next, we need to figure out which ones are the riskiest ones—so that we can work on them first. Understanding that you can’t test every assumption, how do you decide which one to test first? We like to create a chart like the one presented in <a data-type="xref" href="#risk_prioritization_matrix">Figure 3-14</a> and use it to map out the list of hypotheses. The goal is to prioritize which hypotheses to test based on their level of risk (<em>How bad would it be if we were wrong about this?</em>) along with how much value we believe this idea will generate. The higher the risk and the more perceived value involved, the higher the priority is to test those hypotheses first.</p>
+
+<p>This does not mean that assumptions that don’t make the first cut are gone forever. Keep a backlog of the other hypotheses you’ve created so that you can come back to them and test them if and when it makes sense to do so.</p>
+
+<figure><div class="figure" id="risk_prioritization_matrix"><img alt="" src="assets/lux2_0314.png"/>
+<h6><span class="label">Figure 3-14. </span>Risk Prioritization Matrix</h6>
+</div></figure>
+</div></section>
+</div></section>
+
+<section data-pdf-bookmark="Moving on to Design" data-type="sect1"><div class="sect1" id="moving_on_to_design">
+<h1>Moving on to Design</h1>
+
+<p>When your list of hypotheses is complete and prioritized, you’re ready (finally!) to move on to the next step: collaborative design. If you’ve gone through this process to this point with your entire team (and we strongly recommend that you do), you’ll be in a great position to move forward together. This process is an effective way to create a shared understanding and shared mission across your entire team.</p>
+</div></section>
+
+<section data-pdf-bookmark="Wrapping Up" data-type="sect1"><div class="sect1" id="wrapping_up-id00004">
+<h1>Wrapping Up</h1>
+
+<p>In this chapter we discussed how we can reframe our work in terms of outcomes. This is a vitally important Lean UX technique: framing our work with outcomes frees us (and our teams) to search for the best solutions to the problem at hand. We looked at the process of declaring assumptions and writing hypotheses. We begin with the project’s problem statements and then acknowledge our assumptions. We transform these assumptions into hypotheses. We learned how to write hypothesis statements that capture our intended features, audience, and goals and that are specific enough to be tested. We end up with statements that will serve as our roadmap for the next step of the Lean UX process: collaborative design.</p>
+
+<p>In the next chapter, we cover what collaborative design is and how it differs from traditional product design. We discuss specific tools and techniques that empower teams to design together and we show you how designing together is the beginning of the hypothesis testing process.<a contenteditable="false" data-primary="vision, driving with outcomes" data-startref="ix_vision" data-type="indexterm" id="idm140697248729680"/><a contenteditable="false" data-primary="outcomes" data-secondary="driving vision with" data-startref="ix_outcomes" data-type="indexterm" id="idm140697248730496"/></p>
+</div></section>
+<div data-type="footnotes"><p data-type="footnote" id="ch03fn1"><sup><a href="ch03.html#ch03fn1-marker">1</a></sup> <a href="https://www.mountaingoatsoftware.com/agile/user-stories">Mountain Goat Software, “User Stories”</a>.</p></div></div></section></body></html>
