@@ -803,7 +803,7 @@ Every command has a dry-run path:
 
 **Why dry-run as default matters for the experiment:** if `check` doesn't depend on a test runner (Resolution 1) and `init` can run in dry-run, then the tool can validate a project *before any files are created*. The cold-start procedure's Step 2 ("write the enforcement test first, watch it fail") becomes: run `boundary init --dry-run`, see the would-be surface and the would-be failures, decide if the boundaries are right *before* committing to the structure. The tool becomes a *pre-validation* step, not just a scaffolder. This catches wrong boundaries before files exist — genuinely better than the procedure as drafted.
 
-For the scruffy validation: run everything in `--dry-run`, inspect the report, decide whether the extracted surfaces and the would-be contracts are correct. No files written to scruffy until explicitly requested.
+For the target repo validation: run everything in `--dry-run`, inspect the report, decide whether the extracted surfaces and the would-be contracts are correct. No files written to the target repo until explicitly requested.
 
 ### Updated command surface (after refinements)
 
@@ -856,7 +856,7 @@ The tool's own `humans.md` would record: origin (this experiment), relationship 
 
 ### Build order (refined)
 
-**Phase 1 — core engine (unblocks dry-run validation on scruffy):** ✅ done
+**Phase 1 — core engine (unblocks dry-run validation on a target repo):** ✅ done
 1. ✅ **Surface extractor** — read `boundaries.yaml` manifest, read each boundary's entry file, extract exported symbols. TS/JS only for v1. This is the input to everything else.
 2. ✅ **`check` engine** — read AGENTS.md files + extracted surfaces, assert the four contracts (integrity, Communication, surface containment, ADR status, maxLines). No test runner — reads files directly. Works in dry-run (reports pass/fail without files existing).
 3. ✅ **`init` dry-run** — read manifest, report what would be created per boundary, extracted surface, would-pass/fail. No file writing.
@@ -869,11 +869,11 @@ The tool's own `humans.md` would record: origin (this experiment), relationship 
 8. ✅ **Pre-commit hook installer** — install a hook that runs `boundary check` on commit. (`boundary install-hook` / `boundary uninstall-hook`)
 
 **Phase 3 — LLM-assisted enforcement (after cold-start run calibrates):** ⏳ pending
-9. ⏳ **`lint` Phase 2** — LLM-based classification of obligation vs mechanism. Optional, configurable. Needs the cold-start run on scruffy to calibrate what mechanism leakage looks like across different boundaries.
+9. ⏳ **`lint` Phase 2** — LLM-based classification of obligation vs mechanism. Optional, configurable. Needs the cold-start run on a real monorepo to calibrate what mechanism leakage looks like across different boundaries.
 
-**Phase 4 — cold-start validation on scruffy:** 🔄 in progress
-10. ✅ Run `boundary init --dry-run` on scruffy with a 2-3 boundary manifest. Inspect: extracted surfaces, would-be contracts, would-pass/fail. Validate the procedure before any files are written. (dry-run done)
-11. ⏳ If dry-run validates: run `boundary init --write` on 2-3 scruffy boundaries. Wait for changes. Observe rot-rate. This is the evidence that moves the experiment from `confidence: low` to evidence-backed. (write pending)
+**Phase 4 — cold-start validation on a target monorepo:** 🔄 in progress
+10. ✅ Run `boundary init --dry-run` on a target monorepo with a 2-3 boundary manifest. Inspect: extracted surfaces, would-be contracts, would-pass/fail. Validate the procedure before any files are written. (dry-run done)
+11. ⏳ If dry-run validates: run `boundary init --write` on 2-3 boundaries in the target repo. Wait for changes. Observe rot-rate. This is the evidence that moves the experiment from `confidence: low` to evidence-backed. (write pending)
 
 ---
 

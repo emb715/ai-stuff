@@ -37,7 +37,7 @@ Not for: single-feature quick specs (use `quick-spec` directly), pure architectu
 
 # Inputs
 
-- Issue number and repo (e.g., `1696` from `PineapplesDev/scruffy`)
+- Issue number and repo (e.g., `1696` from `your-org/your-repo`)
 - User preferences on key architecture decisions (collected during Step 2)
 
 # Playbook

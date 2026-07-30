@@ -40,7 +40,7 @@ Not for: partial runs (use the underlying playbooks directly), or issues that ne
 # Inputs
 
 - `{{ISSUE_NUMBER}}` — the GitHub issue number to process
-- `{{REPO}}` — the repository in `org/repo` form (e.g., `PineapplesDev/scruffy`)
+- `{{REPO}}` — the repository in `org/repo` form (e.g., `your-org/your-repo`)
 - `{{MODE}}` — `gated` (default) or `continuous`. Selected once at the start and fixed for the run.
 
 # Playbook
