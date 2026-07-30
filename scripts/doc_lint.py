@@ -31,6 +31,7 @@ EXCLUDE_GLOBS = [
     "**/build/**/*.md",
     "experiments/*/server/**/*.md",
     "skills/*/docs/**/*.md",
+    "tools/*/docs/**/*.md",
 ]
 
 # Files within three-file artifact folders that intentionally have no frontmatter.
@@ -87,6 +88,11 @@ REQUIRED_KEYS = {
 ALLOWED_STATUS = {"draft", "validated", "vetted", "deprecated"}
 ALLOWED_CONFIDENCE = {"low", "medium", "high"}
 
+# The owner of this repo. Any other value in an artifact's `owner` frontmatter
+# field fails DL012. Set here, not in AGENTS.md prose, so the linter is the
+# source of truth — AGENTS.md documents the rule, this enforces it.
+EXPECTED_OWNER = "@emb715"
+
 GATE_LABELS = {
     "DL001": "Gate 1",
     "DL002": "Gate 1",
@@ -99,6 +105,7 @@ GATE_LABELS = {
     "DL009": "Gate 2",
     "DL010": "Gate 2",
     "DL011": "Gate 2",
+    "DL012": "Gate 1",
 }
 
 
@@ -415,6 +422,19 @@ def lint() -> Tuple[List[Finding], int]:
         if not is_valid_date(date_val):
             findings.append(
                 Finding("DL003", rel_path, f"Invalid last_tested date format: {date_val or '<empty>'}")
+            )
+
+        # DL012 — owner value must match the repo owner exactly.
+        # Prevents OS-username / git-config-user drift. The expected value is
+        # defined once in EXPECTED_OWNER at the top of this file.
+        owner_val = normalize_scalar(str(fm.get("owner", "")))
+        if owner_val and owner_val != EXPECTED_OWNER:
+            findings.append(
+                Finding(
+                    "DL012",
+                    rel_path,
+                    f"Invalid owner value: {owner_val!r} (expected {EXPECTED_OWNER!r})",
+                )
             )
 
         # DL004

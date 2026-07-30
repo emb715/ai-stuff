@@ -141,6 +141,14 @@ New artifact must be linked from:
 
 Failure: BLOCKED.
 
+### DL012 — Owner value matches repo owner
+
+The `owner` frontmatter field must equal `EXPECTED_OWNER` (defined in `scripts/doc_lint.py`, currently `@emb715`). Prevents drift to the OS username, git config user, or any other value an agent might default to. The expected value is defined once in the linter, not in prose, so enforcement is a single source of truth.
+
+Applies to: all files with required frontmatter (see DL001).
+
+Failure: BLOCKED.
+
 ### DL011 — Non-experiment runtime self-containment
 
 Applies to runtime-consumable artifacts outside `experiments/`.
@@ -169,7 +177,7 @@ PROMOTION_DECISION: <allowed|not allowed>
 
 ## Severity
 
-All DL001–DL008 and DL011 are **blocking** in this repository.
+All DL001–DL008, DL011, and DL012 are **blocking** in this repository.
 
 ## Evidence / Results
 

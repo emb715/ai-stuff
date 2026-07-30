@@ -2,7 +2,7 @@ Research, Analyze, and Assess a feature request or change against a codebase. Pr
 
 ## Trigger
 
-A feature request, issue, bug report, or change request needs a plan before implementation. The input is a description of what to build. The output is a phased plan with file-level scope, named risks, a handoff ledger, and an effort estimate.
+A feature request, issue, bug report, change request, or readiness question (e.g., "is this ready to share/release/open-source?") needs a plan before implementation or remediation. The input is a description of what to build or what to assess. The output is a phased plan with file-level scope, named risks, a handoff ledger, and an effort estimate.
 
 If a plan already exists, skip to the readiness loop ([loop-implementation-readiness](../../prompts/loop-implementation-readiness/) prompt) to validate it against the codebase.
 

@@ -147,6 +147,7 @@ When creating/updating docs:
   - `tooling`
   - `tags`
   - `owner`
+- `owner` value is `@emb715` for this repo. Do not use the OS username, the git config user, or any other value. The lint rule DL012 fails on any other value.
 - Add clear sections for:
   - problem/context
   - scope

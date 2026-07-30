@@ -64,3 +64,4 @@ _TODO: Document at least one real run — candidate name, criteria count, defect
 
 - [`prompts/loop-implementation-readiness/`](../loop-implementation-readiness/) — narrower: verify a codebase implements a planning doc, not a release candidate
 - [`playbooks/adversarial-code-review/`](../../playbooks/adversarial-code-review/) — code-level review of git changes, not user-facing surface verification
+- [`playbooks/readiness-cycle/`](../../playbooks/readiness-cycle/) — orchestrator that chains RAA → implementation-orchestration → this prompt into a readiness cycle for existing artifacts

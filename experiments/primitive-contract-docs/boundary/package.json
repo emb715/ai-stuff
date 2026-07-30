@@ -1,0 +1,22 @@
+{
+  "name": "boundary",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "boundary": "./src/cli.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "yaml": "^2.5.0"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.9.0",
+    "vitest": "^2.1.0",
+    "@types/node": "^22.0.0"
+  }
+}

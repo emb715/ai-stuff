@@ -87,6 +87,7 @@ For each selected number:
 | Research, Analyze, Assess a feature request → validated file-scoped plan | `playbooks/raa/` | playbook | `playbook.md` |
 | Execute a validated plan across a fleet → committed, reviewed, CI-green branch | `playbooks/implementation-orchestration/` | playbook | `playbook.md` |
 | Chain a GitHub issue to a merged PR (gated or continuous mode) | `playbooks/issue-to-pr/` | playbook | `playbook.md` |
+| Assess an existing artifact's readiness → fix → verify (RAA → fixes → review) | `playbooks/readiness-cycle/` | playbook | `playbook.md` |
 | Take an idea from proof-of-concept to release-ready (13-phase pipeline) | `playbooks/build-to-release/` | playbook | `playbook.md` |
 | Adversarial code review on git changes; minimum 3 findings | `playbooks/adversarial-code-review/` | playbook | `playbook.md` |
 | Build a multi-platform agent installer CLI/TUI | `playbooks/agent-installer/` | playbook | `playbook.md` |

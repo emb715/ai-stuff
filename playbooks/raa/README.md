@@ -21,7 +21,7 @@ Takes a feature request or change description and produces a validated, file-sco
 
 # When to use
 
-When a feature request, issue, bug report, or change request needs a plan before implementation. The input is a description of what to build. The output is a phased plan with file-level scope, named risks, a handoff ledger, and an effort estimate.
+When a feature request, issue, bug report, change request, or readiness question (e.g., "is this ready to share/release/open-source?") needs a plan before implementation or remediation. The input is a description of what to build or what to assess. The output is a phased plan with file-level scope, named risks, a handoff ledger, and an effort estimate.
 
 If a plan already exists, skip to the readiness loop ([loop-implementation-readiness](../../prompts/loop-implementation-readiness/) prompt) to validate it against the codebase.
 
@@ -64,3 +64,4 @@ _TODO: Document at least one real run — what feature was planned, how many fil
 - [implementation-orchestration](../implementation-orchestration/playbook.md) — consumes the plan RAA produces; the plan's output contract is structured for direct consumption by this playbook.
 - [loop-implementation-readiness](../../prompts/loop-implementation-readiness/) — validates the plan against the codebase before orchestration; catches errors RAA missed (e.g., a Task referencing a field the schema does not have).
 - [issue-to-ready-specs](../issue-to-ready-specs/playbook.md) — related planning playbook; a natural predecessor when the input is a raw issue that needs structuring before RAA can plan against it.
+- [readiness-cycle](../readiness-cycle/playbook.md) — orchestrator that chains RAA (assess + plan) → implementation-orchestration (fix) → review-release-candidate (verify) for existing-artifact readiness questions.

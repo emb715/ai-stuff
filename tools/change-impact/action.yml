@@ -1,0 +1,21 @@
+name: change-impact
+description: Generate a visual change-impact block on pull requests
+inputs:
+  llm:
+    description: LLM provider (auto, anthropic, claude, openai, fuelix, omniroute, ollama, none)
+    required: false
+    default: auto
+  api-key:
+    description: LLM API key (if not in env)
+    required: false
+  skill-path:
+    description: Path to change-impact-diagram SKILL.md
+    required: false
+    default: skills/change-impact-diagram/SKILL.md
+  max-tokens:
+    description: Max token budget for diff truncation
+    required: false
+    default: '50000'
+runs:
+  using: node20
+  main: dist/action/index.js

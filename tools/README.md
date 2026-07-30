@@ -46,4 +46,6 @@ Frontmatter required on the tool README (same standard as all artifacts):
 
 ## Current tools
 
-_Empty._
+| Tool | Tags | Status |
+|---|---|---|
+| [change-impact](change-impact/) | tool, cli, github-action, impact-analysis, mermaid, llm | validated |

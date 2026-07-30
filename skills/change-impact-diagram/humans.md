@@ -1,0 +1,60 @@
+# humans.md — change-impact-diagram
+
+## What this is
+
+A skill that diagrams the impact of a code change on a system and its primitives. Produces four mermaid diagram types, grounded in the diff (recap mode), the plan (plan mode), or a scoped code read (chat mode). Output lands in a PR description, a plan/spec file, or a chat message.
+
+Generalizes Kent C. Dodds' `visual-recap` skill. visual-recap produces one diagram type (system map) for one destination (PR description). This skill adds decision graphs, state maps, and endpoint interaction diagrams, plus plan and chat modes, and routes primitive discovery through `prompts/repo-primitive-audit/` when no `primitives.yaml` exists.
+
+## Why these decisions
+
+**Four diagram types, not one.** visual-recap's system map answers "what was touched?" but not "what flows from this endpoint?" or "what states does this change introduce?" Each diagram type answers a distinct question a reviewer or planner asks. The cost is SKILL.md length; the payoff is the skill covers decision logic and lifecycle shifts that a single flowchart cannot. The test for inclusion: does the diagram type answer a question a reviewer would otherwise ask in prose? If yes, it earns its place.
+
+**Three modes mapping to three destinations.** PR description, plan/spec file, chat message. The mode controls grounding source (diff vs intent vs scoped read), wrapper format (marker-delimited `<details>` vs section heading vs inline), and depth. One diagram set, three contexts. Avoids a "PR-only" skill that's useless at plan time or mid-session.
+
+**Routing to repo-primitive-audit for map verification — not just discovery.** The first design (option B) was to read the audit prompt and run only its map+breakdown phase, skipping the review. That was wrong. The README of repo-primitive-audit is explicit: the review phase is load-bearing — it's what validates the map against the source. Skip it and the map may itself be fiction. The footgun in SKILL.md (ungrounded edges trace back to an unverified map) exists because of this. The skill routes to the full audit (map + breakdown + review) and uses the **review-verified map** as the primitives source. `{{REVIEW_PLAYBOOK}}` is set to the repo's adversarial-code-review or a narrower map-vs-source consistency check.
+
+**Treat `primitives.yaml` as a verified cache, not static documentation.** Static documentation rots — that's a certainty, not a risk. The validate-don't-trust model runs three cheap drift checks (path existence, file mtime vs `last_verified`, directory structure) before trusting a cached map. If any check fails, the map is stale: chat mode flags low confidence and produces diagrams without classification; plan/recap mode blocks and runs repo-primitive-audit to regenerate. The expensive full audit runs only on drift detection, not every use. The `primitives.yaml` schema requires `code` paths per primitive — without them the drift check has nothing to validate.
+
+**Five classDef types, not four.** The initial design copied visual-recap's four classes (touched/extended/added/untouched). The first real test (a refactor removing a primitive and introducing a replacement) exposed the gap: a removed primitive is neither `untouched` (it was affected) nor any of the others. A fifth class (`removed`, dark red, dashed border) was added. The same test exposed the need for an edge-style convention: solid `-->` for current/new paths, dotted `-.->` for deleted paths when a diagram overlays what was removed onto what remains.
+
+**Plan-mode classification states a risk range, not a single value.** Run 3 (plan mode from an issue, compared against the recap of the PR that closed it) exposed this: the plan block classified the change as `composes` (low) because the issue read as a UI feature, but the actual PR was `adds` (high) because the implementer chose server-side + indexed. The decision graph already showed the fork (client-side vs server-side); the classification just didn't follow it. The fix: plan-mode classification must mirror the decision graph branches — "composes (low) to adds (high) depending on filter location" — not pick one branch and hide the other. A single-value plan-mode classification that ignores a high-risk branch is the same failure mode as the speculative-edges footgun: it looks grounded but hides a path the implementer may take.
+
+**Plan mode with an improvised map is riskier than chat mode with one.** The confidence table originally treated plan and chat identically (both medium with improvised maps). Run 3 showed this is wrong: plan mode is where you decide *whether* to do something, and an unverified map there can be wrong by a full risk level. Chat mode with an improvised map produces a medium-confidence diagram that a reviewer can sanity-check against the diff; plan mode with an improvised map produces a medium-confidence classification that may gate a go/no-go decision. The table now splits them: plan with improvised map = medium + risk range warning; chat with improvised map = medium (state it).
+
+**Marker-delimited block, fixed section order (recap mode).** Copied from visual-recap. A future viewer app can ingest the block via the GitHub API. The contract: content between `<!-- change-impact:start -->` and `<!-- change-impact:end -->`, sections in fixed order, optional sections omitted rather than empty. The upsert script is a 30-line splice that never touches text outside the markers.
+
+**Footgun: speculative edges.** The single highest-risk failure. A decision graph with invented branches is fiction, not impact analysis. Every edge must trace to a code path (recap) or a stated plan decision (plan). The skill instructs omission over fiction. This is the one footgun that meets the skill-authoring bar (non-obvious + severe + natural) — models naturally invent plausible-looking branches when the diff doesn't fully constrain the flow.
+
+**Bash vs mjs for the upsert script.** mjs. The splice is `indexOf` + `slice` in JS; the bash equivalent is multi-line `sed`/`awk` with quoting hell on block content containing shell metacharacters. The "one fewer runtime dependency" argument doesn't hold: anywhere `gh` CLI is authenticated, Node ships with the adjacent toolchain.
+
+## Structure decisions
+
+- `scripts/upsert-impact-block.mjs` — recap-mode PR upsert. Same contract as visual-recap's script with the marker name changed. Scoped to recap mode; plan and chat modes don't touch PR descriptions.
+- No `refs/` directory. The skill's depth is the four diagram specs plus the workflow, all of which belong inline because they're consumed as one unit. If the diagram specs grow large enough to fragment reading flow, split per diagram type into `refs/system-map.md`, `refs/decision-graph.md`, etc. Not yet.
+- No `docs/` directory. The skill is grounded in visual-recap (linked in README provenance) and repo-primitive-audit (linked as related artifact). No external spec to capture.
+- `humans.md` (this file) holds the design rationale, the origin, and maintenance — none of which belong in SKILL.md because they don't change what diagrams the model produces next.
+
+## Origin
+
+Session 2026-07-30. User wanted a new skill based on `kentcdodds/kcd-skills/skills/visual-recap`, extended to answer: how does a code change impact the system and its primitives, with decision graphs ("A can produce B or C, B can produce D or C"), state mapping, and endpoint interaction diagrams. The skill was designed through a Q&A exchange: name locked as `change-impact-diagram`, primitive discovery routed to repo-primitive-audit (option A — full review, not B — map only), the upsert script kept as mjs. Placed in `experiments/` because no run evidence exists yet — must test and validate before promotion to `skills/`.
+
+## Known gaps
+
+- **Chat-mode run: completed (2026-07-30).** Tested against a refactor removing a primitive and introducing a replacement. All four diagram types earned their place. The `removed` classDef and dotted-edge convention were added as a direct result. The decision graph was the highest-value output. Classification used an improvised map (medium confidence) — a verified map would have surfaced a deleted script the improvised map missed.
+- **Recap-mode run: completed (2026-07-30, dry run).** Block produced from a real PR diff (27 files, +3548/-175). Marker validation and splice logic verified against the real PR body via `gh` without writing back. All four diagrams produced. Exposed: decision graph syntax is awkward for parallel-arm gating (one check gating one arm, not the whole flow). Plan-vs-actual section was empty because no prior plan block existed.
+- **Plan-mode run: completed (2026-07-30).** Plan block produced from an issue, then compared against the recap block (plan-vs-actual). The decision graph correctly predicted the implementation fork; the PR resolved it. Classification drift from `composes` (plan) to `adds` (actual) exposed the single-value-classification bug — fixed with the risk-range rule. Also exposed: plan mode with an improvised map is riskier than chat mode — fixed by splitting the confidence table.
+- **Mermaid render coverage inside `<details>` unverified.** All four diagram types render natively on GitHub in principle. Run 1 produced diagrams inline (chat mode). Run 2 produced a `<details>`-wrapped block but did not upsert it to a real PR, so `<details>` rendering on GitHub remains unconfirmed. The first real PR upsert should confirm all four render correctly inside `<details>`.
+- **`{{REVIEW_PLAYBOOK}}` value is loosely specified.** The skill says "the repo's adversarial-code-review or a narrower map-vs-source consistency check." If no such playbook exists in the target repo, the user must supply one or accept a generic review. This boundary is documented but not resolved.
+- **Drift-check protocol is designed, not implemented.** The three checks (path, mtime, structure) are specified in SKILL.md but no script or automated runner exists. The first recap run on a repo with `primitives.yaml` should validate the protocol is cheap enough to run every use and catches real drift without false positives.
+- **Ingestion contract is asserted, not built.** The marker-delimited format is designed for a future viewer app, but no viewer exists. The contract is a promise, not a tested boundary.
+- **plan vs recap drift depends on a prior plan block.** The "Plan vs actual" section only appears when a plan-mode block existed. Run 2 produced an empty plan-vs-actual for this reason; Run 3 proved the section is valuable when both blocks exist. This is by design but limits the section's utility in undisciplined workflows.
+
+## Maintenance
+
+- After a real recap run: confirm the upsert script's splice handles edge cases (empty PR body, block at start of body, block at end, multiple blocks from other tools using the same marker scheme — it shouldn't, but verify). Record in README.md Evidence.
+- After a real plan run: confirm the section-heading format reads well in a plan/spec file, not just a PR description. The format is designed for both but tested for neither.
+- After a real chat run: confirm the model produces only the diagram the question calls for, not the full block. Chat mode over-production is a documented failure mode — if it triggers, narrow the SKILL.md chat-mode wording.
+- When repo-primitive-audit's prompt changes: re-audit the routing instruction in SKILL.md. The full-review dependency (map + breakdown + review) is load-bearing; if the audit prompt drops the review phase or restructures it, the routing must update.
+- When GitHub's mermaid support changes: verify all four diagram types still render. `classDef` color behavior and `stateDiagram-v2` syntax are the most likely to drift.
+- Promoted to `skills/` on 2026-07-30. Folder moved from `experiments/` to `skills/`, script path in SKILL.md updated to `skills/change-impact-diagram/scripts/...`, linked from `skills/README.md` index. Next maintenance: after a real PR upsert that a reviewer confirms renders correctly in a browser, consider promotion to `vetted` via the rubric.

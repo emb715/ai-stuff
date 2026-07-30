@@ -63,3 +63,4 @@ Use `templates/playbook-template.md` to start. Follow `_meta/framebook/save-arti
 | [decision-making](decision-making/) | Take N options and produce a ranked shortlist with rationale using multi-criteria decision analysis; fills the brainstorming → product-brief convergence gap | draft |
 | [request-triage](request-triage/) | Route a raw request to the correct planning artifact (spec paradigm vs plan paradigm) based on execution model and scope; does not execute, only routes | draft |
 | [issue-to-pr](issue-to-pr/) | Chain a GitHub issue to a merged PR through issue-to-ready-specs → raa → implementation-orchestration; two modes: gated (human review at each phase) and continuous (end-to-end) | draft |
+| [readiness-cycle](readiness-cycle/) | Take an existing artifact from "is it ready to share/release?" to verified-ready or blocked with a fix plan; chains raa → implementation-orchestration → review-release-candidate | draft |
