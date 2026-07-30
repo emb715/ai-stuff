@@ -9,7 +9,7 @@ tooling:
 tags:
   - standards
   - structure
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Artifact Folder Structure
@@ -79,6 +79,7 @@ Artifacts outside `experiments/` that are intended for reuse (`prompts/`, `skill
 - No required runtime dependency on files under `experiments/`.
 - Any required templates, commands, or support files must live inside the artifact folder (or another non-experimental canonical location).
 - Experiment links are allowed only as provenance/evidence references in human-facing docs; they cannot be required for execution.
+- **No `humans.md` references in the executable artifact.** The consumable file (`prompt.md`, `playbook.md`, `SKILL.md`, `command.md`, `tool.md`) must not mention or link to `humans.md`. `humans.md` is never loaded as agent context — a reference from the executable artifact either produces dead text (the agent ignores it) or induces the agent to read a file it is told never to read. Both violate the standard. A maintainer who needs maintainer context finds `humans.md` by convention (it is the maintenance file in the three-file folder); no pointer from the executable is needed.
 
 Interpretation:
 - Minimum structure is three files (`README.md`, consumable file, `humans.md`).

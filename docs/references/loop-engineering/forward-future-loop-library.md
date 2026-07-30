@@ -10,7 +10,7 @@ tags:
   - references
   - loop-engineering
   - forward-future
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # How Agent Loops Work — Forward Future Loop Library

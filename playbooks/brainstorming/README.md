@@ -12,7 +12,7 @@ tags:
   - brainstorming
   - ideation
   - facilitation
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Purpose

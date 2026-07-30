@@ -10,7 +10,7 @@ tags:
   - playbook
   - deprecation
   - lifecycle
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Deprecate and Archive

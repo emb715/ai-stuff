@@ -10,7 +10,7 @@ tags:
   - references
   - mcp
   - architecture
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # MCP Architecture

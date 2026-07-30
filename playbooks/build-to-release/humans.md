@@ -1,0 +1,49 @@
+# humans.md — build-to-release
+
+## What this is
+
+A playbook that takes an idea from proof-of-concept to release-ready implementation through a 13-phase gated pipeline. It is an orchestrator: it chains the [`product-brief`](../product-brief/) and [`quick-spec`](../quick-spec/) playbooks (for the brief and the specs) and the [`loop-implementation-readiness`](../../prompts/loop-implementation-readiness/) and [`review-release-candidate`](../../prompts/review-release-candidate/) prompts (for the gates), and adds the surrounding phases they don't cover: proof-of-concept, story breakdown, handoff resolution, shared-assumption check, implementation, post-implementation handoff resolution, fix loop, and adversarial proving.
+
+It extends [`issue-to-ready-specs`](../issue-to-ready-specs/), which stops at "specs ready for implementation." This playbook continues through implementation, review, fix loop, and release.
+
+## Why it works
+
+Four structural choices carry most of the value:
+
+**Handoff resolution is the highest-value phase.** In the validating session (memory-bank), Phase 4 parsed 19 handoffs — 16 blocking, 3 non-blocking — all resolved by spec amendment *before* any code was written. Without this phase, downstream specs would have imported functions that didn't exist (`queries.context_for_task`, `sanitize_input`, `ToolError`), used signatures that conflicted (`search_hybrid(query, k=10)` vs `search_hybrid(query, memory_type, min_score, limit)`), and hit compile errors on first run. The handoff resolution turned 19 potential implementation failures into 19 spec amendments.
+
+The shared-root-cause scan made this efficient: 6 of the 19 handoffs (H1, H7, H8, H9, H10, H19) shared one root cause — "SPEC-1 did not define the functions downstream specs import" — and were resolved in one amendment pass (SPEC-1 R6–R11) instead of 6 separate investigations. Another 5 (H2–H6) shared the root cause "SPEC-1's original ACs had simpler signatures than downstream specs needed" — one pass (SPEC-1 R1–R5). Two amendment passes instead of 19.
+
+**The shared-assumption check catches the most common parallel-spec failure mode.** Three or more specs written in parallel independently guess the same wrong thing. In the validating session, SPEC-3's task body code blocks still called `search_hybrid(..., k=limit)` after SPEC-1's R2 amendment renamed the parameter to `limit`. The reconciliation note (S3-R2) correctly described the new signature — but the body it was supposed to reconcile was stale. The check verified the bodies, not just the notes, and caught what Phase 4 missed. These would have caused `TypeError: search_hybrid() got an unexpected keyword argument 'k'` at runtime — a real bug, not cosmetic drift.
+
+This is the playbook's most reusable insight: **the note is not the fix; the body is.** After writing a reconciliation note, grep the spec body for the old form. If it's still there, the amendment didn't propagate.
+
+**The fix loop runs until green.** No shipping with open P0/P1. The validating session's review surfaced 7 defects (0 P0, 0 P1, 3 P2, 4 P3); the fix loop closed the P2s or signed them off as documented residual risk. The 0 P0/P1 line is the loop's contract — if a blocker can't be cleared, the release stops and escalates. Shipping with an unowned P0/P1 is a pipeline failure, not a pragmatic choice.
+
+**Adversarial proving is the final gate.** Every user-facing surface — the 8 MCP tools, 7 CLI commands, 3 dashboard routes, 3 plugin events — was tested against happy path, edge cases, and adversarial inputs (empty, null, oversized, injection, concurrent). A surface verified only by mocked tests (not exercised against the real runtime) was marked BLOCKED in the scorecard with a residual risk owner, not passed. No untested assumptions ship.
+
+## Design decisions
+
+- **Composes existing playbooks and prompts, doesn't replace them.** `product-brief` handles Phase 1, `quick-spec` handles Phase 3, `loop-implementation-readiness` handles Phase 5, `review-release-candidate` handles Phase 9. This playbook provides the scaffolding around them — proof-of-concept, story breakdown, handoff resolution, shared-assumption check, implementation, fix loop, adversarial proving. If those playbooks or prompts improve, this pipeline improves automatically.
+- **Phase 0 (Proof of Concept) is a gate, not a warm-up.** The proof is the smallest possible program that exercises the riskiest assumption. If the proof fails, the architecture changes — and so do all the specs. The proof is throwaway code; its only output is a verdict. This prevents the most expensive failure mode: spec'ing a stack that doesn't work.
+- **Two handoff-resolution phases (4 and 8), not one.** Phase 4 resolves spec-time handoffs (decision points surfaced during spec writing). Phase 8 resolves implementation-time handoffs (discrepancies between the spec and the actual codebase that only surface when you try to implement). They catch different failure modes and neither subsumes the other.
+- **Shared-assumption check is a separate phase (6), not folded into the readiness loop (5).** The loop is per-requirement; the check is cross-spec. They catch different failure modes. Folding them would lose the cross-spec view — the very view that catches 3 specs guessing the same wrong field.
+- **Adversarial proving is the final gate before release, not a review activity.** It's listed in the scorecard, but it runs after the fix loop closes — because the fix loop may introduce new surfaces that need adversarial testing. Running it earlier would miss fix-loop-introduced surfaces.
+- **Fix loop is bounded by progress, not by a fixed round count.** Same stop rule as the readiness loop: if a round produces no classification improvement, stop and escalate. Idling is not progress.
+- **Fleet-agnostic.** The sequence works with parallel agents (dispatch N implementations simultaneously) or sequentially (one at a time, dependency order). The gotchas from the validating session are inlined in the playbook — each item is a specific failure that happened in the session that produced this playbook.
+
+## Origin
+
+Extracted from a real session (2026-07-26) that built the memory-bank project — a local memory system for opencode sessions — from proof-of-concept through release. The session ran the full pipeline: a `proof.py` script verified `sqlite-memory` + `sqlite-vector` extensions; a product brief defined the 8-MVP-feature scope; 4 specs were written in parallel (SPEC-1 core domain, SPEC-2 MCP server + 8 tools, SPEC-3 CLI + dashboard, SPEC-4 opencode plugin); handoff resolution caught 19 handoffs (16 blocking); the readiness loop extracted 29 requirements (27 covered, 2 partial — success metrics that are post-launch measurements); the shared-assumption check found 3 inconsistencies (1 internal count error, 2 stale parameter references); implementation produced 88 Python tests + 84 TypeScript tests passing; the release scorecard verified 92 ACs (84 pass, 8 blocked on live-runtime verification) with 0 P0/P1 defects.
+
+The session used the ndv fleet (ndv-research, ndv-architect, ndv-explain, ndv-diagnose, ndv-build, ndv-review, ndv-refactor, ndv-optimize, ndv-tester, ndv-secure, ndv-honest) but the pipeline is fleet-agnostic — the sequence is what matters, not the agents. A solo agent can run it sequentially; a fleet can run the parallel phases in parallel.
+
+## Maintenance
+
+- **If handoff resolution (Phase 4) consistently finds 0 handoffs**, the spec investigation (Phase 3) is either exceptionally thorough or the specs don't share codebase entities. The phase is cheap; keep it. A 0-handoff run is a good sign, not a wasted phase.
+- **If the shared-assumption check (Phase 6) consistently finds nothing**, either you're writing specs sequentially (lower risk) or the specs don't share codebase entities. The check is cheap; keep running it. When it does find something, it's a runtime bug — high value, low cost.
+- **If the readiness loop (Phase 5) consistently returns READY_WITH_CONDITIONS**, the brief may be underspecified — it contains success metrics that no spec can pre-verify (the validating session's R22/R23: "recall_similar returns relevant gotcha ≥70% of the time" is a post-launch measurement, not an implementable AC). That's fine — document the P1s and ship. But if P0s are partial, the brief has gaps that should have been resolved in Phase 1.
+- **If the release scorecard (Phase 9) has many BLOCKED ACs**, the implementation wasn't exercisable in a read-only review (network downloads, live runtime). That's expected for some surfaces (the validating session had 8 BLOCKED on live opencode runtime). Flag each as residual risk with an owner. But if the majority are BLOCKED, the test plan was insufficient — strengthen it in the next run.
+- **If the fix loop (Phase 10) can't close a blocker**, stop the release. Escalate. Do not ship with unowned P0/P1. This is the loop's contract — if it can't hold, the pipeline failed, and that's the correct outcome, not a workaround.
+- **If adversarial proving (Phase 11) finds a surface that fails**, it's a defect — route to the fix loop. Do not ship a surface that fails adversarial testing. A surface that fails injection / null / concurrent input is a security or correctness bug, not a polish item.
+- **Promote to `status: validated`** after 2-3 real runs with documented outcomes. Current state: one validating session (memory-bank, 2026-07-26), fleet-specific. Needs at least one run without the ndv fleet to confirm fleet-agnosticism, and at least one run on a project of different size (the validating session was 4 specs; a 1-2 spec project or a 6+ spec project would test the pipeline's scaling assumptions).

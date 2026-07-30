@@ -9,7 +9,7 @@ tooling:
 tags:
   - playbook
   - promotion
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Promote an Artifact

@@ -2,6 +2,14 @@
 
 Operational knowledge base for AI workflows, patterns, prompts, skills, and practices that are tested, reproducible, and reusable.
 
+## How to use this repo (for LLMs)
+
+1. Read the **Artifact inventory** table below — pick an artifact by purpose and status
+2. Open its folder `README.md` (the link in the table) — get frontmatter (status, confidence, last_tested) and a pointer to the consumable file
+3. Use the consumable file: `prompt.md` (prompts), `SKILL.md` (skills), `playbook.md` (playbooks), `system-prompt.md` (agents) — copy-paste clean, no frontmatter, no prose
+
+Trust order: `vetted` > `validated` > `draft`. Flag `last_tested` older than 90 days as stale before relying on it. Ignore `experiments/`, `_meta/`, `docs/standards/` — not part of the reusable surface.
+
 ## What this repo is for
 
 This repo is **not** a random notes dump.
@@ -112,7 +120,7 @@ Fast rule set:
 
 ## Artifact inventory
 
-Update this table when you add or promote artifacts.
+This table is a snapshot. The filesystem is authoritative — `ls` the content dirs (`agents/ prompts/ playbooks/ skills/ tools/`) to confirm what exists. If the table drifts, it is wrong; fix it.
 
 ### Agents
 
@@ -128,6 +136,7 @@ Update this table when you add or promote artifacts.
 | [loop-implementation-readiness](prompts/loop-implementation-readiness/) | Verify a codebase implements a planning doc; tri-state verdict, one highest-risk gap per round | validated |
 | [knowledge-extraction](prompts/knowledge-extraction/) | Mine a completed session and propose durable knowledge writes; user approves before write | validated |
 | [repo-primitive-audit](prompts/repo-primitive-audit/) | Map a repo's primitives from source, break down each section, then run an adversarial review playbook against the map | validated |
+| [review-release-candidate](prompts/review-release-candidate/) | Build a release-candidate review harness: inventory user-facing surfaces vs acceptance criteria, triage by root cause, gate fix batches with regression tests | draft |
 
 ### Playbooks
 
@@ -138,12 +147,14 @@ Update this table when you add or promote artifacts.
 | [adversarial-code-review](playbooks/adversarial-code-review/) | Adversarial code review on git changes; cross-references claims vs reality, minimum 3 findings, fix menu | draft |
 | [quick-spec](playbooks/quick-spec/) | Create implementation-ready specs through discovery + code investigation; enforces 5-criterion Ready-for-Dev standard | validated |
 | [retrospective](playbooks/retrospective/) | Run a retrospective on completed work; lessons, follow-through check, readiness assessment, SMART action items | draft |
+| [issue-to-ready-specs](playbooks/issue-to-ready-specs/) | Drive issues from raw idea to implementation-ready specs | draft |
 
 ### Skills
 
 | Skill | Purpose | Status |
 |---|---|---|
 | [prompt-factory](skills/prompt-factory/) | Generate deterministic implementation prompts from explicit plan docs or session context with mode/pre-flight gating (`default`, `fast`, `auto`; `strict` pending) | validated |
+| [skill-authoring](skills/skill-authoring/) | Create and maintain agent skills for libraries/frameworks/tools; structure, token efficiency, coverage | draft |
 
 ### Tools
 
@@ -153,9 +164,7 @@ Update this table when you add or promote artifacts.
 
 ### Experiments
 
-| Experiment | Purpose | Status |
-|---|---|---|
-| [workflow-engine](experiments/workflow-engine/) | Web-based workflow engine for multi-session AI dev cycles: MCP state, prompt-factory integration, composable UI modules | draft |
+Experiments are not part of the curated inventory. See `experiments/` for in-progress work; do not rely on it for reuse.
 
 ## Operating cadence (weekly)
 

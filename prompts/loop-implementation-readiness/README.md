@@ -12,7 +12,7 @@ tags:
   - validation
   - implementation-readiness
   - codebase-review
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Purpose
@@ -73,6 +73,9 @@ Quantitative per-run metrics (rounds-to-verdict, classification accuracy vs. a m
 - **Unilateral destructive execution.** The ask-gate is non-negotiable. The loop has no authority to perform schema changes, data migrations, secret rotation, force-pushes, public endpoint changes, or dependency bumps without explicit user approval per action.
 - **Multi-doc sets.** Cross-doc consistency degrades when `{{DOC}}` is a set rather than a single primary doc. Scope to one primary doc per run; reference secondaries explicitly and reject the run if cross-doc conflicts block classification.
 - **Empty codebase / unreadable doc.** Both inputs must be confirmed before round 0. The loop must not start if it cannot enumerate either.
+- **Shared root causes across requirements.** Multiple requirements may be blocked by the same codebase fact (e.g., 3 specs all assume `User.orgId` exists). Without the shared-root-cause scan (Round 0 post-classification), the loop resolves the same underlying issue N times instead of once. If the loop seems to be re-solving the same problem across rounds, check whether the scan step was skipped.
+- **Amendment propagation gaps.** When an amendment fixes a Task's code block, the Test Plan and Edge Cases sections may still reference the old code. The post-amendment propagation check (round step 7) catches this. Without it, specs pass per-requirement validation but are internally inconsistent — tests written from the spec would throw against the amended implementation.
+- **Free-form requirement extraction.** Round 0 must extract from specific doc sections (Scope In bullets, Architecture rows, Constraint lines, Acceptance Criteria), not a free-form read. Under-enumeration misses requirements; over-enumeration inflates scope past the doc author's intent.
 
 # Related prompts
 

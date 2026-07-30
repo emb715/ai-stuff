@@ -21,6 +21,7 @@ A standalone playbook for creating product briefs from rough ideas or brainstorm
 - **No file writing.** The brief lives in the conversation. User copies what they need.
 - **No advanced-elicitation or party-mode.** Removed in the initial rewrite. Not re-added.
 - **Inline continuation replaces tool handoff.** The original's completion step suggested running `create-prd` next as a separate workflow. The rewrite keeps the session open — if the user wants to continue, keep going. The brief is the starting document for inline plan refinement.
+- **Skip-research branch.** Added after a real session where research was done upstream by specialist agents before the playbook was invoked. The playbook's research phase was redundant. The skip condition checks whether file paths, schema models, and API endpoints are already documented — if so, go straight to drafting.
 
 ## Origin
 

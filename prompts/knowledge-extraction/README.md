@@ -12,7 +12,7 @@ tags:
   - extraction
   - knowledge-management
   - post-session
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Purpose

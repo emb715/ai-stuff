@@ -9,7 +9,7 @@ tooling:
 tags:
   - references
   - loop-engineering
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Loop Engineering — References

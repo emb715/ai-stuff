@@ -2,14 +2,14 @@
 title: "Playbooks Index"
 status: validated
 confidence: high
-last_tested: 2026-06-24
+last_tested: 2026-07-13
 scope: personal
 tooling:
   - "repo-process/v1"
 tags:
   - playbook
   - index
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # playbooks/
@@ -53,5 +53,13 @@ Use `templates/playbook-template.md` to start. Follow `_meta/framebook/save-arti
 | [brainstorming](brainstorming/) | Facilitate interactive brainstorming sessions using 61 techniques across 10 categories; standalone, no framework dependencies | validated |
 | [product-brief](product-brief/) | Turn brainstorm output or a rough idea into a structured product brief; fills the brainstorm→plan gap | validated |
 | [adversarial-code-review](adversarial-code-review/) | Adversarial code review on git changes; cross-references claims vs reality, minimum 3 findings, fix menu | validated |
-| [quick-spec](quick-spec/) | Create implementation-ready specs through discovery + code investigation; enforces 5-criterion Ready-for-Dev standard | validated |
+| [quick-spec](quick-spec/) | Create implementation-ready specs through discovery + code investigation; enforces 6-criterion Ready-for-Dev standard | validated |
+| [issue-to-ready-specs](issue-to-ready-specs/) | Turn a GitHub issue into a complete implementation-ready spec suite; chains product-brief + quick-spec with research, architecture, handoff resolution, and a readiness audit | draft |
+| [raa](raa/) | Research, Analyze, Assess a feature request against a codebase; produces a validated, file-scoped, implementation-ready plan (not code) for implementation-orchestration to consume | draft |
+| [implementation-orchestration](implementation-orchestration/) | Execute a validated implementation plan across a fleet of build agents; phases, file-level scope, handoff ledger, mandatory review, CI fix loop → committed/reviewed/CI-green branch | draft |
+| [build-to-release](build-to-release/) | Take an idea from proof-of-concept to release-ready implementation through a 13-phase gated pipeline; chains product-brief + quick-spec + the readiness and review prompts with proof, implementation, handoff resolution, fix loop, and adversarial proving | draft |
 | [retrospective](retrospective/) | Run a retrospective on completed work; lessons, follow-through check, readiness assessment, SMART action items | draft |
+| [agent-installer](agent-installer/) | Build a multi-platform agent installer with a `@clack/prompts` TUI — agnostic engine, registry-driven platforms, idempotent routing, temp-dir tests | draft |
+| [decision-making](decision-making/) | Take N options and produce a ranked shortlist with rationale using multi-criteria decision analysis; fills the brainstorming → product-brief convergence gap | draft |
+| [request-triage](request-triage/) | Route a raw request to the correct planning artifact (spec paradigm vs plan paradigm) based on execution model and scope; does not execute, only routes | draft |
+| [issue-to-pr](issue-to-pr/) | Chain a GitHub issue to a merged PR through issue-to-ready-specs → raa → implementation-orchestration; two modes: gated (human review at each phase) and continuous (end-to-end) | draft |

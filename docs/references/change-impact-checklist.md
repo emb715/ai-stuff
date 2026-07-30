@@ -11,7 +11,7 @@ tags:
   - checklist
   - change-management
   - impact-analysis
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Change Impact Checklist

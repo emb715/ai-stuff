@@ -62,6 +62,12 @@ Fix any DL008 (orphan) failures:
 
 If linter is broken: manually check root `README.md` and `playbooks/README.md` against the actual folder contents.
 
+Check `USAGE.md` task map against filesystem:
+- `ls agents/ prompts/ playbooks/ skills/ tools/`
+- Any artifact folder on disk not in the USAGE.md task map → add a row
+- Any row in the task map with no matching folder → remove the row
+- `USAGE.md` is the LLM's consumption surface — drift here means the LLM misses or invents artifacts
+
 ### 5. Write the changelog entry
 
 Open or create `changelog/week-YYYY-WW.md` (use ISO week number).

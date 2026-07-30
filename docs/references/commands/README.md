@@ -12,7 +12,7 @@ tags:
   - commands
   - opencode
   - claude-code
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # docs/references/commands/

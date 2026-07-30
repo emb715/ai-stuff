@@ -9,7 +9,7 @@ tooling:
 tags:
   - prompts
   - index
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # prompts/
@@ -78,3 +78,4 @@ If a command wrapper exists, keep it in the same prompt folder so runtime behavi
 | [loop-implementation-readiness](loop-implementation-readiness/) | loop, validation, implementation-readiness, codebase-review | validated |
 | [knowledge-extraction](knowledge-extraction/) | one-shot, extraction, knowledge-management, post-session | validated |
 | [repo-primitive-audit](repo-primitive-audit/) | one-shot, review, audit, codebase-review, repo-mapping | validated |
+| [review-release-candidate](review-release-candidate/) | one-shot, release, verification, qa, release-gate | draft |

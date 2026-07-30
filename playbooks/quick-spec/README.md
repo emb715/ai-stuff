@@ -12,18 +12,20 @@ tags:
   - specification
   - implementation-readiness
   - development
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Purpose
 
-Creates implementation-ready technical specifications through conversational discovery, code investigation, and structured documentation. Enforces a five-criterion Ready-for-Development standard: Actionable, Logical, Testable, Complete, Self-contained. A spec that fails any criterion is not handed off.
+Creates implementation-ready technical specifications through conversational discovery, code investigation, and structured documentation. Enforces a six-criterion Ready-for-Development standard: Actionable, Logical, Testable, Complete, Self-contained, Consistent. A spec that fails any criterion is not handed off.
 
 # When to use
 
 When the user says "create a quick spec" or "generate a tech spec", or when a feature or change needs an implementation-ready spec before development starts. Produces a document a fresh agent can implement from without session history.
 
 Not for: full PRD creation (use `prompts/loop-prd-readiness/`), architectural decision records, or research documents.
+
+**Paradigm:** this playbook belongs to the spec paradigm. Use the spec paradigm ([quick-spec](../quick-spec/), [issue-to-ready-specs](../issue-to-ready-specs/)) when a single agent or human will implement the feature in one session — the spec is the contract, the implementer handles phasing. Use the plan paradigm ([raa](../raa/), [implementation-orchestration](../implementation-orchestration/)) when a fleet will implement in parallel — the plan handles phasing, file ownership, and handoffs. The paradigms compose: specs feed RAA as the feature description. See [request-triage](../request-triage/) if unsure which to use.
 
 # Preconditions
 
@@ -54,6 +56,7 @@ _TODO: Document at least one real run — what feature was specced, did it pass 
 - Code investigation quality depends on the agent's ability to search the codebase effectively. Large or unfamiliar codebases may produce incomplete Context sections. Scope the investigation if needed.
 - The spec template is a starting point, not a rigid format. Some features need additional sections (data models, API contracts, migration plans). Add what the feature requires.
 - If the feature is too complex for a single spec, split it. A spec that tries to cover too much fails the Complete criterion because details get glossed over.
+- Schema-field assumptions are the single largest source of spec rework. A spec writer who assumes `User.orgId` exists (when membership is via a `Member` join table) produces Tasks that won't compile. Step 2 now requires verifying every referenced field against the actual schema — enforce this.
 
 # Related artifacts
 

@@ -10,7 +10,7 @@ tags:
   - playbook
   - sanitization
   - security
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Sanitize Before Publish

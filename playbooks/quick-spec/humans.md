@@ -2,13 +2,15 @@
 
 ## What this is
 
-A standalone playbook for creating implementation-ready technical specifications. Enforces a five-criterion Ready-for-Development standard before handoff. Investigates the existing codebase to ground specs in real files, patterns, and integration points. Rewritten from a framework-specific workflow with all framework dependencies removed.
+A standalone playbook for creating implementation-ready technical specifications. Enforces a six-criterion Ready-for-Development standard before handoff. Investigates the existing codebase to ground specs in real files, patterns, and integration points. Rewritten from a framework-specific workflow with all framework dependencies removed.
 
 ## Why it works
 
 Three structural choices carry most of the value:
 
-**The Ready-for-Development standard.** Five criteria, all load-bearing. Actionable (file paths, specific actions), Logical (dependency-ordered), Testable (Given/When/Then with edge cases), Complete (no placeholders), Self-contained (fresh agent can implement). This is a checklist you can apply to any spec, not just ones produced by this playbook. The standard is the most reusable element — it works as a review gate on specs from any source.
+**The Ready-for-Development standard.** Six criteria, all load-bearing. Actionable (file paths, specific actions), Logical (dependency-ordered), Testable (Given/When/Then with edge cases), Complete (no placeholders), Self-contained (fresh agent can implement), Consistent (all sections describe the same implementation). This is a checklist you can apply to any spec, not just ones produced by this playbook. The standard is the most reusable element — it works as a review gate on specs from any source.
+
+The sixth criterion, Consistent, was added after a real session where a spec amendment fixed a Task but left the Test Plan mocking the old query — per-section validation passed, cross-section consistency failed.
 
 **Codebase investigation before writing.** The spec is grounded in reality — real files, real patterns, real integration points. A spec written without investigating the codebase produces tasks that reference files that don't exist, patterns that aren't used, and dependencies that aren't present. Investigation first prevents this.
 

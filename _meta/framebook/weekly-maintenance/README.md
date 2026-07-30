@@ -10,7 +10,7 @@ tags:
   - playbook
   - maintenance
   - cadence
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Weekly Maintenance

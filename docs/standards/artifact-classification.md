@@ -10,7 +10,7 @@ tags:
   - standards
   - taxonomy
   - routing
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Artifact Classification Standard

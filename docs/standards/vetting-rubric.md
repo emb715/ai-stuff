@@ -9,7 +9,7 @@ tooling:
 tags:
   - standards
   - quality
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Vetting Rubric

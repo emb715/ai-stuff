@@ -10,7 +10,7 @@ tags:
   - standards
   - lint
   - quality-gates
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Documentation Lint Specification

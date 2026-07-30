@@ -10,7 +10,7 @@ tags:
   - playbook
   - classification
   - routing
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Classify an Artifact

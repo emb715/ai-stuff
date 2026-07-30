@@ -9,7 +9,7 @@ tooling:
 tags:
   - references
   - mcp
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # MCP References

@@ -9,7 +9,7 @@ tooling:
 tags:
   - playbook
   - intake
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Save Artifact from Another Project

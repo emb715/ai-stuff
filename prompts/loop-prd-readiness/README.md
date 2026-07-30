@@ -11,7 +11,7 @@ tags:
   - loop
   - planning
   - implementation-readiness
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Purpose

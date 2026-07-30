@@ -11,7 +11,7 @@ tags:
   - compliance
   - lint
   - gates
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Fix Compliance Failures

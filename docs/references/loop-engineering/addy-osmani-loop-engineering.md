@@ -10,7 +10,7 @@ tags:
   - references
   - loop-engineering
   - addy-osmani
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Loop Engineering — Addy Osmani

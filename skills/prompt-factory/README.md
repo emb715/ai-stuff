@@ -10,7 +10,7 @@ tags:
   - skill
   - prompts
   - workflow
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Purpose

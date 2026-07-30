@@ -10,7 +10,7 @@ tags:
   - references
   - mcp
   - typescript
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # MCP TypeScript Server

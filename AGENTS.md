@@ -248,6 +248,14 @@ New artifacts must be discoverable:
 
 If orphaned: **fail**.
 
+### Gate 7 — Executable/human-file separation
+
+The consumable file (`prompt.md`, `playbook.md`, `SKILL.md`, `command.md`, `tool.md`) must not reference `humans.md`. `humans.md` is never loaded as agent context; a pointer from the executable artifact either produces dead text or induces the agent to read a file it is told never to read.
+
+Applies to: three-file artifact folders (`prompts/`, `skills/`, `tools/`, `playbooks/`, `agents/`).
+
+Check: grep for `humans.md` in the consumable file. Any match: **fail**.
+
 ---
 
 ## Failure behavior (required)

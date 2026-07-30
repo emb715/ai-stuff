@@ -12,7 +12,7 @@ tags:
   - product
   - planning
   - facilitation
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Purpose

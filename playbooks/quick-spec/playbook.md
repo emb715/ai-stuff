@@ -1,4 +1,4 @@
-Create an implementation-ready technical specification through conversational discovery, code investigation, and structured documentation. A spec is ready for development only when it meets five criteria: Actionable, Logical, Testable, Complete, Self-contained.
+Create an implementation-ready technical specification through conversational discovery, code investigation, and structured documentation. A spec is ready for development only when it meets six criteria: Actionable, Logical, Testable, Complete, Self-contained, Consistent.
 
 ## Trigger
 
@@ -12,13 +12,14 @@ User says "create a quick spec", "generate a tech spec", or you have a feature o
 
 ## The Ready-for-Development standard
 
-A spec is ready for development ONLY if all five are true:
+A spec is ready for development ONLY if all six are true:
 
 - **Actionable** — every task has a clear file path and specific action. No "implement the UI" — instead "add `handleSubmit` to `src/components/Form.tsx` that calls `api.submit()`".
 - **Logical** — tasks are ordered by dependency. Lowest level first (data models before API endpoints, endpoints before UI calls).
 - **Testable** — all acceptance criteria follow Given/When/Then. Cover happy path AND edge cases. No untestable criteria.
 - **Complete** — all investigation results inlined. No placeholders, no "TBD", no "to be determined during implementation".
 - **Self-contained** — a fresh agent with no session history can implement the feature by reading the spec alone. No implicit context from the conversation.
+- **Consistent** — all sections describe the same implementation. Tasks, Test Plan, Edge Cases, and Known Issues must reference the same query shapes, the same model names, and the same API contracts. A spec where Task 1 uses `prisma.member.findMany` but the Test Plan mocks `prisma.user.findMany` is inconsistent and not ready, even if each section passes the other criteria individually.
 
 If any criterion fails, the spec is not ready. Fix it before handing off.
 
@@ -44,6 +45,10 @@ Before writing anything, investigate the existing code to ground the spec in rea
 - **Check conventions** — naming, file structure, error handling patterns, test patterns used in the codebase
 - **Identify dependencies** — what libraries, utilities, services will this feature use? What versions?
 - **Find potential conflicts** — does anything already do part of this? Are there naming collisions? Architecture constraints?
+
+**Required: verify every schema field you reference.** For every database model field that will appear in a Task's code block (e.g., `select: { id, name, email, orgId }`), confirm the field exists on the model before writing it into the spec. Run a direct query against the schema — do not guess from naming conventions.
+
+A spec that references nonexistent schema fields fails the Self-contained criterion: a fresh agent would hit a compile error. Common trap: assuming a model has a direct FK (`User.orgId`) when membership is actually a join table (`Member` with `userId` + `organizationId`).
 
 Record findings. These get inlined into the spec — a fresh agent needs them.
 
@@ -91,6 +96,7 @@ Run the Ready-for-Development check:
 - [ ] **Testable** — read every AC. Does it follow Given/When/Then? Are edge cases covered? If any AC is untestable, rewrite it.
 - [ ] **Complete** — any placeholders? Any "TBD"? Any missing investigation results? Fill them in.
 - [ ] **Self-contained** — could a fresh agent implement this without asking questions? If not, add the missing context.
+- [ ] **Consistent** — read Tasks, Test Plan, Edge Cases, and Known Issues together. Do they reference the same model names, query shapes, and API contracts? If any section describes a different implementation than the Tasks, rewrite the stale section. Common blind spot: after amending a Task, the Test Plan still mocks the old query.
 
 If any check fails, fix the spec. Do not hand off a failing spec.
 

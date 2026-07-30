@@ -12,7 +12,7 @@ tags:
   - code-review
   - quality
   - adversarial
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Purpose
@@ -24,6 +24,8 @@ Performs an adversarial code review on git changes. Cross-references git reality
 When the user says "run code review" or "review this code", or when you have a git diff or set of changed files that need quality validation before merge. Works on any git repository — uncommitted changes, staged changes, or branch diffs.
 
 Not for: reviewing entire codebases (scope to a diff), reviewing config/tooling files, or rubber-stamping changes.
+
+Dual role: when used inside [implementation-orchestration](../implementation-orchestration/), the orchestration playbook invokes this as its review phase. Run standalone when reviewing code implemented outside this vault (hand-written, another tool, a prior session).
 
 # Preconditions
 

@@ -10,7 +10,7 @@ tags:
   - plan
   - template
   - meta
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Plan: Create Shareable AI Vault Template

@@ -25,6 +25,10 @@ Wait for the response. That's the only question before research begins.
 
 ## Step 2 — Research
 
+**Skip condition:** If research was already done upstream (architecture decisions exist, codebase investigation is complete, or a prior agent mapped the domain), skip to Step 3. Use the upstream research as the basis for the draft. Do not re-research.
+
+**Skip signal:** You have file paths, schema models, API endpoints, or UI component locations already documented from a prior step. If you only have a GitHub issue body and no codebase context, do the research.
+
 Before drafting anything, research the problem space:
 
 - Who has this problem? What do they currently use? What do they complain about?
@@ -37,6 +41,8 @@ Use web search or whatever tools are available. If tools aren't available, state
 Summarize findings to yourself silently. Don't show the research — show the draft.
 
 ## Step 3 — Draft the brief
+
+If research was skipped (Step 2 skip condition), use the upstream research and architecture decisions as the basis for the draft. Pre-fill the Scope/Constraints section from any architecture decisions that exist — do not re-derive them.
 
 Based on the idea and research, draft all four sections. Mark anything uncertain with `[assumption — confirm]`.
 

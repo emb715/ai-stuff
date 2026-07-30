@@ -10,7 +10,7 @@ tags:
   - playbook
   - skills
   - authoring
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # Write a Skill

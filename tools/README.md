@@ -9,7 +9,7 @@ tooling:
 tags:
   - tools
   - index
-owner: "@ezequielbenitez"
+owner: "@emb715"
 ---
 
 # tools/
@@ -46,4 +46,4 @@ Frontmatter required on the tool README (same standard as all artifacts):
 
 ## Current tools
 
-_Empty. First tool lands here when prompt-factory experiment is validated._
+_Empty._
