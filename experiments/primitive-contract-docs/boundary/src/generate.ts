@@ -18,6 +18,7 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync, statSync, openSync,
 import { join } from "node:path";
 import type { Manifest, BoundaryEntry } from "./manifest.ts";
 import { boundaryDir } from "./manifest.ts";
+import { BoundaryError } from "./errors.ts";
 import { extractSurface } from "./surface.ts";
 import { parseAGENTS, getSection, type ParsedAGENTS, type MarkdownSection } from "./markdown.ts";
 import { generateAgentsTemplate } from "./template.ts";
@@ -420,15 +421,17 @@ function readDraftFile(draftsPath: string): GenerateDraftFile {
   const parsed = readJsonFile(draftsPath, "applyGeneratedDrafts");
 
   if (!parsed || typeof parsed !== "object") {
-    throw new Error(
+    throw new BoundaryError(
       `applyGeneratedDrafts: expected a JSON object at ${draftsPath}, got ${typeof parsed}`,
+      "GENERATE_ERROR",
     );
   }
 
   const obj = parsed as Record<string, unknown>;
   if (!Array.isArray(obj.boundaries)) {
-    throw new Error(
+    throw new BoundaryError(
       `applyGeneratedDrafts: expected a 'boundaries' array at ${draftsPath}`,
+      "GENERATE_ERROR",
     );
   }
 

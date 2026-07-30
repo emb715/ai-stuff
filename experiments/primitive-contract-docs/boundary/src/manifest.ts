@@ -9,6 +9,9 @@
 import { readFileSync, existsSync } from "node:fs";
 import { join, resolve, sep } from "node:path";
 import { parse as parseYaml } from "yaml";
+import { ManifestError } from "./errors.ts";
+
+export { ManifestError };
 
 export interface BoundaryEntry {
   dir: string;
@@ -22,16 +25,6 @@ export interface Manifest {
   maxLines: number;
   boundaries: BoundaryEntry[];
   repoRoot: string;
-}
-
-export class ManifestError extends Error {
-  constructor(
-    message: string,
-    public field?: string,
-  ) {
-    super(message);
-    this.name = "ManifestError";
-  }
 }
 
 /**

@@ -15,6 +15,7 @@ import type { Manifest, BoundaryEntry } from "./manifest.ts";
 import { parseAGENTS, getSection } from "./markdown.ts";
 import { flaggedByPhase1 } from "./phase1-rules.ts";
 import { readJsonFile } from "./json-apply.ts";
+import { BoundaryError } from "./errors.ts";
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
@@ -178,8 +179,9 @@ export function applyLintResults(manifest: Manifest, resultsPath: string): LintR
   const parsed = readJsonFile(resultsPath, "applyLintResults");
 
   if (!Array.isArray(parsed)) {
-    throw new Error(
+    throw new BoundaryError(
       `applyLintResults: expected a JSON array at ${resultsPath}, got ${typeof parsed}`,
+      "LINT_ERROR",
     );
   }
 

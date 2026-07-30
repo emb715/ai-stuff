@@ -23,6 +23,7 @@
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { loadManifest, type Manifest, ManifestError } from "./manifest.ts";
+import { BoundaryError } from "./errors.ts";
 import { runCheck } from "./check.ts";
 import { initDryRun, initWrite } from "./init.ts";
 import { discover, generateManifestYaml } from "./discover.ts";

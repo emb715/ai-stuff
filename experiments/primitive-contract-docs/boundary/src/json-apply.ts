@@ -10,13 +10,14 @@
  */
 
 import { readFileSync } from "node:fs";
+import { BoundaryError } from "./errors.ts";
 
 /**
  * Read `path` as UTF-8 and parse it as JSON.
  *
- * Throws an Error (not a SyntaxError) when the file cannot be parsed,
- * with a message of the form: `<context>: failed to parse JSON at <path>: <reason>`.
- * `context` identifies the calling command (e.g. "applyGeneratedDrafts",
+ * Throws a BoundaryError when the file cannot be parsed, with a message of
+ * the form: `<context>: failed to parse JSON at <path>: <reason>`. `context`
+ * identifies the calling command (e.g. "applyGeneratedDrafts",
  * "applyLintResults") so the user knows which apply pass failed.
  *
  * Does NOT validate the parsed shape — that is the caller's responsibility.
@@ -28,8 +29,9 @@ export function readJsonFile(path: string, context: string): unknown {
   try {
     parsed = JSON.parse(raw);
   } catch (e) {
-    throw new Error(
+    throw new BoundaryError(
       `${context}: failed to parse JSON at ${path}: ${(e as Error).message}`,
+      "JSON_PARSE_ERROR",
     );
   }
 
