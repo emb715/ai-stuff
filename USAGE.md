@@ -90,6 +90,7 @@ All artifact paths below are relative to the repo root (https://github.com/emb71
 | Map a repo's primitives from source, then adversarial-review the map | `prompts/repo-primitive-audit/` | prompt | `prompt.md` |
 | Verify a release candidate against acceptance criteria; gate fix batches | `prompts/review-release-candidate/` | prompt | `prompt.md` |
 | Register `/ai-stuff` command in an external LLM harness to browse this vault | `prompts/ai-stuff-command-installer/` | prompt | `prompt.md` |
+| Author tests from a spec or acceptance criteria, before implementation | `skills/test-authoring/` | skill | `SKILL.md` |
 | Generate ready-to-paste prompts from a plan doc or session context | `skills/prompt-factory/` | skill | `SKILL.md` |
 | Author a new skill for a library, framework, or tool | `skills/skill-authoring/` | skill | `SKILL.md` |
 | Diagram a code change's impact across the system and its primitives | `skills/change-impact-diagram/` | skill | `SKILL.md` |
@@ -107,7 +108,10 @@ All artifact paths below are relative to the repo root (https://github.com/emb71
 | Adversarial code review on git changes; minimum 3 findings | `playbooks/adversarial-code-review/` | playbook | `playbook.md` |
 | Build a multi-platform agent installer CLI/TUI | `playbooks/agent-installer/` | playbook | `playbook.md` |
 | Retrospective on completed work; lessons + SMART action items | `playbooks/retrospective/` | playbook | `playbook.md` |
+| Verify a running build against its acceptance criteria; runtime evidence anchors | `playbooks/acceptance-verification/` | playbook | `playbook.md` |
+| Restore service when a shipped change breaks production; mitigate-first runbook | `playbooks/incident-response/` | playbook | `playbook.md` |
 | Run change-impact-diagram on PRs or locally; LLM-agnostic PR upsert | `tools/change-impact/` | tool | `tool.md` |
+| Run a Playwright suite and emit a per-criterion evidence ledger on a PR | `tools/e2e-web/` | tool | `tool.md` |
 
 ## Trust order
 
