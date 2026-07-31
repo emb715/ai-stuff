@@ -31,6 +31,7 @@ EXCLUDE_GLOBS = [
     "**/build/**/*.md",
     "experiments/*/server/**/*.md",
     "experiments/design-skill/**/*.md",
+    "experiments/primitive-contract-docs/boundary/README.md",
     "skills/*/docs/**/*.md",
     "tools/*/docs/**/*.md",
 ]
@@ -60,6 +61,13 @@ NO_FRONTMATTER_DIRS = {
 # Exempt from DL004 structural section checks. Still checked for frontmatter and sanitization.
 REFERENCE_CAPTURE_DIRS = {
     "docs/references/loop-engineering",
+}
+
+# Directories whose markdown files are external source captures (book OCR, scraped docs).
+# Exempt from DL006 PII patterns (phone/email) — content is from published books, not real PII.
+# DL013 (absolute paths) still applies.
+SANITIZATION_PII_SKIP_DIRS = {
+    "experiments/design-skill/laws/sources",
 }
 
 # Exception: prompt-gen.md has a partial frontmatter block (description/skill fields)
@@ -94,6 +102,16 @@ ALLOWED_CONFIDENCE = {"low", "medium", "high"}
 # source of truth — AGENTS.md documents the rule, this enforces it.
 EXPECTED_OWNER = "@emb715"
 
+# DL013 — absolute or machine-specific path pattern.
+# Catches leaked filesystem paths. Does NOT block /tmp/ (legitimate clone target).
+ABS_PATH_PATTERN = re.compile(
+    r"(?:"
+    r"/Users/[A-Za-z0-9._-]+"        # macOS absolute home path
+    r"|/home/[A-Za-z0-9._-]+"        # Linux absolute home path
+    r"|C:\\\\[A-Za-z0-9._\\-]+"      # Windows absolute path
+    r")"
+)
+
 GATE_LABELS = {
     "DL001": "Gate 1",
     "DL002": "Gate 1",
@@ -107,6 +125,7 @@ GATE_LABELS = {
     "DL010": "Gate 2",
     "DL011": "Gate 2",
     "DL012": "Gate 1",
+    "DL013": "Gate 4",
 }
 
 
@@ -206,6 +225,21 @@ def collect_target_files() -> List[Path]:
     return sorted(results)
 
 
+def collect_all_markdown_files() -> List[Path]:
+    """Every .md file in the repo, excluding only node_modules and .git.
+    Used for sanitization scans (DL006, DL013) which apply regardless of
+    lint exclusion status — excluded files are still public on GitHub.
+    """
+    skip_dirs = {".git", "node_modules", "__pycache__"}
+    results = []
+    for path in ROOT.rglob("*.md"):
+        if any(part in skip_dirs for part in path.parts):
+            continue
+        if path.is_file():
+            results.append(path)
+    return sorted(results)
+
+
 def markdown_headings(body: str) -> List[str]:
     headings: List[str] = []
     for line in body.splitlines():
@@ -275,7 +309,7 @@ def sanitization_hits(text: str) -> List[str]:
         "google_api_key": r"\bAIza[0-9A-Za-z\-_]{35}\b",
         "github_pat": r"\bgh[pousr]_[A-Za-z0-9_]{20,}\b",
         "openai_like_key": r"\bsk-[A-Za-z0-9]{20,}\b",
-        "credential_assignment": r"(?i)\b(api[_-]?key|token|secret|password)\b\s*[:=]\s*['\"]?[A-Za-z0-9_\-\/=+]{8,}",
+        "credential_assignment": r"(?i)\b(api[_-]?key|token|secret|password)\b[ \t]*[:=][ \t]*['\"]?[A-Za-z0-9_\-\/=+]{8,}",
         "private_host": r"https?://[A-Za-z0-9.-]+\.(?:internal|corp|local|lan)\b",
         "email": r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b",
         "phone": r"\b(?:\+?\d{1,2}[\s.-]?)?(?:\(?\d{3}\)?[\s.-]?)\d{3}[\s.-]?\d{4}\b",
@@ -330,8 +364,50 @@ def linked_from_index(rel_path: str, root_readme: str, section_readmes: Dict[str
     return False
 
 
+def sanitization_scan(file_path: Path) -> List[Finding]:
+    """Run DL006 + DL013 on a single file. Applies to every markdown file
+    in the repo regardless of lint exclusion status — excluded files are
+    still public on GitHub.
+    """
+    rel_path = file_path.relative_to(ROOT).as_posix()
+    rel_dir = "/".join(rel_path.split("/")[:-1])
+    text = file_path.read_text(encoding="utf-8")
+    findings: List[Finding] = []
+
+    # DL006 — skip PII patterns for known external source captures (book OCR, etc.)
+    skip_pii = any(rel_dir.startswith(d) for d in SANITIZATION_PII_SKIP_DIRS)
+    if skip_pii:
+        # Still check for credential/key patterns, just not email+phone PII
+        hits = [h for h in sanitization_hits(text) if h != "potential_pii_email_and_phone"]
+    else:
+        hits = sanitization_hits(text)
+    if hits:
+        findings.append(
+            Finding("DL006", rel_path, f"Sanitization risk patterns detected: {', '.join(sorted(set(hits)))}")
+        )
+
+    abs_match = ABS_PATH_PATTERN.search(text)
+    if abs_match:
+        findings.append(
+            Finding(
+                "DL013",
+                rel_path,
+                f"Absolute or machine-specific path detected: {abs_match.group(0)}. Use repo-relative paths only.",
+            )
+        )
+
+    return findings
+
+
 def lint() -> Tuple[List[Finding], int]:
     findings: List[Finding] = []
+
+    # --- Pass 1: sanitization on every markdown file in the repo ---
+    all_files = collect_all_markdown_files()
+    for file_path in all_files:
+        findings.extend(sanitization_scan(file_path))
+
+    # --- Pass 2: structural checks on non-excluded files only ---
     files = collect_target_files()
 
     root_readme_path = ROOT / "README.md"
@@ -388,11 +464,6 @@ def lint() -> Tuple[List[Finding], int]:
             or is_artifact_body_with_local_readme
         )
         if is_bare:
-            hits = sanitization_hits(text)
-            if hits:
-                findings.append(
-                    Finding("DL006", rel_path, f"Sanitization risk patterns detected: {', '.join(sorted(set(hits)))}")
-                )
             continue
 
         fm, body = parse_frontmatter(text)
@@ -503,13 +574,6 @@ def lint() -> Tuple[List[Finding], int]:
                         "Prescriptive language found without measurable/comparative/repro evidence",
                     )
                 )
-
-        # DL006
-        hits = sanitization_hits(text)
-        if hits:
-            findings.append(
-                Finding("DL006", rel_path, f"Sanitization risk patterns detected: {', '.join(sorted(set(hits)))}")
-            )
 
         # DL007
         previous = old_status_from_head(rel_path)

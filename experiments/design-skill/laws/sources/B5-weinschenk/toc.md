@@ -1,6 +1,6 @@
 # B5 — 100 Things Every Designer Needs to Know About People (Susan M. Weinschenk, 2011)
 
-> Source PDF/EPUB in `/Users/ezequielbenitez/Documents/design-books/`
+> Source PDF/EPUB in `~/Documents/design-books/`
 
 > Fleet law count: **D-7, D-8, D-10, D-21, D-25 (5 of 100 things lifted)**
 

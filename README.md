@@ -20,6 +20,8 @@ Paste [`USAGE.md`](USAGE.md) into a fresh session. It drives inventory verificat
 
 Want `/ai-stuff` as a permanent command in your harness instead of pasting each time? Run the [installer prompt](prompts/ai-stuff-command-installer/prompt.md) — it registers the command (remote or local source) so a single `/ai-stuff` loads the browsing flow.
 
+New to the vault? Read [`EXPLAIN.md`](EXPLAIN.md) — a tour of what's inside, what each artifact does, and how they connect.
+
 ## Artifact inventory
 
 This table is a snapshot. The filesystem is authoritative — `ls` the content dirs (`agents/ prompts/ playbooks/ skills/ tools/`) to confirm what exists. If the table drifts, it is wrong; fix it.

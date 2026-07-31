@@ -1,6 +1,6 @@
 # B8 — Articulating Design Decisions (Tom Greever, 2015)
 
-> Source PDF/EPUB in `/Users/ezequielbenitez/Documents/design-books/`
+> Source PDF/EPUB in `~/Documents/design-books/`
 
 > Fleet law count: **D-23, D-24 (2 laws)**
 

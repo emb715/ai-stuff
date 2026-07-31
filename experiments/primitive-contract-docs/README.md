@@ -185,7 +185,7 @@ This subsumes the Bet A / Bet B fork. Bet B (move communication out) doesn't sol
 
 ## Tooling note (parked, not in scope)
 
-Earlier in the session the idea drifted toward a plugin with a generator + drift detector + workflow runner. **That is downstream of this reframe and must not be specced yet.** Specifically: a generator that produces the contract from the implementation just regenerates param-docs with extra steps — the contract will mirror the code and rot with it. The contract has to come from the person who decided the intent, captured at decision time. Tooling earns its keep at drift detection and missing-contract detection, both *after* the hand-author test passes. Do not spec tooling before that.
+The tool is deliberately not a generator. A generator that produces the contract from the implementation just regenerates param-docs with extra steps — the contract will mirror the code and rot with it. The contract has to come from the person who decided the intent, captured at decision time. Tooling earns its keep at drift detection and missing-contract detection, both *after* the hand-author test passes.
 
 # Open questions
 
@@ -285,11 +285,7 @@ The first survey covered DbC, ADRs, C4, AGENTS.md, RFCs, module READMEs, microse
 - **For LLM-tooling folks:** "`.cursor/rules` but for contracts, not conventions." They know Cursor rules.
 - **For explaining the content discipline (any audience):** "Gherkin for a module's role, not its scenarios."
 
-## Tooling note (parked, not in scope)
-
-Earlier in the session the idea drifted toward a plugin with a generator + drift detector + workflow runner. **That is downstream of this reframe and must not be specced yet.** Specifically: a generator that produces the contract from the implementation just regenerates param-docs with extra steps — the contract will mirror the code and rot with it. The contract has to come from the person who decided the intent, captured at decision time. Tooling earns its keep at drift detection and missing-contract detection, both *after* the hand-author test passes. Do not spec tooling before that.
-
-## Test bed: snapberry.ai (`/Users/ezequielbenitez/projects/snapberry/snapberry.ai`)
+## Test bed: snapberry.ai
 
 Survey of an existing repo surfaced that snapberry already implements a large chunk of this idea — and has solved three of the four open questions in ways the experiment hadn't. This makes it the first real test bed, not a blank target.
 
@@ -585,6 +581,8 @@ Two exist in some form (init scaffolding, check via tests). Two are missing (map
 
 Working name: **`boundary`**. Subject to change. The tool is a scaffolder + enforcer for per-module obligation contracts, not a generator.
 
+The tool implementation is at `boundary/` in this experiment directory. Run it with `npx tsx src/cli.ts <command>` from inside `boundary/`. See `boundary/README.md` for self-contained orientation.
+
 ### What it is
 
 A CLI with four commands. Two create structure (`init`, `map`), two enforce it (`check`, `lint`). The tool never writes obligation content — that's human/agent judgment. The tool creates files, generates tests from exports, derives the map from contracts, and enforces the content rule.
@@ -879,14 +877,14 @@ The tool's own `humans.md` would record: origin (this experiment), relationship 
 
 ## Final command surface (v1)
 
-The `boundary` tool shipped with 7 commands. Dry-run is the default execution mode for every command that reports; `--write` is opt-in where files are produced.
+The `boundary` tool shipped with 8 commands. Dry-run is the default execution mode for every command that reports; `--write` is opt-in where files are produced. The command surface below mirrors the USAGE block in `boundary/src/cli.ts`.
 
 ### `boundary discover [--dry-run|--write]`
 
 Scan the repo and propose a `boundaries.yaml` manifest.
 
 - **Reads:** repo tree — `package.json` files (package-based discovery for v1), directory structure.
-- **Writes (`--write`):** `boundaries.yaml` at repo root, populated with one entry per detected package: `dir`, `name`, `purpose` (placeholder), `surface` (entry files).
+- **Writes (`--write`):** `boundaries.yaml` at repo root, populated with one entry per detected package: `dir`, `name`, `purpose` (placeholder), `surface` (entry files). Refuses to overwrite an existing `boundaries.yaml`.
 - **Reports (`--dry-run`, default):** the proposed manifest — per detected package, dir/name/surface, and a preview of the would-be `boundaries.yaml`. No file written.
 - **Enforces/checks:** nothing. This is a proposal step, not a contract step. The human/agent reviews and edits the manifest before passing it to `init`.
 
@@ -898,6 +896,16 @@ Scaffold the boundary pattern from a manifest.
 - **Writes (`--write`):** per boundary — `AGENTS.md` (template with the five sections: Does / Does NOT / Communication / Key entry point / To touch), `decisions/` dir (empty), optional `*-boundary.test.ts`. At repo root — `docs/boundaries.md` (derived module map). Idempotent: existing AGENTS.md files are skipped, not clobbered. `--only` restricts to a subset of boundaries by name.
 - **Reports (`--dry-run`, default):** per boundary — what would be created, the extracted surface (symbols found from the entry file), and whether the would-be template would pass `check`. No files written.
 - **Enforces/checks:** nothing structurally — this is the scaffolder. The would-pass/fail report is a pre-validation signal: it tells you whether the boundaries are right *before* files exist.
+
+### `boundary generate [--emit-prompt] [--apply <file>] [--dry-run --apply <file>] [--force]`  *(NEW)*
+
+Draft obligation-level content by emitting an LLM prompt, then applying the returned JSON. Same emit-prompt + apply pattern as `lint --phase 2`. The tool never calls an LLM API directly — no anthropic/openai deps at build time. The human is the trust anchor.
+
+- **Reads:** `boundaries.yaml` manifest + each boundary's entry file (surface extraction) + a source sample per boundary (for the prompt's context window).
+- **`--emit-prompt` (default):** emits a structured prompt to stdout. Paste it into an LLM; the LLM returns JSON with drafted `does` / `doesNot` / `communication` bullets per boundary. No files written.
+- **`--apply <file>` (write mode, default):** reads the JSON file, fills each boundary's AGENTS.md (creating from template if absent), then runs `boundary check` to verify the result. `--force` overwrites sections that already contain human-authored content; without `--force`, populated sections are skipped and reported as `skipped`.
+- **`--dry-run --apply <file>`:** reads the JSON and reports what would be filled and whether the would-be contracts would pass `check` — no writes. Pre-validation before committing drafts to the target repo.
+- **Enforces/checks:** after `--apply` (write mode), runs `check` against the filled AGENTS.md files and reports pass/fail per boundary. A boundary that fails `check` after filling is reported but does not block the others.
 
 ### `boundary check [--dry-run]`
 
@@ -931,7 +939,24 @@ Content-rule enforcer — mechanism leakage detection in the Communication secti
 - **Enforces/checks (Phase 1, rule-based):**
   - **Reject (mechanism):** file extensions (`.ts`, `.tsx`, `.py`, `.go`, `.rs`, `.js`), file paths with extensions, library names with versions (`zod@3.21`), specific numeric counts (`3x`, `5 retries`, `max 5`), param shapes (`{ userId, expiresAt }`), error code enums (`ECONNREFUSED`, `card_declined`).
   - **Allow (obligation):** obligation language (`may`, `must`, `must not`, `owed`, `owns`, `guarantees`, `rejects`, `never`, `always`), capability verbs (`makes`, `provides`), boundary names without file extensions.
-  - **Phase 2** (LLM-based classification of ambiguous lines) is pending — see build order Phase 3. Phase 1 runs alone on a cold project with no LLM access.
+  - **Phase 2** (LLM-based classification of ambiguous lines) — see below. Phase 1 runs alone on a cold project with no LLM access.
+
+### `boundary lint --phase 2 --emit-prompt`
+
+Phase 2 LLM-based content enforcer — emit a classification prompt.
+
+- **Reads:** `boundaries.yaml` manifest + each AGENTS.md's Communication section lines that passed Phase 1 but need judgement.
+- **Writes:** nothing. Emits the classification prompt to stdout.
+- **Reports:** a structured prompt the user pastes into an LLM. The LLM returns JSON classifying each candidate line as `obligation` / `mechanism` / `ambiguous`. With no API key and no explicit sub-flag, this is the default `--phase 2` behavior (a short header is printed first so stdout isn't a bare prompt).
+
+### `boundary lint --phase 2 --apply <file>`
+
+Phase 2 LLM-based content enforcer — apply the returned classification JSON.
+
+- **Reads:** the classification JSON file produced by an LLM from the `--emit-prompt` output.
+- **Writes:** nothing. Reports only.
+- **Reports:** per line — final classification and pass/fail. Any line classified as `mechanism` or `ambiguous` fails. Exits non-zero if any line failed.
+- **Enforces/checks:** the LLM is the linter for the lines Phase 1 couldn't resolve. This is what makes the content rule scale beyond the regex tripwire.
 
 ### `boundary install-hook`
 
@@ -950,3 +975,50 @@ Remove the `boundary check` pre-commit hook.
 - **Writes:** removes the `boundary check` block from the hook (or deletes the hook file if `boundary check` was its only content).
 - **Reports:** confirmation of removal, or "no boundary hook found."
 - **Enforces/checks:** nothing. This is the inverse of `install-hook` — it disables the drift trigger.
+
+## How to run the tool
+
+All commands run from inside the `boundary/` directory using `npx tsx src/cli.ts <command>`. Pass `--repo /path/to/target/repo` to point at a repo other than the current working directory.
+
+```bash
+# From inside boundary/ directory:
+
+# Discover candidate boundaries in a target repo (no files written):
+npx tsx src/cli.ts discover --dry-run --repo /path/to/repo
+
+# Write the proposed boundaries.yaml to the target repo:
+npx tsx src/cli.ts discover --write --repo /path/to/repo
+
+# Scaffold the boundary pattern (dry-run first — pre-validate before files exist):
+npx tsx src/cli.ts init --dry-run --repo /path/to/repo
+npx tsx src/cli.ts init --write --repo /path/to/repo
+npx tsx src/cli.ts init --write --only auth,database --repo /path/to/repo   # subset
+
+# Enforce the four contracts:
+npx tsx src/cli.ts check --repo /path/to/repo
+
+# Draft obligation content via an LLM (emit prompt, paste into LLM, apply JSON):
+npx tsx src/cli.ts generate --emit-prompt --repo /path/to/repo
+npx tsx src/cli.ts generate --dry-run --apply drafts.json --repo /path/to/repo   # pre-validate
+npx tsx src/cli.ts generate --apply drafts.json --repo /path/to/repo            # write
+npx tsx src/cli.ts generate --apply drafts.json --force --repo /path/to/repo    # overwrite existing
+
+# Regenerate the module map:
+npx tsx src/cli.ts map --dry-run --repo /path/to/repo
+npx tsx src/cli.ts map --write --repo /path/to/repo
+
+# Content-rule enforcer (Phase 1 rule-based, Phase 2 LLM-assisted):
+npx tsx src/cli.ts lint --repo /path/to/repo
+npx tsx src/cli.ts lint --phase 2 --emit-prompt --repo /path/to/repo
+npx tsx src/cli.ts lint --phase 2 --apply classification.json --repo /path/to/repo
+
+# Drift trigger (pre-commit hook that runs 'boundary check'):
+npx tsx src/cli.ts install-hook --repo /path/to/repo
+npx tsx src/cli.ts uninstall-hook --repo /path/to/repo
+
+# Type check the tool itself:
+npx tsc --noEmit
+
+# Run the tool's own test suite:
+npx vitest run
+```

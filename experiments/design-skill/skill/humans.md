@@ -12,7 +12,7 @@ One skill, not five. A UI review needs all clusters simultaneously: perception (
 - **Triage pass 2:** `experiments/design-skill/laws/triage-pass-2.md` — D-35..D-98 (64 promoted) + final cluster assignment
 - **Verbatim source quotes:** `experiments/design-skill/laws/sources/B*/extract.md` — per-book structured extracts
 - **Pattern / heuristic / antipattern aggregates:** `experiments/design-skill/laws/sources/_aggregate/` — copied verbatim into `refs/`
-- **Original PDFs:** `/Users/ezequielbenitez/Documents/design-books/`
+- **Original PDFs:** `~/Documents/design-books/`
 
 Extraction pipeline: pymupdf text extraction from PDFs → per-book `extract.md` (structured per-chapter) → per-book `candidates.md` (candidate law discovery) → two-pass triage (dedup against existing 34 laws, then cluster assignment) → cross-book consolidation → aggregate files. All 125 raw candidates were triaged; 64 promoted, 45 merged into existing or promoted laws, 16 rejected as process/rhetoric/factoid.
 

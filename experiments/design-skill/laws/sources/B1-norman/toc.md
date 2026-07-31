@@ -1,6 +1,6 @@
 # B1 — The Design of Everyday Things (Donald A. Norman, 1988)
 
-> Source PDF/EPUB in `/Users/ezequielbenitez/Documents/design-books/`
+> Source PDF/EPUB in `~/Documents/design-books/`
 
 > Fleet law count: **D-1, D-2, D-19, D-21 (4 laws)**
 

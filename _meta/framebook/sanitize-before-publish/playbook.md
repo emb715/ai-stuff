@@ -72,7 +72,7 @@ The artifact must remain usable after replacement. If a value is central to an e
 ### 4. Check for indirect references
 
 Review:
-- Paths that reveal internal repo structure (e.g., `/home/username/client-project/...`)
+- Paths that reveal internal repo structure (e.g., `/home/<user>/client-project/...`)
 - Variable names that encode client/project identity (e.g., `acme_api_key`)
 - Comments referencing internal tickets, Jira IDs, or internal system names
 - Session logs or output snippets copied verbatim from real work

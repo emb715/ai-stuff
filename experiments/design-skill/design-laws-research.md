@@ -185,4 +185,4 @@ The software engineering laws (`docs/laws-research.md`) govern code structure, t
 
 *Last updated: 2026-07*
 *Source research: All 9 books read in full via sobrief.com (May 2026 session)*
-*D-27..D-34 proposed: Full corpus PDF extraction + candidate discovery pass (June 2026). Source PDFs in `/Users/ezequielbenitez/Documents/design-books/`. Extraction artefacts in `docs/laws/sources/`. Proposed-law justification in `docs/laws/proposed-laws.md` and `docs/laws/proposed-laws-ready.md`.*
+*D-27..D-34 proposed: Full corpus PDF extraction + candidate discovery pass (June 2026). Source PDFs in `~/Documents/design-books/`. Extraction artefacts in `docs/laws/sources/`. Proposed-law justification in `docs/laws/proposed-laws.md` and `docs/laws/proposed-laws-ready.md`.*

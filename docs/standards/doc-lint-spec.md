@@ -161,6 +161,17 @@ Allowed:
 
 Failure: BLOCKED.
 
+### DL013 — No absolute or machine-specific paths
+
+Catches leaked filesystem paths that betray a specific machine or user. Blocks:
+- macOS absolute home paths (e.g., `/Users/<username>/...`)
+- Linux absolute home paths (e.g., `/home/<username>/...`)
+- Windows absolute paths (e.g., `C:\...`)
+
+All paths in artifacts must be repo-relative. `/tmp/` paths are allowed when used as ephemeral clone targets in install instructions.
+
+Failure: BLOCKED.
+
 ## Output contract for lint/compliance runs
 
 Use exact response structure:
@@ -177,7 +188,7 @@ PROMOTION_DECISION: <allowed|not allowed>
 
 ## Severity
 
-All DL001–DL008, DL011, and DL012 are **blocking** in this repository.
+All DL001–DL008, DL011, DL012, and DL013 are **blocking** in this repository.
 
 ## Evidence / Results
 

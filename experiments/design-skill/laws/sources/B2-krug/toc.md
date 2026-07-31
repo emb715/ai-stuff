@@ -1,6 +1,6 @@
 # B2 — Don't Make Me Think (Steve Krug, 2000)
 
-> Source PDF/EPUB in `/Users/ezequielbenitez/Documents/design-books/`
+> Source PDF/EPUB in `~/Documents/design-books/`
 
 > Fleet law count: **D-9, D-11, D-14, D-16, D-17, D-22 (6 laws)**
 

@@ -1,6 +1,6 @@
 # B7 — The Non-Designer's Design Book (Robin P. Williams, 2011)
 
-> Source PDF/EPUB in `/Users/ezequielbenitez/Documents/design-books/`
+> Source PDF/EPUB in `~/Documents/design-books/`
 
 > Fleet law count: **D-5, D-13, D-14, D-26 (4 laws; D-13 = PARC is the book's spine)**
 

@@ -1,6 +1,6 @@
 # B3 — The Laws of Simplicity (John Maeda, 2006)
 
-> Source PDF/EPUB in `/Users/ezequielbenitez/Documents/design-books/`
+> Source PDF/EPUB in `~/Documents/design-books/`
 
 > Fleet law count: **D-17, D-25, D-26 (3 of 10 Maeda laws lifted)**
 

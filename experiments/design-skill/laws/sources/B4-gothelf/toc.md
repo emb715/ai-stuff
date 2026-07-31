@@ -1,6 +1,6 @@
 # B4 — Lean UX (Jeff Gothelf, 2012)
 
-> Source PDF/EPUB in `/Users/ezequielbenitez/Documents/design-books/`
+> Source PDF/EPUB in `~/Documents/design-books/`
 
 > Fleet law count: **D-24 (1 law)**
 
