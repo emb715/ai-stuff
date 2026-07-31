@@ -55,7 +55,7 @@ Validated in a real session (2026-07-26): the memory-bank project ran the full p
 - **Handoff resolution** parsed 19 handoffs (16 blocking, 3 non-blocking) — all resolved by spec amendment before implementation. Two shared-root-cause groups (missing SPEC-1 functions; signature conflicts) resolved in two amendment passes instead of 19.
 - **Readiness loop** (8 rounds) extracted 29 requirements from the brief: 27 covered, 2 partial (success metrics that are post-launch measurements, not implementable ACs), 0 missing, 0 conflict. Verdict: READY_WITH_CONDITIONS.
 - **Shared-assumption check** found 3 inconsistencies (1 internal counting error, 2 stale `k=` parameter references that didn't propagate from the reconciliation note to the task body) — all fixed before implementation. These would have caused `TypeError` at runtime.
-- **Implementation** produced 88 Python tests passing + 84 TypeScript tests passing + `tsc --noEmit` clean.
+- **Implementation** produced 88 Python tests passing + 84 TypeScript tests passing + `tsc --noEmit` clean. 172 tests total, 0 errors, 0 failures.
 - **Release scorecard** verified 92 ACs (84 pass, 0 fail, 8 blocked on live-runtime verification), 9 ADRs holding, 7 defects (0 P0, 0 P1, 3 P2, 4 P3). Verdict: READY_WITH_CONDITIONS.
 
 Key observations from the validating session:

@@ -148,6 +148,14 @@ This table is a snapshot. The filesystem is authoritative — `ls` the content d
 | [quick-spec](playbooks/quick-spec/) | Create implementation-ready specs through discovery + code investigation; enforces 5-criterion Ready-for-Dev standard | validated |
 | [retrospective](playbooks/retrospective/) | Run a retrospective on completed work; lessons, follow-through check, readiness assessment, SMART action items | draft |
 | [issue-to-ready-specs](playbooks/issue-to-ready-specs/) | Drive issues from raw idea to implementation-ready specs | draft |
+| [agent-installer](playbooks/agent-installer/) | Build a multi-platform agent installer with polished TUI; agnostic, reusable, structurally correct | draft |
+| [build-to-release](playbooks/build-to-release/) | Take an idea from proof-of-concept to release-ready implementation through a 13-phase gated pipeline | draft |
+| [decision-making](playbooks/decision-making/) | Converge N options into a ranked shortlist via multi-criteria decision analysis; fills brainstorming→product-brief gap | draft |
+| [implementation-orchestration](playbooks/implementation-orchestration/) | Execute a validated implementation plan across a fleet of build agents; plan→committed, CI-green branch | draft |
+| [issue-to-pr](playbooks/issue-to-pr/) | Chain issue-to-ready-specs → raa → implementation-orchestration into a full-cycle issue→merged PR flow | draft |
+| [raa](playbooks/raa/) | Research, Analyze, Assess: turn a feature/change request into a validated file-scoped implementation-ready plan | draft |
+| [readiness-cycle](playbooks/readiness-cycle/) | Cycle an artifact from "ready to share?" to verified-ready or blocked-with-fix-plan; loops until ship | draft |
+| [request-triage](playbooks/request-triage/) | Route a raw request to the correct planning artifact (spec vs plan paradigm); does not execute | draft |
 
 ### Skills
 
@@ -155,12 +163,13 @@ This table is a snapshot. The filesystem is authoritative — `ls` the content d
 |---|---|---|
 | [prompt-factory](skills/prompt-factory/) | Generate deterministic implementation prompts from explicit plan docs or session context with mode/pre-flight gating (`default`, `fast`, `auto`; `strict` pending) | validated |
 | [skill-authoring](skills/skill-authoring/) | Create and maintain agent skills for libraries/frameworks/tools; structure, token efficiency, coverage | draft |
+| [change-impact-diagram](skills/change-impact-diagram/) | Diagram how a code change impacts the system and its primitives; four mermaid diagram types, three output modes | validated |
 
 ### Tools
 
 | Tool | Purpose | Status |
 |---|---|---|
-| — | _empty_ | — |
+| [change-impact](tools/change-impact/) | Run change-impact-diagram skill automatically on PRs or locally; LLM-agnostic, marker-delimited PR upsert | validated |
 
 ### Experiments
 

@@ -30,6 +30,7 @@ EXCLUDE_GLOBS = [
     "**/node_modules/**/*.md",
     "**/build/**/*.md",
     "experiments/*/server/**/*.md",
+    "experiments/design-skill/**/*.md",
     "skills/*/docs/**/*.md",
     "tools/*/docs/**/*.md",
 ]
