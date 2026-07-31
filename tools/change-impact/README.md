@@ -30,6 +30,110 @@ Runs the `change-impact-diagram` skill automatically on PRs or locally. Produces
 - Run the CLI locally on a branch before pushing to preview the impact block.
 - Run with `--llm none` to produce a prompt bundle for manual use when no LLM is available.
 
+# Usage
+
+## Option A — GitHub Action (automatic on every PR)
+
+### Install as a local composite action
+
+1. Copy the Action bundle and skill into your repo:
+
+```bash
+mkdir -p .github/actions/change-impact
+cp action.yml .github/actions/change-impact/
+cp -r dist/action .github/actions/change-impact/dist
+
+mkdir -p skills/change-impact-diagram
+cp SKILL.md skills/change-impact-diagram/  # optional — tool has a bundled fallback
+```
+
+2. Create `.github/workflows/change-impact.yml`:
+
+```yaml
+name: change-impact
+on:
+  pull_request:
+    types: [opened, synchronize]
+permissions:
+  pull-requests: write
+  contents: read
+jobs:
+  change-impact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Generate change-impact block
+        uses: ./.github/actions/change-impact
+        with:
+          llm: auto
+          api-key: ${{ secrets.ANTHROPIC_API_KEY }}
+          skill-path: skills/change-impact-diagram/SKILL.md
+          max-tokens: '50000'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+3. Add an LLM API key to repo secrets:
+
+```bash
+gh secret set ANTHROPIC_API_KEY --repo your-org/your-repo --body "sk-ant-..."
+```
+
+If no API key is set, the Action posts a comment with a self-contained prompt bundle instead of calling an LLM. The reviewer can paste it into any chat session manually.
+
+4. Open a PR. The Action upserts a marker-delimited impact block into the PR description with:
+   - `### Change impact` heading + shields badges (risk level + operation type)
+   - Collapsible `<details>` with system map, decision graph, state map, endpoint interaction
+   - Real git SHAs for base and head
+   - Idempotent re-runs (block is replaced, not duplicated on `synchronize`)
+
+### Install from a published Action (when available)
+
+```yaml
+- uses: your-org/change-impact@v1
+  with:
+    llm: auto
+    api-key: ${{ secrets.ANTHROPIC_API_KEY }}
+```
+
+## Option B — CLI (local run on any branch)
+
+```bash
+# Auto-detect LLM, diff current branch vs main, write to file
+npx change-impact --llm auto --base main --output block.md
+
+# Use a specific provider
+npx change-impact --llm anthropic --base main --output block.md
+
+# Upsert directly to a PR (requires gh CLI auth)
+npx change-impact --pr 123 --repo your-org/your-repo --llm auto --base main
+
+# No LLM available — produce a prompt bundle for manual use
+npx change-impact --llm none --base main --output prompt-bundle.md
+
+# Interactive mode (no flags) — @clack/prompts walks you through it
+npx change-impact
+```
+
+Progress messages go to stderr; the block goes to the file or stdout. The tool prints a startup line immediately (`change-impact — non-interactive mode, LLM: auto-detect, diff: main...HEAD`) so you know it's running.
+
+## Option C — Fallback (no LLM, no API key)
+
+When no LLM provider is detected, the tool writes a self-contained prompt bundle to `change-impact-prompt.md`. The bundle contains:
+- The full SKILL.md as the system prompt
+- The diff + instructions as the user prompt
+- Steps to paste into any LLM session (Claude, ChatGPT, Gemini, etc.)
+
+The human is the runner. The skill still executes — just manually.
+
+```bash
+npx change-impact --llm none --base main
+# → writes change-impact-prompt.md
+# → paste the two sections into any chat, copy the block back into your PR
+```
+
 # Inputs
 
 ## GitHub Action
