@@ -89,6 +89,7 @@ All artifact paths below are relative to the repo root (https://github.com/emb71
 | Mine a finished session for durable knowledge writes; user approves | `prompts/knowledge-extraction/` | prompt | `prompt.md` |
 | Map a repo's primitives from source, then adversarial-review the map | `prompts/repo-primitive-audit/` | prompt | `prompt.md` |
 | Verify a release candidate against acceptance criteria; gate fix batches | `prompts/review-release-candidate/` | prompt | `prompt.md` |
+| Register `/ai-stuff` command in an external LLM harness to browse this vault | `prompts/ai-stuff-command-installer/` | prompt | `prompt.md` |
 | Generate ready-to-paste prompts from a plan doc or session context | `skills/prompt-factory/` | skill | `SKILL.md` |
 | Author a new skill for a library, framework, or tool | `skills/skill-authoring/` | skill | `SKILL.md` |
 | Diagram a code change's impact across the system and its primitives | `skills/change-impact-diagram/` | skill | `SKILL.md` |

@@ -2,10 +2,6 @@
 
 Operational knowledge base for AI workflows, patterns, prompts, skills, and practices that are tested, reproducible, and reusable.
 
-## How to use this repo (for LLMs)
-
-Paste [`USAGE.md`](USAGE.md) into a fresh session. It drives inventory verification, a grouped menu, and consumption of the correct artifact file. Do not improvise the flow — follow USAGE.md exactly.
-
 ## What this repo is for
 
 This repo is **not** a random notes dump.
@@ -17,6 +13,81 @@ It exists to capture:
 - Standards and playbooks that can be reapplied
 
 If it hasn't been tested and documented, it goes in `experiments/` first.
+
+## How to use this repo (for LLMs)
+
+Paste [`USAGE.md`](USAGE.md) into a fresh session. It drives inventory verification, a grouped menu, and consumption of the correct artifact file. Do not improvise the flow — follow USAGE.md exactly.
+
+Want `/ai-stuff` as a permanent command in your harness instead of pasting each time? Run the [installer prompt](prompts/ai-stuff-command-installer/prompt.md) — it registers the command (remote or local source) so a single `/ai-stuff` loads the browsing flow.
+
+## Artifact inventory
+
+This table is a snapshot. The filesystem is authoritative — `ls` the content dirs (`agents/ prompts/ playbooks/ skills/ tools/`) to confirm what exists. If the table drifts, it is wrong; fix it.
+
+### Agents
+
+| Agent | Purpose | Status |
+|---|---|---|
+| [honest](agents/honest/) | Radical directness, token efficiency, zero filler | validated |
+
+### Prompts
+
+| Prompt | Purpose | Status |
+|---|---|---|
+| [loop-prd-readiness](prompts/loop-prd-readiness/) | Drive planning docs to implementation readiness via iterative loop | validated |
+| [loop-implementation-readiness](prompts/loop-implementation-readiness/) | Verify a codebase implements a planning doc; tri-state verdict, one highest-risk gap per round | validated |
+| [knowledge-extraction](prompts/knowledge-extraction/) | Mine a completed session and propose durable knowledge writes; user approves before write | validated |
+| [repo-primitive-audit](prompts/repo-primitive-audit/) | Map a repo's primitives from source, break down each section, then run an adversarial review playbook against the map | validated |
+| [review-release-candidate](prompts/review-release-candidate/) | Build a release-candidate review harness: inventory user-facing surfaces vs acceptance criteria, triage by root cause, gate fix batches with regression tests | draft |
+| [ai-stuff-command-installer](prompts/ai-stuff-command-installer/) | Register a `/ai-stuff` command in an external LLM harness to browse and consume vault artifacts; remote or local source | validated |
+
+### Playbooks
+
+| Playbook | Purpose | Status |
+|---|---|---|
+| [brainstorming](playbooks/brainstorming/) | Facilitate interactive brainstorming sessions using 61 techniques across 10 categories; standalone, no framework dependencies | validated |
+| [product-brief](playbooks/product-brief/) | Turn brainstorm output or a rough idea into a structured product brief; fills the brainstorm→plan gap | validated |
+| [adversarial-code-review](playbooks/adversarial-code-review/) | Adversarial code review on git changes; cross-references claims vs reality, minimum 3 findings, fix menu | draft |
+| [quick-spec](playbooks/quick-spec/) | Create implementation-ready specs through discovery + code investigation; enforces 5-criterion Ready-for-Dev standard | validated |
+| [retrospective](playbooks/retrospective/) | Run a retrospective on completed work; lessons, follow-through check, readiness assessment, SMART action items | draft |
+| [issue-to-ready-specs](playbooks/issue-to-ready-specs/) | Drive issues from raw idea to implementation-ready specs | draft |
+| [agent-installer](playbooks/agent-installer/) | Build a multi-platform agent installer with polished TUI; agnostic, reusable, structurally correct | draft |
+| [build-to-release](playbooks/build-to-release/) | Take an idea from proof-of-concept to release-ready implementation through a 13-phase gated pipeline | draft |
+| [decision-making](playbooks/decision-making/) | Converge N options into a ranked shortlist via multi-criteria decision analysis; fills brainstorming→product-brief gap | draft |
+| [implementation-orchestration](playbooks/implementation-orchestration/) | Execute a validated implementation plan across a fleet of build agents; plan→committed, CI-green branch | draft |
+| [issue-to-pr](playbooks/issue-to-pr/) | Chain issue-to-ready-specs → raa → implementation-orchestration into a full-cycle issue→merged PR flow | draft |
+| [raa](playbooks/raa/) | Research, Analyze, Assess: turn a feature/change request into a validated file-scoped implementation-ready plan | draft |
+| [readiness-cycle](playbooks/readiness-cycle/) | Cycle an artifact from "ready to share?" to verified-ready or blocked-with-fix-plan; loops until ship | draft |
+| [request-triage](playbooks/request-triage/) | Route a raw request to the correct planning artifact (spec vs plan paradigm); does not execute | draft |
+
+### Skills
+
+| Skill | Purpose | Status |
+|---|---|---|
+| [prompt-factory](skills/prompt-factory/) | Generate deterministic implementation prompts from explicit plan docs or session context with mode/pre-flight gating (`default`, `fast`, `auto`; `strict` pending) | validated |
+| [skill-authoring](skills/skill-authoring/) | Create and maintain agent skills for libraries/frameworks/tools; structure, token efficiency, coverage | draft |
+| [change-impact-diagram](skills/change-impact-diagram/) | Diagram how a code change impacts the system and its primitives; four mermaid diagram types, three output modes | validated |
+
+### Tools
+
+| Tool | Purpose | Status |
+|---|---|---|
+| [change-impact](tools/change-impact/) | Run change-impact-diagram skill automatically on PRs or locally; LLM-agnostic, marker-delimited PR upsert | validated |
+
+### Experiments
+
+Experiments are not part of the curated inventory. See `experiments/` for in-progress work; do not rely on it for reuse.
+
+## Lifecycle
+
+`experiments/ → validated → prompts/ | tools/ | playbooks/ | agents/`
+
+### Status definitions
+
+- `draft` — early idea; incomplete
+- `validated` — tested at least once with documented result
+- `vetted` — repeatable, bounded, sanitized, approved for reuse
+- `deprecated` — no longer recommended
 
 ## Directory map
 
@@ -69,17 +140,6 @@ Read `_meta/framebook/README.md` to discover all available procedures.
 | Deprecate or retire | `_meta/framebook/deprecate-and-archive/` |
 | Fix a BLOCKED lint failure | `_meta/framebook/fix-compliance-failures/` |
 
-## Lifecycle
-
-`experiments/ → validated → prompts/ | tools/ | playbooks/ | agents/`
-
-### Status definitions
-
-- `draft` — early idea; incomplete
-- `validated` — tested at least once with documented result
-- `vetted` — repeatable, bounded, sanitized, approved for reuse
-- `deprecated` — no longer recommended
-
 ## Metadata standard (required frontmatter)
 
 All docs in `experiments/`, `playbooks/`, `prompts/`, `tools/`, `agents/` must include:
@@ -113,63 +173,6 @@ Fast rule set:
 - No unverifiable claims
 - No "best practice" labels without evidence
 - No direct promotion from draft to vetted
-
-## Artifact inventory
-
-This table is a snapshot. The filesystem is authoritative — `ls` the content dirs (`agents/ prompts/ playbooks/ skills/ tools/`) to confirm what exists. If the table drifts, it is wrong; fix it.
-
-### Agents
-
-| Agent | Purpose | Status |
-|---|---|---|
-| [honest](agents/honest/) | Radical directness, token efficiency, zero filler | validated |
-
-### Prompts
-
-| Prompt | Purpose | Status |
-|---|---|---|
-| [loop-prd-readiness](prompts/loop-prd-readiness/) | Drive planning docs to implementation readiness via iterative loop | validated |
-| [loop-implementation-readiness](prompts/loop-implementation-readiness/) | Verify a codebase implements a planning doc; tri-state verdict, one highest-risk gap per round | validated |
-| [knowledge-extraction](prompts/knowledge-extraction/) | Mine a completed session and propose durable knowledge writes; user approves before write | validated |
-| [repo-primitive-audit](prompts/repo-primitive-audit/) | Map a repo's primitives from source, break down each section, then run an adversarial review playbook against the map | validated |
-| [review-release-candidate](prompts/review-release-candidate/) | Build a release-candidate review harness: inventory user-facing surfaces vs acceptance criteria, triage by root cause, gate fix batches with regression tests | draft |
-
-### Playbooks
-
-| Playbook | Purpose | Status |
-|---|---|---|
-| [brainstorming](playbooks/brainstorming/) | Facilitate interactive brainstorming sessions using 61 techniques across 10 categories; standalone, no framework dependencies | validated |
-| [product-brief](playbooks/product-brief/) | Turn brainstorm output or a rough idea into a structured product brief; fills the brainstorm→plan gap | validated |
-| [adversarial-code-review](playbooks/adversarial-code-review/) | Adversarial code review on git changes; cross-references claims vs reality, minimum 3 findings, fix menu | draft |
-| [quick-spec](playbooks/quick-spec/) | Create implementation-ready specs through discovery + code investigation; enforces 5-criterion Ready-for-Dev standard | validated |
-| [retrospective](playbooks/retrospective/) | Run a retrospective on completed work; lessons, follow-through check, readiness assessment, SMART action items | draft |
-| [issue-to-ready-specs](playbooks/issue-to-ready-specs/) | Drive issues from raw idea to implementation-ready specs | draft |
-| [agent-installer](playbooks/agent-installer/) | Build a multi-platform agent installer with polished TUI; agnostic, reusable, structurally correct | draft |
-| [build-to-release](playbooks/build-to-release/) | Take an idea from proof-of-concept to release-ready implementation through a 13-phase gated pipeline | draft |
-| [decision-making](playbooks/decision-making/) | Converge N options into a ranked shortlist via multi-criteria decision analysis; fills brainstorming→product-brief gap | draft |
-| [implementation-orchestration](playbooks/implementation-orchestration/) | Execute a validated implementation plan across a fleet of build agents; plan→committed, CI-green branch | draft |
-| [issue-to-pr](playbooks/issue-to-pr/) | Chain issue-to-ready-specs → raa → implementation-orchestration into a full-cycle issue→merged PR flow | draft |
-| [raa](playbooks/raa/) | Research, Analyze, Assess: turn a feature/change request into a validated file-scoped implementation-ready plan | draft |
-| [readiness-cycle](playbooks/readiness-cycle/) | Cycle an artifact from "ready to share?" to verified-ready or blocked-with-fix-plan; loops until ship | draft |
-| [request-triage](playbooks/request-triage/) | Route a raw request to the correct planning artifact (spec vs plan paradigm); does not execute | draft |
-
-### Skills
-
-| Skill | Purpose | Status |
-|---|---|---|
-| [prompt-factory](skills/prompt-factory/) | Generate deterministic implementation prompts from explicit plan docs or session context with mode/pre-flight gating (`default`, `fast`, `auto`; `strict` pending) | validated |
-| [skill-authoring](skills/skill-authoring/) | Create and maintain agent skills for libraries/frameworks/tools; structure, token efficiency, coverage | draft |
-| [change-impact-diagram](skills/change-impact-diagram/) | Diagram how a code change impacts the system and its primitives; four mermaid diagram types, three output modes | validated |
-
-### Tools
-
-| Tool | Purpose | Status |
-|---|---|---|
-| [change-impact](tools/change-impact/) | Run change-impact-diagram skill automatically on PRs or locally; LLM-agnostic, marker-delimited PR upsert | validated |
-
-### Experiments
-
-Experiments are not part of the curated inventory. See `experiments/` for in-progress work; do not rely on it for reuse.
 
 ## Operating cadence (weekly)
 
