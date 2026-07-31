@@ -4,11 +4,7 @@ Operational knowledge base for AI workflows, patterns, prompts, skills, and prac
 
 ## How to use this repo (for LLMs)
 
-1. Read the **Artifact inventory** table below — pick an artifact by purpose and status
-2. Open its folder `README.md` (the link in the table) — get frontmatter (status, confidence, last_tested) and a pointer to the consumable file
-3. Use the consumable file: `prompt.md` (prompts), `SKILL.md` (skills), `playbook.md` (playbooks), `system-prompt.md` (agents) — copy-paste clean, no frontmatter, no prose
-
-Trust order: `vetted` > `validated` > `draft`. Flag `last_tested` older than 90 days as stale before relying on it. Ignore `experiments/`, `_meta/`, `docs/standards/` — not part of the reusable surface.
+Paste [`USAGE.md`](USAGE.md) into a fresh session. It drives inventory verification, a grouped menu, and consumption of the correct artifact file. Do not improvise the flow — follow USAGE.md exactly.
 
 ## What this repo is for
 

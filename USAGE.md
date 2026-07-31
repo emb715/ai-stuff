@@ -2,6 +2,16 @@
 
 You are operating a curated AI artifact vault. Follow these instructions exactly.
 
+## Step 0 — Resolve the vault root
+
+The vault is the public repo at https://github.com/emb715/ai-stuff (default branch: `main`). All paths in this document (`prompts/...`, `playbooks/...`, `skills/...`, `tools/...`, `agents/...`) are relative to the repo root.
+
+Resolve the root before any command:
+- If a local clone exists, `cd` into it: `cd /path/to/ai-stuff`
+- If no local clone exists, all `ls` and file reads in the steps below must target the GitHub URLs instead — prefix each path with `https://github.com/emb715/ai-stuff/blob/main/` (for a single file) or `https://github.com/emb715/ai-stuff/tree/main/` (for a directory listing). Example: `prompts/loop-prd-readiness/README.md` → `https://github.com/emb715/ai-stuff/blob/main/prompts/loop-prd-readiness/README.md`
+
+The task-map Artifact column also lists paths relative to the repo root — apply the same prefix when fetching from GitHub.
+
 ## Step 1 — Verify the inventory
 
 Run:
@@ -39,12 +49,13 @@ one-line purpose
 one-line purpose 
 
 ## Tools — deployable technical artifacts
-_(none)_
+5. **change-impact** — `validated`
+run change-impact-diagram skill on PRs or locally; LLM-agnostic PR upsert
 ```
 
 Rules:
 - Global numbering across all groups (1, 2, 3… not restart per group)
-- Skip empty groups entirely except Tools — show `_(none)_` so the user knows it was checked
+- Skip empty groups entirely except Tools — show `_(none)_` only if Tools is actually empty, otherwise list its artifacts
 - `status` comes from Step 1 frontmatter read — one of `draft` / `validated` / `vetted` / `unknown`. Render as inline code. Never assume, never default to `draft`
 - One line per artifact — no wrap, no description longer than ~12 words
 - End with: `**Reply with one or more numbers to consume.**`
@@ -69,6 +80,8 @@ For each selected number:
 
 ## Task map (for Step 1 cross-check)
 
+All artifact paths below are relative to the repo root (https://github.com/emb715/ai-stuff, branch `main`). Apply the prefix from Step 0 when fetching.
+
 | Task | Artifact | Type | Consumable |
 |---|---|---|---|
 | Refine a planning doc to implementation readiness via iterative loop | `prompts/loop-prd-readiness/` | prompt | `prompt.md` |
@@ -78,6 +91,7 @@ For each selected number:
 | Verify a release candidate against acceptance criteria; gate fix batches | `prompts/review-release-candidate/` | prompt | `prompt.md` |
 | Generate ready-to-paste prompts from a plan doc or session context | `skills/prompt-factory/` | skill | `SKILL.md` |
 | Author a new skill for a library, framework, or tool | `skills/skill-authoring/` | skill | `SKILL.md` |
+| Diagram a code change's impact across the system and its primitives | `skills/change-impact-diagram/` | skill | `SKILL.md` |
 | Run an interactive brainstorming session (61 techniques, 10 categories) | `playbooks/brainstorming/` | playbook | `playbook.md` |
 | Take N options and produce a ranked shortlist with rationale (multi-criteria) | `playbooks/decision-making/` | playbook | `playbook.md` |
 | Turn a rough idea or brainstorm output into a structured product brief | `playbooks/product-brief/` | playbook | `playbook.md` |
@@ -92,6 +106,7 @@ For each selected number:
 | Adversarial code review on git changes; minimum 3 findings | `playbooks/adversarial-code-review/` | playbook | `playbook.md` |
 | Build a multi-platform agent installer CLI/TUI | `playbooks/agent-installer/` | playbook | `playbook.md` |
 | Retrospective on completed work; lessons + SMART action items | `playbooks/retrospective/` | playbook | `playbook.md` |
+| Run change-impact-diagram on PRs or locally; LLM-agnostic PR upsert | `tools/change-impact/` | tool | `tool.md` |
 
 ## Trust order
 
