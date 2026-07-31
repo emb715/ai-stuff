@@ -121,6 +121,10 @@ Block on likely sensitive patterns:
 - credential-like assignments
 - PII patterns (email + full name pairs, phone numbers in logs, etc.)
 
+Applies to **every markdown file in the repo**, regardless of lint exclusion status. Excluded files are still public on GitHub — sanitization is not optional.
+
+Exception: directories in `SANITIZATION_PII_SKIP_DIRS` (book OCR extracts, scraped source material) skip the email+phone PII heuristic only. Credential and key patterns still apply.
+
 Failure: BLOCKED + redact required.
 
 ### DL007 — Lifecycle transition validity
@@ -169,6 +173,8 @@ Catches leaked filesystem paths that betray a specific machine or user. Blocks:
 - Windows absolute paths (e.g., `C:\...`)
 
 All paths in artifacts must be repo-relative. `/tmp/` paths are allowed when used as ephemeral clone targets in install instructions.
+
+Applies to **every markdown file in the repo**, regardless of lint exclusion status.
 
 Failure: BLOCKED.
 

@@ -77,16 +77,18 @@ Check which API keys are available in this repo's secrets:
 ```bash
 gh secret list --repo <this-repo>
 ```
-
+GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COPILOT_TOKEN: ${{ secrets.COPILOT_TOKEN }}
 The tool auto-detects in priority order:
 1. `ANTHROPIC_API_KEY` — Claude via Anthropic SDK
-2. `FUELX_API_KEY` or `FUELIX_API_KEY` — Fuelix AI (OpenAI-compatible)
-3. `OMNIROUTE_API_KEY` — Omniroute (OpenAI-compatible)
+2. `OMNIROUTE_API_KEY` — Omniroute (OpenAI-compatible)
+3. `GEMINI_API_KEY` — Gemini
 4. `OPENAI_API_KEY` — OpenAI
-5. `OPENAI_API_KEY` + `OPENAI_BASE_URL` — any OpenAI-compatible endpoint
-6. `claude` CLI in PATH — shells out to `claude --print`
-7. Ollama on localhost:11434 — local LLM via raw HTTP
-8. None — posts a comment with a prompt bundle for manual use
+5. `custom` - `OPENAI_API_KEY` + `OPENAI_BASE_URL` — any OpenAI-compatible endpoint
+6. `FUELIX_API_KEY` — Fuelix AI (OpenAI-compatible)
+7. `claude` CLI in PATH — shells out to `claude --print`
+8. Ollama on localhost:11434 — local LLM via raw HTTP
+9. None — posts a comment with a prompt bundle for manual use
 
 If the repo has no LLM secret set, ask the user: "Which LLM provider do you want to use? I can set the secret now." Then:
 

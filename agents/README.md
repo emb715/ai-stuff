@@ -51,3 +51,7 @@ Fleets that live in separate repos. Not stored here — install from source.
 Beyond their domain-specific capabilities, the fleet's orchestrator (`ndv-flow`) can be used as the primary entry point in OpenCode, or via `/ndv-flow {prompt}` in Claude Code. Flow only orchestrates — it decomposes the work, delegates to subagents tailored for each task, and they report back with status, relevant info, or handoffs.
 
 This keeps the main context window clean. By breaking down prompts and keeping individual conversation histories brief, input token counts stay low. Even with prompt caching in place, this architectural strategy remains highly effective as a token-saving approach.
+
+> A monolithic agent session accumulates every read, every tangent, and every dead end permanently across every subsequent turn. An orchestrator that decomposes and routes — but never implements — pays bounded subagent cost instead. The bridge between orchestrator and subagents is engineered down on both sides: capped summaries back, sliced context forward, structured briefs in. Prompt caching makes the static prefix cheap, but it cannot touch the growing tail. The architecture wins on exactly the dimension caching doesn't cover.
+
+— from [Token Efficiency Patterns](https://github.com/ezequielbenitez/neurodiveragents/blob/main/docs/token-efficiency.md), neurodiveragents
