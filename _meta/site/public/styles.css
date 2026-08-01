@@ -74,6 +74,10 @@ header {
 
 .nav a:hover { color: var(--link); }
 
+.nav-gh {
+  margin-left: auto;
+}
+
 .nav-home {
   display: inline-flex;
   align-items: center;
