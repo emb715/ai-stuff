@@ -85,6 +85,22 @@ Interpretation:
 - Minimum structure is three files (`README.md`, consumable file, `humans.md`).
 - Additional files/folders are allowed when needed (for example `commands/`, `templates/`, `refs/`, assets).
 
+### External Artifact Variant
+
+Artifacts whose canonical consumable form lives outside this repo use a modified structure:
+
+```
+<artifact-name>/
+├── README.md     ← frontmatter (with `external` tag) + full documentation + link to external source
+└── humans.md     ← maintenance context
+```
+
+No consumable file. The README serves as the repo record AND the pointer to the external source.
+
+Rationale: copying an external consumable (e.g. a fleet's system prompt) into this repo creates a stale duplicate. The source updates independently; the copy drifts. The two-file variant documents the artifact's purpose, usage, and evidence without duplicating the consumable.
+
+Detection: the `external` tag in frontmatter signals this variant. Tools and the site use it to skip consumable-file rendering.
+
 ### Experiment dependency rule (build-ready standard)
 
 Any experiment that involves building a tool, MCP server, CLI, or any coded artifact must include the following **before writing code**:

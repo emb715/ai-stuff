@@ -1,0 +1,41 @@
+---
+// Base path from astro config, normalized with trailing slash.
+// All internal links: `${base}path` (no leading slash on path).
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={Astro.props.description ?? 'AI operating knowledge base'} />
+    <link rel="stylesheet" href={`${base}styles.css`} />
+    <title>{Astro.props.title}</title>
+  </head>
+  <body>
+    <header>
+      <nav class="nav">
+        <a href={base} class="nav-home" aria-label="ai-stuff home">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 80" class="nav-logo" role="img" aria-hidden="true">
+            <text x="0" y="58" font-family="monospace" font-weight="700" font-size="56" fill="currentColor"><tspan fill="#3B82F6">/</tspan>EMB<tspan fill="#3B82F6">/</tspan></text>
+          </svg>
+          <span>ai-stuff</span>
+        </a>
+        <a href={`${base}prompts`}>prompts</a>
+        <a href={`${base}playbooks`}>playbooks</a>
+        <a href={`${base}skills`}>skills</a>
+        <a href={`${base}tools`}>tools</a>
+        <a href={`${base}agents`}>agents</a>
+        <a href={`${base}notes`}>notes</a>
+        <a href={`${base}standards`}>standards</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <p>Rendered from <a href="https://github.com/emb715/ai-stuff">ai-stuff vault</a>. Filesystem is authoritative.</p>
+    </footer>
+  </body>
+</html>

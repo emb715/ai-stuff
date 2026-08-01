@@ -1,0 +1,33 @@
+---
+import CollectionList from '../../components/CollectionList.astro';
+
+export async function getStaticPaths() {
+  const labelMap: Record<string, string> = {
+    prompts: 'Prompts',
+    playbooks: 'Playbooks',
+    skills: 'Skills',
+    tools: 'Tools',
+    agents: 'Agents',
+    notes: 'Notes',
+    standards: 'Standards',
+  };
+
+  const descMap: Record<string, string> = {
+    prompts: 'Conversational, one-shot, or command-triggered instruction text.',
+    playbooks: 'Recurring operational procedures with triggers, steps, and outputs.',
+    skills: 'Capability and behavior packages.',
+    tools: 'Deployable technical artifacts: MCP servers, CLIs, integrations.',
+    agents: 'Session-wide system prompts that shape LLM behavior.',
+    notes: 'Opinionated, evidence-backed guidance on AI workflows and tooling.',
+    standards: 'Binding governance rules and vetting rubric.',
+  };
+
+  return Object.keys(labelMap).map((name) => ({
+    params: { collection: name },
+    props: { collectionName: name, label: labelMap[name], description: descMap[name] ?? '' },
+  }));
+}
+
+const { collectionName, label, description } = Astro.props;
+---
+<CollectionList collectionName={collectionName} label={label} description={description} />

@@ -600,14 +600,20 @@ def lint() -> Tuple[List[Finding], int]:
 
         # DL010 (agent-specific structure)
         # Every agent folder README must have a sibling system-prompt.md.
+        # External agents (tagged `external`) use the two-file variant —
+        # no system-prompt.md by design (consumable lives outside the repo).
         is_agent_readme = (
             rel_path.startswith("agents/")
             and file_path.name == "README.md"
             and file_path.parent != ROOT / "agents"  # skip agents/README.md index
         )
         if is_agent_readme:
+            tags_val = fm.get("tags", []) if fm else []
+            tag_list = tags_val if isinstance(tags_val, list) else ([tags_val] if isinstance(tags_val, str) else [])
+            tag_lower = [str(t).strip().lower() for t in tag_list]
+            is_external = "external" in tag_lower
             sibling_system_prompt = file_path.parent / "system-prompt.md"
-            if not sibling_system_prompt.exists():
+            if not is_external and not sibling_system_prompt.exists():
                 findings.append(
                     Finding(
                         "DL010",

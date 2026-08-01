@@ -1,0 +1,77 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { experimental_AstroContainer } from 'astro/container';
+import { rewriteHtmlLinks } from '../../utils/rewrite-links.mjs';
+
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+
+export async function getStaticPaths() {
+  const validCollections = ['prompts', 'playbooks', 'skills', 'tools', 'agents', 'notes', 'standards'];
+  const paths = [];
+  for (const name of validCollections) {
+    const entries = await getCollection(name as any);
+    for (const entry of entries) {
+      paths.push({
+        params: { collection: name, id: entry.id },
+        props: { entry, collectionName: name },
+      });
+    }
+  }
+  return paths;
+}
+
+interface Props {
+  entry: CollectionEntry<any>;
+  collectionName: string;
+}
+
+const { entry, collectionName } = Astro.props;
+const { Content } = await render(entry);
+
+// Render Content to HTML string, then rewrite relative links with base path
+const container = await experimental_AstroContainer.create();
+const html = await container.renderToString(Content);
+const processedHtml = rewriteHtmlLinks(html, base, collectionName, entry.id);
+
+const fmtDate = (d: any): string => {
+  if (d instanceof Date) return d.toISOString().split('T')[0];
+  return String(d);
+};
+---
+<Base title={`${entry.data.title} — ai-stuff`} description={entry.data.title}>
+  <article>
+    <p><a href={`${base}${collectionName}`}>&larr; {collectionName}</a></p>
+
+    <h1>{entry.data.title}</h1>
+
+    <dl class="meta">
+      <dt>Status</dt> <dd><span class={`status status-${entry.data.status}`}>{entry.data.status}</span></dd>
+      <dt>Confidence</dt> <dd>{entry.data.confidence}</dd>
+      <dt>Last tested</dt> <dd>{fmtDate(entry.data.last_tested)}</dd>
+      <dt>Scope</dt> <dd>{entry.data.scope}</dd>
+      <dt>Owner</dt> <dd>{entry.data.owner}</dd>
+      {entry.data.tags.length > 0 && (
+        <>
+          <dt>Tags</dt> <dd>{entry.data.tags.join(', ')}</dd>
+        </>
+      )}
+      {entry.data.tooling.length > 0 && (
+        <>
+          <dt>Tooling</dt> <dd>{entry.data.tooling.join(', ')}</dd>
+        </>
+      )}
+    </dl>
+
+    {['prompts', 'playbooks', 'skills', 'agents'].includes(collectionName) && !entry.data.tags.includes('external') && (
+      <p class="consumable-link-block">
+        <a href={`${base}${collectionName}/${entry.id}/${collectionName === 'prompts' ? 'prompt' : collectionName === 'playbooks' ? 'playbook' : collectionName === 'skills' ? 'SKILL' : 'system-prompt'}`}>
+          View the {collectionName === 'prompts' ? 'prompt' : collectionName === 'playbooks' ? 'playbook' : collectionName === 'skills' ? 'SKILL' : 'system-prompt'} file &rarr;
+        </a>
+      </p>
+    )}
+
+    <div class="content" set:html={processedHtml} />
+  </article>
+</Base>

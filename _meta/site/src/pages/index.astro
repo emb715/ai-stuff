@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+
+const collections = [
+  { name: 'prompts', label: 'Prompts', desc: 'Copy-paste instruction text' },
+  { name: 'playbooks', label: 'Playbooks', desc: 'Recurring procedures' },
+  { name: 'skills', label: 'Skills', desc: 'Capability packages' },
+  { name: 'tools', label: 'Tools', desc: 'Deployable artifacts' },
+  { name: 'agents', label: 'Agents', desc: 'Session-wide behavior' },
+  { name: 'notes', label: 'Notes', desc: 'Opinionated guidance' },
+  { name: 'standards', label: 'Standards', desc: 'Binding rules' },
+];
+
+const counts = await Promise.all(
+  collections.map(async (c) => ({
+    ...c,
+    count: (await getCollection(c.name as any)).length,
+  }))
+);
+---
+<Base title="ai-stuff — AI operating knowledge base">
+  <h1>AI operating knowledge base</h1>
+  <p>Reusable, tested, sanitized artifacts from real work. This site renders the vault's source files directly — no duplication.</p>
+
+  <div class="inventory-grid">
+    {counts.map((c) => (
+      <a href={`${base}${c.name}`} class="inventory-card">
+        <div class="inventory-card-label">{c.label}</div>
+        <div class="inventory-card-count">{c.count} {c.count === 1 ? 'entry' : 'entries'}</div>
+      </a>
+    ))}
+  </div>
+</Base>

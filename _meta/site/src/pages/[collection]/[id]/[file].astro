@@ -1,0 +1,78 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getCollection, getEntry, render, type CollectionEntry } from 'astro:content';
+import { experimental_AstroContainer } from 'astro/container';
+import { rewriteHtmlLinks } from '../../../utils/rewrite-links.mjs';
+
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+
+const githubBase = 'https://github.com/emb715/ai-stuff/blob/main';
+
+export async function getStaticPaths() {
+  // Map: collection name → consumable collection name + filename.
+  // consumableFiles have NO frontmatter — metadata comes from the parent README.
+  const consumableMap = {
+    prompts: { collection: 'prompts-consumable', file: 'prompt.md', fileSlug: 'prompt' },
+    playbooks: { collection: 'playbooks-consumable', file: 'playbook.md', fileSlug: 'playbook' },
+    skills: { collection: 'skills-consumable', file: 'SKILL.md', fileSlug: 'SKILL' },
+    agents: { collection: 'agents-consumable', file: 'system-prompt.md', fileSlug: 'system-prompt' },
+  };
+  const paths = [];
+  for (const [collName, config] of Object.entries(consumableMap)) {
+    const entries = await getCollection(config.collection);
+    for (const entry of entries) {
+      paths.push({
+        params: { collection: collName, id: entry.id, file: config.fileSlug },
+        props: { consumableEntry: entry, collectionName: collName, fileSlug: config.fileSlug, fileName: config.file },
+      });
+    }
+  }
+  return paths;
+}
+
+interface Props {
+  consumableEntry: CollectionEntry<any>;
+  collectionName: string;
+  fileSlug: string;
+  fileName: string;
+}
+
+const { consumableEntry, collectionName, fileSlug, fileName } = Astro.props;
+const { Content } = await render(consumableEntry);
+
+// Look up parent README entry for metadata (title, status, etc.)
+const parentEntry = await getEntry(collectionName as any, consumableEntry.id);
+const title = parentEntry?.data?.title ?? consumableEntry.id;
+const status = parentEntry?.data?.status ?? 'draft';
+
+// Render and rewrite links with the same rewriter used by the README page.
+const container = await experimental_AstroContainer.create();
+const html = await container.renderToString(Content);
+const processedHtml = rewriteHtmlLinks(html, base, collectionName, consumableEntry.id);
+
+const githubUrl = `${githubBase}/${collectionName}/${consumableEntry.id}/${fileName}`;
+---
+<Base title={`${title} — ${fileSlug} — ai-stuff`} description={title}>
+  <article>
+    <p>
+      <a href={`${base}${collectionName}/${consumableEntry.id}`}>&larr; {title}</a>
+    </p>
+
+    <h1>{fileSlug}.md</h1>
+
+    <div class="consumable-header">
+      <p class="consumable-label">Consumable file for <strong>{title}</strong></p>
+      {parentEntry && (
+        <p>
+          <span class={`status status-${status}`}>{status}</span>
+        </p>
+      )}
+      <p>
+        <a href={githubUrl} class="github-link" rel="noopener">View on GitHub &rarr;</a>
+      </p>
+    </div>
+
+    <div class="content" set:html={processedHtml} />
+  </article>
+</Base>

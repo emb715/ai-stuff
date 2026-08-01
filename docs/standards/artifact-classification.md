@@ -93,6 +93,27 @@ Agents bypass the standard promotion playbook. Add by hand:
 
 No framebook procedure needed. Version history and design decisions go in `humans.md`.
 
+## External Artifacts
+
+Some artifacts have their canonical consumable form living outside this repo — external agent fleets, published prompts, third-party skills. Copying the consumable here would create a stale duplicate that drifts from the source.
+
+External artifacts use a **modified two-file structure**:
+
+```
+<artifact-name>/
+├── README.md     ← frontmatter (with `external` tag) + documentation + link to source
+└── humans.md     ← maintenance context (same as standard artifacts)
+```
+
+No consumable file (`system-prompt.md`, `prompt.md`, `SKILL.md`, etc.). The README links to the external source where the consumable lives.
+
+Rules:
+- The `tags` array MUST include `external` as the first tag.
+- The README must include all standard sections (Context, Scope, When to use, Evidence, Failure Modes).
+- The Evidence section must document real usage, same as any validated artifact.
+- The link to the external source must be prominent in the README (not buried in a footer).
+- Status can be `validated` or `vetted` based on real usage evidence, same as internal artifacts.
+
 ## Mixed Artifact Rule
 
 If one document contains both reusable prompt text and operating procedure:

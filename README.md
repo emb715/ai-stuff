@@ -108,8 +108,10 @@ Experiments are not part of the curated inventory. See `experiments/` for in-pro
 
 - `_meta/framebook/` — framework procedures for operating this vault
 - `_meta/commands/` — OpenCode commands that operate the vault
+- `_meta/site/` — Astro static site that renders the vault as a browsable catalog (read from source, no duplication)
 - `docs/standards/` — vetting rubric, lint spec, artifact structure and classification
 - `docs/references/` — external research and reference material
+- `docs/notes/` — opinionated, evidence-backed guidance on AI workflows and techniques
 - `templates/` — canonical templates for new artifacts
 
 ## Commands (OpenCode)

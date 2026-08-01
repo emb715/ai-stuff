@@ -33,3 +33,12 @@ External research and reference material that grounds work in this repo.
 | Topic | Sources |
 |---|---|
 | [loop-engineering](references/loop-engineering/) | Addy Osmani, Forward Future Loop Library |
+| [astro](references/astro/) | Astro SSG source URLs, scaffolding, architecture decisions for the vault publishing site |
+
+## notes/
+
+Opinionated, evidence-backed guidance on AI workflows, tooling, and techniques. Not binding standards, not neutral reference — prescriptive guidance with measurable evidence.
+
+| Note | Summary | Status |
+|---|---|---|
+| [token-efficiency.md](notes/token-efficiency.md) | Techniques for reducing token consumption; quantified savings per technique | validated |

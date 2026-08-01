@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+
+interface Props {
+  collectionName: string;
+  label: string;
+  description?: string;
+}
+
+const { collectionName, label, description = '' } = Astro.props;
+const entries: CollectionEntry<typeof collectionName>[] = await getCollection(collectionName as any);
+
+const fmtDate = (d: any): string => {
+  if (d instanceof Date) return d.toISOString().split('T')[0];
+  return String(d);
+};
+
+const statusOrder = { vetted: 0, validated: 1, draft: 2, deprecated: 3 };
+entries.sort((a, b) => {
+  const sa = statusOrder[a.data.status] ?? 99;
+  const sb = statusOrder[b.data.status] ?? 99;
+  return sa - sb;
+});
+---
+<Base title={`${label} — ai-stuff`} description={description}>
+  <h1>{label}</h1>
+  {description && <p>{description}</p>}
+  {entries.length === 0 ? (
+    <p>No entries yet.</p>
+  ) : (
+    <ul class="entry-list">
+      {entries.map((entry) => (
+        <li class={`entry${entry.data.status === 'deprecated' ? ' entry-deprecated' : ''}`}>
+          <div class="entry-head">
+            <a class="entry-title" href={`${base}${collectionName}/${entry.id}`}>{entry.data.title}</a>
+            <span class={`status status-${entry.data.status}`}>{entry.data.status}</span>
+          </div>
+          <div class="entry-meta">
+            <span>{entry.data.confidence} confidence</span>
+            <span class="meta-sep">·</span>
+            <span>tested {fmtDate(entry.data.last_tested)}</span>
+            {entry.data.tags.length > 0 && (
+              <span class="meta-sep">·</span>
+            )}
+            {entry.data.tags.length > 0 && (
+              <span class="meta-tags">
+                {entry.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+              </span>
+            )}
+          </div>
+        </li>
+      ))}
+    </ul>
+  )}
+</Base>
