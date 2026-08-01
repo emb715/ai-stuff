@@ -5,6 +5,14 @@ on:
     branches: [main]
     paths:
       - '_meta/site/**'
+      - 'docs/**'
+      - 'agents/**'
+      - 'prompts/**'
+      - 'playbooks/**'
+      - 'skills/**'
+      - 'tools/**'
+      - 'experiments/**'
+      - '.github/workflows/deploy-site.yml'
 
 permissions:
   contents: read
