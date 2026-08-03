@@ -364,6 +364,80 @@ footer a:hover { color: var(--link); }
   margin: 1.5rem 0;
 }
 
+/* Quick start */
+.quickstart {
+  margin: 1.5rem 0 2rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-dim);
+}
+
+.quickstart h2 {
+  margin: 0 0 0.5rem;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.quickstart-options {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.quickstart-options li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.quickstep-num {
+  flex: 0 0 auto;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: var(--link);
+  color: var(--bg);
+  font-size: 0.8rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.15rem;
+}
+
+.quickstart-explain {
+  margin: 0.75rem 0 0;
+  font-size: 0.875rem;
+  color: var(--text-dim);
+}
+
+.copy-usage {
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--link);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--link);
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+}
+
+.copy-usage:hover {
+  background: var(--link);
+  color: var(--bg);
+}
+
+.copy-usage.copied {
+  background: var(--status-validated);
+  border-color: var(--status-validated);
+  color: var(--bg);
+}
+
 .inventory-card {
   display: block;
   padding: 1rem 1.25rem;

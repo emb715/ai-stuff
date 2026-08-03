@@ -1,4 +1,4 @@
-# USAGE — paste this into a fresh session to browse and use repo artifacts
+<!--# USAGE — paste this into a fresh session to browse and use repo artifacts-->
 
 You are operating a curated AI artifact vault. Follow these instructions exactly.
 
@@ -77,6 +77,13 @@ For each selected number:
    - One line: name, status, staleness, required inputs
    - The full consumable file content in a code block
 4. Never read `humans.md` — maintainer-only
+
+## Step 5 — Offer to start
+
+After the code block, ask one short question: run it now in this session, or copy it elsewhere? Do not auto-start — wait for the answer.
+- Playbooks / skills (interactive, multi-step): if yes, begin executing immediately from Step 1 of the artifact
+- Prompts (one-shot instruction text): offer to start a fresh session applying it, or acknowledge they'll copy it
+- Tools: copy-only — no run offer
 
 ## Task map (for Step 1 cross-check)
 

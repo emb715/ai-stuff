@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { getCollection } from 'astro:content';
+import usageContent from '../../../../USAGE.md?raw';
 
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
@@ -26,6 +27,27 @@ const counts = await Promise.all(
   <h1>AI operating knowledge base</h1>
   <p>Reusable, tested, sanitized artifacts from real work. This site renders the vault's source files directly — no duplication.</p>
 
+  <section class="quickstart">
+    <h2>Quick start</h2>
+    <p>Browse and consume the vault from any LLM session — two ways.</p>
+    <ol class="quickstart-options">
+      <li>
+        <span class="quickstep-num" aria-hidden="true">1</span>
+        <div>
+          <button type="button" class="copy-usage" data-usage={usageContent}>Copy USAGE.md</button> and paste into a fresh session. It verifies the inventory, prints a grouped menu, and delivers the correct artifact file.
+        </div>
+      </li>
+      <li>
+        <span class="quickstep-num" aria-hidden="true">2</span>
+        <div>
+          Register the <code>/ai-stuff</code> command once via the <a href={`${base}prompts/ai-stuff-command-installer`}>installer prompt</a> — then <code>/ai-stuff</code> loads the browsing flow in any session.
+        </div>
+      </li>
+    </ol>
+    <p class="quickstart-explain">New to the vault? Read <a href="https://github.com/emb715/ai-stuff/blob/main/EXPLAIN.md" rel="noopener">EXPLAIN.md</a> — a tour of what's inside and how the artifacts connect.</p>
+  </section>
+
+  <h2>Browse</h2>
   <div class="inventory-grid">
     {counts.map((c) => (
       <a href={`${base}${c.name}`} class="inventory-card">
@@ -35,3 +57,21 @@ const counts = await Promise.all(
     ))}
   </div>
 </Base>
+<script>
+  const btn = document.querySelector('.copy-usage');
+  btn?.addEventListener('click', async () => {
+    const text = btn.getAttribute('data-usage') ?? '';
+    const original = btn.textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      btn.textContent = 'Copied';
+      btn.classList.add('copied');
+    } catch {
+      btn.textContent = 'Copy failed — click raw link';
+    }
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove('copied');
+    }, 1500);
+  });
+</script>
