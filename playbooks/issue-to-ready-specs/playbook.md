@@ -39,7 +39,20 @@ If no parallel agent fleet is available, do these investigations sequentially �
 - Decompose the confirmed brief into implementation stories. Each story is one outcome with clear dependencies
 - Order by dependency: data layer first (schema), then logic (API, enforcement), then presentation (UI)
 - Identify parallel-safe groups: stories with no file overlap can be implemented simultaneously
-- Present the breakdown to the user for confirmation
+
+**Merge-by-domain-proximity check (before finalizing the count):**
+After drafting the breakdown, before presenting it, check: can two adjacent stories be one broader spec that the implementer splits during implementation? API + its CRUD is one spec, not two. Admin UI + advisor UI is one spec, not two. The implementer is better positioned to split than the spec writer — they have the codebase in front of them. Signal to merge: domain proximity + shared codebase patterns, not a count. No hard ceiling — epics legitimately need more specs than single features.
+
+**Brief ↔ breakdown coverage check (before presenting):**
+Build a mapping table: every brief MVP item → story(ies) that cover it. If any MVP item has no story, either add a story or explain how an existing story covers it. This catches the most common breakdown defect: a user overrides an architect decision during Step 2 (e.g., "cron, not lazy eval"), the brief incorporates the override (Step 3), but the breakdown still reflects the original architect decision because the override didn't propagate forward.
+
+| Brief MVP item | Story(ies) | Covered? |
+|---|---|---|
+| [MVP item 1] | [Story N] | ✓ |
+| [MVP item 2] | [Story N, Story M] | ✓ |
+| [MVP item 3] | — | ✗ add a story |
+
+Present the breakdown AND the coverage table to the user for confirmation.
 
 ### 5. Spec investigation (parallel, depends on breakdown)
 
@@ -70,7 +83,7 @@ Specs often surface decision points they couldn't resolve in isolation — phras
    - If you have specialist agents, dispatch to the named specialist
    - If working alone, investigate the question directly in the codebase
 5. Apply resolutions as spec amendments
-6. **Re-verify amendment propagation**: check that the amendment propagated to ALL sections of the spec — Tasks, Test Plan, Edge Cases, Known Issues. Stale test mocks after a Task amendment are the most common blind spot
+6. **Re-verify amendment propagation**: run the `Consistent` check from [`quick-spec`](../quick-spec/) Step 4 on each amended spec — read Tasks, Test Plan, Edge Cases, and Known Issues together; do they reference the same model names, query shapes, and API contracts? The common blind spot: after amending a Task, the Test Plan still mocks the old query. The `Consistent` criterion is the structural check for this; do not re-describe it in prose — invoke it
 
 ### 8. Readiness loop (sequential, depends on amended specs)
 
@@ -117,15 +130,17 @@ This catches the most common parallel-spec failure mode: 3 specs independently g
 - **Amendments don't propagate to test plans.** After amending a Task's query, the Test Plan still mocked the old query. The Consistent criterion (from quick-spec) catches this. Without it, tests written from the spec would throw against the amended implementation
 - **The product-brief research phase is redundant if research was done upstream.** Skip it. The brief's value is the Scope/Constraints section, not re-researching
 - **The readiness loop is the highest-value phase.** It caught 3 blockers, 1 stale test plan, and confirmed all P0s. Do not skip it or short-circuit it
-- **Prefer broader specs, merge by domain proximity before dispatch.** A 9-spec decomposition in the validating session produced a 4500-line session where actual decisions were ~200 lines — the rest was verbatim research and redundant context across specs sharing the same codebase patterns. Before finalizing the story breakdown (Step 4), check: can any two stories be merged into one broader spec that the implementer splits during implementation? API + its CRUD is one spec, not two. Admin UI + advisor UI is one spec, not two. The implementer is better positioned to split than the spec writer — they have the codebase in front of them. No hard ceiling — epics legitimately need more specs than single features. The signal to merge is domain proximity + shared codebase patterns, not a count
+- **The brief ↔ breakdown coverage check catches decision-override drift.** If the user overrides an architect decision in Step 2 (e.g., "cron, not lazy eval"), the brief incorporates the override but the breakdown can still reflect the original decision. The coverage table in Step 4 makes this visible before dispatch
 
 ## Verification
 
 - Every spec passes the six-criterion Ready-for-Development standard
 - Every PRD requirement has a code anchor in at least one spec
+- Every brief MVP item maps to at least one story in the breakdown (Step 4 coverage table)
 - No handoff remains unresolved (status "pending" = failure)
 - Shared assumptions across parallel specs are verified against the schema
-- The user confirmed: the brief, the story breakdown, and the final readiness verdict
+- The `Consistent` criterion was re-run on every amended spec after handoff resolution (Step 7.6)
+- The user confirmed: the brief, the story breakdown (with coverage table), and the final readiness verdict
 
 ## Rollback / Fallback
 

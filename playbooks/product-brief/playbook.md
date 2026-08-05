@@ -94,11 +94,18 @@ If yes: brief is done. One confirmation round is the default. Two at most.
 
 ## Step 5 — Decide what's next
 
-The brief is done. Ask: "Do you want to keep going into a plan, or is this the stopping point for now?"
+The brief is done. Ask: "Do you want to keep going, or is this the stopping point for now?"
 
 **If stopping:** brief lives in the conversation. User copies what they need.
 
-**If continuing into a plan:** stay in the same session. The brief is the starting document. Run iterative rounds on it — each round resolves the highest-risk gap with the smallest change, keeps assumptions explicit, surfaces contradictions for user input, and stops when all requirements are traceable and no P0/P1 unknowns remain. Don't switch tools. Keep going.
+**If continuing:** the brief is the starting document. Two continuation paths — the caller decides which:
+
+- **Spec paradigm** → [`quick-spec`](../quick-spec/) or [`issue-to-ready-specs`](../issue-to-ready-specs/): turn the brief into implementation-ready specs (Problem, Scope, Acceptance Criteria, Tasks, Test Plan). Use when a single agent or human will implement the feature in one session — the spec is the contract, the implementer handles phasing.
+- **Plan paradigm** → [`raa`](../raa/): turn the brief into a phased, file-scoped implementation plan with a handoff ledger. Use when a fleet will implement in parallel — the plan handles phasing, file ownership, and handoffs.
+
+If called from `issue-to-ready-specs`, the next step is `quick-spec` (spec paradigm), not iterative rounds on the brief. Do not re-run research — it was done upstream.
+
+If no caller context and the user wants to refine the brief itself (not move to specs or a plan): stay in the session and run iterative rounds on it — each round resolves the highest-risk gap with the smallest change, keeps assumptions explicit, surfaces contradictions for user input, and stops when all requirements are traceable and no P0/P1 unknowns remain. This is the "refine the brief" path, distinct from the spec/plan paths above.
 
 ## Verification
 
