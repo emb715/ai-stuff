@@ -3,7 +3,7 @@ title: "Testing Discipline Reference"
 status: draft
 confidence: high
 last_tested: 2026-08-04
-scope: universal
+scope: global
 tooling:
   - "vitest/jest/pytest"
 tags:

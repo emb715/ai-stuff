@@ -1,6 +1,31 @@
+---
+title: "references/cli-reference.md — liteparse CLI"
+status: validated
+confidence: high
+last_tested: 2026-08-04
+scope: global
+tooling:
+  - "liteparse"
+  - "lit-cli"
+tags:
+  - skill
+  - liteparse
+  - reference
+  - cli
+owner: "@emb715"
+---
+
 # references/cli-reference.md — liteparse CLI
 
 Full CLI surface for `lit` (v2.11.0). Verified against `lit <command> --help` on 2026-08-04.
+
+## Context / Problem
+
+`SKILL.md` documents only the 80% case for `lit`. This reference captures the full flag surface — every subcommand and option — for the cases SKILL.md intentionally omits (advanced extraction flags, batch/screenshot options, multi-format input support).
+
+## Scope
+
+Covers `lit parse`, `lit batch-parse`, `lit screenshot`, `lit is-complex`, OCR setup, and multi-format input support. Does not cover install (`SKILL.md`) or the markdown-fidelity footgun (`SKILL.md`).
 
 ## `lit parse [OPTIONS] <FILE>`
 
@@ -97,3 +122,16 @@ Server must implement the liteparse OCR HTTP spec. EasyOCR and PaddleOCR server 
 | DOCX/PPTX/XLSX/ODT/RTF/etc | via LibreOffice | `brew install --cask libreoffice` (macOS); `apt install libreoffice` (Debian) |
 
 If a non-PDF/non-image format fails with a converter error, LibreOffice is missing or not on PATH. Verify: `libreoffice --version`.
+
+## Procedure / Steps
+
+Reference table — no procedure to follow. Look up the flag for the subcommand in use; combine with `SKILL.md` for the 80% workflow.
+
+## Evidence / Results
+
+Captured directly from `lit <command> --help` output on 2026-08-04 against liteparse v2.11.0 (see `SKILL.md` Evidence section for install/verification details). Not independently re-verified beyond that capture.
+
+## Failure Modes / Boundaries
+
+- This table can drift from the installed binary after a `lit` upgrade — re-capture `--help` output and diff against this file on each major release.
+- Flag semantics not exercised end-to-end here; this is a reference capture, not a tested procedure. See `SKILL.md` for verified core-command usage.

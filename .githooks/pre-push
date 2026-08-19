@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Pre-push guardrail: blocks `git push` if the documentation linter fails.
+# Mirrors the CI check in .github/workflows/doc-lint.yml.
+#
+# Enable once per clone with:
+#   git config core.hooksPath .githooks
+
+set -euo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+
+echo "Running documentation lint before push..."
+
+if ! python3 "$REPO_ROOT/scripts/doc_lint.py"; then
+    echo ""
+    echo "Push blocked: documentation lint failed (COMPLIANCE: BLOCKED)."
+    echo "Fix the reported issues, or run 'python3 scripts/doc_lint.py' locally for details."
+    exit 1
+fi
+
+exit 0

@@ -3,7 +3,7 @@ title: "Arch Design Pipeline"
 status: draft
 confidence: medium
 last_tested: 2026-08-12
-scope: universal
+scope: team
 tooling:
   - agnostic/any-LLM
 tags:

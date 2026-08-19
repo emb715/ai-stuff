@@ -1,3 +1,18 @@
+---
+title: "Claude Code QA Skills Starter Pack"
+status: draft
+confidence: medium
+last_tested: 2026-08-19
+scope: personal
+tooling:
+  - "claude-code"
+tags:
+  - experiment
+  - qa
+  - skills
+owner: "@emb715"
+---
+
 # Claude Code QA Skills Starter Pack
 
 4 production-ready QA skills for Claude Code (and any Agent Skills compatible agent: Cursor, Copilot, Windsurf, Codex, and 30+ more). From QASkills.sh, the open registry of 400+ QA skills.

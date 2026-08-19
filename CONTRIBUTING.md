@@ -112,6 +112,18 @@ CI enforcement:
 - `.github/workflows/doc-lint.yml` runs the same check on PRs and pushes to `main`
 - Any failure is blocking
 
+## Git hooks (guardrails)
+
+Enable the local pre-push guardrail once after cloning:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+This activates `.githooks/pre-push`, which runs the same documentation lint as CI
+(`python3 scripts/doc_lint.py`) and blocks `git push` if it reports `COMPLIANCE: BLOCKED`.
+See `.githooks/README.md` for details.
+
 ## Review rubric
 
 Reviewers should reject content that is:
