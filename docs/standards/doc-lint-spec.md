@@ -178,6 +178,18 @@ Applies to **every markdown file in the repo**, regardless of lint exclusion sta
 
 Failure: BLOCKED.
 
+### DL014 — `last_tested` freshness
+
+The `last_tested` date must be within the staleness threshold (default 180 days, configurable via `DL014_MAX_AGE_DAYS` env var).
+
+Applies to: all files with required frontmatter (see DL001) where `status` is `validated` or `vetted`. Does NOT apply to:
+- `experiments/` (experimental work, not yet validated)
+- `status: draft` (in-progress, freshness enforced after validation)
+- `status: deprecated` (awaiting archival, expected to be stale)
+- Index/navigation READMEs (section indexes, not evidence-bearing artifacts)
+
+Failure: BLOCKED. Fix: re-verify the artifact and bump `last_tested` to today, or mark `deprecated` if no longer relevant.
+
 ## Output contract for lint/compliance runs
 
 Use exact response structure:
@@ -194,7 +206,7 @@ PROMOTION_DECISION: <allowed|not allowed>
 
 ## Severity
 
-All DL001–DL008, DL011, DL012, and DL013 are **blocking** in this repository.
+All DL001–DL008, DL011, DL012, DL013, and DL014 are **blocking** in this repository.
 
 ## Evidence / Results
 

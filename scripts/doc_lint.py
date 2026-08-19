@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import os
 import re
 import subprocess
 import sys
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import date, datetime
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -102,6 +103,16 @@ ALLOWED_CONFIDENCE = {"low", "medium", "high"}
 # source of truth — AGENTS.md documents the rule, this enforces it.
 EXPECTED_OWNER = "@emb715"
 
+# DL014 — last_tested freshness threshold.
+# Artifacts with status validated/vetted must have last_tested within this
+# many days of today, or they are stale and must be re-verified or deprecated.
+# Configurable via env var for CI overrides (e.g., longer grace periods during
+# migrations). Default 180 days (~6 months).
+try:
+    DL014_MAX_AGE_DAYS = int(os.environ.get("DL014_MAX_AGE_DAYS", "180"))
+except ValueError:
+    DL014_MAX_AGE_DAYS = 180
+
 # DL013 — absolute or machine-specific path pattern.
 # Catches leaked filesystem paths. Does NOT block /tmp/ (legitimate clone target).
 ABS_PATH_PATTERN = re.compile(
@@ -126,6 +137,7 @@ GATE_LABELS = {
     "DL011": "Gate 2",
     "DL012": "Gate 1",
     "DL013": "Gate 4",
+    "DL014": "Gate 5",
 }
 
 
@@ -495,6 +507,33 @@ def lint() -> Tuple[List[Finding], int]:
             findings.append(
                 Finding("DL003", rel_path, f"Invalid last_tested date format: {date_val or '<empty>'}")
             )
+
+        # DL014 — last_tested freshness.
+        # Validated/vetted artifacts must have been tested recently; a stale
+        # last_tested date means the claimed evidence may no longer reproduce.
+        # Skipped for: experiments/ (not validated yet), draft (in-progress),
+        # deprecated (awaiting archival), and index/navigation READMEs.
+        if is_valid_date(date_val):
+            is_index_readme = (
+                file_path.name == "README.md"
+                and file_path.parent != ROOT  # not root README
+            )
+            in_experiments = rel_path.startswith("experiments/")
+            if (
+                not in_experiments
+                and status not in ("draft", "deprecated")
+                and not is_index_readme
+            ):
+                parsed_date = datetime.strptime(date_val, "%Y-%m-%d").date()
+                age = (date.today() - parsed_date).days
+                if age > DL014_MAX_AGE_DAYS:
+                    findings.append(
+                        Finding(
+                            "DL014",
+                            rel_path,
+                            f"last_tested is {age} days old (max {DL014_MAX_AGE_DAYS}); re-verify and bump the date or mark deprecated",
+                        )
+                    )
 
         # DL012 — owner value must match the repo owner exactly.
         # Prevents OS-username / git-config-user drift. The expected value is

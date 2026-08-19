@@ -31,7 +31,7 @@ Generalizes Kent C. Dodds' `visual-recap` skill. visual-recap produces one diagr
 ## Structure decisions
 
 - `scripts/upsert-impact-block.mjs` — recap-mode PR upsert. Same contract as visual-recap's script with the marker name changed. Scoped to recap mode; plan and chat modes don't touch PR descriptions.
-- No `refs/` directory. The skill's depth is the four diagram specs plus the workflow, all of which belong inline because they're consumed as one unit. If the diagram specs grow large enough to fragment reading flow, split per diagram type into `refs/system-map.md`, `refs/decision-graph.md`, etc. Not yet.
+- No `references/` directory. The skill's depth is the four diagram specs plus the workflow, all of which belong inline because they're consumed as one unit. If the diagram specs grow large enough to fragment reading flow, split per diagram type into `references/system-map.md`, `references/decision-graph.md`, etc. Not yet.
 - No `docs/` directory. The skill is grounded in visual-recap (linked in README provenance) and repo-primitive-audit (linked as related artifact). No external spec to capture.
 - `humans.md` (this file) holds the design rationale, the origin, and maintenance — none of which belong in SKILL.md because they don't change what diagrams the model produces next.
 

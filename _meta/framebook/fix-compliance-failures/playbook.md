@@ -37,6 +37,11 @@ Common lint codes:
 | DL007 | Sanitization issue |
 | DL008 | Not linked from any index (orphan) |
 
+Troubleshooting by lint code:
+| Code | Symptom | Fix |
+|---|---|---|
+| DL014 | last_tested date is stale (>180 days) | Re-verify the artifact against current state, bump `last_tested` to today. If no longer relevant, mark `status: deprecated` with a reason. |
+
 ### 2. Order the fixes
 
 Fix gates in this order to avoid re-work:

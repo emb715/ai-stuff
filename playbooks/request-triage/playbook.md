@@ -50,9 +50,11 @@ Ask the user:
 
 ## Step 4 — Check composability
 
-If the user already has specs (from quick-spec or issue-to-ready-specs) and wants fleet execution, route to **raa**. The specs become raa's feature description input — specs feed plans, not the reverse.
+If the user has a validated design doc set at `docs/design/<feature-slug>/` (PRD+RFD+NRFD+Tech Spec), the design docs are the authoritative input — do not fall through to the specs check. Route per the Step 2/3 paradigm decision: spec paradigm → quick-spec with the Tech Spec as input; plan paradigm → raa with Tech Spec + RFD as input. The existing specs check (below) fires only if no design doc set exists.
 
-If the user has specs and wants single-agent execution, no re-routing needed — the specs are already implementation-ready.
+If no design doc set exists, and the user already has specs (from quick-spec or issue-to-ready-specs) and wants fleet execution, route to **raa**. The specs become raa's feature description input — specs feed plans, not the reverse.
+
+If no design doc set exists, and the user has specs and wants single-agent execution, no re-routing needed — the specs are already implementation-ready.
 
 ## Step 5 — Check for convergence need
 

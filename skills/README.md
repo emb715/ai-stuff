@@ -49,7 +49,7 @@ skills/
     └── humans.md    ← maintenance notes, design decisions, context for humans
 ```
 
-Optional subdirectories (`refs/`, `docs/`, `scripts/`, `commands/`) are allowed when the skill needs them.
+Optional subdirectories (`references/`, `docs/`, `scripts/`, `commands/`) are allowed when the skill needs them.
 
 ## Index
 
@@ -58,3 +58,4 @@ Optional subdirectories (`refs/`, `docs/`, `scripts/`, `commands/`) are allowed 
 | [skill-authoring](skill-authoring/) | skill, meta, authoring, documentation, process | draft |
 | [prompt-factory](prompt-factory/) | skill, prompts, generation, factory | validated |
 | [change-impact-diagram](change-impact-diagram/) | skill, impact-analysis, mermaid, diagrams, primitives | validated |
+| [liteparse](liteparse/) | skill, pdf, parsing, ocr, liteparse, document-processing | draft |

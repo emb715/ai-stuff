@@ -159,7 +159,7 @@ Organize by domain so Claude only reads what's relevant to the task:
 ```
 bigquery-skill/
 ├── SKILL.md
-└── refs/
+└── references/
     ├── finance.md
     ├── sales.md
     ├── product.md
@@ -169,8 +169,8 @@ bigquery-skill/
 ```markdown
 # BigQuery Data Analysis
 
-**Finance**: Revenue, ARR → See [refs/finance.md](refs/finance.md)
-**Sales**: Pipeline, accounts → See [refs/sales.md](refs/sales.md)
+**Finance**: Revenue, ARR → See [references/finance.md](references/finance.md)
+**Sales**: Pipeline, accounts → See [references/sales.md](references/sales.md)
 ```
 
 ### Pattern 3: Conditional details
@@ -182,7 +182,7 @@ bigquery-skill/
 
 ### No orphan rule (skill-authoring addition)
 
-Every `refs/` file must have exactly one routing link in SKILL.md. A file with no link is undiscoverable.
+Every `references/` file must have exactly one routing link in SKILL.md. A file with no link is undiscoverable.
 
 ### Avoid deeply nested references
 
@@ -427,7 +427,7 @@ When inputs can be rendered as images (PDFs, diagrams):
 |---|---|
 | Concise is key | Token efficiency step (Step 7), compression test |
 | Description = what + when, third person | Trigger description step (Step 8) |
-| Progressive disclosure, one level deep | No orphan rule, refs/ structure |
+| Progressive disclosure, one level deep | No orphan rule, references/ structure |
 | Evaluation-driven development | humans.md: known gaps + maintenance checklist |
 | Test with Claude A, evaluate with Claude B | Implicit in the iterative process |
 | Avoid time-sensitive content | Part of audit step (Step 4) |

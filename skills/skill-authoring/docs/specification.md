@@ -16,7 +16,7 @@ skill-name/
 └── ...               # Any additional files
 ```
 
-> **Note:** The official spec uses `references/` for documentation files. The skill-authoring convention uses `refs/` (shortened) for the same purpose. Both are valid — pick one and stay consistent within a skill.
+> **Note:** The official spec uses `references/` for documentation files. Use `references/` to align with the official Agent Skills spec — the skill-authoring convention now uses `references/` (previously `refs/`, aligned 2026-08-12). Pick one and stay consistent within a skill.
 
 ---
 
@@ -116,7 +116,7 @@ Executable code. Scripts should:
 - Include helpful error messages
 - Handle edge cases gracefully
 
-### `references/` (or `refs/`)
+### `references/`
 
 Additional documentation loaded on demand:
 - `REFERENCE.md` — technical reference
@@ -163,7 +163,7 @@ Source: https://github.com/agentskills/agentskills/tree/main/skills-ref
 
 | Spec says | skill-authoring uses | Notes |
 |---|---|---|
-| `references/` for docs | `refs/` | Shortened, same purpose |
+| `references/` for docs | `references/` | Aligned to spec 2026-08-12 (was `refs/`) |
 | No format restriction on body | Affirmative, token-efficient prose | Stricter than spec for quality |
 | 500 lines max SKILL.md | 100–180 lines target | Much stricter — enforces concision |
-| Any file structure | `SKILL.md` + `refs/` + `humans.md` | Opinionated for consistency |
+| Any file structure | `SKILL.md` + `references/` + `humans.md` | Opinionated for consistency |

@@ -29,29 +29,29 @@ This ADR records the decisions made for the skill-authoring process and the skil
 
 ---
 
-### 2. refs/ for model-accessible references, docs/ for human research
+### 2. references/ for model-accessible references, docs/ for human research
 
-**Decision:** Supplementary files the model may need to read during a session go in `refs/`. Research, ADRs, and background documentation for human maintainers go in `docs/`.
+**Decision:** Supplementary files the model may need to read during a session go in `references/`. Research, ADRs, and background documentation for human maintainers go in `docs/`.
 
-**Rationale:** The model navigates the skill directory via bash. Files in `refs/` are linked from SKILL.md and are part of the skill's operational surface. Files in `docs/` are not linked from SKILL.md and are never loaded as model context — they exist for the humans maintaining the skill collection.
+**Rationale:** The model navigates the skill directory via bash. Files in `references/` are linked from SKILL.md and are part of the skill's operational surface. Files in `docs/` are not linked from SKILL.md and are never loaded as model context — they exist for the humans maintaining the skill collection. The directory name `references/` aligns with the official Agent Skills spec (agentskills.io), which uses `references/` as the optional documentation directory.
 
 **Consequences:**
-- Every file in `refs/` must have exactly one routing link in SKILL.md (no orphan rule)
+- Every file in `references/` must have exactly one routing link in SKILL.md (no orphan rule)
 - Files in `docs/` have no routing link in SKILL.md — they are invisible to the model by design
-- ADRs always go in `docs/`, never `refs/`
+- ADRs always go in `docs/`, never `references/`
 
 ---
 
-### 3. No orphan rule — every refs/ file has exactly one routing link
+### 3. No orphan rule — every references/ file has exactly one routing link
 
-**Decision:** Every file in `refs/` must be reachable via exactly one routing link in SKILL.md. Files with no link are removed or merged.
+**Decision:** Every file in `references/` must be reachable via exactly one routing link in SKILL.md. Files with no link are removed or merged.
 
-**Rationale:** The model reads SKILL.md in one pass. A `refs/` file with no routing link is permanently undiscoverable — the model has no mechanism to find it. A routing link that appears in the relevant section (not at the top) gives the model context for when to follow it.
+**Rationale:** The model reads SKILL.md in one pass. A `references/` file with no routing link is permanently undiscoverable — the model has no mechanism to find it. A routing link that appears in the relevant section (not at the top) gives the model context for when to follow it.
 
 **Consequences:**
 - Routing links appear at the end of the section they relate to, not in a top-level index
-- A refs/ file with no natural home section is a signal the concern is not represented in SKILL.md — either add the section or eliminate the file
-- Routing link format: `→ See [refs/X.md](refs/X.md) for Y in 5–10 words.`
+- A references/ file with no natural home section is a signal the concern is not represented in SKILL.md — either add the section or eliminate the file
+- Routing link format: `→ See [references/X.md](references/X.md) for Y in 5–10 words.`
 
 ---
 
@@ -68,15 +68,15 @@ This ADR records the decisions made for the skill-authoring process and the skil
 
 ---
 
-### 5. One footgun per skill, grounded antipatterns in refs/
+### 5. One footgun per skill, grounded antipatterns in references/
 
-**Decision:** SKILL.md contains exactly one footgun — the most severe, non-obvious, natural failure mode. Additional grounded antipatterns (three or more) go in `refs/antipatterns.md`. Fewer than three are folded into the relevant section.
+**Decision:** SKILL.md contains exactly one footgun — the most severe, non-obvious, natural failure mode. Additional grounded antipatterns (three or more) go in `references/antipatterns.md`. Fewer than three are folded into the relevant section.
 
 **Rationale:** Multiple warnings in SKILL.md dilute the severity signal. If everything is a warning, nothing is. One footgun with clear consequences is more effective than a list. The inclusion test for any antipattern: could the model write this wrong version while believing it is correct?
 
 **Consequences:**
 - SKILL.md has at most one ✗/✓ footgun block
-- refs/antipatterns.md is created only when there are three or more grounded antipatterns
+- references/antipatterns.md is created only when there are three or more grounded antipatterns
 - Antipatterns that fail the inclusion test are not documented
 - Every ✗ must be immediately followed by ✓ with the failure mode named — a ✗ without a paired ✓ and explanation is removed, not kept
 
@@ -91,7 +91,7 @@ This ADR records the decisions made for the skill-authoring process and the skil
 **Consequences:**
 - The pair must be drawn from the actual library being documented
 - One pair is sufficient — this is not an exhaustive style guide
-- The pair lives in SKILL.md, not in refs/
+- The pair lives in SKILL.md, not in references/
 
 ---
 
@@ -112,15 +112,15 @@ This ADR records the decisions made for the skill-authoring process and the skil
 
 **Decision:**
 - SKILL.md: 100–180 lines (target), 250 lines (hard cap)
-- Each refs/ file: 60–100 lines (target), 150 lines (soft cap)
+- Each references/ file: 60–100 lines (target), 150 lines (soft cap)
 - humans.md: no cap — prose for humans has no token cost
-- Total SKILL.md + refs/ combined: 600 lines (soft cap)
+- Total SKILL.md + references/ combined: 600 lines (soft cap)
 
-**Rationale:** The agentskills.io spec allows 500 lines for SKILL.md. The skill-authoring process enforces a stricter target because skills that approach 500 lines have almost certainly failed to progressively disclose. The 80% case should fit in 180 lines. Anything beyond that should be a refs/ file.
+**Rationale:** The agentskills.io spec allows 500 lines for SKILL.md. The skill-authoring process enforces a stricter target because skills that approach 500 lines have almost certainly failed to progressively disclose. The 80% case should fit in 180 lines. Anything beyond that should be a references/ file.
 
 **Consequences:**
 - Skills approaching 250 lines in SKILL.md must be refactored before shipping
-- refs/ files approaching 150 lines should be split by concern
+- references/ files approaching 150 lines should be split by concern
 - humans.md is exempt — it is never loaded as model context
 
 ---
@@ -140,12 +140,12 @@ This ADR records the decisions made for the skill-authoring process and the skil
 
 ### 10. Markdown decoration policy — strip separators, bold, and decorative arrows
 
-**Decision:** SKILL.md and all refs/ files strip decorative markdown: `---` horizontal rules, `**bold**` outside code blocks, and `→` arrow prefixes on routing links. Headings (`#`, `##`, `###`), tables, code blocks, and `[link](path)` are kept.
+**Decision:** SKILL.md and all references/ files strip decorative markdown: `---` horizontal rules, `**bold**` outside code blocks, and `→` arrow prefixes on routing links. Headings (`#`, `##`, `###`), tables, code blocks, and `[link](path)` are kept.
 
 **Rationale:** Markdown rendering is for humans reading in a UI. A model consuming a skill as context tokens sees raw text — `**bold**`, `---`, and `→` cost tokens and carry no instruction value. The words carry the meaning; the decorators do not. The exception is structural markdown (headings, tables, code fences, links) which the model uses for navigation and semantic parsing, not visual rendering.
 
 **Consequences:**
-- No `---` horizontal rules anywhere in SKILL.md or refs/ files
+- No `---` horizontal rules anywhere in SKILL.md or references/ files
 - No `**bold**` outside code blocks — emphasis is carried by word choice and position
 - No `→` arrow prefixes on routing links — the link text already conveys direction
 - humans.md is exempt — it is for human readers and may use any markdown freely
@@ -169,17 +169,23 @@ This ADR records the decisions made for the skill-authoring process and the skil
 
 ## Alternatives considered
 
-**Single SKILL.md file, no refs/**  
+**Single SKILL.md file, no references/**  
 Rejected. A flat skill that contains the full API reference, all antipatterns, and all configuration options would approach or exceed 500 lines. Progressive disclosure requires splitting content so the model only loads what each task needs.
 
 **Top-level routing index instead of section-level links**  
 Rejected. A top-level index lists files with no context. A model that hasn't read the sections yet doesn't know which file is relevant. Section-level routing links appear after the model has read the section they relate to — by then the model knows whether to follow the link.
 
 **docs/ for both research and model references**  
-Rejected. Mixing human research with model-accessible references creates an unclear boundary. The model should never need to navigate docs/ — that's a signal it has the wrong purpose. refs/ is the model's space; docs/ is the maintainer's space.
+Rejected. Mixing human research with model-accessible references creates an unclear boundary. The model should never need to navigate docs/ — that's a signal it has the wrong purpose. references/ is the model's space; docs/ is the maintainer's space.
 
 **Gerund naming only (processing-pdfs, building-skills)**  
 Partially adopted. Gerund form is preferred but noun-phrase alternatives (pdf-processing, skill-authoring) are acceptable. The skill-authoring name itself uses noun-phrase form.
+
+---
+
+## Decision log
+
+**2026-08-12 — Changed `refs/` to `references/` across all skills.** Decision #2 originally chose `refs/` as a shortened form of `references/`. The official Agent Skills spec (agentskills.io) uses `references/` as the optional documentation directory name. The shortened `refs/` was a vault convention that created divergence from the standard. Decision reversed: use `references/` to align with the official spec. All existing `refs/` folders renamed to `references/`; all routing links and documentation updated. The rationale, no-orphan rule, and one-concern-per-file convention are unchanged — only the directory name.
 
 ---
 

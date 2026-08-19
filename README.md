@@ -69,6 +69,7 @@ This table is a snapshot. The filesystem is authoritative — `ls` the content d
 | [prompt-factory](skills/prompt-factory/) | Generate deterministic implementation prompts from explicit plan docs or session context with mode/pre-flight gating (`default`, `fast`, `auto`; `strict` pending) | validated |
 | [skill-authoring](skills/skill-authoring/) | Create and maintain agent skills for libraries/frameworks/tools; structure, token efficiency, coverage | draft |
 | [change-impact-diagram](skills/change-impact-diagram/) | Diagram how a code change impacts the system and its primitives; four mermaid diagram types, three output modes | validated |
+| [liteparse](skills/liteparse/) | Parse PDFs and other documents locally with lit — fast spatial text parsing with bounding boxes, OCR (Tesseract bundled), page screenshots, text/markdown/JSON output | validated |
 
 ### Tools
 

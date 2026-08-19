@@ -13,6 +13,6 @@ Created 2026-06-24. AGENTS.md defines the BLOCKED output format and the 6 gates 
 
 ## Maintenance notes
 
-- The lint codes (DL001–DL008) are based on the current state of `doc_lint.py`. If new codes are added, update the reference table in the playbook.
+- The lint codes (DL001–DL014) are based on the current state of `doc_lint.py`. If new codes are added, update the reference table in the playbook.
 - Currently Gate 3 and Gate 5 are only partially covered by the linter. When the linter is expanded, the "manually verify" note in step 4 can be updated or removed.
 - If AGENTS.md adds a Gate 7 or changes gate definitions, update the gate reference table in step 1.

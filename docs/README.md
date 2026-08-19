@@ -42,3 +42,7 @@ Opinionated, evidence-backed guidance on AI workflows, tooling, and techniques. 
 | Note | Summary | Status |
 |---|---|---|
 | [token-efficiency.md](notes/token-efficiency.md) | Techniques for reducing token consumption; quantified savings per technique | validated |
+| [testing-discipline.md](notes/testing-discipline.md) | Unit test case selection, quality gates, mocking discipline, PR test review obligation table | draft |
+| [bug-reporting.md](notes/bug-reporting.md) | Severity definitions, reproduction discipline, QA dashboard principle for bug reporting | draft |
+
+

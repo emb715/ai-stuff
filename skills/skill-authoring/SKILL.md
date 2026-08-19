@@ -13,10 +13,10 @@ A good skill is:
 
 - Concise — every line earns its place
 - Responsible for one thing — not a multi-step workflow
-- Composable — routes to `refs/` files instead of dumping everything inline
-- Progressively disclosed — SKILL.md covers the 80% case, depth lives in `refs/`
+- Composable — routes to `references/` files instead of dumping everything inline
+- Progressively disclosed — SKILL.md covers the 80% case, depth lives in `references/`
 - Harness-agnostic — works regardless of which AI tool loads it
-- Well-documented — a `humans.md` companion explains the skill's structure, decisions, and how to maintain it; SKILL.md contains none of this — it is written for a model, not a reader
+- Well-documented — SKILL.md is written for a model, not a human reader; maintenance context (structure rationale, design decisions, known gaps) goes in a separate file that is not loaded as model context
 - Portable — no assumptions about the consumer's project structure
 - Secure — never instructs the model to output secrets, tokens, or credentials; redacts sensitive values in examples
 - Affirmative — describes what the library does, not what it doesn't have
@@ -58,7 +58,7 @@ Examples by category:
 - State: reading a value once instead of subscribing to it
 - Types: using a cast to bypass an `unknown` return without validating shape
 
-One footgun per skill. If you find more than one, rank by severity and document only the worst in SKILL.md. The rest go in `refs/`.
+One footgun per skill. If you find more than one, rank by severity and document only the worst in SKILL.md. The rest go in `references/`.
 
 ### Step 3 — Identify grounded antipatterns (optional)
 
@@ -80,9 +80,9 @@ Never show ✗ without ✓. A wrong example with no correction and no explanatio
 
 Where antipatterns live:
 - One severe case → SKILL.md alongside the footgun (Step 2)
-- Longer tail → `refs/antipatterns.md`, linked from SKILL.md
+- Longer tail → `references/antipatterns.md`, linked from SKILL.md
 
-If you find fewer than three grounded antipatterns, skip the `refs/antipatterns.md` file and fold them into the relevant section of SKILL.md or the appropriate `refs/` file. A dedicated antipattern file only earns its place when the list is long enough to fragment the reading flow elsewhere.
+If you find fewer than three grounded antipatterns, skip the `references/antipatterns.md` file and fold them into the relevant section of SKILL.md or the appropriate `references/` file. A dedicated antipattern file only earns its place when the list is long enough to fragment the reading flow elsewhere.
 
 ### Step 4 — Audit existing docs or skill (if rewriting)
 
@@ -105,20 +105,20 @@ SKILL.md covers:
 - Install or import — the first thing any developer needs
 - The 3–5 most-used APIs with minimal working examples
 - The one footgun with a correct alternative shown
-- Explicit `→ See refs/X.md` routes for anything requiring more depth
+- Explicit `→ See references/X.md` routes for anything requiring more depth
 
-`refs/` files cover (one file per concern, not per API):
+`references/` files cover (one file per concern, not per API):
 - Full export/API tables
 - Detailed feature walkthroughs
 - Configuration reference
 - Patterns that only appear once a developer is already past the basics
 
 Name files by concern:
-- `refs/imports.md` — full export reference by entry point
-- `refs/routing.md` — routing patterns
-- `refs/data-fetching.md` — fetching and mutation patterns
-- `refs/configuration.md` — config options and defaults
-- `refs/testing.md` — testing utilities and patterns
+- `references/imports.md` — full export reference by entry point
+- `references/routing.md` — routing patterns
+- `references/data-fetching.md` — fetching and mutation patterns
+- `references/configuration.md` — config options and defaults
+- `references/testing.md` — testing utilities and patterns
 
 ### Step 6 — Write affirmatively
 
@@ -178,17 +178,7 @@ Token efficiency rules:
 - One blank line between sections, not two
 - Inline comments in code blocks instead of paragraphs before them
 
-What belongs in SKILL.md vs humans.md:
-
-| SKILL.md | humans.md |
-|---|---|
-| Import paths | Why subpaths exist |
-| Working examples | How to extend the examples |
-| Footgun + correct version | Why this specific pattern was chosen |
-| Routing table links | How the refs/ structure was decided |
-| API signatures | Where the signatures were verified |
-
-The compression test: read a section and ask — does every sentence change what code the model writes next? If a sentence only helps a human understand the context, it goes in `humans.md`.
+The compression test: read a section and ask — does every sentence change what code the model writes next? If a sentence only helps a human understand the context, it does not belong in SKILL.md.
 
 ### Step 10 — Write the trigger description
 
@@ -208,8 +198,7 @@ Specific enough to not false-trigger on unrelated sessions. Generic phrases like
 ```
 skills/<library-name>/
 ├── SKILL.md              ← model-facing: trigger, identity, install, 80% patterns, footgun, routes
-├── humans.md             ← human-facing: structure rationale, maintenance guide, decision log
-└── refs/
+└── references/
     ├── imports.md        ← full export reference by entry point
     ├── antipatterns.md   ← (optional) grounded antipatterns when list > 3
     ├── <concern-a>.md    ← depth for feature A
@@ -218,47 +207,30 @@ skills/<library-name>/
 ```
 
 SKILL.md target: 100–180 lines — dense, token-efficient, no explanatory prose  
-humans.md target: as long as needed — prose welcome, explains the why  
-Each refs/ file target: 60–100 lines  
-Total SKILL.md + refs/ cap: ~600 lines
+Each references/ file target: 60–100 lines  
+Total SKILL.md + references/ cap: ~600 lines
 
 ## Routing table pattern
 
-At the end of each section in SKILL.md that has a corresponding `refs/` file, add one line:
+At the end of each section in SKILL.md that has a corresponding `references/` file, add one line:
 
 ```md
-See [refs/routing.md](refs/routing.md) for dynamic segments, layouts, and typed routes.
+See [references/routing.md](references/routing.md) for dynamic segments, layouts, and typed routes.
 ```
 
 Points to the file. Describes what's there in 5–10 words so the model knows whether to follow it.
 
-No orphan rule: every `refs/` file must have exactly one routing link in SKILL.md. A docs file with no link is undiscoverable — the model reads SKILL.md in one pass and has no other mechanism to find it. Before committing a skill, verify the mapping is complete:
+No orphan rule: every `references/` file must have exactly one routing link in SKILL.md. A docs file with no link is undiscoverable — the model reads SKILL.md in one pass and has no other mechanism to find it. Before committing a skill, verify the mapping is complete:
 
 ```
-refs/imports.md        → linked from ## Installation / Import paths
-refs/auth.md           → linked from ## Authentication
-refs/data-fetching.md  → linked from ## Data fetching
-refs/configuration.md  → linked from ## Configuration
-refs/antipatterns.md   → linked from ## <relevant section>
+references/imports.md        → linked from ## Installation / Import paths
+references/auth.md           → linked from ## Authentication
+references/data-fetching.md  → linked from ## Data fetching
+references/configuration.md  → linked from ## Configuration
+references/antipatterns.md   → linked from ## <relevant section>
 ```
 
 If a docs file has no natural section to link from, that is a signal the file's concern is not represented in SKILL.md at all — either add the section or merge the content into an existing docs file.
-
-## humans.md — the companion file
-
-`humans.md` sits alongside `SKILL.md` and is never loaded as model context. It exists for the person who writes, reviews, or maintains the skill.
-
-What it contains:
-
-- Why this structure — the reasoning behind what's in SKILL.md vs each refs/ file
-- Source of truth — where the API signatures and examples were verified, and when
-- Footgun rationale — why this specific pattern was chosen as the one footgun
-- Antipattern rationale — why each antipattern passed the inclusion test
-- Known gaps — APIs or behaviors not yet documented, and why
-- Maintenance notes — what to check when the library releases a new version
-- Decision log — any tradeoffs made (e.g. "left out X because it's deprecated in v4")
-
-Format: plain prose. No token constraints. Written for a human who has never seen this skill before and needs to understand, extend, or audit it.
 
 ## Applying this process
 
@@ -266,6 +238,6 @@ For any library or framework, the process is the same:
 
 1. Source: official docs → changelog → type definitions → source (when local/private)
 2. Footgun: the pattern the docs warn about most, or what the migration guide flags as a common mistake
-3. Structure: mirror the library's own conceptual groupings — if the official docs have sections, the refs/ files should match them
+3. Structure: mirror the library's own conceptual groupings — if the official docs have sections, the references/ files should match them
 
 The process produces the same output structure regardless of language, ecosystem, or library size.
