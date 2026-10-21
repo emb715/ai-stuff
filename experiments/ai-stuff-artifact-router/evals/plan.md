@@ -53,6 +53,33 @@ Baselines run **before** the revision is written. The `old` condition runs on th
 
 `old` runs only on the four cases where the planned fixes should discriminate (R4, R6, R7, R10), to attribute any delta to the fixes rather than to the skill merely existing. The other cells are not run in `old` and are reported as not executed, not as passes.
 
+### Execution constraint (added in plan revision 2 — see below)
+
+Every prompt in both halves ends with a read-only constraint, identical across all conditions:
+
+> Do not edit, create, delete or commit anything, and do not run any git command that changes state.
+
+Because it is constant across conditions it cannot confound the comparison. It has a cost, recorded as a limitation rather than hidden: a session told not to act is more likely to describe a procedure than to start one, which flatters **both** conditions on "did it name a route" and makes the baseline look more route-aware than an unconstrained session would.
+
+The two halves then diverge, deliberately:
+
+- **Half B (routing)** prompts add "how would you approach it, and with what procedure" — the dependent variable is *which* route is named, so both conditions must be asked for one.
+- **Half A (discovery)** prompts add only "don't do it yet, just tell me how you'd start" and never say procedure, playbook, skill or vault. Activation has to come from the `description` alone; naming the artifact class in the prompt would test obedience, not discovery.
+
+Half B therefore cannot be read as evidence about activation, and Half A cannot be read as evidence about route quality.
+
+Half B prompts also supply the task's object **inline** (notes pasted in the prompt, the issue described in prose) and state that the scenario is hypothetical. Earlier prompts referenced objects that do not exist in this repo — issue #214, an unattached notes file, a feature branch — and sessions correctly spent the run hunting for them and then blocking on missing input, which measures nothing about routing.
+
+### Plan revisions
+
+**Revision 2, 2026-10-21, after six baseline runs, before any scored result was recorded.** The six runs are discarded, not graded. Three defects in revision 1, all in the method rather than the skill:
+
+1. **No read-only constraint.** The prompts were phrased as work orders. The R2 baseline session read "this internal template repo" as *this* repo, judged it unpublishable because it redistributes nine copyrighted books in full, deleted 141,148 lines across 123 files, wrote a `LICENSE`, and committed the result as `7a67eaf` — sweeping unrelated untracked files into the commit. It also restored the parked symlink, contaminating every baseline run dispatched after it. The tracked tree was restored to `ae9343d` and verified byte-identical; the commit is kept reachable as tag `eval-accident-7a67eaf`. Root cause: dispatching open-ended prompts with write permissions into a live repo. Fixed by the constraint above.
+2. **Missing objects.** See the inline-object rule above.
+3. **Unverified condition integrity.** Revision 1 checked the symlink once, before the batch. Revision 2 verifies the symlink state and `git status` **after every batch**, and any run whose condition cannot be confirmed is discarded rather than graded.
+
+The findings in defect 1 are an incidental result about this repo, not about the router, and are recorded in `results.md` under incidental findings. They do not count for or against promotion.
+
 ### Feasibility probe (not an eval case)
 
 One throwaway probe ("retro on a finished sprint") was run before this plan existed, purely to establish that a dispatched session can discover the skill at all. It activated and self-reported `SKILLS_USED: ai-stuff-artifact-router`. It is excluded from all scoring because its ground truth was not pre-registered.
@@ -101,7 +128,7 @@ Eleven cases, in `evals.json`. Ground truth and evidence below, pre-registered.
 
 ### R1 — footgun: verb `review`, object = git diff
 
-**Prompt:** "There's a diff sitting on my feature branch. Tear it apart before I merge it."
+**Prompt:** "Say I've got a diff sitting on a feature branch in another project — six files, a new caching layer, plus its tests. Tear it apart before I merge it."
 
 **Ground truth:** `playbooks/adversarial-code-review/`
 
@@ -114,7 +141,7 @@ Evidence: its `When to use` — "when you have a git diff or set of changed file
 
 ### R2 — footgun: verb `review`/`ready`, object = existing repo + readiness question
 
-**Prompt:** "I want to open-source this internal template repo. Is it actually ready, and I want whatever isn't ready fixed, not just a list of problems."
+**Prompt:** "I want to open-source an internal template repo of ours — a different repo, not this one. Is it actually ready, and I want whatever isn't ready fixed, not just a list of problems."
 
 **Ground truth:** `playbooks/readiness-cycle/`
 
@@ -129,7 +156,7 @@ R1 and R2 are the footgun pair: same verb, different object, opposite answers. T
 
 ### R3 — footgun: verb `break down`, object = GitHub issue
 
-**Prompt:** "Break down issue #214 into implementable work items with acceptance criteria."
+**Prompt:** "In another project I have GitHub issue #214: *'Users can't export reports to CSV. Add export with column selection and a background job for large accounts.'* Break it down into implementable work items with acceptance criteria."
 
 **Ground truth:** `playbooks/issue-to-ready-specs/`
 
@@ -142,7 +169,7 @@ Evidence: its `When to use` — "when the user says 'spec this issue', 'break do
 
 ### R4 — the known coverage gap: verb `break down`, object = session notes, direction notes → issues
 
-**Prompt:** "Here are my notes from today's planning session. Break this down into issues in our tracker."
+**Prompt:** "Notes from today's planning session on another project: *we're committing to self-serve billing this quarter; the PDF endpoint 500s on invoices over 200 lines; p95 on the invoice list has to stay under 400ms; still undecided whether dunning emails are in scope.* Break this down into issues in our tracker."
 
 **Ground truth:** **no playbook covers this.** The correct output is to say so and stop.
 
@@ -158,7 +185,7 @@ R4.1 is the assertion that can block promotion. Routing notes→issues work into
 
 ### R5 — chain, where a chain playbook already exists
 
-**Prompt:** "I've got GitHub issue #88 and I want it to end up as a merged PR, but I want to approve each phase before it moves on."
+**Prompt:** "In another project I've got GitHub issue #88, well-scoped, and I want it to end up as a merged PR — but I want to approve each phase before it moves on."
 
 **Ground truth:** `playbooks/issue-to-pr/`, gated mode.
 
@@ -171,7 +198,7 @@ Evidence: its `Purpose` — "chains issue-to-ready-specs → raa → implementat
 
 ### R6 — chain, where no single playbook spans entry → exit
 
-**Prompt:** "That brainstorm threw out about forty ideas for the onboarding revamp. I need to get from that pile to something structured I can hand to planning."
+**Prompt:** "A brainstorm on another project threw out about forty ideas for the onboarding revamp. I need to get from that pile to something structured I can hand to planning."
 
 **Ground truth:** a **chain of two playbooks** — `decision-making` → `product-brief`. No single playbook spans forty raw options to a structured brief.
 
@@ -200,7 +227,7 @@ This case exists because the old manifest files `agent-installer` under intent `
 
 ### R8 — paradigm ambiguity
 
-**Prompt:** "A change request came in. I genuinely don't know whether this wants a spec or a plan."
+**Prompt:** "A change request came in on another project. I genuinely don't know whether this wants a spec or a plan."
 
 **Ground truth:** `playbooks/request-triage/`
 
@@ -228,7 +255,7 @@ Evidence: SKILL.md Step 0 names this exact string as an insufficient-signal exam
 
 ### R10 — orchestrator vs. the sub-playbook it embeds (the status-priority trap)
 
-**Prompt:** "I have a validated phased plan with file-level scope. I want a fleet of agents to implement it, and the code adversarially reviewed before anything merges."
+**Prompt:** "For another project I have a validated phased plan with file-level scope and ordered dependencies. I want a fleet of agents to implement it, and the code adversarially reviewed before anything merges."
 
 **Ground truth:** `playbooks/implementation-orchestration/`
 
@@ -243,7 +270,7 @@ This case is the direct test of defect 2. The task mentions adversarial review e
 
 ### R11 — `Not for` exclusion
 
-**Prompt:** "I need an implementation-ready spec for adding CSV export to the reports page. One feature, one session."
+**Prompt:** "I need an implementation-ready spec for adding CSV export to the reports page of another project. One feature, one session, one implementer."
 
 **Ground truth:** `playbooks/quick-spec/`
 

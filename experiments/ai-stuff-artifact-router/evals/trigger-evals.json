@@ -1,0 +1,10 @@
+[
+  {"id":"T1","query":"A feature request came in on another project — bulk invite for team admins. I want it taken from request to shipped properly rather than winging it.","should_trigger":true,"probe_shape":"task maps to a playbook domain, no playbook named","observed_trigger":true},
+  {"id":"T2","query":"Which playbook should I use to turn a rough product idea into something a developer can actually build?","should_trigger":true,"probe_shape":"explicit which-playbook question","observed_trigger":true},
+  {"id":"T3","query":"I'm about to start a big multi-step change in another project and I'd rather do it in some structured way than improvise it.","should_trigger":true,"probe_shape":"multi-step work, right procedure non-obvious","observed_trigger":true},
+  {"id":"T4","query":"We finished the Q3 migration last week and I want to capture what we learned before everyone forgets it.","should_trigger":true,"probe_shape":"playbook domain described without the playbook's own vocabulary ('retro' never said)","observed_trigger":false},
+  {"id":"T5","query":"Run the quick-spec playbook on the CSV export feature in another project.","should_trigger":false,"probe_shape":"user already named the playbook — stated non-activation condition","observed_trigger":false},
+  {"id":"T6","query":"Promote the liteparse skill from draft to validated.","should_trigger":false,"probe_shape":"vault lifecycle operation — owned by _meta/framebook/","observed_trigger":false},
+  {"id":"T7","query":"The DL012 owner check in scripts/doc_lint.py is failing on a template file. Work out why.","should_trigger":false,"probe_shape":"repo tooling bug, adjacent domain, no playbook object","observed_trigger":false},
+  {"id":"T8","query":"What's the difference between the spec paradigm and the plan paradigm in this vault?","should_trigger":false,"probe_shape":"documentation question, not a task to route","observed_trigger":false}
+]

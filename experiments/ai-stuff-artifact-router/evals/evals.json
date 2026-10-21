@@ -1,0 +1,132 @@
+{
+  "skill_name": "ai-stuff-artifact-router",
+  "half": "routing correctness — graded separately from discovery (see trigger-evals.json)",
+  "scope": "Live OpenCode sessions in the ai-stuff repo, real harness skill discovery. Task objects are hypothetical and supplied inline; no run touched a real tracker or codebase.",
+  "ground_truth_source": "Each case's correct answer is quoted from the target playbook's own README.md (When to use / Not for / Purpose) in plan.md, and was pre-registered before any run.",
+  "shared_prompt_suffix": "Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical — I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+  "evals": [
+    {
+      "id": "R1",
+      "name": "footgun-review-verb-diff-object",
+      "prompt": "Say I've got a diff sitting on a feature branch in another project — six files, a new caching layer, plus its tests. Tear it apart before I merge it.",
+      "ground_truth": "playbooks/adversarial-code-review/",
+      "tests": "Footgun disambiguation: verb 'review', object is a git diff. Pairs with R2.",
+      "expectations": [
+        "Names playbooks/adversarial-code-review/ as the route.",
+        "Does not name readiness-cycle, whose Not for excludes a one-off review without fixes."
+      ]
+    },
+    {
+      "id": "R2",
+      "name": "footgun-review-verb-artifact-readiness",
+      "prompt": "I want to open-source an internal template repo of ours — a different repo, not this one. Is it actually ready, and I want whatever isn't ready fixed, not just a list of problems.",
+      "ground_truth": "playbooks/readiness-cycle/",
+      "tests": "Footgun disambiguation: same verb family as R1, object is an existing artifact plus a readiness question, and fixes are requested.",
+      "expectations": [
+        "Names playbooks/readiness-cycle/ as the route.",
+        "Does not stop at adversarial-code-review or review-release-candidate alone — the task asks for fixes, not a review."
+      ]
+    },
+    {
+      "id": "R3",
+      "name": "footgun-breakdown-verb-issue-object",
+      "prompt": "In another project I have GitHub issue #214: \"Users can't export reports to CSV. Add export with column selection and a background job for large accounts.\" Break it down into implementable work items with acceptance criteria.",
+      "ground_truth": "playbooks/issue-to-ready-specs/",
+      "tests": "Footgun disambiguation: verb 'break down', object is a tracked issue. Pairs with R4, which reverses the direction.",
+      "expectations": [
+        "Names playbooks/issue-to-ready-specs/ as the route.",
+        "Does not name issue-to-pr — the task asks for work items, not a merged PR."
+      ]
+    },
+    {
+      "id": "R4",
+      "name": "coverage-gap-notes-to-issues",
+      "prompt": "Notes from today's planning session on another project: we're committing to self-serve billing this quarter; the PDF endpoint 500s on invoices over 200 lines; p95 on the invoice list has to stay under 400ms; still undecided whether dunning emails are in scope. Break this down into issues in our tracker.",
+      "ground_truth": "no playbook covers this",
+      "tests": "The declared playbooks-only scope boundary, and the direction-of-flow rule. notes -> issues is the reverse of issue -> specs.",
+      "expectations": [
+        "Does not route to issue-to-ready-specs, whose entry is a tracked issue the user does not have. Primary safety assertion — a failure here blocks promotion.",
+        "States that no playbook covers this task."
+      ],
+      "observation_only": "Whether anything surfaces skills/issues-to-roadmap/, and whether that comes from the router or from that skill self-activating. Not scored."
+    },
+    {
+      "id": "R5",
+      "name": "chain-playbook-exists",
+      "prompt": "In another project I've got GitHub issue #88, well-scoped, and I want it to end up as a merged PR — but I want to approve each phase before it moves on.",
+      "ground_truth": "playbooks/issue-to-pr/ (gated mode)",
+      "tests": "Chain rule 2: prefer the existing chain playbook over composing its three steps by hand.",
+      "expectations": [
+        "Names playbooks/issue-to-pr/ rather than only its three underlying playbooks.",
+        "Identifies gated mode, or per-phase human approval gates."
+      ]
+    },
+    {
+      "id": "R6",
+      "name": "chain-no-single-playbook-spans",
+      "prompt": "A brainstorm on another project threw out about forty ideas for the onboarding revamp. I need to get from that pile to something structured I can hand to planning.",
+      "ground_truth": "a sequence: playbooks/decision-making/ then playbooks/product-brief/",
+      "tests": "Chain rule 3: no single playbook spans entry to exit, so the answer is an ordered sequence.",
+      "expectations": [
+        "Names both playbooks, in order.",
+        "Does not route to product-brief alone with forty unranked options as its input.",
+        "Does not route to brainstorming — the ideas already exist."
+      ]
+    },
+    {
+      "id": "R7",
+      "name": "misfiled-intent-installer-build",
+      "prompt": "I need to ship a CLI that installs our agent definitions into Claude Code, Cursor and OpenCode. Interactive, but it also has to work in CI.",
+      "ground_truth": "playbooks/agent-installer/",
+      "tests": "The intent audit. The pre-revision manifest filed agent-installer under ideate; this is unambiguously build work.",
+      "expectations": [
+        "Names playbooks/agent-installer/ as the route.",
+        "Does not route to brainstorming, product-brief or decision-making — the other ideate entries."
+      ]
+    },
+    {
+      "id": "R8",
+      "name": "paradigm-ambiguity-self-reference",
+      "prompt": "A change request came in on another project. I genuinely don't know whether this wants a spec or a plan.",
+      "ground_truth": "playbooks/request-triage/",
+      "tests": "A self-reference hazard: request-triage is itself a router, so the skill must route to it rather than answer the paradigm question in its place.",
+      "expectations": [
+        "Names playbooks/request-triage/ as the route.",
+        "Does not answer the spec-versus-plan question itself in place of routing."
+      ]
+    },
+    {
+      "id": "R9",
+      "name": "insufficient-routing-signal",
+      "prompt": "I want to plan something.",
+      "ground_truth": "ask a clarifying question; do not route",
+      "tests": "Step 0 signal sufficiency. Intent present, object absent. Regression guard on a rule the pre-revision skill already stated.",
+      "expectations": [
+        "Asks what the object is before naming any playbook as the answer.",
+        "Does not present a single playbook as the answer."
+      ]
+    },
+    {
+      "id": "R10",
+      "name": "containment-orchestrator-vs-subplaybook",
+      "prompt": "For another project I have a validated phased plan with file-level scope and ordered dependencies. I want a fleet of agents to implement it, and the code adversarially reviewed before anything merges.",
+      "ground_truth": "playbooks/implementation-orchestration/",
+      "tests": "The status-priority trap. The right route is draft; the playbook it embeds is validated, so a status-first priority rule prefers the sub-playbook over the orchestrator.",
+      "expectations": [
+        "Names playbooks/implementation-orchestration/ as the route.",
+        "Treats adversarial-code-review as the embedded review phase, not as the route."
+      ]
+    },
+    {
+      "id": "R11",
+      "name": "not-for-exclusion",
+      "prompt": "I need an implementation-ready spec for adding CSV export to the reports page of another project. One feature, one session, one implementer.",
+      "ground_truth": "playbooks/quick-spec/",
+      "tests": "Disambiguation step 4 in isolation: issue-to-ready-specs' Not for excludes single-feature quick specs.",
+      "expectations": [
+        "Names playbooks/quick-spec/ as the route.",
+        "Does not name issue-to-ready-specs."
+      ]
+    }
+  ]
+}

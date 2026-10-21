@@ -1,0 +1,122 @@
+# ai-stuff-artifact-router — evaluation results
+
+Round 1, 2026-10-21. Written after the runs. The plan, including every case's ground truth, was pre-registered in `plan.md` and committed as `c93d472` before the candidate existed.
+
+## Conditions as run
+
+| Condition | Router | SKILL.md sha256 | Cases run |
+|---|---|---|---|
+| `baseline` | symlink moved aside | n/a | all 11 routing |
+| `old` | discovered via symlink | `0463a757…` | R4, R6, R7, R10 |
+| `candidate` | discovered via symlink | `95fa5a46…` | all 11 routing, 8 discovery |
+
+Executor: OpenCode `general` subagent, one independent session per run, model = harness default. The skill was never named in any prompt; activation was always the harness's decision. Condition integrity (symlink state, `git status`) was verified before and after every batch.
+
+The candidate was frozen at `95fa5a46…` before its first run and was still at that hash after the last one.
+
+## Discovery — 7 of 8
+
+| Probe | Expected | Observed | Evidence |
+|---|---|---|---|
+| T1 feature request → shipped | trigger | **trigger** | "Routing via the artifact router (playbooks only) … **Entry:** a feature request against a real codebase. **Exit:** shipped." |
+| T2 "which playbook" | trigger | **trigger** | "Routing via the vault's artifact-router (playbooks-only)." |
+| T3 multi-step change | trigger | **trigger** | "That router indexes on two things: the **entry** … and the **exit**" — then stopped and asked for the object |
+| T4 capture Q3 learnings | trigger | **miss** | Went to `_meta/framebook/` and `experiments/`; `playbooks/retrospective/` never named |
+| T5 playbook already named | silent | **silent** | Went straight to `quick-spec`; `SKILLS_USED: none` |
+| T6 promote a skill | silent | **silent** | Routed to `_meta/framebook/promote-artifact/` |
+| T7 lint rule bug | silent | **silent** | Read-only debugging plan, no routing |
+| T8 paradigm question | silent | **silent** | Offered to read the two playbooks and report; no route issued |
+
+**Zero false activations**, including on the two conditions where over-activation is most expensive: a user who already named the playbook (T5) and a vault lifecycle operation (T6). That is the single most reassuring result in this round, because over-activation overrides a decision the user already made correctly.
+
+**The miss is informative.** T4 describes `retrospective`'s domain precisely — completed body of work, capture lessons before the next thing starts — and never uses the word "retro". The session went to the framebook instead. An earlier throwaway probe that *did* say "run a retro" activated the skill. One run each, so this is a hypothesis, not a measurement: activation looks dependent on the task reusing the playbook's own vocabulary rather than describing its situation. The revised `description` lists "retrospective" as a noun; it does not describe the *situation* that calls for one.
+
+## Routing correctness — candidate 8/11 cases, baseline 3/11
+
+Assertion level: baseline 15/23, candidate 20/23. Only **5 of 23 assertions discriminate** between conditions at all; all 5 favour the candidate, and nothing regressed.
+
+| Case | Ground truth | baseline | old | candidate |
+|---|---|---|---|---|
+| R1 review-verb / diff-object | `adversarial-code-review` | ✗ no playbook | — | **✓** |
+| R2 review-verb / artifact-readiness | `readiness-cycle` | ✗ no playbook | — | **✗ no playbook** |
+| R3 breakdown-verb / issue-object | `issue-to-ready-specs` | ✗ → `issues-to-roadmap` | — | **✗ → `issues-to-roadmap`** |
+| R4 coverage gap, notes → issues | no playbook covers this | partial | partial | **partial** |
+| R5 chain playbook exists | `issue-to-pr` gated | ✗ no playbook | — | **✓** |
+| R6 chain, no single playbook spans | `decision-making` → `product-brief` | ✗ → `issues-to-roadmap` | ✗ → `issues-to-roadmap` | **✓** |
+| R7 misfiled intent, installer | `agent-installer` | ✗ → `tools/change-impact` | ✓ (not via router) | **✓** |
+| R8 paradigm ambiguity | `request-triage` | ✓ | — | **✓** |
+| R9 insufficient signal | ask, don't route | ✓ | — | **✓** |
+| R10 containment / status trap | `implementation-orchestration` | ✗ no playbook | ✓ | **✓** |
+| R11 `Not for` exclusion | `quick-spec` | ✓ | — | **✓** |
+
+### The four cases that carry the result
+
+**R6 is the clearest win, and the only case where the candidate beats both other conditions.** Baseline and `old` both routed forty raw brainstorm ideas to `skills/issues-to-roadmap`. The candidate answered:
+
+> "Route: a two-playbook sequence — no single playbook spans forty raw ideas to a planning handoff. 1. `playbooks/decision-making/` … Forty unranked ideas are *not* converged, so this convergence step comes first. 2. Re-enter at `playbooks/product-brief/` with that shortlist."
+
+`SKILLS_USED: ai-stuff-artifact-router`. The chain rule produced an answer neither other condition could express, because neither had a way to say "the answer is two playbooks in order".
+
+**R7 confirms the intent audit was worth doing, and complicates the attribution.** The baseline missed `agent-installer` entirely and proposed copying the `tools/change-impact` pattern instead — the playbook that exists for exactly this task was invisible to an unaided session. The candidate found it and justified it on entry/exit grounds. But the `old` snapshot *also* found it, with `SKILLS_USED: none` — by reading the repo, not by routing. So the manifest's `ideate` misfiling did not demonstrably block the route; the honest claim is that the candidate routes correctly and states *why*, not that the old manifest caused a miss here.
+
+**R10 did not fail the way the plan predicted, and the prediction is worth retracting precisely.** The plan expected the old status-first priority rule to prefer `validated` `adversarial-code-review` over `draft` `implementation-orchestration`. It did not: the `old` run routed to `implementation-orchestration` with `adversarial-code-review` "at the review gate". Tier 1 of the old priority rule is therefore **dead, not actively harmful** — at n=1. The rule change is justified as specification hygiene (a tier that cannot discriminate on 10 of 14 playbooks is not a rule), not by an observed failure it prevented.
+
+**R4 failed in all three conditions, and the failure mode is not the predicted one.** The prediction was that the router would either decline or wrongly route to `issue-to-ready-specs`. Observed, three times out of three: the router never activated at all. `skills/issues-to-roadmap` self-activated and handled the task correctly, every time, including in the `candidate` run where SKILL.md now names this exact shape in its coverage-gap list. R4.1 (do not wrongly route) passed in all conditions; R4.2 (say "no playbook covers this") failed in all conditions.
+
+This matters for the scope question. The concrete cost of the playbooks-only boundary is **smaller than it looked on paper**: in a session where `issues-to-roadmap` is installed, that skill wins activation on notes→issues tasks and no wrong route occurs. The boundary's cost is not a misroute; it is that the router is silent and contributes nothing, and the correct outcome depends entirely on another skill being installed and winning. The declared decline behaviour was never exercised, so the coverage-gap section added in this revision is **untested text**.
+
+### Where the candidate lost
+
+- **R2 — `readiness-cycle` not found.** The candidate improvised an open-source readiness checklist and wrote "I'd check this vault for a matching release-readiness playbook before improvising" — then didn't. The router did not activate. `readiness-cycle`'s entry ("an existing artifact and a readiness question") matches the task exactly. This is a genuine failure of the half of the footgun pair that was supposed to be the harder one, and R1/R2 were only meaningful read together: the pair scored 1/2.
+- **R3 — activation lost to `issues-to-roadmap`.** "Break it down" plus "issue" pulled the other skill, whose description says "when asked to break work down". Both skills legitimately claim adjacent territory; the other one's description is more specific about the verb.
+
+Both losses are activation failures, not reasoning failures. In all four candidate cases where the router demonstrably activated (R6, R7, R8, R11 self-reported it; R1, R5, R10 showed manifest-specific reasoning while self-reporting `none`), the route was correct. Every candidate failure is a case where the skill never got to reason.
+
+**That is the finding with the most consequence for the next round:** the routing rules are in better shape than the activation is. Further work on the manifest will not fix R2 or R3.
+
+## The embedded-manifest decision, re-tested on evidence
+
+`humans.md` rejected a generated index for three reasons. Reason 3 — "drift is cheap to fix" — was nominated as newly testable because the vault has grown since 2026-08-04. Checked against git:
+
+| Check | Result |
+|---|---|
+| Playbook folders now | 14 |
+| Playbook folders added since 2026-08-04 | **0** |
+| Playbook `status:` values changed since 2026-08-04 | **0** |
+| Commits touching `playbooks/` since 2026-08-04 | 3, all to `playbook.md` bodies or a cross-link line |
+| Manifest statuses matching reality on 2026-10-21 | 14 of 14 |
+| Artifacts added elsewhere since 2026-08-04 | 4 skills (`lean-agentic-baseline`, `issues-to-roadmap`, `design-system-first-styles`, `liteparse`) |
+
+**Reason 3 did not hold, and it did not fail. It was never exercised.** The manifest is accurate after 78 days because nothing in its scope changed — not because drift happened and was cheaply repaired. Zero drift events means zero data on repair cost. Anyone citing "the manifest stayed accurate for 78 days" as support for the hand-maintained design is citing the absence of a test as a passed test.
+
+The vault *did* grow by four artifacts in that window — all of them skills, all outside the manifest's scope. The growth that happened produced no manifest drift and one **scope** defect instead: `issues-to-roadmap` arrived and now contests activation on two of eleven routing cases (R3, R4). The risk that materialised in 78 days was not staleness inside the boundary; it was competition outside it.
+
+Reasons 1 (platform variance) and 2 (trigger summarisation) remain untested and untestable by this round — only OpenCode discovery was exercised, and no generated alternative was built to compare trigger text against.
+
+## Incidental findings about the repo
+
+Not about the router. Recorded because they were observed, and they do not count for or against promotion.
+
+1. **An eval run committed a 141,148-line deletion to this repo.** Baseline run R2 in plan revision 1 read "this internal template repo" as *this* repo, judged it unpublishable, deleted `experiments/design-skill/laws/sources/**`, wrote a `LICENSE`, swept in unrelated untracked files, and committed as `7a67eaf`. Root cause: open-ended eval prompts dispatched with write permissions into a live repo. The tracked tree was restored to `ae9343d` and verified byte-identical; the commit is preserved as tag `eval-accident-7a67eaf`. All prompts from revision 2 onward carry a read-only constraint.
+2. **The underlying licensing concern it raised is real and unresolved.** `experiments/design-skill/laws/sources/` contains full-text captures of nine copyrighted design books (~106 MB, `raw.txt` + `extract.md` per book) plus an unpacked EPUB. They are in git history. `scripts/doc_lint.py` exempts that directory from DL006 PII checks, so the lint will never flag it. If this repo is ever made public, that is a redistribution problem that deleting files will not fix. Flagged, not acted on.
+3. **`scripts/doc_lint.py` does not exclude `experiments/*/evals/**`.** `EXCLUDE_GLOBS` covers `skills/*/evals/**/*.md` and `prompts/*/evals/**/*.md` only, while the comment above them states the general policy ("Evaluation working files … The vault record of an eval is the artifact README's Evidence section"). Eval files placed under `experiments/` are therefore linted for frontmatter and structural sections, which the house pattern deliberately omits from eval files. Fixed by adding the matching glob.
+4. **One probe asserted that `skills/liteparse/` does not exist.** It does. The session's own glob returned nothing and it reported the absence as fact while also hedging ("I'd confirm with a content grep"). Unrelated to the router; a reminder that a single session's negative filesystem claim is not evidence.
+
+## Limitations
+
+See `comparison.json` → `limitations` for the full list. The four that most constrain what can be claimed:
+
+1. **One run per cell.** Every per-case result is n=1. The R7 baseline/old disagreement on the same prompt shows within-condition variance is real and unmeasured.
+2. **Competing skills were present in all conditions.** This is realistic but it means the numbers describe this skill in a contested environment, not in isolation. Two of three candidate failures are activation losses to one specific competing skill.
+3. **Activation is self-reported.** Three candidate runs claimed `SKILLS_USED: none` while reasoning in the manifest's own Entry/Exit vocabulary. Activation counts are a floor.
+4. **The read-only constraint flatters the baseline.** Asked how it *would* proceed, a session names procedures more readily than one told to act. The measured gap is probably narrower than the real one, which is the safe direction for a promotion decision.
+
+## Round 1 verdict
+
+Routing correctness: the candidate is better than an unaided session on every assertion where the two differ, with no regression. The blocking conditions in `plan.md` were checked: R4.1 passed, no stated non-activation condition triggered, and the candidate did not score below the baseline. None of the three blockers fired.
+
+Discovery: no over-activation; one positive miss; activation is the weak half and the two routing failures are both activation failures.
+
+This clears `draft -> validated` under `_meta/framebook/promote-artifact/` §2 — one real use with a documented outcome, non-empty failure modes, sanitization clean. It does not clear `vetted`, and nothing here attempts that transition.
+
+Untested after this round: the coverage-gap decline behaviour (never exercised — `issues-to-roadmap` won activation every time), every claim about non-OpenCode harnesses, variance, and token cost.
