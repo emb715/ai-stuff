@@ -35,6 +35,10 @@ EXCLUDE_GLOBS = [
     "experiments/primitive-contract-docs/boundary/README.md",
     "skills/*/docs/**/*.md",
     "tools/*/docs/**/*.md",
+    # Evaluation working files (plans, raw run output). The vault record of an
+    # eval is the artifact README's Evidence section, not these.
+    "skills/*/evals/**/*.md",
+    "prompts/*/evals/**/*.md",
 ]
 
 # Files within three-file artifact folders that intentionally have no frontmatter.
@@ -49,14 +53,29 @@ NO_FRONTMATTER_NAMES = {
     "tool.md",
 }
 
-# Directories whose non-README markdown files are artifact body files (no frontmatter by design).
-NO_FRONTMATTER_DIRS = {
-    "experiments/prompt-factory/templates",
-    "skills/prompt-factory/templates",
-    "skills/prompt-factory/templates/types",
-    "skills/prompt-factory/commands",
+# Escape hatch for a bare-markdown directory that the generalized rule below does
+# not cover. Prefer extending ARTIFACT_ASSET_DIRS over adding a path here.
+NO_FRONTMATTER_DIRS: set[str] = set()
 
-}
+# Asset subdirectories inside an artifact folder. Their markdown files are
+# consumable bodies (issue templates, command bodies, prompt fragments), not
+# repo records — no frontmatter by design. Generalizes what used to be a list of
+# hardcoded prompt-factory paths.
+#
+#   <section>/<artifact>/<asset-dir>/**/*.md
+#
+ARTIFACT_SECTIONS = ("agents", "experiments", "playbooks", "prompts", "skills", "tools")
+ARTIFACT_ASSET_DIRS = ("templates", "commands", "assets")
+ARTIFACT_ASSET_RE = re.compile(
+    r"^(?:" + "|".join(ARTIFACT_SECTIONS) + r")/[^/]+/(?:" + "|".join(ARTIFACT_ASSET_DIRS) + r")/"
+)
+
+
+def is_artifact_asset(rel_path: str) -> bool:
+    """True for markdown under an artifact folder's asset subdirectory."""
+    if rel_path.rsplit("/", 1)[-1] == "README.md":
+        return False
+    return bool(ARTIFACT_ASSET_RE.match(rel_path))
 
 # Directories whose non-README markdown files are reference captures (external content).
 # Exempt from DL004 structural section checks. Still checked for frontmatter and sanitization.
@@ -138,6 +157,11 @@ GATE_LABELS = {
     "DL012": "Gate 1",
     "DL013": "Gate 4",
     "DL014": "Gate 5",
+    "DL015": "Gate 2",
+    "DL016": "Gate 7",
+    # DL000 is the meta-rule: it checks that every gate AGENTS.md declares has at
+    # least one rule above. It belongs to no single gate.
+    "DL000": "Gate 0",
 }
 
 
@@ -411,8 +435,109 @@ def sanitization_scan(file_path: Path) -> List[Finding]:
     return findings
 
 
+# DL015 — the consumable file each artifact section requires. `tools` is absent
+# on purpose: artifact-structure.md lets a tool use its natural filename.
+SECTION_CONSUMABLE = {
+    "agents": "system-prompt.md",
+    "prompts": "prompt.md",
+    "playbooks": "playbook.md",
+    "skills": "SKILL.md",
+}
+
+
+# DL016 — files that are loaded as agent context and must not point at humans.md.
+CONSUMABLE_NAMES = {
+    "SKILL.md",
+    "prompt.md",
+    "playbook.md",
+    "command.md",
+    "tool.md",
+    "system-prompt.md",
+}
+
+
+def gate_coverage_findings() -> List[Finding]:
+    """DL000 — every gate declared in AGENTS.md has at least one rule mapped to it.
+
+    Gate 7 was declared must-pass in AGENTS.md and enforced by nothing for
+    months, because the gate list lives in prose and the rule mapping lives in
+    GATE_LABELS, and nothing compared them. This compares them.
+    """
+    agents_md = ROOT / "AGENTS.md"
+    if not agents_md.exists():
+        return []
+
+    declared = set(re.findall(r"^###\s+Gate\s+(\d+)", agents_md.read_text(encoding="utf-8"), re.MULTILINE))
+    covered = {label.split()[-1] for label in GATE_LABELS.values()}
+
+    unenforced = sorted(declared - covered, key=int)
+    if not unenforced:
+        return []
+
+    return [
+        Finding(
+            "DL000",
+            "AGENTS.md",
+            f"Gate(s) {', '.join('Gate ' + g for g in unenforced)} declared must-pass with no DL rule mapped in GATE_LABELS",
+        )
+    ]
+
+
+def artifact_folder_findings() -> List[Finding]:
+    """DL015 — artifact folder completeness.
+
+    A file-by-file linter cannot see a file that does not exist. This pass walks
+    the artifact folders themselves and requires the three-file structure:
+    README.md, humans.md, and the section's consumable. Artifacts tagged
+    `external` in README frontmatter use the two-file variant and are exempt
+    from the consumable requirement.
+    """
+    findings: List[Finding] = []
+
+    for section in ("agents", "prompts", "playbooks", "skills", "tools"):
+        section_dir = ROOT / section
+        if not section_dir.is_dir():
+            continue
+
+        for folder in sorted(p for p in section_dir.iterdir() if p.is_dir()):
+            rel_folder = folder.relative_to(ROOT).as_posix()
+            readme = folder / "README.md"
+
+            missing = []
+            if not readme.exists():
+                missing.append("README.md")
+            if not (folder / "humans.md").exists():
+                missing.append("humans.md")
+
+            consumable = SECTION_CONSUMABLE.get(section)
+            if consumable and not (folder / consumable).exists():
+                is_external = False
+                if readme.exists():
+                    fm, _ = parse_frontmatter(readme.read_text(encoding="utf-8"))
+                    tags = (fm or {}).get("tags", [])
+                    tag_list = tags if isinstance(tags, list) else [tags]
+                    is_external = "external" in [str(t).strip().lower() for t in tag_list]
+                if not is_external:
+                    missing.append(consumable)
+
+            if missing:
+                findings.append(
+                    Finding(
+                        "DL015",
+                        rel_folder + "/",
+                        f"Incomplete artifact folder. Missing: {', '.join(missing)}",
+                    )
+                )
+
+    return findings
+
+
 def lint() -> Tuple[List[Finding], int]:
     findings: List[Finding] = []
+
+    # --- Pass 0: gate coverage (DL000) and artifact folder completeness (DL015) ---
+    findings.extend(gate_coverage_findings())
+    findings.extend(artifact_folder_findings())
 
     # --- Pass 1: sanitization on every markdown file in the repo ---
     all_files = collect_all_markdown_files()
@@ -469,9 +594,21 @@ def lint() -> Tuple[List[Finding], int]:
                 )
             )
 
+        # DL016 — Gate 7: a consumable must not point at humans.md. Checked before
+        # the bare-file skip below, because every consumable is a bare file.
+        if (file_path.name in CONSUMABLE_NAMES or "/commands/" in rel_path) and "humans.md" in text:
+            findings.append(
+                Finding(
+                    "DL016",
+                    rel_path,
+                    "Consumable file references humans.md, which is never loaded as agent context",
+                )
+            )
+
         is_bare = (
             file_path.name in NO_FRONTMATTER_NAMES
             or rel_dir in NO_FRONTMATTER_DIRS
+            or is_artifact_asset(rel_path)
             or rel_path in OPENCODE_COMMAND_FILES
             or is_artifact_body_with_local_readme
         )

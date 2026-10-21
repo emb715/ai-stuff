@@ -50,9 +50,13 @@ Apply rules to:
 Exclude:
 - `templates/**/*.md`
 - `archive/**/*.md`
+- `skills/*/docs/**/*.md`, `tools/*/docs/**/*.md` — captured reference material
+- `skills/*/evals/**/*.md`, `prompts/*/evals/**/*.md` — evaluation plans and raw run output. The vault record of an eval is the artifact README's Evidence section; these are the working files behind it
 - root operational files (`README.md`, `CONTRIBUTING.md`, `AGENTS.md`) unless explicitly enabled
 
 **Three-file artifact folder exception:** For artifacts following the three-file structure (`README.md` + `<thing>.md` + `humans.md`), apply frontmatter and structural rules to `README.md` only. `<thing>.md` and `humans.md` are exempt from DL001–DL004 by design — they carry no frontmatter. See `docs/standards/artifact-structure.md`.
+
+**Artifact asset subdirectory exception:** Markdown under `<section>/<artifact>/{templates,assets,commands}/**` is a consumable body (an issue template, a command body, a prompt fragment), not a repo record, and is exempt from DL001–DL004. A `README.md` in such a directory is still checked, so an asset directory may carry its own index. This is a pattern rule in `scripts/doc_lint.py` (`is_artifact_asset`); do not add hardcoded per-artifact paths.
 
 ## Rule set
 
@@ -145,6 +149,43 @@ New artifact must be linked from:
 
 Failure: BLOCKED.
 
+### DL009 — Playbook structural completeness
+
+Applies to: every non-`README.md` markdown file under `playbooks/`.
+
+A playbook is a procedure someone else executes, so it needs more than the generic sections DL004 checks. Required:
+
+- a trigger heading — when to run it
+- a procedure/steps/workflow/process heading
+- an ordered step sequence (`## 1.` headings, or a numbered list)
+- a workflow heading
+- an outputs heading
+- a verification heading
+- a failure, rollback or fallback heading
+- `playbook` in the README's `tags`
+
+Failure: BLOCKED. The message names each missing element.
+
+### DL010 — Agent folder completeness
+
+Applies to: `agents/<name>/README.md`, excluding the `agents/README.md` index.
+
+Every agent folder must contain a sibling `system-prompt.md`. Exemption: an agent tagged `external` in its README frontmatter uses the two-file variant, because the consumable lives outside this repo.
+
+Failure: BLOCKED.
+
+DL015 generalizes this check to the other artifact sections; DL010 remains the agent-specific form.
+
+### DL016 — Executable/human-file separation
+
+Enforces AGENTS.md Gate 7. A consumable file must not reference `humans.md`.
+
+Applies to: `prompt.md`, `playbook.md`, `SKILL.md`, `command.md`, `tool.md`, `system-prompt.md`, and markdown under an artifact's `commands/` directory.
+
+`humans.md` is never loaded as agent context. A pointer to it from the executable either produces dead text the agent ignores, or induces the agent to read a file the standard tells it not to read. Maintainers find `humans.md` by convention — it is the maintenance file in the three-file folder — so no pointer is needed.
+
+Failure: BLOCKED. Fix: delete the reference. If the executable genuinely needs the information, the information belongs in the executable.
+
 ### DL012 — Owner value matches repo owner
 
 The `owner` frontmatter field must equal `EXPECTED_OWNER` (defined in `scripts/doc_lint.py`, currently `@emb715`). Prevents drift to the OS username, git config user, or any other value an agent might default to. The expected value is defined once in the linter, not in prose, so enforcement is a single source of truth.
@@ -190,6 +231,23 @@ Applies to: all files with required frontmatter (see DL001) where `status` is `v
 
 Failure: BLOCKED. Fix: re-verify the artifact and bump `last_tested` to today, or mark `deprecated` if no longer relevant.
 
+### DL015 — Artifact folder completeness
+
+A file-by-file linter cannot see a file that does not exist. DL001–DL014 validate the files present in a folder; they say nothing about a folder that is missing its record or its maintenance file. DL015 walks the artifact folders themselves.
+
+Applies to: direct subdirectories of `agents/`, `prompts/`, `playbooks/`, `skills/`, `tools/`. Not `experiments/`, where loose structure is allowed by design.
+
+Required in every artifact folder:
+- `README.md`
+- `humans.md`
+- the section's consumable file — `agents/` → `system-prompt.md`, `prompts/` → `prompt.md`, `playbooks/` → `playbook.md`, `skills/` → `SKILL.md`
+
+`tools/` has no required consumable name: `artifact-structure.md` permits a tool's natural filename, so only `README.md` and `humans.md` are checked there.
+
+Exemption: an artifact carrying the `external` tag in its README frontmatter uses the two-file variant (README + humans, consumable lives outside the repo) and is not required to have a consumable file. This mirrors the DL010 exemption for agents.
+
+Failure: BLOCKED. Fix: add the missing files, or tag the artifact `external` if its consumable genuinely lives elsewhere.
+
 ## Output contract for lint/compliance runs
 
 Use exact response structure:
@@ -206,7 +264,9 @@ PROMOTION_DECISION: <allowed|not allowed>
 
 ## Severity
 
-All DL001–DL008, DL011, DL012, DL013, and DL014 are **blocking** in this repository.
+All of DL001–DL016 are **blocking** in this repository.
+
+Every gate declared in `AGENTS.md` must have at least one rule mapped to it in `GATE_LABELS` (`scripts/doc_lint.py`). `DL000` enforces that mapping: a gate declared in prose with no rule behind it is a gate nobody checks. Gate 7 sat unenforced that way until 2026-10-09.
 
 ## Evidence / Results
 
