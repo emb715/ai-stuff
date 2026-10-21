@@ -1,0 +1,14 @@
+[
+  {"query":"Write a SKILL.md for our TypeScript client library from its version-3 docs and exported declarations; the agent keeps guessing removed methods.","should_trigger":true},
+  {"query":"Audit the vaultctl-management skill for stale flags, destructive commands, and missing installation prerequisites.","should_trigger":true},
+  {"query":"Our generated context-kit skill links to docs that the OpenCode installer doesn't copy. Review the skill and its delivery assumptions before we change it.","should_trigger":true},
+  {"query":"Improve the record-map skill: it repeats its trigger list, has a 400-line core, and always loads its references. Keep the useful examples.","should_trigger":true},
+  {"query":"Turn the current CLI documentation into an agent skill for configuration and recovery, with both deletion and remote-export safeguards.","should_trigger":true},
+  {"query":"Compare an existing library skill with a revised version and define what evidence would justify saying the new skill helps agents.","should_trigger":true},
+  {"query":"I'm using mapRecords in a React component; why does TypeScript infer the wrong output type? Fix the component, not the skill.","should_trigger":false},
+  {"query":"The SnapBerry MCP server won't connect to OpenCode. Diagnose my installation and tell me which CLI command to run.","should_trigger":false},
+  {"query":"Write a public README for our SDK, including installation instructions and the exported API. I don't want an agent skill.","should_trigger":false},
+  {"query":"Create a reusable release-management playbook for humans that coordinates approvals and rollback, not a SKILL.md.","should_trigger":false},
+  {"query":"Review our generated SDK bindings for incorrect signatures and stale code; don't review or author skill instructions.","should_trigger":false},
+  {"query":"Explain how OpenCode discovers installed skills and whether user-invocable metadata affects loading. This is a product-configuration question, not a skill rewrite.","should_trigger":false}
+]

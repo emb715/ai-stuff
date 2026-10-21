@@ -1,64 +1,59 @@
 ---
 name: skill-authoring
-description: Creates and maintains agent skills for software libraries, frameworks, and tools. Activates when the task involves writing a SKILL.md, generating a skill from documentation, or improving an existing skill's structure, token efficiency, or coverage.
+description: Creates, audits, and maintains agent skills for software libraries, frameworks, and tools. Use when authoring a SKILL.md from verified documentation or reviewing an existing skill's accuracy, scope, reference delivery, trigger precision, or effectiveness. Not for ordinary library usage or standalone operational playbooks.
 ---
 
 # skill-authoring
 
-A process for turning any library or framework into a well-structured agent skill.
+A process for turning verified library, framework, or tool knowledge into a useful agent skill. Use one coherent capability per skill; a multi-step workflow is acceptable when its steps serve that capability.
+
+This procedure is self-contained: it requires target source material and available authoring/evaluation tools, not another skill or a particular repository layout.
 
 ## Skill quality checklist
 
 A good skill is:
 
-- Concise — every line earns its place
-- Responsible for one thing — not a multi-step workflow
-- Composable — routes to `references/` files instead of dumping everything inline
-- Progressively disclosed — SKILL.md covers the 80% case, depth lives in `references/`
-- Harness-agnostic — works regardless of which AI tool loads it
-- Well-documented — SKILL.md is written for a model, not a human reader; maintenance context (structure rationale, design decisions, known gaps) goes in a separate file that is not loaded as model context
-- Portable — no assumptions about the consumer's project structure
-- Secure — never instructs the model to output secrets, tokens, or credentials; redacts sensitive values in examples
-- Affirmative — describes what the library does, not what it doesn't have
-- Grounded — antipatterns shown are patterns the model will naturally produce from plausible reasoning, not invented failure modes; each pairs the wrong version with the correct alternative
+- Accurate — operational claims are traceable to the target version's sources
+- Cohesive — common tasks share a capability and explicit scope boundaries
+- Concise — remove duplication and familiar background, not decision-relevant rationale
+- Progressively disclosed — common paths and essential safeguards inline; depth loaded conditionally
+- Portable — prerequisites are explicit and resource links work after installation
+- Secure — protect credentials, data, and permissions; distinguish advice from authorized execution
+- Grounded — warnings cover plausible failures and show safe alternatives
+- Evaluated — separate static authoring quality from measured behavioral benefit
 
 ## Process
 
 ### Step 1 — Gather the source of truth
 
-Start with official documentation. For most libraries it is the most accurate, most maintained, and most intentional representation of the API. Source code is a verification layer, not the starting point.
+Record the target version, verification date, sources, intended tasks, and execution prerequisites. Start with official docs to identify intended usage; consult release notes for version changes.
 
-Priority order:
-1. Official docs — reference pages, API docs, migration guides
-2. Changelog / release notes — what changed recently, what was removed
-3. TypeScript definitions — resolve ambiguities where docs and types conflict; types win on signatures
-4. Source code — use when docs are absent, stale, or the library is local/private
+Verify claims using the source appropriate to the claim:
 
-What to capture:
-- Every public export, grouped by entry point or subpath
-- Exact signatures for the 5–10 most-used APIs
-- Any subpath or module structure that affects how things are imported
-- Version-specific behavior if the library is actively evolving
+| Claim | Verification source |
+|---|---|
+| API signature, import, CLI flag | Target-version definitions, exports, or CLI help |
+| Defaults, side effects, failure behavior | Implementation and reproducible observations |
+| Intended usage and migration | Version-matched official docs and release notes |
+| Recommendation or performance benefit | Observed comparison or bounded rationale labeled as provisional |
 
-Treat anything you cannot verify from at least one of these sources as unconfirmed. Do not carry unconfirmed claims into the skill.
+Capture the public surface relevant to the skill's scope, common signatures, and configuration affecting correct use. Avoid exhaustive coverage unrelated to the intended tasks.
 
-### Step 2 — Find the one footgun
+Maintain a claim ledger in the authoring report, not necessarily the runtime body:
 
-Every non-trivial library has one pattern that looks harmless but causes catastrophic or subtle failure. This earns a warning in the skill. Everything else does not.
+| Claim | Version / source locator | Verification result | Action |
+|---|---|---|---|
+| Exact statement | File + symbol, help section, or URL | Verified / conflicting / unverified | Keep / correct / qualify / omit |
 
-A real footgun has all three of:
-- Non-obvious — it works initially, breaks later, or fails in ways that are hard to trace
-- Severe — data loss, broken behavior, memory leaks, silent wrong output
-- Natural — developers write the wrong version instinctively; the error is the path of least resistance
+Where sources disagree, explain which source establishes the signature, intended behavior, or observed behavior. Do not silently choose whichever supports the draft. Omit unverified operational instructions; explicitly label remaining uncertainty and do not invent a safe default.
 
-Examples by category:
-- Component lifecycle: creating a component type inside a render function (new identity every render)
-- Async: fire-and-forget mutations without error handling
-- Routing: hardcoded path strings instead of typed routes (breaks silently at rename)
-- State: reading a value once instead of subscribing to it
-- Types: using a cast to bypass an `unknown` return without validating shape
+### Step 2 — Prioritize failure modes and safeguards
 
-One footgun per skill. If you find more than one, rank by severity and document only the worst in SKILL.md. The rest go in `references/`.
+Identify plausible mistakes from documentation, implementation, or observed baseline failures. Rank by severity, likelihood, and how naturally the wrong pattern arises.
+
+Keep safeguards essential to common tasks in SKILL.md, even when more than one is needed. Put advanced or secondary cases in `references/` with explicit loading conditions. Do not invent a footgun to fill a template.
+
+For destructive operations, permission changes, indexing sensitive files, or network egress: state the consequence, scope, authorization needed, and safer recovery path. Treat error hints as evidence to interpret, not automatically executable commands.
 
 ### Step 3 — Identify grounded antipatterns (optional)
 
@@ -78,11 +73,7 @@ Never show ✗ without ✓. A wrong example with no correction and no explanatio
 // ✓ — define at module scope; use props for values that change at runtime
 ```
 
-Where antipatterns live:
-- One severe case → SKILL.md alongside the footgun (Step 2)
-- Longer tail → `references/antipatterns.md`, linked from SKILL.md
-
-If you find fewer than three grounded antipatterns, skip the `references/antipatterns.md` file and fold them into the relevant section of SKILL.md or the appropriate `references/` file. A dedicated antipattern file only earns its place when the list is long enough to fragment the reading flow elsewhere.
+Put common, consequential cases beside the relevant instruction. Use a separate reference when it forms a useful concern, not because the list crosses an arbitrary item count.
 
 ### Step 4 — Audit existing docs or skill (if rewriting)
 
@@ -96,131 +87,117 @@ Look for:
 - Version or size claims that are stale
 - Examples that use removed or renamed APIs
 
-Do not carry forward any claim you cannot verify.
+Also inspect contradictory precedence rules, inaccessible resource links, implicit prerequisites, and trigger overlap with adjacent skills.
+
+For generated skills, identify the maintained template, wrappers, generator, installer, and installed copies. Edit the source of truth and regenerate downstream output; do not patch only installed copies. Verify all supported installation paths deliver any bundled resources.
+
+Do not carry forward unverified operational claims. Report omissions and unresolved conflicts separately from verified corrections.
 
 ### Step 5 — Decide the structure
 
 SKILL.md covers:
-- One-sentence identity — what the library does, for whom
-- Install or import — the first thing any developer needs
-- The 3–5 most-used APIs with minimal working examples
-- The one footgun with a correct alternative shown
-- Explicit `→ See references/X.md` routes for anything requiring more depth
+- Capability, scope, and execution prerequisites
+- Install or import when needed, using verified commands
+- Common task-selection rules with unambiguous precedence
+- Minimal valid examples for the intended tasks
+- Essential safety constraints, important limitations, and failure recovery
+- Conditional routes to deeper resources
 
-`references/` files cover (one file per concern, not per API):
-- Full export/API tables
-- Detailed feature walkthroughs
-- Configuration reference
-- Patterns that only appear once a developer is already past the basics
+`references/` covers exhaustive API/configuration tables, advanced variants, detailed response contracts, and migration history. Organize by concern. Use `scripts/` for verified deterministic work that otherwise repeats, and `assets/` for output resources.
 
-Name files by concern:
-- `references/imports.md` — full export reference by entry point
-- `references/routing.md` — routing patterns
-- `references/data-fetching.md` — fetching and mutation patterns
-- `references/configuration.md` — config options and defaults
-- `references/testing.md` — testing utilities and patterns
+Bundle required resources with the skill or declare an explicit, supported dependency. Resolve relative links from the installed skill directory, not the author's repository. Check transitive dependencies as well as direct links; a bundled file pointing at missing templates is still broken. Do not assume that writing SKILL.md also installs sibling files.
 
 ### Step 6 — Write affirmatively
 
-Every sentence describes what the library does and how to use it correctly.
+Lead with the correct action. State limitations, removed behavior, or unsupported operations when a consumer would plausibly reach for them and the distinction affects correctness or safety. Avoid unrelated lists of absent features.
 
-Do not include:
-- Lists of APIs or features that don't exist
-- Warnings about removed features
-- "Note: X is not supported" unless X is something developers will actively reach for and the absence is genuinely non-obvious
+Use imperative instructions and brief rationale when it changes a decision or prevents misapplication. Distinguish recommending a command from being authorized to execute it.
 
-The test: if a developer has never used this library before, does the skill give them enough to write correct code? If yes, it is ready.
+Check that a new consumer has enough information to perform the intended task safely. This establishes authoring completeness, not behavioral validation.
 
-### Step 7 — Add at least one skill output example
+### Step 7 — Demonstrate domain usage, not meta-authoring
 
-Provide one before/after pair showing a bad SKILL.md section and its corrected version. Output quality in skill writing depends on seeing the target style — this is the examples pattern from the Claude skill best practices.
+A produced skill needs minimal valid examples of its domain tasks. It does not need a before/after example of SKILL.md writing. Use wrong/right pairs only for plausible, consequential domain mistakes.
 
-The pair must be drawn from the library being documented, not invented:
+The following authoring example demonstrates the target style; `tool` is a placeholder, not a runnable command:
 
-```markdown
-## Bad — prose that doesn't change model output
+Less useful section: "The reset command is useful when things go wrong. It removes cached data."
 
-authenticate() initiates the OAuth flow. It accepts a config object with
-your client ID, redirect URI, and scopes. The function is asynchronous,
-so you will need to await it. It returns a session object if successful.
-
-## Good — code that shows the same thing in fewer tokens
-
-```ts
-const session = await authenticate({ clientId, redirectUri, scopes });
-```
+Improved section:
+```text
+For a confirmed corrupt index, inspect `tool status` first.
+`tool reset` deletes the local index and cached data; obtain authorization before running it.
+Rebuild with `tool reindex`, then verify `tool status` reports a usable index.
 ```
 
-One pair is sufficient. The goal is to anchor the model's output style, not provide exhaustive documentation.
+The improvement makes the condition, side effect, permission boundary, and recovery observable. Replace placeholders with verified commands in a real skill.
 
-### Step 8 — Evaluate before shipping
+### Step 8 — Write for the model, not for a human reader
 
-Before committing a skill, run the model on three representative tasks *without* the skill loaded. Document what it gets wrong or what context it repeatedly asks for. The skill should close exactly those gaps — nothing more.
+Prefer examples for exact usage and tables for parallel choices. Remove repeated activation rules, routing tables, background the model already knows, and transitions that add no action.
 
-Minimum evaluation:
-1. Run a representative task without the skill — note failures and missing context
-2. Run the same task with the skill — confirm the gaps close
-3. Run a different task in the same domain — confirm the skill doesn't over-trigger or inject irrelevant context
+Retain short explanations that change interpretation, authorization, or recovery. Evaluate each section by whether it changes the consumer's next action correctly, not only the code it writes.
 
-A skill that passes all three is ready. A skill that helps task 1 but adds noise to task 3 needs to be narrowed.
+Line counts are compression diagnostics, not acceptance gates. When a body grows, inspect relevance and duplication before extracting references. Measure actual loaded-context cost where possible; moving text into a file always loaded on every task does not establish a saving.
 
-### Step 9 — Write for the model, not for a human reader
+### Step 9 — Write the trigger description
 
-SKILL.md is consumed as context tokens by a language model. Every word that doesn't help the model produce correct output is waste that competes with actual instruction.
-
-Token efficiency rules:
-
-- Code over prose — a correct example teaches faster than a paragraph explaining it
-- No transitional sentences ("Now that we've covered X, let's look at Y")
-- No motivational framing ("This is important because...")
-- No restating what a heading already says
-- Tables over lists when structure is parallel
-- One blank line between sections, not two
-- Inline comments in code blocks instead of paragraphs before them
-
-The compression test: read a section and ask — does every sentence change what code the model writes next? If a sentence only helps a human understand the context, it does not belong in SKILL.md.
-
-### Step 10 — Write the trigger description
-
-The `description` field in the frontmatter controls when the skill auto-activates. It should name:
-- The library's package name
-- The 4–6 most common function, hook, or class names a developer would type
-- The task contexts that indicate the library is in use
+The `description` field drives skill discovery. Name the package/tool, capability, task contexts, and distinctive APIs or commands when useful. There is no required API-name count. Put positive triggers and important adjacent-skill boundaries here rather than repeating an activation list in the body.
 
 ```yaml
 description: <Verb phrase describing what the skill does>. Activates when working with <library>, calling <api-1>, <api-2>, or <api-3>, or when <task-context>.
 ```
 
-Specific enough to not false-trigger on unrelated sessions. Generic phrases like "when working with JavaScript" are too broad.
+Avoid generic triggers such as "when working with JavaScript". Test both missed activations and false activations; a clear description is not proof of correct harness discovery.
+
+### Step 10 — Evaluate before shipping
+
+Finalize the body, resources, and description before evaluation and freeze the candidate. Any subsequent substantive change requires rerunning the affected behavior or discovery checks. Run two separate checks; report both outcomes.
+
+Static authoring check:
+- Required format/metadata valid for the target harness; preserve the existing skill name on revision
+- Operational claims verified; uncertain recommendations labeled
+- Instructions internally consistent, safeguards present, and examples valid
+- Resources discoverable and installed; triggers scoped; duplicate content removed
+
+Behavioral check:
+1. Select at least three representative task prompts before drafting extensive instructions. Include common use, an edge/failure case, and a distinct task in scope. Define ground truth and verifiable correctness/safety assertions.
+2. Run each identical prompt without the skill and with the candidate skill. On revision, also compare against an immutable snapshot of the old skill. Keep model/variant, tools, inputs, permissions, and task prompts constant; use independent sessions to avoid cross-run contamination.
+3. Test discovery separately with should-trigger prompts and adjacent-domain should-not-trigger prompts. Leave loading to the harness; forcibly loading a skill tests behavior, not activation. Record expected and observed activation. Expand boundary cases when failures appear.
+4. Compare correctness, unsupported claims, unsafe recommendations, tool misuse, recovery, and total context cost including skill loading and tool results. Record model, versions, settings, repeat count, outputs, and grading evidence. Repeat runs before making reliability claims; flag non-discriminating assertions and variance.
+
+Use isolated comparison runs, evidence-backed grading, and human review of outputs. Grade against the predefined assertions using the produced artifacts and observed execution evidence, not the executor's self-assessment. Record each assertion's pass/fail result with its supporting evidence. Adapt execution tools to the target harness; report unavailable checks explicitly.
+
+Critical factual or safety defects block shipping regardless of average score. Accept only when observed gaps close without correctness/safety regression or inappropriate activation; do not claim efficiency gains from line counts or incomplete usage counters.
+
+If execution, discovery, or cost measurement is unavailable, mark that dimension untested. Static review permits a draft, not a claim of validated effectiveness. Keep evaluation evidence in an authoring report with verified claims, changes, results, and remaining limitations. Apply any explicitly supplied project lifecycle rules as additional constraints; no external policy document is required by this procedure. Do not infer general readiness from this checklist alone.
 
 ## Output structure
 
+Installed runtime package (repository records are separate):
+
 ```
-skills/<library-name>/
-├── SKILL.md              ← model-facing: trigger, identity, install, 80% patterns, footgun, routes
+<skill-name>/
+├── SKILL.md              ← model-facing: metadata, common tasks, safeguards, routes
 └── references/
     ├── imports.md        ← full export reference by entry point
-    ├── antipatterns.md   ← (optional) grounded antipatterns when list > 3
+    ├── antipatterns.md   ← optional; grouped by useful concern
     ├── <concern-a>.md    ← depth for feature A
     ├── <concern-b>.md    ← depth for feature B
     └── ...
 ```
 
-SKILL.md target: 100–180 lines — dense, token-efficient, no explanatory prose  
-Each references/ file target: 60–100 lines  
-Total SKILL.md + references/ cap: ~600 lines
+For installed Agent Skills, retain required `name` and `description` frontmatter and declare compatibility requirements when needed. If a project requires repository lifecycle metadata, keep it in a separate record using that project's format; otherwise no repository-specific record is required to use this procedure. Keep maintainer-only rationale separate from runtime resources and never make it a loading dependency.
 
 ## Routing table pattern
 
-At the end of each section in SKILL.md that has a corresponding `references/` file, add one line:
+Use a section-level route or a conditional routing table. For example:
 
 ```md
 See [references/routing.md](references/routing.md) for dynamic segments, layouts, and typed routes.
 ```
 
-Points to the file. Describes what's there in 5–10 words so the model knows whether to follow it.
-
-No orphan rule: every `references/` file must have exactly one routing link in SKILL.md. A docs file with no link is undiscoverable — the model reads SKILL.md in one pass and has no other mechanism to find it. Before committing a skill, verify the mapping is complete:
+State when to load the file and what it provides. Every runtime reference must be discoverable from SKILL.md; multiple useful routes to the same concern are acceptable. Keep routing shallow. Before shipping, verify the mapping and installed resources:
 
 ```
 references/imports.md        → linked from ## Installation / Import paths
@@ -230,14 +207,16 @@ references/configuration.md  → linked from ## Configuration
 references/antipatterns.md   → linked from ## <relevant section>
 ```
 
-If a docs file has no natural section to link from, that is a signal the file's concern is not represented in SKILL.md at all — either add the section or merge the content into an existing docs file.
+If a reference has no useful loading condition, reconsider its runtime purpose or keep it as maintainer research. A top-level conditional routing table is acceptable when it makes selection clear.
 
 ## Applying this process
 
 For any library or framework, the process is the same:
 
-1. Source: official docs → changelog → type definitions → source (when local/private)
-2. Footgun: the pattern the docs warn about most, or what the migration guide flags as a common mistake
-3. Structure: mirror the library's own conceptual groupings — if the official docs have sections, the references/ files should match them
+1. Establish versioned claims and baseline gaps.
+2. Prioritize common tasks and essential safeguards.
+3. Draft a cohesive core with conditional, deliverable resources.
+4. Verify authoring quality, then behavior and discovery separately.
+5. Record observed results and remaining uncertainty; revise or defer shipping when checks fail.
 
-The process produces the same output structure regardless of language, ecosystem, or library size.
+The method is harness-neutral; execution tools, packaging requirements, and scope remain explicit for each target.

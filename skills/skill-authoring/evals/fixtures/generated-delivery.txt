@@ -1,0 +1,44 @@
+Controlled fictional fixture: context-kit, version 0.9.0.
+These supplied paths describe a mock project, not files you should edit outside your output.
+
+Current product documentation:
+context-kit provides local source exploration and preparation context for coding tasks.
+Tool catalog: prepare({task}), orient({}), lookup({name}).
+prepare assembles relevant source for a coding task; orient is session orientation.
+lookup is for one known symbol. Tools return evidence, not permission to change files.
+If prepare needs more inputs, ask the user rather than claiming the task is ready.
+
+Source/delivery map:
+templates/routing-body.md                 Canonical shared body, edited by maintainers
+templates/skill-opencode.md               OpenCode metadata wrapper, name: context-kit
+templates/skill-claude.md                 Claude metadata wrapper, name: context-kit
+scripts/build-skills.mjs                  Combines wrappers and body into dist/skills/
+src/install/opencode.ts                  Copies ONLY dist/skills/opencode/SKILL.md
+src/install/claude.ts                    Copies ONLY dist/skills/claude/SKILL.md
+.opencode/skills/context-kit/SKILL.md     Installed generated output; overwritten on update
+.claude/skills/context-kit/SKILL.md       Installed generated output; overwritten on update
+docs/tool-contracts.md                   Repository-only detailed reference; NOT shipped
+
+Existing body excerpts:
+"At every session start, orient must be the first call."
+"For a coding task, prepare must be the first call before any other tool."
+"Read ../../docs/tool-contracts.md for detailed result contracts."
+Two identical intent tables and three copies of the activation list follow.
+The source body is 270 lines, including repeated examples and optional contract details.
+
+Existing description:
+"Use for all coding and all installation or configuration questions."
+
+Adjacent skill:
+context-kit-cli manages installation and configuration. Code exploration belongs
+to context-kit, not context-kit-cli. This authoring task does not ask to revise the CLI skill.
+
+Task scope:
+Revise context-kit while preserving its name and MCP/exploration purpose.
+Deliver a draft core and any required reference resources, plus an authoring report
+with the actual producer/generator/installer changes needed to deliver them.
+Do not patch only the installed copy or assume the existing installers copy references.
+Explain first-call precedence and eliminate duplicated activation/routing sections.
+Define a relocated-installation test for BOTH harnesses so no repository-relative
+documentation dependency survives. Draft the test; do not claim it executed.
+No runtime/trigger or cost comparison has run for the produced skill.

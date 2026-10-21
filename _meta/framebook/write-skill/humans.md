@@ -2,16 +2,17 @@
 
 ## Origin
 
-Created 2026-06-24. `skills/skill-authoring/SKILL.md` is a 271-line reference document — detailed and accurate, but not operational. It describes what to do; it doesn't sequence the steps into an executable procedure. This playbook is the execution wrapper for that reference.
+Created 2026-06-24 as an execution wrapper for the skill-authoring process. Revised 2026-10-07 after duplicated rules drifted from the canonical skill. Historical line-count descriptions are not current acceptance criteria.
 
 ## Design decisions
 
-- This playbook is intentionally thinner than the `skill-authoring` reference. It gives you the execution path, not all the reasoning behind each step. For the reasoning, read `skills/skill-authoring/SKILL.md`.
-- Evaluation (step 8) is non-negotiable and placed second-to-last, after writing but before publishing. The skill-authoring reference puts this at step 8 of 10 for the same reason — evaluation without a complete skill is premature; publishing without evaluation is a guess.
-- "One footgun" is strict. The temptation is to add every antipattern you find. The skill-authoring reference is explicit: one in SKILL.md, the rest in refs/. This playbook mirrors that constraint.
-- The trigger description step (step 6) is separate and explicit. It's the most commonly skipped step and the one that determines whether the skill loads at the right time.
+- The executable delegates authoring to `skills/skill-authoring/SKILL.md` and adds only vault integration. It no longer keeps a second detailed copy of the authoring rules.
+- Body and description are finalized before canonical Step 10 evaluation. Static authoring, matched behavior, actual discovery, and cost are reported separately; missing measurements do not become successful tests.
+- Essential safeguards are prioritized by consequence and common-path relevance, not by a single-warning quota. Runtime depth uses `references/` and requires delivery checks.
+- The vault's maintainer record is separate from executable loading. Installed-package requirements are not automatically the same as vault record requirements.
 
 ## Maintenance notes
 
-- If the 10-step process in `skills/skill-authoring/SKILL.md` changes, review this playbook for alignment. The key steps that need to stay in sync: footgun rules, evaluation criteria, SKILL.md vs humans.md content split, and routing table pattern.
-- When this playbook has been run at least once with documented results, promote to `validated` and update `last_tested`.
+- If the canonical authoring process changes, review delegation, scope, evaluation dimensions, resource delivery, and vault integration rather than copying all its steps again.
+- Keep README and maintenance records consistent with the executable. After a real wrapper run, record results and use the separate promotion procedure; successful tests do not automatically promote it.
+- The 2026-10-07 authoring fixture comparisons are evidence about the authoring skill, not a standalone run of this framebook. Its lifecycle/date are not advanced on that basis.

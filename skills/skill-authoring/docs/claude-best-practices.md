@@ -182,7 +182,7 @@ bigquery-skill/
 
 ### No orphan rule (skill-authoring addition)
 
-Every `references/` file must have exactly one routing link in SKILL.md. A file with no link is undiscoverable.
+Local addition revised 2026-10-07: every runtime reference must be discoverable from SKILL.md with a useful loading condition and delivered to installed consumers. Multiple useful routes are acceptable. This is a local convention, not an upstream requirement about exact link count.
 
 ### Avoid deeply nested references
 
@@ -423,13 +423,13 @@ When inputs can be rendered as images (PDFs, diagrams):
 
 ## Alignment with skill-authoring principles
 
-| Best practice doc says | skill-authoring enforces |
+| Best practice doc says | Current local application (revised 2026-10-07) |
 |---|---|
-| Concise is key | Token efficiency step (Step 7), compression test |
-| Description = what + when, third person | Trigger description step (Step 8) |
-| Progressive disclosure, one level deep | No orphan rule, references/ structure |
-| Evaluation-driven development | humans.md: known gaps + maintenance checklist |
-| Test with Claude A, evaluate with Claude B | Implicit in the iterative process |
+| Concise is key | Step 8 removes duplication while retaining decision-relevant rationale; no local line quota |
+| Description = what + when | Step 9 writes capability and scoped activation conditions before evaluation |
+| Progressive disclosure, one level deep | Conditional routes plus installed/transitive resource checks (Steps 4–5) |
+| Evaluation-driven development | Step 10 separates static checks, matched behavior, actual discovery, and cost |
+| Test with Claude A, evaluate with Claude B | Independent execution/grading when available; limitations reported explicitly |
 | Avoid time-sensitive content | Part of audit step (Step 4) |
 | Consistent terminology | Covered in affirmative writing step (Step 6) |
-| Feedback loop / validate → fix → repeat | Grounded antipatterns step (Step 3) |
+| Feedback loop / validate → fix → repeat | Step 10 freezes candidates, compares evidence, and retests affected checks after changes |

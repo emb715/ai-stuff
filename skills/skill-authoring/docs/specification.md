@@ -103,7 +103,9 @@ The agent loads the entire SKILL.md once the skill is activated. Split longer co
 | **2 — Instructions** | When skill is triggered | < 5000 tokens recommended | Full SKILL.md body |
 | **3 — Resources** | As needed | Effectively unlimited | Scripts, references, assets — loaded on demand |
 
-Keep SKILL.md under 500 lines. Move detailed reference material to separate files.
+General guidance: keep SKILL.md under 500 lines and move detailed reference material to files loaded on demand. This is authoring guidance, not a format-validation limit.
+
+Local authoring recommendation: prefer SKILL.md under 200 lines. Roughly 180–200 lines is a drafting target for larger skills, not a minimum; shorter complete skills are preferable to padded ones. Preserve essential instructions and safeguards when compressing. This is a maintainer preference, not a measured optimum or a hard acceptance gate.
 
 ---
 
@@ -165,5 +167,5 @@ Source: https://github.com/agentskills/agentskills/tree/main/skills-ref
 |---|---|---|
 | `references/` for docs | `references/` | Aligned to spec 2026-08-12 (was `refs/`) |
 | No format restriction on body | Affirmative, token-efficient prose | Stricter than spec for quality |
-| 500 lines max SKILL.md | 100–180 lines target | Much stricter — enforces concision |
+| Keep SKILL.md under 500 lines (guidance) | Prefer under 200 lines; roughly 180–200 for larger skills | Recommendation, not a minimum or hard gate; assess relevance, safeguards, and loaded cost separately |
 | Any file structure | `SKILL.md` + `references/` + `humans.md` | Opinionated for consistency |

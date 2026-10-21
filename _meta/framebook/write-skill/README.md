@@ -15,15 +15,15 @@ owner: "@emb715"
 
 # Write a Skill
 
-Step-by-step operational playbook for producing a SKILL.md from any library or framework.
+Vault integration procedure for creating or revising a library, framework, or tool skill using the canonical skill-authoring method.
 
 ## Context / Problem
 
-`skills/skill-authoring/SKILL.md` contains a deep 10-step reference process for building skills, but it is reference material — not an operational procedure. There is no step-by-step flow that takes you from "I want to skill this library" to "the skill is ready to ship." The knowledge exists; the execution path doesn't.
+Authoring rules and vault integration were duplicated, causing drift in warning quotas, line targets, reference naming, and evaluation sequencing. This wrapper delegates authoring to the canonical skill and adds vault structure, linkage, lint, and lifecycle checks.
 
 ## Scope
 
-Applies to any new skill being authored from an external library, framework, tool, or internal pattern. Covers: gathering sources, structuring the skill, writing SKILL.md and humans.md, evaluating before ship. Does not cover maintaining or updating an existing skill (read `skill-authoring/SKILL.md` Step 4 for that).
+Applies to creation and revision of library, framework, and tool skills. Covers verified claims, runtime resources, repository records, separate authoring/behavior/discovery evidence, and vault integration. It does not replace artifact classification or authorize automatic promotion.
 
 ## Trigger
 
@@ -31,29 +31,32 @@ You want to package knowledge about a library, framework, or pattern into a reus
 
 ## Outputs
 
-- `skills/<library-name>/SKILL.md` — model-facing skill (100–180 lines)
+- `skills/<skill-name>/README.md` — lifecycle record, evidence, and boundaries
+- `skills/<skill-name>/SKILL.md` — model-facing skill with common paths and essential safeguards
 - `skills/<library-name>/humans.md` — maintenance companion
-- `skills/<library-name>/refs/` — depth files if needed (each 60–100 lines)
+- `skills/<skill-name>/references/` — conditionally loaded depth resources when useful
 - Entry in root `README.md` artifact inventory
 
 ## Verification
 
-- SKILL.md is 100–180 lines
-- One footgun with correct alternative shown
-- Every `refs/` file has a routing link in SKILL.md
-- Evaluated against 3 tasks: without skill, with skill, different task
+- Claims match versioned sources; contradictory precedence and unsupported instructions are resolved
+- Common-path safeguards are retained without a warning-count quota
+- Runtime resources are discoverable and actually delivered to installed consumers
+- Finalize the body and description before matched task comparisons and separate discovery tests; report missing measurements as untested
 - `humans.md` exists and documents source of truth, footgun rationale, known gaps
 
 ## Evidence / Results
 
 Drafted 2026-06-24 based on the 10-step process in `skills/skill-authoring/SKILL.md`, which was itself built through real skill authoring sessions. Playbook form not yet run as a standalone procedure — status `draft`.
 
+Revised 2026-10-07 to delegate rather than duplicate authoring rules and to align creation/revision scope, `references/`, safeguards, and evaluation dimensions. This wrapper has not been executed as a standalone lifecycle/promotion procedure; its existing `last_tested` remains unchanged.
+
 ## Failure Modes / Boundaries
 
-- If official docs don't exist: use TypeScript types + source code, but mark confidence lower
-- If you find more than one footgun: include only the worst in SKILL.md; the rest go in `refs/antipatterns.md`
-- If evaluation (step 8 of skill-authoring) reveals the skill helps task 1 but adds noise to task 3: narrow the trigger description and remove the over-triggering section
-- A skill with no evaluation is a guess, not a skill
+- If docs are absent or stale, use the appropriate definitions/help, implementation, or observations; omit operational instructions that remain unverified
+- Do not hide essential safeguards merely to reduce warning count or length
+- Forced loading cannot establish activation precision; narrow triggers and retest actual discovery when inappropriate activation is observed
+- A skill with static checks only may remain draft, but cannot claim validated effectiveness
 
 ## Related Links
 

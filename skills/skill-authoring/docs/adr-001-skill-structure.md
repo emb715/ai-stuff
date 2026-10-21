@@ -1,6 +1,6 @@
 # ADR-001: Skill Structure and Authoring Conventions
 
-**Status:** Accepted  
+**Status:** Accepted with revisions on 2026-10-07; superseded text is replaced below
 **Date:** 2025-06  
 **Context:** skill-authoring — the process skill for generating opencode skills from library documentation
 
@@ -23,7 +23,7 @@ This ADR records the decisions made for the skill-authoring process and the skil
 **Rationale:** Skills are loaded as context tokens. Prose that helps a human understand a decision costs tokens that compete with actual instruction. Separating the two audiences means SKILL.md can be maximally dense without sacrificing maintainability.
 
 **Consequences:**
-- SKILL.md contains zero explanatory prose — only instruction and example
+- SKILL.md contains instructions, examples, and brief rationale when it changes interpretation, authorization, or recovery; unrelated maintenance prose stays separate
 - humans.md contains rationale, source verification, known gaps, maintenance checklist, and decision log
 - Neither file substitutes for the other
 
@@ -36,22 +36,22 @@ This ADR records the decisions made for the skill-authoring process and the skil
 **Rationale:** The model navigates the skill directory via bash. Files in `references/` are linked from SKILL.md and are part of the skill's operational surface. Files in `docs/` are not linked from SKILL.md and are never loaded as model context — they exist for the humans maintaining the skill collection. The directory name `references/` aligns with the official Agent Skills spec (agentskills.io), which uses `references/` as the optional documentation directory.
 
 **Consequences:**
-- Every file in `references/` must have exactly one routing link in SKILL.md (no orphan rule)
+- Every runtime file in `references/` must be discoverable from SKILL.md with a useful loading condition; verify that installers deliver it and its dependencies
 - Files in `docs/` have no routing link in SKILL.md — they are invisible to the model by design
 - ADRs always go in `docs/`, never `references/`
 
 ---
 
-### 3. No orphan rule — every references/ file has exactly one routing link
+### 3. No orphan rule — discoverable and deliverable references
 
-**Decision:** Every file in `references/` must be reachable via exactly one routing link in SKILL.md. Files with no link are removed or merged.
+**Decision (revised 2026-10-07):** Every runtime reference must be discoverable from SKILL.md through explicit loading guidance. More than one useful route is allowed. Remove, merge, or reclassify files with no runtime purpose.
 
-**Rationale:** The model reads SKILL.md in one pass. A `references/` file with no routing link is permanently undiscoverable — the model has no mechanism to find it. A routing link that appears in the relevant section (not at the top) gives the model context for when to follow it.
+**Rationale:** Conditional routing makes resources useful without loading all depth for every task. Exactly one link and a fixed placement do not establish discoverability or effectiveness. A correct link is still unusable if packaging omits its target.
 
 **Consequences:**
-- Routing links appear at the end of the section they relate to, not in a top-level index
+- Use section-level links or a conditional top-level routing table, whichever makes selection clearer
 - A references/ file with no natural home section is a signal the concern is not represented in SKILL.md — either add the section or eliminate the file
-- Routing link format: `→ See [references/X.md](references/X.md) for Y in 5–10 words.`
+- State the loading condition and contents; resolve links from the installed package and test transitive resources
 
 ---
 
@@ -59,80 +59,78 @@ This ADR records the decisions made for the skill-authoring process and the skil
 
 **Decision:** The `description` field must be written in third person and include both what the skill does and when to activate.
 
-**Rationale:** The description is injected into the system prompt. First-person ("I can help you...") or second-person ("Use when...") causes discovery inconsistencies as documented in the Claude skill authoring best practices. Third person ("Creates and refactors...") is unambiguous in the system prompt context.
+**Rationale (revised 2026-10-07):** A capability description should avoid self-referential assistant chatter such as "I can help you." An activation clause such as "Use when..." is compatible with a descriptive capability statement and appears in the supporting examples. Whether any phrasing improves discovery must be measured, not asserted from grammar alone.
 
 **Consequences:**
 - Description starts with a verb phrase: "Creates...", "Generates...", "Analyzes..."
-- Description always includes an "Activates when..." or "Use when..." clause in third person
-- Quoted trigger phrases ("create a skill for X") are not used — they inflate the description with low-signal text
+- Description includes clear activation conditions; "Activates when..." and "Use when..." are both acceptable
+- Include distinctive task language when useful; validate missed and false activation instead of relying on a phrase-count rule
 
 ---
 
-### 5. One footgun per skill, grounded antipatterns in references/
+### 5. Essential safeguards inline, secondary antipatterns in references/
 
-**Decision:** SKILL.md contains exactly one footgun — the most severe, non-obvious, natural failure mode. Additional grounded antipatterns (three or more) go in `references/antipatterns.md`. Fewer than three are folded into the relevant section.
+**Decision (revised 2026-10-07):** Rank plausible failures by severity, likelihood, and natural misuse. Keep every safeguard essential to common tasks inline; group advanced cases by concern in references. No mandatory warning or item count.
 
-**Rationale:** Multiple warnings in SKILL.md dilute the severity signal. If everything is a warning, nothing is. One footgun with clear consequences is more effective than a list. The inclusion test for any antipattern: could the model write this wrong version while believing it is correct?
+**Rationale:** A fixed warning quota can hide essential protection when common operations have distinct consequences, such as deletion and remote export. Plausible wrong patterns should still name the failure and show the safe alternative; do not fabricate hazards.
 
 **Consequences:**
-- SKILL.md has at most one ✗/✓ footgun block
-- references/antipatterns.md is created only when there are three or more grounded antipatterns
+- SKILL.md retains common-path correctness and safety requirements regardless of warning count
+- Create references/antipatterns.md only when it is a useful concern, not when a numeric threshold is crossed
 - Antipatterns that fail the inclusion test are not documented
 - Every ✗ must be immediately followed by ✓ with the failure mode named — a ✗ without a paired ✓ and explanation is removed, not kept
 
 ---
 
-### 6. Skill output must include one before/after example pair
+### 6. Produced skills show domain usage; the meta-skill shows authoring style
 
-**Decision:** Every skill generated by this process must include at least one before/after example pair showing a bad section and its corrected version.
+**Decision (revised 2026-10-07):** Produced domain skills include valid usage examples. A bad-section/good-section authoring example belongs in skill-authoring itself, not as a required section of every generated skill.
 
-**Rationale:** Output quality in skill writing depends on seeing the target style. The examples pattern (from Claude skill best practices) is more effective than describing the desired style in prose. One concrete pair anchors the model's output more reliably than a paragraph of instruction.
+**Rationale:** Authoring examples teach the author; domain examples teach the consumer. Requiring meta-authoring content in a domain skill wastes context and mixes audiences. Effectiveness of any example remains an evaluation question.
 
 **Consequences:**
-- The pair must be drawn from the actual library being documented
-- One pair is sufficient — this is not an exhaustive style guide
-- The pair lives in SKILL.md, not in references/
+- Domain examples use verified signatures/commands
+- Wrong/right pairs are optional and limited to plausible consequential domain mistakes
+- Placeholder examples in the authoring skill are explicitly illustrative, not executable product claims
 
 ---
 
 ### 7. Evaluation before shipping
 
-**Decision:** Before committing any skill, run the model on at least three representative tasks: one without the skill (baseline), one with the skill (gap check), one adjacent task (over-trigger check).
+**Decision (revised 2026-10-07):** Check authoring quality separately from behavioral usefulness. Compare at least three identical representative prompts with and without the candidate; on revision also compare the immutable old skill. Test discovery separately using positive and adjacent negative prompts.
 
 **Rationale:** Skills that close intended gaps but add noise to adjacent tasks are worse than no skill. Evaluation catches both failure modes. This mirrors the evaluation-driven development pattern from the Claude skill best practices.
 
 **Consequences:**
-- A skill is not ready until it passes all three evaluation tasks
+- Critical factual/safety defects block shipping irrespective of average score; unmeasured behavior, discovery, or cost stays explicitly untested
 - Failures are documented in humans.md under Known Gaps
-- The evaluation structure is: baseline task (without skill) → gap task (with skill) → adjacent task (with skill)
+- Keep model, tools, inputs, permissions, and prompts constant; forced loading measures behavior, not discovery
+- Record actual outputs and grading evidence; repeat runs before reliability claims and use vault procedures for lifecycle changes
+- Finalize the body and description before Step 10 evaluation; freeze the candidate and retest affected dimensions after substantive edits
 
 ---
 
-### 8. Line targets and caps
+### 8. Length diagnostics, not arbitrary acceptance gates
 
-**Decision:**
-- SKILL.md: 100–180 lines (target), 250 lines (hard cap)
-- Each references/ file: 60–100 lines (target), 150 lines (soft cap)
-- humans.md: no cap — prose for humans has no token cost
-- Total SKILL.md + references/ combined: 600 lines (soft cap)
+**Decision (revised 2026-10-07):** Remove the former 100–180-line target, 250-line hard cap, and combined 600-line quota as local acceptance rules. Diagnose relevance, duplication, conditional loading, and actual context cost. Honor concrete target-harness limits separately.
 
-**Rationale:** The agentskills.io spec allows 500 lines for SKILL.md. The skill-authoring process enforces a stricter target because skills that approach 500 lines have almost certainly failed to progressively disclose. The 80% case should fit in 180 lines. Anything beyond that should be a references/ file.
+**Rationale:** Historical examples show that compact bodies are feasible; they do not establish an optimal length. Extracting depth helps only when the consumer can avoid loading it unnecessarily. Local source summaries mention 500 lines as guidance; do not represent guidance as a format-validity guarantee.
 
 **Consequences:**
-- Skills approaching 250 lines in SKILL.md must be refactored before shipping
-- references/ files approaching 150 lines should be split by concern
+- A long skill prompts review, not automatic failure; a short skill can still be incomplete or wrong
+- Split references by useful loading condition, not merely by size
 - humans.md is exempt — it is never loaded as model context
 
 ---
 
 ### 9. Skill is harness-agnostic — no library-specific content in process steps
 
-**Decision:** The skill-authoring SKILL.md contains no references to specific libraries, frameworks, languages, or ecosystems.
+**Decision (revised 2026-10-07):** The authoring method is harness-neutral, but examples and declared prerequisites may be specific when clearly labeled. Do not assume the executor has a particular platform CLI or installation layout.
 
-**Rationale:** The process applies identically to any library. Specific examples in the process steps anchor the reader's mental model to one library and obscure the generality of the method. Library-specific examples belong in the generated skills, not in the process that generates them.
+**Rationale:** Concrete examples can teach style without prescribing an ecosystem. Claims of portability must account for tooling, generated sources, and delivery differences.
 
 **Consequences:**
-- All examples in SKILL.md use placeholder language ("the library", "the framework", "the API")
+- Mark illustrative placeholders explicitly; real product instructions need verified sources
 - The "Applying this process" section is generic — it describes the shape of the application, not a specific one
 - Real library examples that informed the process design live in docs/ or humans.md as historical context
 
@@ -140,14 +138,13 @@ This ADR records the decisions made for the skill-authoring process and the skil
 
 ### 10. Markdown decoration policy — strip separators, bold, and decorative arrows
 
-**Decision:** SKILL.md and all references/ files strip decorative markdown: `---` horizontal rules, `**bold**` outside code blocks, and `→` arrow prefixes on routing links. Headings (`#`, `##`, `###`), tables, code blocks, and `[link](path)` are kept.
+**Decision (revised 2026-10-07):** Prefer economical structural markdown and remove decoration that adds no meaning. Do not reject useful emphasis or separators solely on assumed token savings; required YAML frontmatter is not decorative markdown.
 
 **Rationale:** Markdown rendering is for humans reading in a UI. A model consuming a skill as context tokens sees raw text — `**bold**`, `---`, and `→` cost tokens and carry no instruction value. The words carry the meaning; the decorators do not. The exception is structural markdown (headings, tables, code fences, links) which the model uses for navigation and semantic parsing, not visual rendering.
 
 **Consequences:**
-- No `---` horizontal rules anywhere in SKILL.md or references/ files
-- No `**bold**` outside code blocks — emphasis is carried by word choice and position
-- No `→` arrow prefixes on routing links — the link text already conveys direction
+- Preserve metadata syntax and clear navigation
+- Prefer concise headings, tables, examples, and links; judge extra formatting by usefulness rather than a blanket prohibition
 - humans.md is exempt — it is for human readers and may use any markdown freely
 - docs/ files are exempt — they are human research documents, not model context
 
@@ -186,6 +183,8 @@ Partially adopted. Gerund form is preferred but noun-phrase alternatives (pdf-pr
 ## Decision log
 
 **2026-08-12 — Changed `refs/` to `references/` across all skills.** Decision #2 originally chose `refs/` as a shortened form of `references/`. The official Agent Skills spec (agentskills.io) uses `references/` as the optional documentation directory name. The shortened `refs/` was a vault convention that created divergence from the standard. Decision reversed: use `references/` to align with the official spec. All existing `refs/` folders renamed to `references/`; all routing links and documentation updated. The rationale, no-orphan rule, and one-concern-per-file convention are unchanged — only the directory name.
+
+**2026-10-07 — Evidence-specific authoring revision.** Replaced the prose/warning/link/length quotas and mandatory domain-skill meta-authoring examples. Added matched evaluations, separate discovery/cost reporting, and installed-resource checks. The current decisions above supersede corresponding earlier constraints; the original rationale is historical, not proof of effectiveness. Keep skill-authoring draft pending sufficient real-world evidence and the vault promotion procedure.
 
 ---
 

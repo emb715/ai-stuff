@@ -1,0 +1,33 @@
+Controlled fictional fixture: @fixture/record-map, version 2.1.0.
+These supplied files are the entire source of truth. Do not install or run this fictional package.
+
+Official docs, version 1.8 (stale):
+Import mapRecords from @fixture/record-map. It returns a Promise; await it.
+
+Official docs, version 2.1:
+The package transforms record arrays with a caller-supplied mapping function.
+Install example: npm install @fixture/record-map@2.1.0
+Use the named export mapRecords. The input array is not mutated.
+
+package.json, version 2.1.0:
+{"name":"@fixture/record-map","version":"2.1.0","exports":{".":"./dist/index.js"}}
+
+dist/index.d.ts:
+export declare function mapRecords<T, U>(records: readonly T[], fn: (record: T, index: number) => U): U[];
+
+dist/index.js:
+export function mapRecords(records, fn) { return records.map(fn); }
+
+Changelog 2.0:
+mapRecords is synchronous. The earlier Promise-returning adapter was removed.
+
+Observed example from the fixture author:
+mapRecords([{n: 2}, {n: 3}], record => record.n * 2) returns [4, 6] immediately.
+The original record objects are unchanged by this mapping function.
+
+Task scope:
+Create a skill named record-map for writing and reviewing uses of this package.
+Cover the public API above and basic valid usage. Do not invent other exports,
+subpaths, configuration, documented footguns, or behavioral evaluation results.
+No skill-with/without execution has been performed. A short skill is sufficient
+if it supplies the necessary context. Only the synthetic example was observed.

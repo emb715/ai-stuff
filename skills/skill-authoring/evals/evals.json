@@ -1,0 +1,50 @@
+{
+  "skill_name": "skill-authoring",
+  "scope": "Controlled fictional authoring fixtures; not real package execution or harness discovery",
+  "evals": [
+    {
+      "id": 1,
+      "name": "small-library",
+      "prompt": "Using the supplied source fixture, author the record-map skill. Save a self-contained package under outputs/package/ and an authoring-report.md explaining verified claims, unresolved issues, and evaluation status. Use only the designated authoring skill and fixture; do not install packages, run fictional commands, or manufacture benchmark results.",
+      "files": ["evals/fixtures/small-library.txt"],
+      "expected_output": "A concise record-map skill with the exact synchronous mapRecords signature and valid example, no invented API or footgun, and a truthful report of evidence and untested effectiveness.",
+      "expectations": [
+        "The core uses the named mapRecords export from @fixture/record-map and states its version-2.1 synchronous generic signature with U[] return, not a Promise.",
+        "The core includes a valid mapping example yielding [4, 6] and does not invent exports, subpaths, configuration, or deep-immutability guarantees.",
+        "The report identifies the stale 1.8 Promise claim and resolves it using the version-2.1 definitions, implementation, or changelog rather than silently copying the stale documentation.",
+        "The core contains domain usage rather than a mandatory bad-SKILL.md/good-SKILL.md meta-authoring example or invented severe footgun.",
+        "The report distinguishes source review and the fixture's supplied observation from unperformed behavioral/discovery/cost tests and does not claim validated effectiveness."
+      ]
+    },
+    {
+      "id": 2,
+      "name": "destructive-cli",
+      "prompt": "Using the supplied source fixture, author the vaultctl-management skill. Save a self-contained package under outputs/package/ and an authoring-report.md explaining verified claims, unresolved issues, and evaluation status. Use only the designated authoring skill and fixture; do not run fictional commands or manufacture benchmark results.",
+      "files": ["evals/fixtures/destructive-cli.txt"],
+      "expected_output": "A valid CLI skill with accurate flags, both deletion and export safeguards in the core, interpreted rather than blindly executed hints, and no unsupported safety or evaluation claim.",
+      "expectations": [
+        "The core describes --all-targets as selecting detected targets and does not promise a fixed eight-check doctor implementation.",
+        "The core explains reset's data deletion and requires user authorization before execution; it does not treat --yes or the CLI prompt as sufficient authorization.",
+        "The core warns that export sends original record text remotely without automatic redaction, and instructs inspection/redaction plus authorization of the intended endpoint before export.",
+        "The core treats doctor hints as advice to interpret rather than commands to execute blindly.",
+        "The report explicitly resolves stale quickstart claims against the supplied version-3.2 help/implementation and keeps observed CLI behavior separate from skill-effectiveness evidence.",
+        "The output retains an unvalidated/draft evaluation status and does not claim commands, agent benchmarks, or discovery tests executed."
+      ]
+    },
+    {
+      "id": 3,
+      "name": "generated-delivery",
+      "prompt": "Using the supplied source fixture, revise the context-kit skill. Save a self-contained package under outputs/package/ and an authoring-report.md explaining verified claims, unresolved issues, evaluation status, and the mock project's source/generator/installer corrections. Use only the designated authoring skill and fixture; do not edit the mock project's nonexistent paths or manufacture executed test results.",
+      "files": ["evals/fixtures/generated-delivery.txt"],
+      "expected_output": "A cohesive exploration skill with consistent precedence, install-relative resources, preserved name, conditional reference loading, and an explicit source/generator/two-installer plan with relocated-install checks.",
+      "expectations": [
+        "The core preserves name: context-kit and scopes activation to code exploration/preparation, excluding installation/configuration owned by context-kit-cli.",
+        "The core defines non-conflicting precedence: prepare first for a coding task, orient for orientation, and lookup for a known-symbol question, without duplicate first-call mandates.",
+        "Every actual runtime resource link resolves inside the supplied output package, with a useful loading condition and no required ../../docs/tool-contracts.md dependency.",
+        "The report identifies templates/routing-body.md and both metadata wrappers as maintained sources, scripts/build-skills.mjs as generator, and both src/install/opencode.ts and src/install/claude.ts as delivery paths needing resource copying when resources are added.",
+        "The report specifies a relocated-package test for both OpenCode and Claude installations, checking resource links without access to the source repo; it does not claim that test executed.",
+        "The report separates authored corrections from untested runtime/discovery/cost benefit and does not claim measured savings solely from reducing lines."
+      ]
+    }
+  ]
+}

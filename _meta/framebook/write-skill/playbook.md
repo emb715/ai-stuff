@@ -1,143 +1,56 @@
-# Write a Skill
+# Write or Revise a Skill
 
 ## Trigger
 
-You want to package knowledge about a library or framework into a SKILL.md an agent can load.
+Package verified library, framework, or tool knowledge into an agent skill, or revise an existing skill's accuracy, scope, delivery, or effectiveness.
 
 ## Preconditions
 
-- You have access to the library's official documentation
-- You have a clear sense of what context problem this skill solves (what does the model get wrong without it?)
+- Target capability, version, intended tasks, and harness are identified.
+- Documentation, definitions/help, implementation, or reproducible observations are available to verify operational claims.
+- For a revision, preserve an immutable copy of the original skill for comparison.
 
 ## Procedure / Steps
 
-### 1. Gather the source of truth
+### 1. Load the canonical authoring procedure
 
-Priority order:
-1. Official docs (reference pages, API docs, migration guides)
-2. Changelog / release notes
-3. TypeScript definitions (resolve ambiguities; types win on signatures)
-4. Source code (only when docs are absent or the library is internal)
+Read [skill-authoring/SKILL.md](../../../skills/skill-authoring/SKILL.md). Execute its Steps 1–10 for source verification, safeguards, structure, examples, evaluation, and discovery. This framebook adds vault integration; it does not duplicate the authoring rules.
 
-Capture:
-- Every public export, grouped by entry point or subpath
-- Exact signatures for the 5–10 most-used APIs
-- Any subpath or module structure that affects imports
-- Version-specific behavior if the library is evolving
+### 2. Establish scope and evidence
 
-Do not carry unverified claims into the skill.
+Record target version/date and a claim ledger. Select representative task prompts before extensive drafting. Resolve conflicting docs, signatures, defaults, and observed behavior explicitly. Do not publish unverified operational instructions.
 
-### 2. Find the one footgun
+### 3. Author or revise at the maintained source
 
-A footgun requires all three:
-- **Non-obvious** — works initially, breaks later, or fails in hard-to-trace ways
-- **Severe** — data loss, broken behavior, memory leak, silent wrong output
-- **Natural** — developers write the wrong version instinctively
+Keep one coherent capability with common tasks and all essential safeguards inline. Link conditional `references/` resources; verify they are delivered to installed consumers. For generated skills, edit the canonical templates and update generation/installation paths rather than only installed copies.
 
-If you find more than one: rank by severity, put only the worst in SKILL.md, the rest in `refs/antipatterns.md`.
+Preserve the existing skill name on revision. Do not impose warning quotas, reference-link quotas, or arbitrary line-count gates. Retain rationale that changes decisions; remove duplication and irrelevant background.
 
-### 3. Identify grounded antipatterns (optional)
+### 4. Apply vault structure
 
-Only include if the model would confidently produce the wrong version from plausible reasoning.
+Follow [artifact-structure.md](../../../docs/standards/artifact-structure.md) and the artifact's existing format. Keep lifecycle metadata in README.md, runtime instructions in SKILL.md, and maintenance context separate from runtime loading.
 
-Each antipattern must:
-- Show wrong version with one-line explanation of why it fails
-- Immediately follow with the correct version
-- Name the failure mode
+Create new uncertain work in `experiments/`; edit existing artifacts in place when revising. Keep records aligned with the executable artifact and record the evidence and known limitations.
 
-Never show `✗` without `✓`.
+### 5. Verify authoring and behavior separately
 
-### 4. Decide the structure
+Run static checks for source accuracy, internal consistency, valid examples, resource delivery, safety, and metadata.
 
-SKILL.md covers:
-- One-sentence identity
-- Install / import
-- 3–5 most-used APIs with minimal working examples
-- One footgun with correct alternative
-- Routing links to `refs/` files for depth
+For behavioral evidence, use the authoring skill's matched comparisons and separate discovery checks. Record actual outputs, settings, and grading evidence. Mark missing runtime, discovery, or cost measurement untested; static review alone supports a draft, not validated effectiveness.
 
-`refs/` files (one per concern, not per API):
-- `refs/imports.md` — full export reference
-- `refs/routing.md` — routing patterns
-- `refs/data-fetching.md` — fetching and mutation patterns
-- `refs/configuration.md` — config options
-- Add others only when the concern is large enough to fragment reading flow
+Use available evaluation tooling, adapting harness assumptions explicitly. Do not invent a successful evaluation or infer savings from line count.
 
-### 5. Write SKILL.md
+### 6. Link, lint, and assess lifecycle
 
-Rules:
-- Code over prose — examples teach faster than paragraphs
-- No transitional sentences, no motivational framing
-- Inline comments in code blocks instead of paragraphs before them
-- Tables over lists when structure is parallel
-- One blank line between sections
-
-Target: 100–180 lines.
-
-For every `refs/` file, add one routing line at the end of the relevant section:
-```md
-See [refs/data-fetching.md](refs/data-fetching.md) for mutations, optimistic updates, and pagination.
-```
-
-### 6. Write the trigger description
-
-The `description` frontmatter field controls auto-activation. It must name:
-- The library's package name
-- 4–6 most common function/hook/class names
-- Task contexts that indicate the library is in use
-
-```yaml
-description: <Verb phrase>. Activates when working with <library>, calling <api-1>, <api-2>, or when <task-context>.
-```
-
-Specific enough to not false-trigger on unrelated sessions.
-
-### 7. Write humans.md
-
-Cover:
-- Why this structure (what's in SKILL.md vs each refs/ file)
-- Source of truth (where signatures were verified, when)
-- Footgun rationale (why this specific pattern was chosen)
-- Antipattern rationale (why each passed the inclusion test)
-- Known gaps (what's not documented and why)
-- Maintenance notes (what to check on new library versions)
-
-Prose, no token constraints. Written for whoever maintains this skill next.
-
-### 8. Evaluate before shipping
-
-Run the model on 3 representative tasks *without* the skill loaded. Document what it gets wrong. Then:
-
-1. Run the task without the skill — note failures and missing context
-2. Run the same task with the skill — confirm the gaps close
-3. Run a different task in the same domain — confirm the skill doesn't over-trigger or inject irrelevant context
-
-A skill that passes all three is ready. A skill that helps task 1 but adds noise to task 3 needs its trigger narrowed.
-
-### 9. Link and record
-
-- Add folder to `skills/` section (if a skills index exists)
-- Add entry to root `README.md` artifact inventory under Skills
-- Record evaluation results in `humans.md` or artifact Evidence section
+- Link new artifacts from a section index or root README.md; preserve existing links for revisions.
+- Run `python3 scripts/doc_lint.py` and report exact failures, distinguishing pre-existing failures from new ones.
+- Critical factual/safety defects block shipping regardless of average score.
+- Promotion follows [promote-artifact](../promote-artifact/playbook.md) and the vault standards. Successful tests do not automatically change status.
 
 ## Workflow
 
-```
-gather source of truth (docs → changelog → types → source)
-  → identify one footgun
-  → identify grounded antipatterns (optional)
-  → decide SKILL.md vs refs/ structure
-  → write SKILL.md (100–180 lines, code-first)
-  → write trigger description
-  → write humans.md
-  → evaluate: 3 tasks (without / with / different domain)
-  → link from section index + root README
-```
-
-- If footgun is unclear → ship without it; add when found
-- If evaluation shows over-triggering → narrow trigger description, remove noisy sections
-- If refs/ file has no routing link in SKILL.md → do not commit it; it's an orphan
+Load canonical skill → verify versioned claims → select evals → draft common paths and safeguards → verify installed resources → compare behavior and discovery → record evidence → link/lint → assess lifecycle.
 
 ## Rollback / Fallback
 
-If the skill degrades model output on task 3 (over-triggering): narrow the description field. If that's not enough, move the noisy content to a `refs/` file and add a routing link only from a specific section — not from the intro. An over-broad skill that loads everywhere is worse than no skill.
+When a correction regresses correctness or safety, revise it or restore the known baseline and report the defect. For inappropriate activation, narrow the description and retest adjacent prompts. If execution is unavailable, preserve the draft with explicit untested dimensions rather than claiming readiness.

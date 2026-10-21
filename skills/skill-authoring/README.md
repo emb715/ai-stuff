@@ -2,10 +2,11 @@
 title: "skill-authoring"
 status: draft
 confidence: medium
-last_tested: 2026-08-04
+last_tested: 2026-10-07
 scope: personal
 tooling:
   - "agnostic/any-LLM"
+  - "OpenCode/general-subagent (executor model not reported)"
 tags:
   - skill
   - meta
@@ -17,7 +18,9 @@ owner: "@emb715"
 
 # Purpose
 
-Process for turning any library, framework, or tool into a well-structured agent skill: gather the source of truth, find the one footgun, decide structure, write affirmatively for a model reader, evaluate before shipping. Covers the full lifecycle from raw docs to a maintainable `SKILL.md` + `references/` + `humans.md` package.
+Process for turning verified library, framework, or tool knowledge into a cohesive agent skill: track versioned claims, prioritize essential safeguards, conditionally load installed resources, and evaluate authoring quality separately from behavioral effectiveness. Covers creation and revision without warning quotas or arbitrary length gates.
+
+The executable `SKILL.md` is standalone: it does not require another authoring skill, these repository records, or a vault policy document. The surrounding records and framebook provide optional vault integration; supplied project rules remain additional constraints where applicable.
 
 # When to use
 
@@ -25,17 +28,33 @@ Process for turning any library, framework, or tool into a well-structured agent
 - The task is to improve an existing skill's structure, token efficiency, or coverage.
 - The task is to generate a skill from official documentation.
 
-Not for: writing agent system prompts (use `agents/`), one-shot prompts (use `prompts/`), or multi-step operational procedures (use `playbooks/`).
+Not for: ordinary library usage, agent system prompts, one-shot prompts, or standalone operational playbooks. A skill may contain multiple steps when they serve its declared capability; artifact classification still follows vault standards.
 
 # Inputs
 
 - Target library/framework/tool name and version
 - Access to official documentation (preferred), changelog, type definitions, or source code
-- For rewrites: the existing `SKILL.md` and any `references/` files to audit
+- For revisions: the existing `SKILL.md`, runtime resources, and any template/generator/installer paths
+- Target harness, intended tasks, prerequisites, and available evaluation tools
 
 # Skill
 
 Use [`SKILL.md`](SKILL.md) — the authoring process, quality checklist, output structure, and routing conventions.
+
+# Procedure
+
+1. Record version/date and verify operational claims against appropriate sources.
+2. Select intended tasks; rank failure modes and retain essential safeguards.
+3. Draft a cohesive core with domain examples and conditional, deliverable resources.
+4. Run static authoring checks, matched behavioral comparisons, and separate discovery checks.
+5. Record results and untested dimensions; follow vault policy for any lifecycle transition.
+
+# Evaluation resources
+
+- [`evals/evals.json`](evals/evals.json) — three reproducible fictional authoring tasks; fixtures are bundled under `evals/fixtures/`.
+- [`evals/trigger-evals.json`](evals/trigger-evals.json) — six positive and six adjacent negative discovery prompts, prepared but not executed.
+- [`evals/comparison.json`](evals/comparison.json) — observed old/candidate grades, selected evidence, snapshot hashes, and limitations.
+- These fixtures test small-library accuracy, destructive CLI safeguards, and generated multi-harness resource delivery. They do not execute real packages or establish actual harness discovery, cost savings, or general reliability.
 
 # Reference docs
 
@@ -46,7 +65,9 @@ Use [`SKILL.md`](SKILL.md) — the authoring process, quality checklist, output 
 
 # Evidence
 
-Two real authoring runs executed against the library-skill track (Steps 1–10) during this session. Both produced `SKILL.md` files within the 100–180 line target prescribed by the process, and both surfaced at least one footgun from the source documentation.
+## Historical authoring evidence (2026-08-04)
+
+The original record documents two authoring runs against the earlier Steps 1–10. The results below are historical observations, not a fresh source/API audit or proof of the revised skill's effectiveness. Their line-count outcomes demonstrate feasible compression, not an optimal length threshold.
 
 ## Authoring run 1: deepeval-llm-evaluation
 
@@ -73,18 +94,38 @@ Two real authoring runs executed against the library-skill track (Steps 1–10) 
 
 ## Observation
 
-Both runs produced `SKILL.md` within the 100–180 line target prescribed by the process, confirming the target is achievable for real library skills of varying source sizes (156 lines vs. ~500 lines). The progressive disclosure pattern (`references/` for depth) kept `SKILL.md` dense while preserving complete coverage — the source-to-SKILL.md compression was 17% for the already-compact deepeval source and ~79% for the verbose liteparse README, with depth relocated rather than dropped. Each run also produced at least one footgun sourced from real documentation or binary behavior, not invented.
+Both historical runs met the earlier line target and moved depth into references. Those observations do not isolate the effect of the authoring skill, establish complete coverage, or demonstrate lower end-to-end token cost. No matched with/without authoring comparison is documented for them. Confidence remains medium and status remains draft.
 
-This is 2 runs. The process is repeatable on these two data points but has not been validated at scale (N=10+). Confidence remains medium.
+## Revision evidence (2026-10-07)
+
+The revision replaces warning/link/length quotas, clarifies source-specific verification, adds a claim ledger and generated-delivery checks, and separates static review, behavior, discovery, and cost evidence.
+
+**Before/after comparison:** six separate authoring runs compared the original skill with an immutable initial revision using identical per-pair fictional fixtures. Separate graders inspected the produced packages and reports without reading the authoring procedures.
+
+| Fixture | Original | Initial revision |
+|---|---|---|
+| Small library | 5/5 assertions | 5/5 assertions |
+| Destructive CLI | 6/6 assertions | 6/6 assertions |
+| Generated multi-harness delivery | 6/6 assertions | 6/6 assertions |
+| Total | 17/17 | 17/17 |
+
+**Observed result:** no regression on the formal checks for the tested candidate, but no demonstrated improvement. Every formal assertion passed in both configurations, making this set non-discriminating. Fixture prompts themselves supply important safety/delivery requirements and may mask differences between procedures.
+
+**Limits:** one run per case/configuration, fictional inputs, no no-skill baseline, and no real harness discovery or downstream package/installer execution. Two executors disclosed extra required repository reads; exact ambient context/model parity was not independently verified. Executor transcripts are authored summaries rather than independently captured tool logs. Timing and token metrics were not supplied, so no efficiency claim is made. A human output review remains outstanding.
+
+After that comparison, static review prompted evaluation to move after body/description finalization, added a candidate-freeze/retest rule, clarified the installed-package tree, and aligned supporting records. The exact tested and final snapshot hashes are recorded in `evals/comparison.json`; the final corrections received static checks but not a repeated authoring comparison. `last_tested` records this observed testing/review date, not a validated-effectiveness claim. Status remains **draft**, confidence **medium**, with promotion deferred.
+
+A subsequent standalone-use correction removed the optional external-skill workflow pointer, stated grading/reporting instructions directly, and made project lifecycle metadata/policy conditional. This portability correction was statically checked, not behaviorally benchmarked; the earlier 17/17 comparison does not validate the current executable.
 
 # Failure Modes / Boundaries
 
-- The process assumes official documentation exists and is reasonably maintained. For private or internal-only libraries with no docs, source code becomes the source of truth — expect longer authoring time and lower confidence claims.
-- Step 2 (find the one footgun) is the highest-judgment step. If you cannot identify a real footgun after reading the docs, do not invent one — leave the section empty rather than fabricate. A fake footgun is worse than none.
+- The process needs verifiable sources for operational claims. When docs are absent or stale, definitions/help, implementation, and observations may supply the evidence; unresolved instructions are omitted rather than invented.
+- Failure-mode prioritization is judgment-sensitive. Do not invent warnings, and do not move an essential safeguard out of the common path merely to reduce warning count.
 - Step 3 (antipatterns) is optional and conditional. Only include antipatterns the model would plausibly produce from reasonable API reasoning. Antipatterns that require ignorance of the API belong in examples, not antipatterns.
-- The 100–180 line SKILL.md target is a heuristic, not a hard limit. Going over signals either too much in SKILL.md (move to `references/`) or too large a library (consider splitting by subpath).
-- The `humans.md` companion is required by this skill's own conventions. A skill without it is incomplete by its own standard.
-- Step 8 evaluation (run-without-skill vs. with-skill vs. cross-task) is the quality gate. Skipping it ships skills that may add noise without closing real gaps.
+- Length and file counts are diagnostics, not evidence of effectiveness. Moving content into always-loaded references does not necessarily save tokens.
+- Vault artifacts require the three-file record structure; external installation requirements depend on the target harness. Maintainer-only files are never runtime dependencies.
+- Step 10 distinguishes static checks from controlled behavior and actual discovery after the candidate body and description are finalized. Forced loading cannot establish trigger precision, and a missing measurement remains untested.
+- The revised procedure's recommendations are provisional. Synthetic comparisons cannot establish real-world runtime correctness or reliability across models; promotion requires the separate vault process.
 
 # Related artifacts
 

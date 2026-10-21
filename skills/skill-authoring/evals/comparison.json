@@ -1,0 +1,99 @@
+{
+  "skill_name": "skill-authoring",
+  "date": "2026-10-07",
+  "baseline_git_commit": "0ea168d68b712f47a7f759f7373ff9135dde571f",
+  "tested_snapshots": {
+    "old_sha256": "3a4ab2a3270187c329ba585f3b99159b9366db781924a8f0ee90af4bd6e3882a",
+    "candidate_sha256": "e92b160a97c9d3073df8c71f04750b09e5e9a5f7ac39392a914b1764008bfa5d",
+    "candidate_stage": "Initial revision before reviewer-requested step reordering, candidate-freeze rule, and runtime-tree labeling",
+    "review_corrected_sha256": "48557fe77b823a08fdddd70bb4adc081580e8a9d47b593fe96568979c101c8ef",
+    "final_sha256": "1929ce9e4eb61121bf91c578072a6ae369ee79f185d41499f4b9e407e4242c3b",
+    "final_stage": "Statically checked after review and standalone-use corrections: external-skill pointer removed, grading/reporting explicit, project policy/metadata conditional. Authoring comparisons not rerun on this final snapshot"
+  },
+  "method": {
+    "executor": "OpenCode general subagent, default model not reported by tool",
+    "grader": "Separate general subagents instructed not to read authoring procedures and to grade actual output evidence",
+    "runs_per_case_per_configuration": 1,
+    "configurations": ["revised authoring skill", "old authoring skill"],
+    "task_inputs": "Identical per pair; bundled fictional fixture files",
+    "loading": "Explicit procedure loading, not harness discovery",
+    "transcripts": "Executor-authored summaries, not independently captured tool logs",
+    "duration_ms": null,
+    "total_tokens": null,
+    "cost_measurement": "Unavailable; completion notifications supplied no timing/token data"
+  },
+  "cases": [
+    {
+      "id": 1,
+      "name": "small-library",
+      "old": {"passed": 5, "failed": 0, "total": 5},
+      "revised": {"passed": 5, "failed": 0, "total": 5},
+      "selected_grading_evidence": {
+        "old": [
+          "Core declares mapRecords<T, U>(records: readonly T[], fn: (record: T, index: number) => U): U[] and says it returns synchronously.",
+          "Report: 'Stale 1.8 default-import and Promise guidance conflicts with the current named declaration and implementation.'",
+          "Report: 'No baseline tasks, skill-loaded tasks, or domain/over-trigger checks were executed.'"
+        ],
+        "revised": [
+          "Core: 'It returns an array synchronously; no Promise-handling step is required.'",
+          "Core: 'readonly T[] is not a guarantee that each record is immutable'.",
+          "Report: 'Validated effectiveness and release readiness are not established'."
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "destructive-cli",
+      "old": {"passed": 6, "failed": 0, "total": 6},
+      "revised": {"passed": 6, "failed": 0, "total": 6},
+      "selected_grading_evidence": {
+        "old": [
+          "Core: 'vaultctl init --all-targets  # Configure every detected target without selection'.",
+          "Core: 'Obtain explicit user authorization for that deletion'.",
+          "Core: 'explicit approval for both the reviewed payload and that exact recipient/endpoint'."
+        ],
+        "revised": [
+          "Core: '--all-targets configures every **detected** target without selection; it does not configure undetected targets.'",
+          "Core: '--yes' 'skips the CLI prompt; it never establishes user authorization'.",
+          "Core: 'vaultctl sends the original text and does **not** redact secrets'."
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "generated-delivery",
+      "old": {"passed": 6, "failed": 0, "total": 6},
+      "revised": {"passed": 6, "failed": 0, "total": 6},
+      "selected_grading_evidence": {
+        "old": [
+          "Core: 'That rule takes precedence over session orientation: do not prepend orient.'",
+          "Report specifies both installer paths and copying full generated packages, not only SKILL.md.",
+          "Relocation test report: 'Actual result: **not executed**.'"
+        ],
+        "revised": [
+          "Core: 'Do not insert orient before prepare merely because the session is new.'",
+          "Report requires isolated projects outside the author repository: 'Make original author sources inaccessible'.",
+          "Report: 'The old body's reported 270 lines is not a cost baseline.'"
+        ]
+      }
+    }
+  ],
+  "overall": {
+    "old": {"passed": 17, "failed": 0, "total": 17},
+    "revised": {"passed": 17, "failed": 0, "total": 17},
+    "assertion_delta": 0,
+    "conclusion": "No regression on these checks for the tested candidate; no demonstrated behavioral improvement. All formal assertions were non-discriminating between the two outputs."
+  },
+  "limitations": [
+    "Three fictional tasks, one run per configuration: no reliability or broad-generalization claim.",
+    "Fixture prompts already state important safeguards/delivery requirements, which may mask differences between authoring procedures.",
+    "Old small-library and revised CLI executors disclosed extra required repository orientation reads, violating the planned two-file-only boundary; this is exploratory, not perfectly controlled.",
+    "Executor model/variant and exact ambient context were not independently verified as identical.",
+    "No no-authoring-skill baseline, actual harness discovery trial, downstream package execution, or generator/installer/relocation execution was performed.",
+    "Executor summaries cannot independently prove all process claims; full raw outputs and grading reports were reviewed in the temporary evaluation workspace.",
+    "The final reviewer corrections received static checks only; comparisons apply to the explicitly hashed initial candidate.",
+    "Duration and token measurements unavailable; line-count changes do not establish cost savings.",
+    "Human output review and additional discriminating cases remain outstanding."
+  ],
+  "lifecycle_decision": "Keep draft / medium. No promotion or validated-effectiveness claim."
+}
