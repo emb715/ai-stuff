@@ -25,6 +25,7 @@ Binding rules for this repo. All artifacts must pass these.
 | [vetting-rubric.md](standards/vetting-rubric.md) | Scored rubric for promoting artifacts to `vetted/` |
 | [doc-lint-spec.md](standards/doc-lint-spec.md) | Machine-checkable lint rules (DL001–DL008) |
 | [artifact-structure.md](standards/artifact-structure.md) | Three-file folder convention for prompts, tools, skills, commands |
+| [artifact-classification.md](standards/artifact-classification.md) | Taxonomy and routing rules for where a new artifact belongs |
 
 ## references/
 
