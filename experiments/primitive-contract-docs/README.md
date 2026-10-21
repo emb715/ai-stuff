@@ -2,7 +2,7 @@
 title: "Primitive Contract Docs"
 status: draft
 confidence: low
-last_tested: 2026-07-30
+last_tested: 2026-08-22
 scope: personal
 tooling:
   - "agnostic/any-LLM"
@@ -1022,3 +1022,70 @@ npx tsc --noEmit
 # Run the tool's own test suite:
 npx vitest run
 ```
+
+---
+
+## Observation 1 — first rot datum, and it is negative (2026-08-22)
+
+The `src/shared/` warm-start run entered observation phase waiting for a real change to the boundary. The first observable datum has arrived. **It is negative for the enforcement claim — and worse for the thesis than the first reading of it suggested.** An earlier version of this section got the facts wrong; every claim below is now verified with `git log` / `git show` against the snapberry repo at `snapberry.ai/`, and the corrections are recorded rather than quietly swapped in, because the errors were the same *kind* of error the observation is about.
+
+### The false reference
+
+`src/shared/AGENTS.md` line 13, in the `## Does NOT` section, reads:
+
+```
+- Own domain logic — each domain boundary (indexer, mcp, cli, server, etc.) owns its own
+```
+
+`src/server/` does not exist. It was deleted — along with `src/web/` — in commit `8998f2f` (author date **2026-07-20**), which removed 13 files under `src/server/` and 20 under `src/web/`, including both boundaries' own `AGENTS.md` and boundary tests. No later commit touches either path.
+
+**This is not stranded text. It was newly authored.** The obligation-only rewrite of `src/shared/AGENTS.md` landed in commit `4759389` (**2026-08-17**, v0.4.0) — `git log -S'## Communication' -- src/shared/AGENTS.md` returns that commit and only that commit, 28 days *after* the boundaries were deleted. The pre-rewrite text read "…CLI → `cli/`, HTTP → `server/`…"; the rewrite did not leave that line alone, it **re-typed `server` into a fresh sentence**. And it did so in the same commit whose own message asserts "Dead code removed: graph-reason.ts, graph-traverser.ts, src/server/, src/web/" — a message whose diff contains **zero** `src/server` or `src/web` paths. The commit claimed a deletion it did not perform, and in the same breath wrote a contract naming the thing it claimed to have deleted.
+
+**This is obligation-level text, not mechanism.** "Each domain boundary owns its own domain logic" is exactly the kind of ownership rule the content rule says should survive implementation change. The rule held its form and still stated a falsehood — because the obligation is *stated in terms of boundary names*, and a boundary name is a claim about the system that can be false at the moment it is written.
+
+### The enforcement test passed anyway — for the wrong reason
+
+`src/shared/__tests__/shared-boundary.test.ts` — 16 assertions, all green. **This is a scope gap, not a sensitivity gap**, and the distinction matters because the run's own limitation note had predicted the wrong one.
+
+The only section-scoped assertion targets `## Communication` via `/^## Communication\s*\n([\s\S]*?)(?=\n## |\n$|$)/m`. The false name sits at line 13, under `## Does NOT`. **No assertion in the file reads `## Does NOT` at all.** The remaining assertions cover AGENTS.md existence, the ≤40-line limit, ADR resolution and status, and surface containment for the files named in "Key entry point."
+
+The mechanism-leakage guard `` /`[a-z-]+\.ts`/ `` is beside the point here: it matches backticked *file extensions*, not directory names, and it never ran over the offending section anyway. **Widening that regex would not have caught this.** Only a section-coverage assertion (no AGENTS.md section left unread by every assertion) or a boundary-name-exists check would have. The run assumed the check's *sensitivity* was the weak point. The actual weak point was its *scope*: the enforcement was written to defend the section the experiment was proud of, and left every other obligation-bearing section undefended.
+
+### What this does to the thesis
+
+Not falsified — refined, and in a direction that costs it more than "the test missed a drift" would have.
+
+**The sharp finding: authoring an obligation-only contract did not prevent the author from writing a factually false obligation.** The rewrite was not the moment the error survived; it was the moment the error *entered*. The content discipline governs **form** — obligation language, no file paths, no mechanism nouns in backticks — and says **nothing about referential truth**. A sentence can satisfy every rule the discipline knows how to state and still assert that a directory exists which was deleted a month earlier. "Contracts don't rot because intent changes slower than implementation" does not help when the contract is wrong on the day it is written.
+
+Corollary that still stands: **obligations reference boundary names, and boundary names are mechanism.** "Callers must not depend on flush ordering" has no such dependency (Example 3 survives). "Each domain boundary — indexer, mcp, cli, server — owns its own domain logic" does. The obligation/mechanism line does not run cleanly between sentences; it runs *through* them.
+
+The concrete loss: **the claim that the enforcement test keeps the contract honest is not supported by this test bed.** That claim was rule 4 — the one the "Test bed: snapberry.ai" table marked *Done*, and the one the reframe said rules 1–3 are aspirational without. A false obligation was committed and no assertion had scope over it; a human reading the file found it. Downgrade rule 4 in the snapberry table from *Done* to *Partial* on the next revision of that section.
+
+### Timeline (corrected)
+
+| Date | Event | Commit |
+|---|---|---|
+| 2026-07-20 | `src/server/` (13 files) and `src/web/` (20 files) deleted | `8998f2f` |
+| 2026-08-17 | Obligation-only rewrite authored; `server` re-typed into `## Does NOT`; commit message falsely claims the deletion | `4759389` |
+| 2026-08-22 | False reference found by hand and corrected | — |
+
+The false reference was live for **5 days**, not the 33 an earlier version of this section claimed. That number was computed from a rewrite date that does not exist in the history; it is withdrawn, along with the trust-model conclusion derived from it. **5 days is not evidence of a slow-rot trust model in either direction** — the window is too short to conclude anything about advisory-vs-authoritative behavior, and the interesting fact is not the duration but the authorship.
+
+### Methodology problem (still stands, on corrected grounds)
+
+- **No clean before/after.** The contract rewrite and its enforcement-test extension landed in `4759389`, a 60+ file feature commit, alongside code changes. There is no window in which the contract was stable and the code moved — which is the only window a rot-rate claim can be measured in.
+- **The measurement is self-confounded.** The experiment asks "did AGENTS.md need an edit?" while the same author edits AGENTS.md in the same commits as the code. The author is both the instrument and the subject. **A future observation only counts if it is blind (someone else changes the code) or time-separated (the contract commit lands, then N days pass, then an unrelated code commit lands).** Neither held here.
+- **Commit messages are not evidence.** `4759389`'s message asserted a deletion its diff does not perform. Any future datum must be established from diffs and `git log -S`, not from prose in commit messages — including this experiment's own notes.
+
+### Status after this observation
+
+- `confidence` stays `low`. One datum, negative, confounded, and initially recorded wrong.
+- Rule 4 (explicit trust model + enforcement) loses its "solved by snapberry" status. No conclusion about which trust model was operating in practice — the window is 5 days and the enforcement had no scope over the section regardless.
+- The false `server` reference is being fixed separately in snapberry. **The datum is the false authorship plus the scope gap, not the typo.** Fixing the line does not retire the observation.
+- Still needed for a datum that counts: a time-separated or blind observation, per the confound above.
+
+### Open questions from this observation
+
+- **Should `check` validate that every boundary name mentioned in an AGENTS.md corresponds to an existing `src/<module>/` directory?** The verification strengthens this: the tool already reads `boundaries.yaml`, so it has the authoritative boundary-name list. Cross-referencing every bare identifier in `Does` / `Does NOT` / `Communication` against that list is cheap, deterministic, and needs no LLM — Phase 1, not Phase 2. It would have failed the commit that introduced the falsehood, at the moment it was introduced. It is also the first content check proposed here that validates a contract against *the system*, not against a style rule; every existing assertion checks the doc's shape or its file-level surface. Candidate name: **referential integrity** — the fifth contract, alongside integrity, Communication, surface, and ADR.
+- **Second, distinct check: section coverage.** No section of an AGENTS.md should be unread by every assertion. The scope gap here was invisible precisely because the suite was green — a green suite says nothing about the sections it never opened. This is a property of the *test file*, not of the contract, and it is checkable: enumerate the `##` headings, enumerate the headings any assertion scopes to, fail on the difference.
+- Second-order: the same check applies to `docs/boundaries.md` and to any cross-boundary reference. If the map is generated (`boundary map`), it is already consistent by construction — but hand-written references *inside* AGENTS.md files are not, and that is where this drift lived.
