@@ -1,0 +1,19 @@
+# Excerpt to add to pyproject.toml
+[tool.importlinter]
+root_package = "app"
+
+[[tool.importlinter.contracts]]
+name = "Routes must not import repos directly"
+type = "forbidden"
+source_modules = ["app.routes"]
+forbidden_modules = ["app.repos"]
+allow_indirect_imports = true
+
+[[tool.importlinter.contracts]]
+name = "Lower layers never import higher ones"
+type = "layers"
+layers = [
+    "app.routes",
+    "app.services",
+    "app.repos",
+]

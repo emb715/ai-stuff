@@ -59,3 +59,6 @@ Optional subdirectories (`references/`, `docs/`, `scripts/`, `commands/`) are al
 | [prompt-factory](prompt-factory/) | skill, prompts, generation, factory | validated |
 | [change-impact-diagram](change-impact-diagram/) | skill, impact-analysis, mermaid, diagrams, primitives | validated |
 | [liteparse](liteparse/) | skill, pdf, parsing, ocr, liteparse, document-processing | draft |
+| [lean-agentic-baseline](lean-agentic-baseline/) | skill, agentic-engineering, process, audit, scorecard, governance | validated |
+| [design-system-first-styles](design-system-first-styles/) | skill, design-system, styles, ui, naming, refactor | validated |
+| [issues-to-roadmap](issues-to-roadmap/) | skill, planning, issues, tracker, roadmap, github | validated |

@@ -1,0 +1,13 @@
+# .github/labeler.yml — turn paths into an impact label
+impact:schema:
+  - changed-files:
+      - any-glob-to-any-file: ['db/migrations/**', 'src/db/**']
+impact:security:
+  - changed-files:
+      - any-glob-to-any-file: ['src/auth/**']
+impact:ui:
+  - changed-files:
+      - any-glob-to-any-file: ['src/web/**']
+impact:docs:
+  - changed-files:
+      - all-globs-to-all-files: ['docs/**', '**/*.md']

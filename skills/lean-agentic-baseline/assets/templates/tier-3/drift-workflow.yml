@@ -1,0 +1,13 @@
+name: drift
+on:
+  schedule:
+    - cron: '0 6 * * 1'      # every Monday
+  workflow_dispatch:
+
+jobs:
+  steering:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: bash scripts/steering-drift.sh
+      - run: bash scripts/adr-drift.sh

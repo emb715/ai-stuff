@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --bail 1",
+    "validate": "bash scripts/validate.sh"
+  }
+}

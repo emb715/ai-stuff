@@ -1,0 +1,38 @@
+name: ci
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with: { fetch-depth: 0 }
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with: { node-version-file: .nvmrc }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm validate
+
+  build:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with: { node-version-file: .nvmrc }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+  bot_review:
+    needs: build
+    uses: ./.github/workflows/bot-review.yml   # defined under "PR review & autonomy" (Tier 3)
+
+  preview:
+    needs: bot_review
+    if: contains(github.event.pull_request.labels.*.name, 'preview')
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "deploy preview here"

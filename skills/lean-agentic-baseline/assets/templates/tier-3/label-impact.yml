@@ -1,0 +1,14 @@
+name: label-impact
+on: pull_request_target
+# pull_request_target runs with write access, so this workflow must only
+# read file paths. Never check out or run the PR's code in it.
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/labeler@v6

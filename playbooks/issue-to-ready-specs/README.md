@@ -67,3 +67,4 @@ Key observations from the validating session:
 - [`playbooks/product-brief/`](../product-brief/) — used in Step 3 (Brief)
 - [`playbooks/quick-spec/`](../quick-spec/) — used in Step 6 (Spec writing), provides the six-criterion standard
 - [`prompts/loop-prd-readiness/`](../../prompts/loop-prd-readiness/) — alternative readiness approach for PRD-level docs
+- [`skills/issues-to-roadmap/`](../../skills/issues-to-roadmap/) — runs in the opposite direction: session notes → issues in a tracker, where this playbook runs issue → spec documents

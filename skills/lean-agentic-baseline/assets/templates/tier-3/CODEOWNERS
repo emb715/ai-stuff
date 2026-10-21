@@ -1,0 +1,12 @@
+/db/migrations/   @your-org/data-owners
+/src/auth/        @your-org/security
+/src/api/         @your-org/backend
+
+# Gate paths (Tier 0 · Permissions) — the agent identity must never appear here.
+/package.json          @your-org/platform
+/.github/workflows/    @your-org/platform
+/.github/CODEOWNERS    @your-org/platform
+/.claude/              @your-org/platform
+/lefthook.yml          @your-org/platform
+/AGENTS.md             @your-org/architects
+/docs/decisions/       @your-org/architects

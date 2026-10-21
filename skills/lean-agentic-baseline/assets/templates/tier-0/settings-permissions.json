@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Bash(npm publish *)",
+      "Bash(pnpm publish *)"
+    ],
+    "ask": [
+      "Edit(package.json)",
+      "Edit(.github/workflows/**)",
+      "Edit(.github/CODEOWNERS)",
+      "Edit(.claude/**)",
+      "Edit(AGENTS.md)",
+      "Edit(eslint.config.*)",
+      "Edit(tsconfig*.json)",
+      "Edit(lefthook.yml)",
+      "Bash(pnpm add *)",
+      "Bash(yarn add *)",
+      "Bash(bun add *)"
+    ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "allowUnsandboxedCommands": false,
+    "filesystem": { "denyRead": ["~/"], "allowRead": ["."] },
+    "network": { "allowedDomains": ["github.com", "*.npmjs.org"] }
+  }
+}

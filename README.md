@@ -31,6 +31,7 @@ This table is a snapshot. The filesystem is authoritative — `ls` the content d
 | Agent | Purpose | Status |
 |---|---|---|
 | [honest](agents/honest/) | Radical directness, token efficiency, zero filler | validated |
+| [ndv-fleet](agents/ndv-fleet/) | 18-agent specialist fleet with orchestrator; decomposes, routes, and executes across domains | validated |
 
 ### Prompts
 
@@ -69,7 +70,10 @@ This table is a snapshot. The filesystem is authoritative — `ls` the content d
 | [prompt-factory](skills/prompt-factory/) | Generate deterministic implementation prompts from explicit plan docs or session context with mode/pre-flight gating (`default`, `fast`, `auto`; `strict` pending) | validated |
 | [skill-authoring](skills/skill-authoring/) | Create and maintain agent skills for libraries/frameworks/tools; structure, token efficiency, coverage | draft |
 | [change-impact-diagram](skills/change-impact-diagram/) | Diagram how a code change impacts the system and its primitives; four mermaid diagram types, three output modes | validated |
+| [design-system-first-styles](skills/design-system-first-styles/) | Write UI styles as a design system — name things not places, find the existing pattern first, reach for the highest layer; CSS, utility classes, CSS-in-JS, native toolkits | validated |
 | [liteparse](skills/liteparse/) | Parse PDFs and other documents locally with lit — fast spatial text parsing with bounding boxes, OCR (Tesseract bundled), page screenshots, text/markdown/JSON output | validated |
+| [lean-agentic-baseline](skills/lean-agentic-baseline/) | Assess and adapt a repo's AI-engineering setup against 26 Lean Agentic pillars; inventory, fit assessment, bounded adoption, drift checks | validated |
+| [issues-to-roadmap](skills/issues-to-roadmap/) | Turn a planning session into agent-ready issues in a tracker, then group them upward into milestones, a project and a roadmap proposal | validated |
 
 ### Tools
 
