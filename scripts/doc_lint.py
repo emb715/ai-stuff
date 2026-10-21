@@ -39,6 +39,7 @@ EXCLUDE_GLOBS = [
     # eval is the artifact README's Evidence section, not these.
     "skills/*/evals/**/*.md",
     "prompts/*/evals/**/*.md",
+    "experiments/*/evals/**/*.md",
 ]
 
 # Files within three-file artifact folders that intentionally have no frontmatter.
