@@ -5,7 +5,12 @@ description: Routes the current task to the right playbook in the ai-stuff vault
 
 # artifact-router
 
-Routes the current task to the right playbook in the ai-stuff vault. On user confirmation, reads and surfaces the playbook's `playbook.md` as the active procedure. Scope is playbooks only — does not route to prompts, skills, agents, or tools.
+Routes the current task to the right playbook in the ai-stuff vault. On user confirmation, reads and surfaces the playbook's `playbook.md` as the active procedure.
+
+Scope is two hard boundaries:
+
+- **Playbooks only.** Does not route to prompts, skills, agents, or tools.
+- **`playbooks/` only.** Never route to anything under `experiments/`, whatever shape it has. An experiment with a `playbook.md`, a `playbook` tag, or a plausible procedure is still an experiment: untested, unsanitized, and explicitly excluded from the vault's reusable inventory. The manifest below is the complete set of routable playbooks.
 
 ## When to activate
 
@@ -81,7 +86,9 @@ Indexed by `Entry` (what the user must already have) and `Exit` (what the playbo
 | `playbooks/readiness-cycle/` | `release` | an existing artifact and a readiness question | a verified-ready verdict or a fix plan, looped until ship | draft |
 | `playbooks/retrospective/` | `capture` | a completed body of work | lessons, follow-through check, SMART action items | draft |
 
-Treat the manifest as a cache, not a source of truth. If a route seems wrong, read the playbook's own `README.md` — that is authoritative.
+Treat the manifest as a cache, not a source of truth. If a route seems wrong, read the playbook's own `README.md` — that is authoritative on *what a listed playbook does*.
+
+It is not a licence to widen the set. Verifying a route against the filesystem can only confirm or drop a row, never add one. A folder found by scanning that is absent from this table is not a route — and a folder found under `experiments/` is never a route. If the right answer looks like it lives in an unlisted folder, say no playbook covers this and name the gap; adding a row is a maintenance edit a human makes, not a routing decision.
 
 ## Chains — when the answer is more than one playbook
 
@@ -128,8 +135,9 @@ These task shapes look routable and have no playbook. Say "no playbook covers th
 - **Session notes, brainstorm output, or a planning transcript → issues in a tracker.** No playbook runs this direction. `issue-to-ready-specs` runs the opposite direction and its entry is a tracked issue the user does not have yet.
 - **Authoring or revising an agent skill, prompt, command, or tool.**
 - **Vault lifecycle operations** — promote, deprecate, lint, audit, archive, save an artifact from another project. Those are `_meta/framebook/`.
+- **Anything an experiment would cover.** `experiments/` holds procedure-shaped drafts — for example a document-driven design pipeline (PRD → RFD → NRFD → tech spec) tagged `playbook` with its own `playbook.md`. These collide hardest with `plan`-intent tasks, which is exactly when the temptation to reach for one is strongest. Decline. An experiment becomes routable by being promoted into `playbooks/` and added to the manifest, never by being found.
 
-This router is playbooks-only by design. A task that would be served by a prompt, skill, agent, or tool gets a decline, not a near-miss playbook.
+This router is playbooks-only by design, and `playbooks/`-only. A task that would be served by a prompt, skill, agent, tool, or experiment gets a decline, not a near-miss.
 
 ## Routing examples
 

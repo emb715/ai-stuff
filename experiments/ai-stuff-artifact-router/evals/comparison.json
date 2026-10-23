@@ -8,7 +8,10 @@
     "old_stage": "Pre-revision SKILL.md, 107 lines. Intent-only manifest, status-first priority rule, no chain rule, no coverage-gap section.",
     "candidate_sha256": "95fa5a4683a6d9c52bd82b9d331e4aef7e5a60310c1716b4eb94b80e19f82732",
     "candidate_stage": "Revision addressing four routing defects: intent audit with Entry/Exit manifest columns, fit-first priority rule with status demoted to a caveat, chain rule plus chain table, direction-of-flow footgun step and a known-coverage-gaps decline list. Description rewritten with playbook-domain vocabulary.",
-    "candidate_frozen_before_runs": true
+    "candidate_frozen_before_runs": true,
+    "candidate_revision_2_sha256": "c4a0f976fe1c18a2973723fd205cccae236c9cfaa99950d645deb4d7597e954d",
+    "candidate_revision_2_stage": "2026-10-23, owner instruction 'nothing from experiments should be routed'. Adds the playbooks/-only boundary in three places and restricts filesystem verification to confirming or dropping a row, never adding one. No listed row's entry, exit or priority order changed.",
+    "revision_2_coverage": "R12 only. R1-R11 and all 8 discovery probes were run against revision 1 and were NOT rerun; they are revision-1 results and are not claimed for revision 2."
   },
   "method": {
     "executor": "OpenCode general subagent, one independent session per run",
@@ -45,6 +48,8 @@
      "evidence": {"baseline": "'What is \"something\"? New artifact, continuing an experiment, or research?'", "candidate": "'I can't route this yet: \"plan something\" names no subject ... step one is the question.'"}},
     {"id": "R10", "assertions": 2, "baseline": 1, "old": 2, "candidate": 2, "discriminating_assertions": ["R10.1"],
      "evidence": {"baseline": "Generic fleet decomposition via the ndv-flow skill; no vault playbook named.", "old": "'Your task routes to playbooks/implementation-orchestration/ ... with playbooks/adversarial-code-review/ at the review gate', SKILLS_USED: ai-stuff-artifact-router. The predicted status-first failure did not occur.", "candidate": "implementation-orchestration first, adversarial-code-review as 'the gate before merge'."}},
+    {"id": "R12", "assertions": 2, "baseline": null, "old": null, "candidate": 2, "condition": "candidate revision 2 only", "discriminating_assertions": [],
+     "evidence": {"candidate": "Routed product-brief -> quick-spec as a sequence, and named the collision unprompted: 'an experiment in this vault describes a PRD→RFD→NRFD→spec pipeline matching your wording. It's not routable — untested, unsanitized, outside playbooks/.'"}},
     {"id": "R11", "assertions": 2, "baseline": 2, "old": null, "candidate": 2, "discriminating_assertions": [],
      "evidence": {"baseline": "'Procedure: playbooks/quick-spec/ ... Not issue-to-ready-specs (draft; for multi-story issue breakdowns)'.", "candidate": "'Route: playbooks/quick-spec/ ... not issue-to-ready-specs (needs a tracked issue, emits a PRD + N specs)'."}}
   ],

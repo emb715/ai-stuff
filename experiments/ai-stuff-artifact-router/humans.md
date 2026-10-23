@@ -60,6 +60,21 @@ Caveat worth keeping in view: **this section is untested text.** The case built 
 
 In the pre-revision snapshot the skill activated in only one of four runs, losing to `issues-to-roadmap` on anything shaped like "break work down". The description now lists the playbook domains by name and states all three non-activation conditions. It improved things but did not solve them: two of three remaining routing failures are still activation losses, and one discovery probe missed because the task described `retrospective`'s situation without saying "retro". The next round of work on this skill belongs in the description, not the manifest.
 
+### Why `experiments/` is never routable (2026-10-23, owner instruction)
+
+"Nothing from experiments should be routed." Recorded as a hard boundary alongside playbooks-only.
+
+It was already true of the manifest — all 14 rows are `playbooks/` — but it was nowhere stated, and two things made that a real gap rather than a pedantic one:
+
+1. `experiments/arch-design-pipeline/` is procedure-shaped: a `playbook.md`, a `playbook` tag, and a PRD → RFD → NRFD → tech-spec purpose that collides directly with the `plan` intent. It is indexed in `experiments/README.md`, so a session looking for a planning procedure can find it in one read.
+2. `SKILL.md` told the agent to treat the manifest as a cache and verify against each playbook's own README. That is right for checking a listed row and wrong as a discovery licence — it legitimised a filesystem scan whose results were not bounded to `playbooks/`.
+
+The fix closes the loophole rather than just adding a prohibition: verification can **confirm or drop** a row, never **add** one. An unlisted folder is not a route regardless of where it lives; an experiment becomes routable by promotion into `playbooks/` plus a manifest edit, which is a human maintenance action, not a routing decision.
+
+This also removes a real hazard of the alternative design. A generated index that scanned for `playbook.md` would have picked up `arch-design-pipeline` automatically and routed real tasks into a draft experiment. That is a fourth argument against the generator, and unlike reason 3 it is concrete rather than speculative — see the drift re-test below.
+
+Note the self-reference, which the rule does not resolve: this router itself lives in `experiments/` and is wired live into `.opencode/skills/`. It is not a routing *target*, so the rule does not bar it, but an experiment is shaping every session in this repo. Either promote it into `skills/` or unwire the symlink; running an untested artifact permanently while declaring experiments unroutable is inconsistent.
+
 ### Why an embedded manifest, not a generated index
 
 A generated index (scan `playbooks/*/README.md`, parse frontmatter, build the table at runtime) would stay fresh automatically. Rejected for three reasons:

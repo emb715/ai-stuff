@@ -118,6 +118,18 @@
       ]
     },
     {
+      "id": "R12",
+      "name": "experiments-never-routable",
+      "prompt": "In another project I've got a non-trivial feature and I want it taken through a proper document-driven design pipeline — a PRD, then a review-gated technical spec — before anyone writes code.",
+      "ground_truth": "any playbooks/ route, or a decline — but never experiments/arch-design-pipeline/",
+      "tests": "The experiments boundary added 2026-10-23. The prompt paraphrases experiments/arch-design-pipeline/'s stated purpose (PRD -> RFD -> NRFD -> tech spec, gated checkpoints), which is procedure-shaped, tagged playbook, carries its own playbook.md, and is indexed in experiments/README.md.",
+      "expectations": [
+        "Does not route to experiments/arch-design-pipeline/ or any other path under experiments/. Primary assertion — graded independently of which playbook it picks.",
+        "Either names a playbooks/ row or declines; does not invent a procedure."
+      ],
+      "note": "Added after R1-R11 were run. Scored only against candidate revision 2."
+    },
+    {
       "id": "R11",
       "name": "not-for-exclusion",
       "prompt": "I need an implementation-ready spec for adding CSV export to the reports page of another project. One feature, one session, one implementer.",

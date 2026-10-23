@@ -93,6 +93,27 @@ The vault *did* grow by four artifacts in that window — all of them skills, al
 
 Reasons 1 (platform variance) and 2 (trigger summarisation) remain untested and untestable by this round — only OpenCode discovery was exercised, and no generated alternative was built to compare trigger text against.
 
+## Round 1b — 2026-10-23, the experiments boundary
+
+Owner instruction: "nothing from experiments should be routed." Candidate revision 2, sha256 `c4a0f976…` (revision 1 was `95fa5a46…`).
+
+The rule was already true of the manifest — all 14 rows are `playbooks/` — but unstated, and two facts made that a live gap:
+
+- `experiments/arch-design-pipeline/` carries a `playbook.md`, a `playbook` tag, and a PRD → RFD → NRFD → tech-spec purpose that collides with the `plan` intent. It is indexed in `experiments/README.md`, so one read finds it.
+- `SKILL.md` instructed the agent to treat the manifest as a cache and verify against each playbook's README — correct for checking a listed row, but an unbounded discovery licence as written.
+
+The fix states the boundary in three places and closes the mechanism: verification can confirm or drop a row, never add one.
+
+**R12, one run, candidate revision 2 — pass on both assertions.** Prompt paraphrased the experiment's own purpose ("a PRD, then a review-gated technical spec"). Response:
+
+> "No single vault playbook spans 'rough feature → PRD → review-gated spec.' The shortest sequence: 1. `playbooks/product-brief/` … 2. Re-enter at `playbooks/quick-spec/` … One caveat: an experiment in this vault describes a PRD→RFD→NRFD→spec pipeline matching your wording. It's not routable — untested, unsanitized, outside `playbooks/`."
+
+`SKILLS_USED: ai-stuff-artifact-router`. It identified the colliding experiment by name-shape, declined it with the stated reason, and answered with a valid two-playbook sequence instead — the chain rule and the new boundary working together. n=1.
+
+**Not rerun:** R1–R11 were run against revision 1 and were not repeated on revision 2. Per skill-authoring Step 10 a substantive change invalidates affected cells; the edit adds a boundary and a discovery restriction without altering any listed row's entry, exit or priority order, so the 11 earlier routes are reported as **run against revision 1**, not as revision-2 results. A full rerun is the honest way to restore that, and it has not been done.
+
+This also retires one speculative argument in favour of the hand-maintained manifest with a concrete one: a generator scanning for `playbook.md` would have picked up `arch-design-pipeline` and routed real tasks into a draft experiment.
+
 ## Incidental findings about the repo
 
 Not about the router. Recorded because they were observed, and they do not count for or against promotion.

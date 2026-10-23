@@ -29,6 +29,7 @@ Not for:
 - Tasks where the user already named a playbook — let them proceed.
 - Tasks no playbook covers — say so and stop. Do not improvise.
 - Routing to non-playbook artifacts (prompts, skills, agents, tools) — out of scope.
+- Routing to anything under `experiments/`, whatever shape it has. Only `playbooks/` is routable; the manifest is the complete routable set.
 - Operating the vault itself (lifecycle, lint, audit) — those are `_meta/commands/` and `_meta/framebook/`.
 
 # Inputs
@@ -65,6 +66,8 @@ Only 5 of 23 assertions discriminate between conditions; all 5 favour the candid
 
 **Manifest accuracy, checked rather than assumed.** 14 of 14 manifest rows matched reality on 2026-10-21: no playbook added, renamed, or status-changed since 2026-08-04. The four artifacts the vault gained in that window were all skills, outside this manifest's scope. The hand-maintained manifest has consequently never faced a drift event — see `humans.md` for what that does and does not say about the design.
 
+**Round 1b, 2026-10-23 — the experiments boundary (candidate revision 2, `c4a0f976…`).** On owner instruction, `experiments/` is now an explicit hard boundary alongside playbooks-only, and filesystem verification may only confirm or drop a manifest row, never add one. One case (R12), one run, both assertions passed: given a prompt paraphrasing `experiments/arch-design-pipeline/`'s own purpose, the session declined the experiment by name-shape — "not routable — untested, unsanitized, outside `playbooks/`" — and answered with a valid `product-brief` → `quick-spec` sequence. R1–R11 and the discovery probes were **not** rerun against revision 2 and remain revision-1 results.
+
 Variance is untested (n=1 per cell), activation was measured by self-report plus output fingerprints rather than harness instrumentation, and only OpenCode discovery was exercised. Full limitations in `evals/comparison.json`.
 
 **Status.** These runs satisfy `_meta/framebook/promote-artifact/` §2 for `draft -> validated`. The transition itself is left to the owner; `status` stays `draft` until then, and `confidence` is raised `low -> medium` on the strength of one documented round.
@@ -76,6 +79,7 @@ Variance is untested (n=1 per cell), activation was measured by self-report plus
 - **Manifest drift.** The manifest is hand-maintained. The moment a playbook is added/renamed/deleted without updating this file, routes go stale or dead. Mitigation: treat the manifest as a cache, not a source of truth. When a route seems wrong, verify the playbook still exists before routing. The real source of truth is each playbook's `README.md`. Verified accurate 14/14 on 2026-10-21, but the manifest has never yet faced a drift event, so the cost of repairing one is still unmeasured.
 - **Overlapping triggers.** Playbooks share trigger verbs ("review", "plan", "implement") but act on different objects. The disambiguation rule in SKILL.md (Footgun) handles this: match the task's object against each candidate's `When to use` + `Not for`, not the verb alone. Skipping this step produces wrong routes.
 - **Over-triggering.** The skill activates on "task matches a playbook's domain" — a broad condition. If the user already has the right playbook in mind and just didn't name it, the skill adds noise. Mitigation: do not activate when the user names a playbook explicitly.
+- **Experiments are never routable, and the rule needed stating.** `experiments/` contains procedure-shaped drafts — `arch-design-pipeline/` has a `playbook.md`, a `playbook` tag and a `plan`-adjacent purpose. Until 2026-10-23 nothing in `SKILL.md` excluded them: the manifest listed only `playbooks/` rows, but the instruction to "treat the manifest as a cache" and verify against each playbook's README left a filesystem scan free to surface an experiment as a candidate. The exclusion is now explicit in three places, and verification can only confirm or drop a row, never add one. Not covered by any eval case — no round-1 probe attempted an experiment route, so this is specified and unverified.
 - **Playbook scope only.** The skill does not route to prompts, skills, agents, or tools. A task that would benefit from a non-playbook artifact gets "no playbook covers this" even if a prompt or skill would fit. This is a deliberate boundary — the vault has other routing surfaces (`USAGE.md`, `AGENTS.md`) for the full inventory.
 - **Cannot execute the playbook.** The skill surfaces `playbook.md` as the active procedure; it does not run the playbook's steps. The user (or the session agent) follows the procedure. This is a routing skill, not an execution layer.
 
