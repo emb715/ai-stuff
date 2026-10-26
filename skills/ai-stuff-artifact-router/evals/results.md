@@ -114,6 +114,55 @@ The fix states the boundary in three places and closes the mechanism: verificati
 
 This also retires one speculative argument in favour of the hand-maintained manifest with a concrete one: a generator scanning for `playbook.md` would have picked up `arch-design-pipeline` and routed real tasks into a draft experiment.
 
+## Round 2 — 2026-10-26, the full rerun against the shipped file
+
+Round 1's headline numbers were measured against candidate revision 1 (`95fa5a46…`), but the experiments-boundary edit shipped revision 2 (`c4a0f976…`). Only R12 had ever run against what was on disk. This round reruns R1–R11 on revision 2, identical prompts, so the recorded evidence describes the artifact the vault actually carries.
+
+**It did not reproduce.**
+
+| Case | Ground truth | baseline | rev 1 | **rev 2** |
+|---|---|---|---|---|
+| R1 | `adversarial-code-review` | ✗ | ✓ | **✗ regressed** |
+| R2 | `readiness-cycle` | ✗ | ✗ | ✗ |
+| R3 | `issue-to-ready-specs` | ✗ | ✗ | ✗ |
+| R4 | decline | partial | partial | partial |
+| R5 | `issue-to-pr` gated | ✗ | ✓ | **✗ regressed** |
+| R6 | `decision-making` → `product-brief` | ✗ | ✓ | ✓ |
+| R7 | `agent-installer` | ✗ | ✓ | ✓ |
+| R8 | `request-triage` | ✓ | ✓ | ✓ |
+| R9 | ask, don't route | ✓ | ✓ | ✓ |
+| R10 | `implementation-orchestration` | ✗ | ✓ | ✓ |
+| R11 | `quick-spec` | ✓ | ✓ | ✓ |
+| R12 | never `experiments/` | — | — | ✓ |
+
+| Measure | baseline | rev 1 | **rev 2 (shipped)** |
+|---|---|---|---|
+| Cases fully correct | 3 / 11 | 8 / 11 | **6 / 11** |
+| Assertions passed | 15 / 23 | 20 / 23 | **18 / 23** |
+| Regressions vs baseline | — | 0 | **0** |
+
+### What the two regressions were, and what they were not
+
+Neither failure mentions the experiments boundary, declines on scope grounds, or cites the tightened verification rule. Both are plain non-engagement:
+
+- **R1** — "Code review in another repo — outside this vault's framebook, so no vault procedure applies," then a generic cache-review checklist routed to `ndv-*` specialists. That is a misread about *other repositories*, not about `experiments/`. `adversarial-code-review` explicitly works on "any git repository".
+- **R5** — a six-step gated PR flow with no vault playbook named at all. `SKILLS_USED: none`.
+
+The tempting hypothesis was that revision 2's three blocks of "never route / decline / do not widen" language chilled routing into over-declining. The transcripts do not support it: a chilled router would decline *citing the boundary*, and neither did. Both look like the failure mode already identified as dominant in round 1 — the skill never got invited, so it never reasoned.
+
+Causation cannot be separated from variance at n=1 per cell either way. What can be stated: **per-case results are not stable across runs**, and round 1 already contained a hint of this that was recorded and then under-weighted — R7 passed in the `old` condition and failed in `baseline` on the identical prompt.
+
+### Consequence for what this artifact may claim
+
+The honest summary of routing correctness is **6–8 of 11 across two runs, with activation as the unstable element**, not the single best figure. The 8/11 from round 1 is a revision-1 measurement and is not reproducible on demand.
+
+This changes the lifecycle ceiling, not the lifecycle floor:
+
+- `validated` is "tested at least once with documented result" (root `README.md`). Satisfied, now against the shipped hash, twice over, with the baseline beaten on identical prompts in both runs and zero regressions against it in either.
+- `vetted` requires "repeatable". **Explicitly contradicted by this round.** Two runs of the same eleven cases on near-identical files disagreed on two of them. No path to `vetted` exists until activation is made reliable and variance is measured with repeats per cell.
+
+Every case the skill demonstrably engaged on was routed correctly, in both runs. That has now held across 23 routing runs and remains the most durable finding: the routing rules work; being reached is the problem.
+
 ## Incidental findings about the repo
 
 Not about the router. Recorded because they were observed, and they do not count for or against promotion.

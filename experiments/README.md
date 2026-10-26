@@ -20,7 +20,6 @@ Exploratory work, hypotheses, and trial logs. Everything in here is in-progress 
 
 | Experiment | Purpose | Status |
 |---|---|---|
-| [ai-stuff-artifact-router](ai-stuff-artifact-router/) | Routes tasks to the right playbook in the ai-stuff vault; surfaces playbook.md as the active procedure (playbooks only). | draft |
 | [arch-design-pipeline](arch-design-pipeline/) | Document-driven design pipeline (PRD → RFD → NRFD → Tech Spec) with gated review checkpoints for non-trivial features. | draft |
 | [claude-code-qa-skills](claude-code-qa-skills/) | 5 production-ready QA skills for Claude Code and compatible agents: Playwright E2E, LLM evals, unit tests, PR review, Jira. | draft |
 | [design-skill](design-skill/) | 98 evidence-backed design laws from 9 canonical books for UI/UX review, critique, and principled interface building. | draft |

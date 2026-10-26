@@ -122,6 +122,26 @@ Per `docs/standards/artifact-structure.md` Gate 7: the consumable file must not 
 - **State tracking.** No record of which playbook was routed and whether it was used. Adding this would cross into agent-territory and require a persistence layer. Out of scope for a routing skill.
 - **Maintenance instructions in SKILL.md.** The manifest is hand-maintained; the rule is stated in SKILL.md ("treat the manifest as a cache, not a live index"). The lint command and maintenance cadence belong here, not in the model-facing file.
 
+## Classification note — why `skills/` and not `playbooks/` (2026-10-26)
+
+Promoted `draft -> validated` and moved from `experiments/` to `skills/ai-stuff-artifact-router/` on this date.
+
+The placement needs a note because two vault documents disagree:
+
+- `docs/standards/artifact-classification.md` (a **standard**) routes "Reusable capability/behavior package" to `skills/`. Behaviour packaging is exactly what this is: a `SKILL.md` the harness discovers and activates on its own.
+- `_meta/framebook/classify-artifact/` (a **procedure**) requires of `skills/`: "Not a step-by-step procedure (that's a playbook)." This skill *is* a step-by-step procedure — numbered routing steps, an ordered priority rule, four chain rules.
+
+Resolved by `_meta/framebook/README.md`: "If a procedure conflicts with `docs/standards/`, standards win." The standard sends it to `skills/`.
+
+Two supporting reasons, so this does not rest on a technicality:
+
+1. `playbooks/` cannot host it. Those are manually-loaded `playbook.md` files. This artifact's entire value is automatic activation from frontmatter — put it in `playbooks/` and it stops working.
+2. The procedure's criterion is already contradicted across the vault. `skills/skill-authoring/` has ten numbered Step headings; `issues-to-roadmap` has nine steps. Every skill here is procedural, because a harness "skill" is a behaviour package, not a reference document.
+
+**The criterion is the thing that is wrong, not the placement.** `classify-artifact`'s "not a step-by-step procedure" test predates the harness-skill distinction and now misroutes every skill in the vault. Flagged for the owner; not edited here, because rewriting a framebook procedure is a separate decision from promoting one artifact.
+
+Also corrected in the same pass: the root `README.md` lifecycle line omitted `skills/` as a destination and implied `vetted` was a folder.
+
 ## Maintenance notes
 
 When a playbook is added, renamed, or its status changes:

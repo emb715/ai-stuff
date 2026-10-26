@@ -74,6 +74,7 @@ This table is a snapshot. The filesystem is authoritative — `ls` the content d
 | [liteparse](skills/liteparse/) | Parse PDFs and other documents locally with lit — fast spatial text parsing with bounding boxes, OCR (Tesseract bundled), page screenshots, text/markdown/JSON output | validated |
 | [lean-agentic-baseline](skills/lean-agentic-baseline/) | Assess and adapt a repo's AI-engineering setup against 26 Lean Agentic pillars; inventory, fit assessment, bounded adoption, drift checks | validated |
 | [issues-to-roadmap](skills/issues-to-roadmap/) | Turn a planning session into agent-ready issues in a tracker, then group them upward into milestones, a project and a roadmap proposal | validated |
+| [ai-stuff-artifact-router](skills/ai-stuff-artifact-router/) | Route a task to the right vault playbook by what you have and what you want; chains, declines, playbooks-only | validated |
 
 ### Tools
 
@@ -87,7 +88,9 @@ Experiments are not part of the curated inventory. See `experiments/` for in-pro
 
 ## Lifecycle
 
-`experiments/ → validated → prompts/ | tools/ | playbooks/ | agents/`
+`experiments/ → validated → agents/ | prompts/ | playbooks/ | skills/ | tools/`
+
+Location encodes *type*, status encodes *trust* — see `docs/standards/artifact-classification.md`. An artifact moves to its type folder when it is tested with a documented outcome; `vetted` is a frontmatter status, not a folder.
 
 ### Status definitions
 

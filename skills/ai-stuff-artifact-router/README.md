@@ -1,8 +1,8 @@
 ---
 title: "artifact-router"
-status: draft
+status: validated
 confidence: medium
-last_tested: 2026-10-21
+last_tested: 2026-10-26
 scope: personal
 tooling:
   - "agnostic/any-LLM"
@@ -48,15 +48,19 @@ Round 1, 2026-10-21. Plan pre-registered and committed (`c93d472`) before the ca
 
 **Setup.** 23 live OpenCode sessions, one independent session per cell, executor = `general` subagent at the harness default model. The skill was discovered through the project-level symlink `.opencode/skills/ai-stuff-artifact-router` and was never named in a prompt. Three conditions: `baseline` (symlink moved aside), `old` (frozen pre-revision snapshot `0463a757…`, 4 cases), `candidate` (revision `95fa5a46…`, frozen before its first run, all cases). Every prompt carried an identical read-only constraint.
 
-**Routing correctness — 11 cases, ground truth quoted from each playbook's own README before any run.**
+**Routing correctness — 12 cases, ground truth quoted from each playbook's own README before any run. Two full runs.**
 
-| Measure | baseline | candidate |
-|---|---|---|
-| Cases fully correct | 3 / 11 | **8 / 11** |
-| Assertions passed | 15 / 23 | **20 / 23** |
-| Regressions against baseline | — | **0** |
+| Measure | baseline | rev 1 (`95fa5a46`) | **rev 2 (`c4a0f976`)** |
+|---|---|---|---|
+| Cases fully correct | 3 / 11 | 8 / 11 | **6 / 11** |
+| Assertions passed | 15 / 23 | 20 / 23 | **18 / 23** |
+| Regressions against baseline | — | 0 | **0** |
 
-Only 5 of 23 assertions discriminate between conditions; all 5 favour the candidate. The margin comes from finding playbooks an unaided session misses — `adversarial-code-review` (R1), `issue-to-pr` in gated mode (R5), `agent-installer` (R7), `implementation-orchestration` with `adversarial-code-review` as its embedded gate (R10) — and from answering with an ordered sequence where no single playbook spans the task (R6: `decision-making` → `product-brief`, which both other conditions got wrong).
+**Read the range, not the best figure: 6–8 of 11, with activation as the unstable element.** Rerunning the same eleven cases against the shipped file flipped two cells that had passed (R1, R5) — both by never engaging the skill, neither by declining on scope. Variance here is demonstrated, not merely unmeasured.
+
+The margin over an unaided session comes from finding playbooks it misses — `agent-installer` (R7), `implementation-orchestration` with `adversarial-code-review` as its embedded gate (R10), and in one run each `adversarial-code-review` (R1) and `issue-to-pr` gated (R5) — and from answering with an ordered sequence where no single playbook spans the task (R6: `decision-making` → `product-brief`, which both baseline and revision 1's predecessors got wrong). R12 confirms the `experiments/` boundary holds.
+
+**Every case the skill demonstrably engaged on was routed correctly, in both runs, across 23 routing runs.** The routing rules work; being reached is the problem.
 
 **Discovery — 8 probes, 7 correct.** Zero false activations, including on the two most expensive non-activation conditions: a playbook the user already named, and a vault lifecycle operation. One positive miss (T4): a task describing `retrospective`'s situation without using the word "retro" went to the framebook instead.
 
@@ -66,11 +70,15 @@ Only 5 of 23 assertions discriminate between conditions; all 5 favour the candid
 
 **Manifest accuracy, checked rather than assumed.** 14 of 14 manifest rows matched reality on 2026-10-21: no playbook added, renamed, or status-changed since 2026-08-04. The four artifacts the vault gained in that window were all skills, outside this manifest's scope. The hand-maintained manifest has consequently never faced a drift event — see `humans.md` for what that does and does not say about the design.
 
-**Round 1b, 2026-10-23 — the experiments boundary (candidate revision 2, `c4a0f976…`).** On owner instruction, `experiments/` is now an explicit hard boundary alongside playbooks-only, and filesystem verification may only confirm or drop a manifest row, never add one. One case (R12), one run, both assertions passed: given a prompt paraphrasing `experiments/arch-design-pipeline/`'s own purpose, the session declined the experiment by name-shape — "not routable — untested, unsanitized, outside `playbooks/`" — and answered with a valid `product-brief` → `quick-spec` sequence. R1–R11 and the discovery probes were **not** rerun against revision 2 and remain revision-1 results.
+**The `experiments/` boundary (R12, 2026-10-23).** On owner instruction, `experiments/` is an explicit hard boundary alongside playbooks-only, and filesystem verification may only confirm or drop a manifest row, never add one. Given a prompt paraphrasing `experiments/arch-design-pipeline/`'s own purpose, the session declined the experiment by name-shape — "not routable — untested, unsanitized, outside `playbooks/`" — and answered with a valid `product-brief` → `quick-spec` sequence.
 
-Variance is untested (n=1 per cell), activation was measured by self-report plus output fingerprints rather than harness instrumentation, and only OpenCode discovery was exercised. Full limitations in `evals/comparison.json`.
+**Shipped file is revision 3, `7f984bb0`.** The promotion to `skills/` tripped DL011, which forbids a promoted runtime artifact from referencing `experiments/` paths — it is a bare substring check for *dependencies* and cannot tell a dependency from a prohibition. Reworded to "the `experiments` tree" in three places, no semantic change (4 lines, diff in git). R12, the only case that exercises that text, was rerun on revision 3 and passed both assertions: it declined the near-perfect wording match explicitly — "I'd decline the `experiments/` PRD→RFD→NRFD→tech-spec pipeline despite the near-perfect wording match: experiments are untested and non-routable by rule" — and routed `product-brief` → `quick-spec`. R1–R11 were not rerun on revision 3 and remain revision-2 results.
 
-**Status.** These runs satisfy `_meta/framebook/promote-artifact/` §2 for `draft -> validated`. The transition itself is left to the owner; `status` stays `draft` until then, and `confidence` is raised `low -> medium` on the strength of one documented round.
+One run per cell, so no per-case result stands alone. Activation was measured by self-report plus output fingerprints rather than harness instrumentation, and three runs reported `SKILLS_USED: none` while reasoning in the manifest's own Entry/Exit vocabulary — activation counts are a floor. The 8 discovery probes were run against revision 1 and were not repeated. Only OpenCode discovery has ever been exercised. Full limitations in `evals/comparison.json`.
+
+**Status: `validated`.** Satisfies `_meta/framebook/promote-artifact/` §2 — two documented runs against the shipped hash, baseline beaten on identical prompts in both, non-empty failure modes, sanitization clean, lint PASS.
+
+**Not a candidate for `vetted`, and the evidence says so rather than being silent on it.** `vetted` requires "repeatable"; two runs of the same eleven cases on near-identical files disagreed on two of them. Closing that needs activation stabilised (R2 and R3 fail in both runs) and repeats per cell to quantify variance.
 
 # Failure Modes / Boundaries
 

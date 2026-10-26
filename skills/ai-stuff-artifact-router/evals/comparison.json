@@ -11,7 +11,7 @@
     "candidate_frozen_before_runs": true,
     "candidate_revision_2_sha256": "c4a0f976fe1c18a2973723fd205cccae236c9cfaa99950d645deb4d7597e954d",
     "candidate_revision_2_stage": "2026-10-23, owner instruction 'nothing from experiments should be routed'. Adds the playbooks/-only boundary in three places and restricts filesystem verification to confirming or dropping a row, never adding one. No listed row's entry, exit or priority order changed.",
-    "revision_2_coverage": "R12 only. R1-R11 and all 8 discovery probes were run against revision 1 and were NOT rerun; they are revision-1 results and are not claimed for revision 2."
+    "revision_2_coverage": "R1-R12 all run against revision 2 (R1-R11 rerun 2026-10-26, R12 on 2026-10-23). The 8 discovery probes were run against revision 1 only and are NOT claimed for revision 2."
   },
   "method": {
     "executor": "OpenCode general subagent, one independent session per run",
@@ -65,7 +65,32 @@
     "discriminating_assertions": 5,
     "non_discriminating_assertions": 18,
     "regressions_vs_baseline": 0,
-    "conclusion": "On 5 of 23 assertions the configurations differ at all; all 5 favour the candidate, and no assertion regressed against the baseline. 18 assertions are non-discriminating and prove nothing about the skill. The candidate's margin comes from finding playbooks an unaided session does not find (R1, R5, R7, R10) and from answering with an ordered sequence where no single playbook fits (R6)."
+    "conclusion": "On 5 of 23 assertions the configurations differ at all; all 5 favour the candidate, and no assertion regressed against the baseline. 18 assertions are non-discriminating and prove nothing about the skill. The candidate's margin comes from finding playbooks an unaided session does not find (R1, R5, R7, R10) and from answering with an ordered sequence where no single playbook fits (R6).",
+    "superseded_note": "These are revision-1 figures. The shipped artifact is revision 2; see routing_revision_2, which did not reproduce them."
+  },
+  "routing_revision_3": {
+    "date": "2026-10-26",
+    "sha256": "7f984bb06379094c",
+    "sha256_note": "Short form; full hash in git at the promotion commit.",
+    "why": "Promotion into skills/ tripped DL011, a bare substring check forbidding experiments/ paths in promoted runtime artifacts. It cannot distinguish a dependency from a prohibition, and this artifact's reference is a prohibition. Reworded to 'the experiments tree' in three places.",
+    "semantic_change": "None. 4 lines changed, path literals only.",
+    "cases_run": ["R12"],
+    "R12": "Pass, both assertions. 'I'd decline the experiments/ PRD->RFD->NRFD->tech-spec pipeline despite the near-perfect wording match: experiments are untested and non-routable by rule.' Routed product-brief -> quick-spec and asked the discriminating scope question.",
+    "not_rerun": "R1-R11 remain revision-2 results. Discovery probes remain revision-1 results."
+  },
+  "routing_revision_2": {
+    "date": "2026-10-26",
+    "sha256": "c4a0f976fe1c18a2973723fd205cccae236c9cfaa99950d645deb4d7597e954d",
+    "why": "Round 1 measured revision 1, but the experiments-boundary edit shipped revision 2. Only R12 had run against the file on disk.",
+    "cases_fully_correct": {"revision_2": 6, "revision_1": 8, "baseline": 3, "of": 11},
+    "assertions": {"revision_2": 18, "revision_1": 20, "baseline": 15, "of": 23},
+    "regressions_vs_baseline": 0,
+    "cells_that_flipped_from_revision_1": {
+      "R1": "Pass -> fail. 'Code review in another repo - outside this vault's framebook, so no vault procedure applies', then a generic checklist routed to ndv-* specialists. A misread about other repositories, not about experiments/.",
+      "R5": "Pass -> fail. Generic six-step gated PR flow, no vault playbook named, SKILLS_USED: none."
+    },
+    "chilling_effect_hypothesis": "Rejected on the evidence available. A router over-declining because of revision 2's added 'never route / decline / do not widen' language would decline citing the boundary; neither regression does. Both are non-engagement, the failure mode already dominant in round 1. Causation cannot be separated from variance at n=1 per cell.",
+    "conclusion": "Honest summary of routing correctness is 6-8 of 11 across two runs, with activation as the unstable element - not the single best figure. Every case the skill demonstrably engaged on was routed correctly, in both runs, across 23 routing runs total."
   },
   "discovery_overall": {
     "probes": 8,
@@ -74,7 +99,8 @@
     "conclusion": "No over-activation on any stated non-activation condition, including the two that matter most — a named playbook (T5) and a vault lifecycle operation (T6). One positive miss: T4 describes retrospective's domain without using the word 'retro', and the session went to the framebook instead. Activation appears to depend on the task reusing the playbook's own vocabulary."
   },
   "limitations": [
-    "One run per cell. Variance untested; no reliability claim follows from any single cell.",
+    "One run per cell. Variance is no longer merely untested — it is demonstrated: rerunning the same eleven cases on a near-identical file flipped two of them (R1, R5). No per-case result here is reliable on its own, and the round-1 8/11 is not reproducible on demand.",
+    "Reliability is disproven rather than unmeasured, which closes the path to vetted ('repeatable') until activation is stabilised and runs are repeated per cell.",
     "The old configuration covers only 4 of 11 cases, so old-versus-candidate attribution is partial.",
     "Author-graded, not independently graded.",
     "Activation measured by self-report plus fingerprints, not harness instrumentation. Three candidate runs self-reported 'none' while displaying manifest-specific reasoning, so activation counts are a floor, not an exact figure.",
@@ -85,5 +111,5 @@
     "No cost measurement; the skill's token overhead at load time is unmeasured.",
     "Revision 2 of the plan discarded six earlier baseline runs after one of them committed a 141k-line deletion to the repo. Those runs are not graded and the incident is recorded in results.md."
   ],
-  "lifecycle_decision": "Supports draft -> validated. Documented outcome exists, the candidate beats the unaided baseline on every assertion where they differ, no regression, no over-activation. Does not support vetted: R2 and R3 fail, one discovery positive is missed, n=1 per cell, and promotion to vetted additionally requires a validated -> vetted transition that this run cannot authorise."
+  "lifecycle_decision": "Supports draft -> validated, now measured against the shipped hash c4a0f976 rather than a superseded one. Two independent runs, baseline beaten on identical prompts in both (6/11 and 8/11 vs 3/11), zero regressions against baseline in either, zero false activations. Actively does NOT support vetted: 'repeatable' is contradicted by this evidence, not merely unproven, since the same eleven cases disagreed on two cells across runs. Remaining defects: R2 and R3 fail in both runs, R4's decline path has never fired, one discovery positive missed, and activation is the unstable element throughout."
 }
