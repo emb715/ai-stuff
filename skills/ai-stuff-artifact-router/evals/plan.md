@@ -312,6 +312,70 @@ Condition 3 is the one that matters most and the one most likely to be glossed o
 - **Platform variance.** Only OpenCode skill discovery is exercised. The embedded manifest's portability claim (`humans.md`, "platform variance") is not tested on any other harness.
 - **Manifest accuracy as a live property.** Statuses were verified by hand against the manifest on 2026-10-21 and all 14 matched. The eval does not re-derive that and does not test what happens after a future drift event.
 
+## Round 3 — 2026-10-27, activation. Pre-registered before the fix was written
+
+Rounds 1 and 2 agreed on one thing across 23 routing runs: **every case the skill demonstrably engaged on was routed correctly, and every failure was a case where it never engaged.** Round 3 changes the activation surface — the `description` — and nothing else. The manifest, priority rule, chain rule and boundaries are untouched.
+
+### R3 is retired as a defective case
+
+Before fixing anything, one of the two target failures turns out to be a bad test rather than a bug.
+
+R3 asked: *"Break it down into implementable work items with acceptance criteria."* Pre-registered ground truth was `issue-to-ready-specs`, quoted from its README — which does claim exactly that phrasing. But:
+
+- `issue-to-ready-specs` produces **repo spec documents** (a PRD plus N implementation specs).
+- `skills/issues-to-roadmap` produces **tracker issues** with mechanical criteria, and its description claims "when asked to break work down, create issues". Its README cedes the other direction: "Not for writing repo-versioned spec documents — that is `playbooks/issue-to-ready-specs/`."
+
+The boundary between them is **where the output lands**, and R3's prompt never says. Both artifacts are legitimate candidates, so the sessions that chose `issues-to-roadmap` three times out of three may simply have been right and the ground truth wrong.
+
+R3 is therefore marked defective: ambiguous ground truth, no correct answer to score against. It is **not** a target for the description fix. Tuning the router to win a genuinely ambiguous case would make real sessions worse, by pulling tracker work into a repo-document playbook.
+
+It is replaced by one disambiguated case:
+
+**R3a** — *"In another project I have GitHub issue #214: 'Users can't export reports to CSV…'. Turn it into implementation spec documents in the repo — file-level tasks and test plans, not tracker tickets."*
+Ground truth: `playbooks/issue-to-ready-specs/`. The output location is now stated, so the boundary is testable.
+
+The underlying collision is a finding about the vault, not the router: two artifacts advertise the same verb and object, and only their READMEs disambiguate — not their descriptions, which are what the harness actually selects on. Recorded for the owner; not fixed here.
+
+### Hypothesis
+
+Activation keys on the **nouns** of the artifact names rather than the **situations** users describe. Evidence: T4 described `retrospective`'s situation precisely without saying "retro" and missed, while an earlier probe that said "run a retro" activated. R2 named no word in the current description's activation sentence ("planning, building, reviewing or shipping work") despite matching `readiness-cycle`'s entry exactly.
+
+The fix rewrites the `description` to enumerate situations in the user's words, and to explicitly cede the notes-to-tracker direction it keeps losing and should lose.
+
+### What changes
+
+Only the `description` in frontmatter. Candidate becomes revision 4; hash recorded in `comparison.json`.
+
+### Runs — repeats where variance is the known risk
+
+Round 2 proved per-case results are unstable, so the activation-critical cells get repeats. 19 runs.
+
+| Cell | Repeats | Why |
+|---|---|---|
+| R2 | 3 | Target failure. Clean case: the right playbook exists, nothing else claims the task |
+| T4 | 3 | Target failure. Discovery miss on a situation-described task |
+| R3a | 2 | New disambiguated case, never run |
+| R1, R5 | 2 each | The cells that flipped between rounds 1 and 2. Measures stability, not just pass/fail |
+| T1, T2, T3 | 1 each | Positive probes; guard against the rewrite breaking what worked |
+| T5, T6, T7, T8 | 1 each | Negative probes. Over-activation guard |
+
+Baseline is not rerun: it is skill-independent and already measured on identical prompts.
+
+### Success criteria, fixed now
+
+| # | Criterion | Consequence if missed |
+|---|---|---|
+| S1 | R2 passes ≥ 2/3 | Fix failed on its primary target |
+| S2 | T4 triggers ≥ 2/3 | Fix failed on the discovery miss |
+| S3 | **All of T5–T8 stay silent** | **Blocker.** Over-activation on a stated non-activation condition is worse than the miss being fixed |
+| S4 | R1 and R5 each pass ≥ 1/2 | No regression on previously-passing routes |
+| S5 | T1–T3 all trigger | No regression on working activation |
+| S6 | R3a passes ≥ 1/2 | The disambiguated boundary is routable |
+
+S3 is the one that can sink the round regardless of the others. A description broad enough to catch every situation is also broad enough to fire when the user already named a playbook, and that trade is not worth making.
+
+Variance will still be unquantified at 2–3 repeats. The round can show a fix worked; it cannot establish reliability, and nothing here supports `vetted`.
+
 ## Results
 
 See `results.md`, written after the runs.
