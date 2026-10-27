@@ -2,7 +2,7 @@
 title: "issues-to-roadmap"
 status: validated
 confidence: medium
-last_tested: 2026-10-07
+last_tested: 2026-10-27
 scope: personal
 tooling:
   - "agnostic/any-LLM"
@@ -51,9 +51,13 @@ Use [`SKILL.md`](SKILL.md) — the nine-step procedure with its tracker-neutral 
 
 # Evidence / Results
 
-> **Trigger narrowed 2026-10-27 (owner instruction).** Everything below was measured against the previous, broader trigger, which fired on any request to "break work down" or on pasted notes regardless of whether the decisions were settled. The **behavioural** evidence still applies — the nine steps, the five kinds, the draft-show-stop discipline and the refusal to invent criteria are unchanged. The **discovery** evidence does not: the should-trigger and should-not-trigger probes in `evals/plan.md` (including D1 and D2) were written for the old description and no longer describe the activation surface. Re-running them is outstanding work, listed in this session's plan.
+> **Trigger narrowed 2026-10-27 (owner instruction), and re-measured the same day.** Everything below the next paragraph was measured against the previous, broader trigger. The **behavioural** evidence still applies unchanged — the nine steps, the five kinds, the draft-show-stop discipline and the refusal to invent criteria were not touched. The **discovery** evidence was superseded and has been replaced.
 >
-> Two runs after the narrowing are recorded at the end of this section.
+> **Discovery after the narrowing: 5 of 5 correct.** Two positives fired — an agreed, signed-off roadmap with work starting Monday, and a list of eight agreed items needing dependency ordering. Three negatives stayed silent: an unsettled planning chat with open disagreement, the ambiguous "break down issue #214 into work items with acceptance criteria", and an adjacent-domain lint bug. The unsettled-notes run articulated the new boundary in its own words rather than merely declining:
+>
+> > "`issues-to-roadmap` is explicitly not for notes whose decisions aren't settled — it would turn two people's maybes into issues that look authoritative and freeze the disagreement into a backlog."
+>
+> The ambiguous issue-breakdown probe, which this skill won three times out of three before the narrowing, now goes to `playbooks/issue-to-ready-specs/`. That was the point of the change, and it is the clearest evidence of it working. Probe set and per-probe results are in `evals/plan.md`.
 
 **`validated` across all nine steps.** Drafting is measured over seven activating runs against a baseline; the creation sequence ran once on a real private tracker with every side effect verified against the API. Confidence is `medium` rather than `high` because drafting variance is only n=2 per cell, creation is n=1 on one repo, and the failure paths — partial-failure resume, a missing `project` scope mid-sequence — are still unverified.
 

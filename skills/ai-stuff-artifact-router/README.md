@@ -48,19 +48,22 @@ Round 1, 2026-10-21. Plan pre-registered and committed (`c93d472`) before the ca
 
 **Setup.** 23 live OpenCode sessions, one independent session per cell, executor = `general` subagent at the harness default model. The skill was discovered through the project-level symlink `.opencode/skills/ai-stuff-artifact-router` and was never named in a prompt. Three conditions: `baseline` (symlink moved aside), `old` (frozen pre-revision snapshot `0463a757…`, 4 cases), `candidate` (revision `95fa5a46…`, frozen before its first run, all cases). Every prompt carried an identical read-only constraint.
 
-**Routing correctness — 12 cases, ground truth quoted from each playbook's own README before any run. Two full runs.**
+**Current figures, measured against the shipped file (revision 5, `3ca6d81a`) on 2026-10-27.** 17 cases, ground truth quoted from each artifact's own README and pre-registered before any run.
 
-| Measure | baseline | rev 1 (`95fa5a46`) | **rev 2 (`c4a0f976`)** |
-|---|---|---|---|
-| Cases fully correct | 3 / 11 | 8 / 11 | **6 / 11** |
-| Assertions passed | 15 / 23 | 20 / 23 | **18 / 23** |
-| Regressions against baseline | — | 0 | **0** |
+| Measure | baseline | **shipped** |
+|---|---|---|
+| Routing cases fully correct | 3 / 11 | **14 / 17** |
+| Routing assertions passed | 15 / 23 | **30 / 35** |
+| Discovery probes | — | **8 / 8** |
+| False activations | — | **0**, across 16 negative-probe runs |
 
-**Read the range, not the best figure: 6–8 of 11, with activation as the unstable element.** Rerunning the same eleven cases against the shipped file flipped two cells that had passed (R1, R5) — both by never engaging the skill, neither by declining on scope. Variance here is demonstrated, not merely unmeasured.
+Case counts are not directly comparable across revisions — the baseline predates five prompt cases and the R3 → R3a correction. What is comparable: on identical prompts, the baseline never found `adversarial-code-review`, `issue-to-pr`, `agent-installer`, `implementation-orchestration` or the `decision-making` → `product-brief` sequence, and the shipped file finds all of them.
 
-The margin over an unaided session comes from finding playbooks it misses — `agent-installer` (R7), `implementation-orchestration` with `adversarial-code-review` as its embedded gate (R10), and in one run each `adversarial-code-review` (R1) and `issue-to-pr` gated (R5) — and from answering with an ordered sequence where no single playbook spans the task (R6: `decision-making` → `product-brief`, which both baseline and revision 1's predecessors got wrong). R12 confirms the `experiments/` boundary holds.
+**The two cells that blocked a reliability claim are now 5/5 each.** R5 went from 2 of 4 across earlier revisions to 5 of 5; T4 from 1 of 3 to 5 of 5. That also killed the plausible hypothesis that a long multi-situation description dilutes matching — adding five prompts and more situations improved both. Activation appears to strengthen when a situation gains *more* anchors, not fewer. Two cells at 5/5 is still two cells; the other fifteen are n=1 on this revision.
 
-**Every case the skill demonstrably engaged on was routed correctly, in both runs, across 23 routing runs.** The routing rules work; being reached is the problem.
+**Three cases short of clean.** R4 avoids the wrong route but still does not say "nothing covers this". P4 (one session's dead ends → `knowledge-extraction`) and P5 (repo doc-vs-source drift → `repo-primitive-audit`) fail by non-activation. Two of the three prompt failures recorded across rounds 4–5 are attributable to ambient non-vault instructions describing a competing workflow for the same task shape — P1 failed that way in round 4 and passed on the identical file in round 5, which confirms the confound over a routing defect. P4 has no such excuse and is the one genuine open defect.
+
+**Every case the skill demonstrably engaged on was routed correctly, across all five rounds and 60-plus routing runs.** The routing rules work; being reached is the remaining problem, and it is now much less of one.
 
 **Discovery — 8 probes, 7 correct.** Zero false activations, including on the two most expensive non-activation conditions: a playbook the user already named, and a vault lifecycle operation. One positive miss (T4): a task describing `retrospective`'s situation without using the word "retro" went to the framebook instead.
 

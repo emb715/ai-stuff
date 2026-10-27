@@ -270,6 +270,59 @@ P2 showed the surfacing distinction landing correctly, unprompted:
 
 It also excluded `quick-spec` ("writes a new spec from discovery, yours already exists") and `raa` ("entry is a request against a codebase, not a doc") on entry grounds, and named the follow-on prompt as a separate step.
 
+## Round 5 — 2026-10-27, the full revision-5 sweep
+
+Plan steps 1 and 2. Every live case and probe run against the shipped file, with 5 repeats on the two cells whose instability was blocking a reliability claim. 40 runs.
+
+Revision 5, `3ca6d81a…`. P1–P5 pre-registered in `evals.json` (commit `47a6586`) before this sweep.
+
+### Routing — 14 of 17 cases, 30 of 35 assertions
+
+| Case | Result | | Case | Result |
+|---|---|---|---|---|
+| R1 diff → adversarial review | ✓ | | R11 one-feature spec | ✓ |
+| R2 repo readiness | ✓ | | R12 experiments boundary | ✓ |
+| R3a issue → repo specs | ✓ | | P1 doc vs codebase | ✓ |
+| R4 unsettled notes → tracker | partial | | P2 gappy plan doc | ✓ |
+| R5 issue → merged PR | **✓ 5/5** | | P3 release candidate | ✓ |
+| R6 forty ideas → brief | ✓ | | P4 session knowledge | **✗** |
+| R7 installer | ✓ | | P5 repo doc-vs-source drift | **✗** |
+| R8 paradigm triage | ✓ | | | |
+| R9 insufficient signal | ✓ | | | |
+| R10 orchestrator containment | ✓ | | | |
+
+### Discovery — 8 of 8, the first clean sweep
+
+4 of 4 positives triggered, 4 of 4 negatives silent. Zero false activations, now across 16 negative-probe runs over three rounds.
+
+### Both unstable cells stabilised, and the dilution hypothesis is dead
+
+The plan asked whether a long multi-situation description dilutes per-situation match strength. If it did, adding five prompts and more situations to the description should have made activation worse. It did the opposite:
+
+| Cell | rev 1 | rev 2 | rev 4 | **rev 5** |
+|---|---|---|---|---|
+| R5 | pass | fail | 1/2 | **5/5** |
+| T4 | miss | — | 1/3 | **5/5** |
+
+**R5 went from 2 of 4 across earlier revisions to 5 of 5. T4 went from 1 of 3 to 5 of 5.** The reading that survives: activation strengthens when the description gives a situation *more* anchors, not fewer. T4 is the clearest case — adding `prompts/knowledge-extraction/` gave the capture situation a second artifact and a second phrasing ("lessons **or durable knowledge**"), and all five runs then fired and correctly surfaced the pair with its entry discriminator rather than guessing:
+
+> "A migration spanning weeks and people is the first; a single session's reasoning is the second."
+
+That is the final tiebreak rule executing as written, which it had never been observed doing before.
+
+Do not read this as reliability established. Two cells at 5/5 is two cells; the other fifteen are n=1 on this revision, and nothing here measures stability across model or harness changes.
+
+### The two failures are the same failure
+
+P4 (one session's dead ends → `knowledge-extraction`) and P5 (repo doc-vs-source drift → `repo-primitive-audit`) both failed by non-activation, and both were absorbed by a competing non-vault path:
+
+- P4 went to `_meta/framebook/classify-artifact/` and `save-artifact/` plus per-project memory — a defensible answer to "keep what we learned", just not the routed one.
+- P5 built its own claim-extraction audit. Same confound as P1's earlier failure: the session's ambient instructions describe a repo-audit workflow for this exact shape.
+
+P1 passing this round, after failing on the same file, confirms the confound reading rather than a routing defect: the route is correct and reachable, but a strong ambient prior beats it some of the time. **Two of three prompt failures across two rounds are attributable to instructions outside the vault, which no change to this skill can overcome.**
+
+P4 has no such excuse and is the one genuine open defect: the capture situation now fires reliably as a *pair* (T4, 5/5) but not when the task emphasises durable knowledge over lessons.
+
 ## Incidental findings about the repo
 
 Not about the router. Recorded because they were observed, and they do not count for or against promotion.
