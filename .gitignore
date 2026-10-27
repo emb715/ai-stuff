@@ -3,3 +3,7 @@ __pycache__/
 .snapberry
 .DS_Store
 .openchamber/
+
+# Local-only: third-party book corpora for the design-laws experiment.
+# Kept on disk for experimentation, never tracked — the repo is public.
+experiments/design-skill/laws/sources/

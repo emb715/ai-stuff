@@ -43,6 +43,18 @@ Produced:
 
 This is research output, not a validated artifact. No reproducible outcome measurement has been run.
 
+## Source corpora are local-only (2026-10-27)
+
+`laws/sources/` held full-text captures of nine copyrighted books — 108 MB, `raw.txt` plus `extract.md` per book. It is now **untracked and gitignored**, and the files remain on disk for continued experimentation.
+
+Why: this repository is public, and had been serving those captures since 2026-07-30. Distilling them into reusable law statements was the point of the experiment; redistributing the sources was never part of it.
+
+Consequences to know:
+
+- The derived artifacts in `laws/` (`extracted.md`, `quotes.md`, `proposed-laws-ready.md`) stay tracked and still cite `sources/B*/` paths. Those citations now point at files only present in a local checkout. That is intended — the citation records provenance, it is not a dependency a reader can follow.
+- Anyone cloning this repo gets the derived work and not the corpora. Re-running the extraction requires supplying the books yourself.
+- **Untracking does not remove them from git history.** They remain reachable in the public history from 2026-07-30 onward. Removing them for real needs a history rewrite or a fresh squashed repo — an open decision, recorded in `changelog/week-2026-44.md`.
+
 ## Failure Modes / Boundaries
 
 - Laws are prescriptive guidance drawn from books, not empirical measurements taken in this repo.
