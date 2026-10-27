@@ -68,6 +68,28 @@
     "conclusion": "On 5 of 23 assertions the configurations differ at all; all 5 favour the candidate, and no assertion regressed against the baseline. 18 assertions are non-discriminating and prove nothing about the skill. The candidate's margin comes from finding playbooks an unaided session does not find (R1, R5, R7, R10) and from answering with an ordered sequence where no single playbook fits (R6).",
     "superseded_note": "These are revision-1 figures. The shipped artifact is revision 2; see routing_revision_2, which did not reproduce them."
   },
+  "routing_revision_4": {
+    "date": "2026-10-27",
+    "sha256": "7503824dfa91cda64256927bde5ecafbdb6f3476ae93f3df7d12145c96340c1f",
+    "what_changed": "The description only. Manifest, priority rule, chain rule and boundaries untouched.",
+    "hypothesis": "Activation keys on the nouns of artifact names rather than the situations users describe. Rewrote the description to enumerate situations in the user's words and to explicitly cede the notes-to-tracker direction.",
+    "plan_commit": "63677ca, pre-registered before the rewrite",
+    "runs": 19,
+    "success_criteria": {
+      "S1_R2_pass_2_of_3": {"result": "3/3", "met": true},
+      "S2_T4_trigger_2_of_3": {"result": "1/3 clear activation, 2/3 reached the right playbook", "met": false},
+      "S3_negatives_all_silent_BLOCKER": {"result": "4/4 silent", "met": true},
+      "S4_R1_and_R5_pass_1_of_2": {"result": "R1 2/2, R5 1/2", "met": true},
+      "S5_T1_to_T3_all_trigger": {"result": "3/3", "met": true},
+      "S6_R3a_pass_1_of_2": {"result": "2/2", "met": true}
+    },
+    "headline": "R2 went 0/3 across three earlier rounds to 3/3 on a description change alone. Mechanism evidenced directly: a T4 run quoted the new description's phrase 'work just finished, capture the lessons' as its reason to route, and that phrase exists only in revision 4.",
+    "precision_held": "Zero false activations, now across 12 negative-probe runs over two rounds. T5 reasoned it unprompted: 'it's the named playbook, so no router needed.'",
+    "variance_datum": "R5 is 2 of 4 across all rounds (rev1 pass, rev2 fail, rev4a fail, rev4b pass) - the first quantified variance figure for this artifact, and it is poor. R1 went 2/2 after being unstable, so instability is per-case rather than uniform.",
+    "R3_retired": "R3's ground truth was contested between playbooks/issue-to-ready-specs and skills/issues-to-roadmap, whose only disambiguator (repo documents vs tracker) lives in their READMEs - which the harness never reads when selecting. Replaced by R3a, which states the output location; passed 2/2, one run drawing the boundary itself. The defect is upstream in those two artifacts' descriptions, not in this skill.",
+    "not_rerun": "R4 and R6-R12 remain revision-2 or revision-3 results. No new 11-case aggregate is claimed.",
+    "open_defect": "T4. 'Work just finished that they want lessons from' is in the description and still fires only sometimes."
+  },
   "routing_revision_3": {
     "date": "2026-10-26",
     "sha256": "7f984bb06379094c",
@@ -111,5 +133,6 @@
     "No cost measurement; the skill's token overhead at load time is unmeasured.",
     "Revision 2 of the plan discarded six earlier baseline runs after one of them committed a 141k-line deletion to the repo. Those runs are not graded and the incident is recorded in results.md."
   ],
+  "lifecycle_decision_round_3": "Stays validated. Round 3 improved activation on its primary target (R2 0/3 -> 3/3) without costing precision (4/4 negatives silent), and produced the first quantified variance figure (R5 2/4), which is poor. Still not a vetted candidate: 'repeatable' remains contradicted, now with a number attached rather than an inference. The remaining defects are T4 activation and an upstream description collision between issue-to-ready-specs and issues-to-roadmap that this skill cannot fix.",
   "lifecycle_decision": "Supports draft -> validated, now measured against the shipped hash c4a0f976 rather than a superseded one. Two independent runs, baseline beaten on identical prompts in both (6/11 and 8/11 vs 3/11), zero regressions against baseline in either, zero false activations. Actively does NOT support vetted: 'repeatable' is contradicted by this evidence, not merely unproven, since the same eleven cases disagreed on two cells across runs. Remaining defects: R2 and R3 fail in both runs, R4's decline path has never fired, one discovery positive missed, and activation is the unstable element throughout."
 }

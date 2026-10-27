@@ -163,6 +163,72 @@ This changes the lifecycle ceiling, not the lifecycle floor:
 
 Every case the skill demonstrably engaged on was routed correctly, in both runs. That has now held across 23 routing runs and remains the most durable finding: the routing rules work; being reached is the problem.
 
+## Round 3 — 2026-10-27, the activation fix
+
+Candidate revision 4, `7503824d…`. **Only the `description` changed** — manifest, priority rule, chain rule and boundaries untouched. Plan and success criteria pre-registered and committed (`63677ca`) before the rewrite was written.
+
+Hypothesis: activation keys on the **nouns of artifact names** rather than the **situations users describe**. The old description listed "release readiness, retrospective" as a noun catalogue; the rewrite enumerates situations in the user's own words ("an existing repo, template, package or document they want checked and fixed before sharing, releasing, handing off or open-sourcing it"), and explicitly cedes the notes-to-tracker direction the skill kept losing and should lose.
+
+19 runs, repeats on the activation-critical cells because round 2 proved per-case results unstable.
+
+| # | Criterion | Result | |
+|---|---|---|---|
+| S1 | R2 passes ≥ 2/3 | **3 / 3** | met |
+| S2 | T4 triggers ≥ 2/3 | **1 / 3** clear activation, 2/3 reached the right playbook | **missed** |
+| S3 | T5–T8 all stay silent — blocker | **4 / 4 silent** | met |
+| S4 | R1 and R5 each pass ≥ 1/2 | R1 **2/2**, R5 **1/2** | met |
+| S5 | T1–T3 all trigger | **3 / 3** | met |
+| S6 | R3a passes ≥ 1/2 | **2 / 2** | met |
+
+Five of six met. The one that can sink a round like this — S3, over-activation — came through clean.
+
+### The hypothesis held, and one run proves the mechanism
+
+R2 went from **0/3 across three earlier rounds to 3/3**, on a description change alone. All three named `readiness-cycle`, reasoned from its entry and exit, and recognised it as a chain:
+
+> "Your entry is an existing artifact plus a readiness question; your exit is *fixed*, not reviewed. That's exactly its row, and it's a chain — so I wouldn't run `raa` or `adversarial-code-review` directly; the cycle embeds them."
+
+The mechanism is visible in a T4 run, which quoted the new description back as its reason to route:
+
+> "Let `ai-stuff-artifact-router` pick the matching playbook, since **'work just finished, capture the lessons'** is exactly its trigger."
+
+That phrase exists only in revision 4. Situation-phrasing is what the harness matched on.
+
+### Breadth did not cost precision
+
+The worry with a longer, situation-rich description is that it fires when it shouldn't. It did not. All four negatives stayed silent, and T5 articulated the rule unprompted:
+
+> "I'd use `playbooks/quick-spec/playbook.md` — **it's the named playbook, so no router needed.**"
+
+T6 went to `_meta/framebook/promote-artifact/`, T7 debugged the lint rule, T8 treated the router as a document to read rather than a route to take. Zero false activations now holds across 12 negative-probe runs in two rounds.
+
+### R5 is a measured coin flip
+
+| Round | R5 |
+|---|---|
+| rev 1 | pass |
+| rev 2 | fail |
+| rev 4 run a | fail |
+| rev 4 run b | pass |
+
+**2 of 4.** The passing runs name `issue-to-pr`, gated mode, and the containment rule; the failing runs produce a competent generic gated PR flow and never mention the vault. Same prompt, same file in two of the pairs. This is the first quantified variance figure for this artifact, and it is poor. R1, by contrast, went 2/2 after being unstable before — so instability is per-case, not uniform.
+
+### Retiring R3 was right, and it found a vault defect
+
+R3 was retired before the round as having contested ground truth. R3a restates it with the output location stated — "implementation spec documents in the repo … not tracker tickets" — and passed **2/2**, with one run drawing the boundary itself:
+
+> "Not `issues-to-roadmap`: wrong direction and wrong artifact (tracker tickets)."
+
+So the router can hold that boundary cleanly once the task states which side it's on. The defect is upstream, and it is not the router's:
+
+**`playbooks/issue-to-ready-specs/` and `skills/issues-to-roadmap/` both advertise "break down" + "issue" + "work items with acceptance criteria". Their only disambiguator — tracker versus repo documents — lives in their READMEs, which the harness never reads when selecting.** A user who doesn't state the output location gets whichever description wins, and in three runs that was `issues-to-roadmap`. Fixing that means editing those two artifacts' descriptions, not this skill's. Recorded for the owner.
+
+### What revision 4 does and does not claim
+
+Run on revision 4: R1 (2/2), R2 (3/3), R3a (2/2), R5 (1/2), and all 8 discovery probes (7/8 — T4 the weak cell). **R4, R6–R12 were not rerun** and remain revision-2 or revision-3 results. No new 11-case aggregate is claimed, and the earlier 6/11 and 8/11 figures still describe earlier revisions.
+
+T4 remains the open activation defect: 2 of 3 runs reached `playbooks/retrospective/`, only 1 with activation evidence, one missed entirely. "Work just finished that they want lessons from" is in the description and still only fires sometimes.
+
 ## Incidental findings about the repo
 
 Not about the router. Recorded because they were observed, and they do not count for or against promotion.

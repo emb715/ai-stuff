@@ -122,6 +122,29 @@ Per `docs/standards/artifact-structure.md` Gate 7: the consumable file must not 
 - **State tracking.** No record of which playbook was routed and whether it was used. Adding this would cross into agent-territory and require a persistence layer. Out of scope for a routing skill.
 - **Maintenance instructions in SKILL.md.** The manifest is hand-maintained; the rule is stated in SKILL.md ("treat the manifest as a cache, not a live index"). The lint command and maintenance cadence belong here, not in the model-facing file.
 
+### Round 3, 2026-10-27 — the description is the activation surface
+
+The single most useful thing learned about this artifact, and it generalises to every skill in the vault.
+
+**Descriptions are selected on by situation, not by artifact name.** The old description listed what the vault contains — "brainstorming, product brief, decision, triage, spec, plan … release readiness, retrospective". That is an index, and it only matches when the user happens to use the vault's own nouns. The rewrite enumerates the situations a user actually describes: "an existing repo, template, package or document they want checked and fixed before sharing, releasing, handing off or open-sourcing it."
+
+R2 — "is this template repo ready to open-source, and fix what isn't" — had failed 0 for 3 across three rounds. After the rewrite it passed 3 for 3. Nothing else changed; the manifest, priority rule and boundaries were untouched. One run made the mechanism explicit by quoting the new text back: *"since 'work just finished, capture the lessons' is exactly its trigger."* That phrase exists only in revision 4.
+
+Two corollaries worth keeping:
+
+1. **Ceding territory in the description is a feature.** The description now says it stays silent "when the task is to file session notes or a transcript as new tracker issues". Naming what the skill is *not* for is what stops it fighting `issues-to-roadmap`, and it cost nothing — precision held at zero false activations across 12 negative probes.
+2. **Breadth did not cost precision, contrary to the obvious worry.** A longer, situation-rich description did not start firing on named playbooks or vault chores. The limiting factor was never breadth; it was vocabulary overlap with what users type.
+
+What did **not** get fixed: `R5` is 2 of 4 across all rounds on an identical prompt, and `T4` fires on 1 of 3. Activation is narrowed, not solved, and it is now the only thing standing between this artifact and a reliability claim.
+
+### The upstream collision this round surfaced (not fixable here)
+
+Retiring eval case R3 as defective exposed a vault defect rather than a router defect.
+
+`playbooks/issue-to-ready-specs/` and `skills/issues-to-roadmap/` both advertise the same verb and object — "break down", an issue, "work items with acceptance criteria". The boundary between them is real and documented: one writes repo spec documents, the other files tracker issues, and each README names the other. **But the harness selects on `description`, and neither description states the boundary.** So a task that doesn't say where the output lands goes to whichever description wins, which in three runs was `issues-to-roadmap`.
+
+The router cannot fix this. When the task states the output location, it holds the line (R3a passed 2/2, one run rejecting `issues-to-roadmap` as "wrong direction and wrong artifact"). The fix is one sentence in each of those two artifacts' descriptions. Flagged for the owner; editing two unrelated validated artifacts is out of scope for a round about this skill's activation.
+
 ## Classification note — why `skills/` and not `playbooks/` (2026-10-26)
 
 Promoted `draft -> validated` and moved from `experiments/` to `skills/ai-stuff-artifact-router/` on this date.
