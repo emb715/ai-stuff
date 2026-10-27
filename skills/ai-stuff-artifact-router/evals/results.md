@@ -323,6 +323,31 @@ P1 passing this round, after failing on the same file, confirms the confound rea
 
 P4 has no such excuse and is the one genuine open defect: the capture situation now fires reliably as a *pair* (T4, 5/5) but not when the task emphasises durable knowledge over lessons.
 
+## Round 6 — 2026-10-27, declines that name things
+
+Revision 7, `c9584456…`. Owner decision: a decline now names the artifact that does cover the task, from a fixed **Covered elsewhere** table, without surfacing or reading it. The table is closed — an artifact absent from both the manifests and the table gets a plain decline with no invented pointer, which keeps the step-6 widening hole shut.
+
+Two shapes stay deliberately uncovered and get **no** pointer: unsettled notes → tracker issues, and anything an experiment would cover.
+
+4 runs.
+
+| Case | Expected | Result |
+|---|---|---|
+| **R13** settled plan → tracker | decline, name `issues-to-roadmap` | **pass on the route; pointer not scoreable** |
+| **R4** unsettled, scope disputed | decline, **no** pointer | **✓** |
+| R1 regression | `adversarial-code-review` | ✓ |
+| T5 negative | silent | ✓ |
+
+**R13 produced the outcome the case was written to allow for.** `skills/issues-to-roadmap/` self-activated and handled the task itself, so the router never activated and never needed to point anywhere. Expectation 1 (no wrong route) passed; expectation 2 is unscoreable because the pointer path wasn't reached. That is the *preferred* outcome — the owning skill winning its own task beats a router naming it — and it means the pointer remains a fallback whose value shows only when the router activates anyway. **The decline-with-pointer rule is therefore specified, shipped, and still essentially untested in the wild.**
+
+**R4 is the result worth keeping.** With no vault artifact involved and the router not activating, the session refused the task on its own reasoning:
+
+> "Writing issues now would freeze an open disagreement into the tracker as if settled… Issues created on top of it get silently reinterpreted by whoever picks them up."
+
+It then recommended closing scope first, a plan document second, issues only once settled. That is exactly what leaving the shape uncovered is supposed to produce, arrived at without being told. The decision to leave it uncovered looks right.
+
+No regressions: R1 still routes correctly and excludes the prompt neighbour; T5 still stays silent on a named playbook.
+
 ## Context cost, measured 2026-10-27
 
 Never measured before, and it is two separate costs that were being conflated:
