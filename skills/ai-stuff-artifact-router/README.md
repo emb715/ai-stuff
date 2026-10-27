@@ -17,7 +17,7 @@ owner: "@emb715"
 
 # Purpose
 
-Routes the current task to the right playbook in the ai-stuff vault. On user confirmation, reads and surfaces the playbook's `playbook.md` as the active procedure. Scope is playbooks only — does not route to prompts, skills, agents, or tools.
+Routes the current task to the right playbook or prompt in the ai-stuff vault. On user confirmation, reads and surfaces that artifact's consumable file — `playbook.md` as the active procedure, `prompt.md` as text to paste. Scope is the 14 playbooks and 5 prompts in its manifests; it does not route to skills, agents, tools, or anything in `experiments/`.
 
 # When to use
 
@@ -72,7 +72,13 @@ The margin over an unaided session comes from finding playbooks it misses — `a
 
 **The `experiments/` boundary (R12, 2026-10-23).** On owner instruction, `experiments/` is an explicit hard boundary alongside playbooks-only, and filesystem verification may only confirm or drop a manifest row, never add one. Given a prompt paraphrasing `experiments/arch-design-pipeline/`'s own purpose, the session declined the experiment by name-shape — "not routable — untested, unsanitized, outside `playbooks/`" — and answered with a valid `product-brief` → `quick-spec` sequence.
 
-**Round 3, 2026-10-27 — the activation fix (shipped revision 4, `7503824d`).** 19 runs, criteria pre-registered and committed before the fix was written. Only the `description` changed; manifest, priority rule, chain rule and boundaries untouched.
+**Round 4, 2026-10-27 — prompts in scope, collision fixed upstream (shipped revision 5, `3ca6d81a`).** Six-run verification batch on two owner decisions; does not supersede round 3's figures. Scope widened to 5 of 6 prompts (`ai-stuff-command-installer` excluded as vault tooling, not work). `skills/issues-to-roadmap/` narrowed to the execution-setup moment.
+
+The headline: **a one-sentence change to each of two descriptions converted a 0/3 case into a pass without touching the router's logic.** R3's ambiguous phrasing — "break down issue #214 into work items with acceptance criteria" — went to `issues-to-roadmap` three times out of three in rounds 1–3. After the narrowing it routes to `playbooks/issue-to-ready-specs/` and volunteers "tracker issues afterward are a separate step". The narrowed skill still fires at its own moment, and types the pieces by kind. Prompt routing landed mechanically too: P2 routed `loop-prd-readiness`, excluded `quick-spec` and `raa` on entry grounds, and noted "it's a prompt, not a procedure I run here". Negatives stayed silent.
+
+One failure, recorded inconclusive: P1 ("here's the PRD, here's the codebase — does the code do what the doc says?") did not reach `prompts/loop-implementation-readiness/`. The session's ambient instructions carry a detailed claim-verification workflow for that exact task shape, so it had a strong non-vault prior; a cleaner probe needs a shape those instructions do not cover.
+
+**Round 3, 2026-10-27 — the activation fix (revision 4, `7503824d`).** 19 runs, criteria pre-registered and committed before the fix was written. Only the `description` changed; manifest, priority rule, chain rule and boundaries untouched.
 
 | Criterion | Result |
 |---|---|

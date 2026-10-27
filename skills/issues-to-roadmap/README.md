@@ -29,10 +29,12 @@ The failure this skill is built against is not "no document" but "no shared home
 
 # Scope / When to use
 
-- After a planning, brainstorming or decision session, when the outcome is a set of decisions that need filing.
-- When the user pastes planning notes or a transcript and asks to break work down, create issues, or build a roadmap.
+- **At the point where a settled plan becomes work about to start.** The decisions are made, execution is next, and the tracker has to become the home a human reader or a later agent uses to pick up scope, ordering and status. This is the trigger — narrowed on owner instruction 2026-10-27.
+- When the outcome of a planning, brainstorming or decision session is a set of decisions ready to be filed and worked.
+- When handed work already agreed and asked to sequence it or map what blocks what — dependencies belong on the issues.
 - When a second session revisits work already filed — step 5 matches on outcome and proposes `update #n` rather than duplicating.
 - Not for deciding *what* to build. It files decisions a human already made; an open question stays an open question.
+- Not for breaking down notes whose decisions are **not settled yet**. Exploratory breakdown is not this skill's moment; come back when the plan is agreed and work is starting.
 - Not for writing repo-versioned spec documents — that is [`playbooks/issue-to-ready-specs/`](../../playbooks/issue-to-ready-specs/). This skill's target home is the tracker.
 - Not for implementing an issue. It writes no plan and no code.
 
@@ -48,6 +50,10 @@ The failure this skill is built against is not "no document" but "no shared home
 Use [`SKILL.md`](SKILL.md) — the nine-step procedure with its tracker-neutral read and create contracts plus the verified `gh` worked examples, the agent-ready rules, the two-gate two-phase size model, the proposal layout, and the creation order. Issue bodies come from [`templates/`](templates/): `spec.md`, `bug.md`, `prd.md`, `frd.md`, `nfrd.md`.
 
 # Evidence / Results
+
+> **Trigger narrowed 2026-10-27 (owner instruction).** Everything below was measured against the previous, broader trigger, which fired on any request to "break work down" or on pasted notes regardless of whether the decisions were settled. The **behavioural** evidence still applies — the nine steps, the five kinds, the draft-show-stop discipline and the refusal to invent criteria are unchanged. The **discovery** evidence does not: the should-trigger and should-not-trigger probes in `evals/plan.md` (including D1 and D2) were written for the old description and no longer describe the activation surface. Re-running them is outstanding work, listed in this session's plan.
+>
+> Two runs after the narrowing are recorded at the end of this section.
 
 **`validated` across all nine steps.** Drafting is measured over seven activating runs against a baseline; the creation sequence ran once on a real private tracker with every side effect verified against the API. Confidence is `medium` rather than `high` because drafting variance is only n=2 per cell, creation is n=1 on one repo, and the failure paths — partial-failure resume, a missing `project` scope mid-sequence — are still unverified.
 

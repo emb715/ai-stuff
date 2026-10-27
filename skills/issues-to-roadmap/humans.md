@@ -51,6 +51,19 @@ Be honest about how much the sequencing fix buys. An agent reading one issue bod
 ## What was deliberately left out
 
 - **No status transitions.** The skill files issues and stops. Moving an issue to review belongs to the session that implements it, and closing belongs to a human or a gate.
+## Trigger narrowed to the execution-setup moment (2026-10-27, owner instruction)
+
+> "issues-to-roadmap should be invoked only when we have a full plan to create and start working, so we can document each piece of it by the type of file and log all the interaction, progress, context that a reader and agent needs to keep up with the status."
+
+The description previously claimed any "break work down" request and any pasted notes or transcript. It now requires that **the plan is settled and work is about to begin**, and it explicitly rejects breaking down notes whose decisions are not settled.
+
+Why this was the right narrowing, beyond it being an instruction: the old description was winning activation on tasks it was not the best artifact for. Measured in the router's round-1 to round-3 evals, it took three runs of a task whose correct answer was arguably `playbooks/issue-to-ready-specs/`, purely because its description claimed "break work down" and that playbook's did not. Trigger breadth was buying it work it should have declined.
+
+**Two consequences to be honest about:**
+
+1. **Exploratory breakdown now has no owner.** "Here are my notes, break this into issues" previously landed here. It no longer matches this skill, it has never matched any playbook (the vault's playbooks run issue → specs, the opposite direction), and `playbooks/issue-to-ready-specs/` requires an existing tracked issue. That is a real coverage hole created by the narrowing, not a pre-existing one that moved. It may be the right hole — exploratory breakdown arguably wants a human decision first, which is exactly this skill's own "an open question stays an open question" rule — but it is now uncovered rather than covered-by-the-wrong-artifact.
+2. **The "log interaction, progress, context" half is not implemented, and today is a stated non-goal.** `SKILL.md` ends with "This skill files issues; it does not move status, and it does not claim an issue is ready because it exists." What the skill *does* supply is the substrate: one issue per decision, typed by kind, with dependencies mapped, in a tracker where comments and state live. What it does not do is maintain a running log of interaction or progress afterwards. If the instruction meant "the tracker is where that log lives, and this skill sets it up", nothing more is needed. If it meant "this skill should also write and update that log", that is a new capability which contradicts an explicit boundary and needs its own decision. Flagged, not built.
+
 - **No repo writes at all.** It creates and edits nothing under the project repo, including `.gitignore`. The proposal goes to a temp path outside the tree. Spec documents are the job of `playbooks/issue-to-ready-specs/`.
 - **No estimation beyond the bands.** No points, no hours, no cycle time. Those invite gaming and test none of the model's actual claims.
 - **No Jira specifics.** The templates assume a free-form markdown body. Jira's required custom fields would need a separate mapping, and nobody has needed it yet.

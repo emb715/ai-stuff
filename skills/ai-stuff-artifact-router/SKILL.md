@@ -1,24 +1,26 @@
 ---
 name: ai-stuff-artifact-router
-description: Picks the right ai-stuff playbook for the work at hand and surfaces its playbook.md on confirmation. Activates when no playbook is named and the user has any of these: a topic or rough idea to shape; more options than they can choose between; a request, feature or tracked issue to turn into specs or a phased plan; a validated plan that needs building; a multi-platform installer CLI to ship; a diff to tear apart before merging; work just finished that they want lessons from; or an existing repo, template, package or document they want checked and fixed before sharing, releasing, handing off or open-sourcing it. Also activates on "which playbook", "how do I do this here", and "what's the right way to start this". Stays silent when the user already named a playbook, when the work is a vault lifecycle operation (promote, deprecate, lint, audit, archive, save an artifact), when the task is to file session notes or a transcript as new tracker issues, and when no playbook covers the task.
+description: Picks the right ai-stuff playbook or prompt for the work at hand and surfaces it on confirmation. Activates when none is named and the user has any of these: a topic or rough idea to shape; more options than they can choose between; a request, feature or tracked issue to turn into specs or a phased plan; a planning doc with gaps that has to become implementation-ready; a validated plan that needs building; a multi-platform installer CLI to ship; a diff to tear apart before merging; a doc to verify a codebase actually implements; a repo whose docs may have drifted from its source; a release candidate to sign off against acceptance criteria; work just finished that they want lessons or durable knowledge from; or an existing repo, template, package or document they want checked and fixed before sharing, releasing, handing off or open-sourcing it. Also activates on "which playbook", "how do I do this here", and "what's the right way to start this". Stays silent when the user already named the artifact to use, when the work is a vault lifecycle operation (promote, deprecate, lint, audit, archive, save an artifact), when the task is to author a skill or prompt rather than use one, when a settled plan is being stood up in a tracker, and when nothing in the vault covers the task.
 ---
 
 # artifact-router
 
-Routes the current task to the right playbook in the ai-stuff vault. On user confirmation, reads and surfaces the playbook's `playbook.md` as the active procedure.
+Routes the current task to the right playbook or prompt in the ai-stuff vault. On user confirmation, reads and surfaces that artifact's consumable file.
 
 Scope is two hard boundaries:
 
-- **Playbooks only.** Does not route to prompts, skills, agents, or tools.
-- **`playbooks/` only.** Never route to anything in the `experiments` tree, whatever shape it has. An experiment with its own `playbook.md`, a `playbook` tag, or a plausible procedure is still an experiment: untested, unsanitized, and explicitly excluded from the vault's reusable inventory. The manifest below is the complete set of routable playbooks.
+- **Playbooks and prompts.** Routes to the playbooks and prompts listed in the two manifests below, and to nothing else. Does not route to skills, agents, or tools — those load themselves or are deployed, and routing to them duplicates a mechanism that already runs.
+- **Never the `experiments` tree**, whatever shape a thing in it has. An experiment with its own `playbook.md`, a `playbook` tag, or a plausible procedure is still an experiment: untested, unsanitized, and explicitly excluded from the vault's reusable inventory. The manifests below are the complete routable set.
+
+A playbook is a procedure you execute step by step; its consumable file is `playbook.md`. A prompt is text you paste into a session; its consumable file is `prompt.md`. Surface whichever the route calls for.
 
 ## When to activate
 
-- User describes a task that maps to a playbook's domain and names no playbook.
+- User describes a task that maps to a listed playbook's or prompt's domain and names neither.
 - User asks "which playbook should I use" / "how do I do X in this repo".
-- User is about to start multi-step work and the right playbook is non-obvious.
+- User is about to start multi-step work and the right artifact is non-obvious.
 
-Do not activate when the user already named a playbook. Do not activate for vault lifecycle operations (promote, lint, audit, archive, save an artifact) — those are `_meta/framebook/`. For tasks no playbook covers, say so and stop.
+Do not activate when the user already named the artifact to use. Do not activate for vault lifecycle operations (promote, lint, audit, archive, save an artifact) — those are `_meta/framebook/`. Do not activate when a settled plan is being stood up in a tracker — `skills/issues-to-roadmap/` owns that and activates itself. For tasks nothing listed here covers, say so and stop.
 
 ## Routing procedure
 
@@ -30,7 +32,7 @@ Do not activate when the user already named a playbook. Do not activate for vaul
 2. **Match.** Find the row whose `Entry` the user already has and whose `Exit` is what they want. One row matching both is the route. If no single row spans entry to exit, apply the chain rule.
 3. **Disambiguate.** If several rows match, apply the disambiguation rule (see Footgun), then the priority rule.
 4. State the recommendation: playbook name, why it fits, what it produces, and its status as a caveat.
-5. **Confirm before invoking.** Ask the user whether to surface it. On yes, read `<playbook-folder>/playbook.md` from disk and surface it in the session as the active procedure. On no, stop — the recommendation alone is the output.
+5. **Confirm before invoking.** Ask the user whether to surface it. On yes, read the route's consumable file from disk — `<playbook-folder>/playbook.md` for a playbook, `<prompt-folder>/prompt.md` for a prompt — and surface it in the session: a playbook as the active procedure, a prompt as text to paste. On no, stop — the recommendation alone is the output.
 6. If no playbook matches, say "no playbook covers this" — do not improvise and do not substitute the nearest-looking playbook.
 
 ### Signal sufficiency — what to check and what not to
@@ -86,7 +88,24 @@ Indexed by `Entry` (what the user must already have) and `Exit` (what the playbo
 | `playbooks/readiness-cycle/` | `release` | an existing artifact and a readiness question | a verified-ready verdict or a fix plan, looped until ship | draft |
 | `playbooks/retrospective/` | `capture` | a completed body of work | lessons, follow-through check, SMART action items | draft |
 
-Treat the manifest as a cache, not a source of truth. If a route seems wrong, read the playbook's own `README.md` — that is authoritative on *what a listed playbook does*.
+### Prompts
+
+Prompts are text you paste, not procedures you walk. These five fill gaps no playbook covers — mostly *verification against an existing artifact*, which every playbook either assumes already happened or delegates outward. `prompts/ai-stuff-command-installer/` is deliberately absent: it installs vault tooling and is not work to route.
+
+| Prompt | Intent | Entry — what you must already have | Exit — what it produces | Status |
+|---|---|---|---|---|
+| `prompts/loop-prd-readiness/` | `plan` | a planning doc with known gaps, conflicts or partial sections | the same doc driven to implementation-ready, atomic and traceable | validated |
+| `prompts/loop-implementation-readiness/` | `review` | a finished doc **and** a codebase meant to implement it | evidence-based coverage verdict, smallest next action per gap | validated |
+| `prompts/review-release-candidate/` | `release` | a release candidate (branch, build, tag) **and** documented acceptance criteria | inventory → triage → fix batches → sign-off verdict | draft |
+| `prompts/repo-primitive-audit/` | `review` | a repo or section to review, and suspected doc-vs-source drift | a primitive map from source, then an adversarial review against it | validated |
+| `prompts/knowledge-extraction/` | `capture` | a finished substantive session with decisions, failures or constraints in it | proposed durable knowledge writes, user approves before any write | validated |
+
+Two of these pair with a playbook on the same verb, and the entry discriminates:
+
+- `loop-implementation-readiness` vs `adversarial-code-review` — a **doc to verify code against** versus a **diff to attack**. Doc and whole codebase: the prompt. Diff and acceptance criteria: the playbook.
+- `knowledge-extraction` vs `retrospective` — **durable knowledge out of one session** versus **lessons and SMART actions out of a body of work**. One session's decisions and dead ends: the prompt. A finished sprint, feature or milestone, with ownership of the lessons: the playbook.
+
+Treat the manifests as a cache, not a source of truth. If a route seems wrong, read the playbook's own `README.md` — that is authoritative on *what a listed playbook does*.
 
 It is not a licence to widen the set. Verifying a route against the filesystem can only confirm or drop a row, never add one. A folder found by scanning that is absent from this table is not a route — and a folder in the `experiments` tree is never a route. If the right answer looks like it lives in an unlisted folder, say no playbook covers this and name the gap; adding a row is a maintenance edit a human makes, not a routing decision.
 
@@ -97,8 +116,9 @@ Several playbooks are themselves chains. Their rows above are correct, but the c
 | Chain playbook | What it runs internally | Entry → Exit |
 |---|---|---|
 | `issue-to-pr` | `issue-to-ready-specs` → `raa` → `implementation-orchestration` | tracked issue → merged PR |
-| `readiness-cycle` | `raa` → `implementation-orchestration` → `review-release-candidate` (a prompt) | artifact + readiness question → verified ready, looped |
-| `build-to-release` | `product-brief` → `quick-spec` → implementation → `adversarial-code-review` → release review | idea or PoC → released, 13 gated phases |
+| `readiness-cycle` | `raa` → `implementation-orchestration` → `prompts/review-release-candidate/` | artifact + readiness question → verified ready, looped |
+| `build-to-release` | `product-brief` → `quick-spec` → `prompts/loop-implementation-readiness/` → implementation → `adversarial-code-review` → `prompts/review-release-candidate/` | idea or PoC → released, 13 gated phases |
+| `raa` | hands off to `prompts/loop-implementation-readiness/` when a plan already exists | request → validated plan → verified against code |
 | `issue-to-ready-specs` | `product-brief` and `quick-spec` | tracked issue → PRD + specs |
 | `implementation-orchestration` | `adversarial-code-review` as its mandatory review phase | validated plan → reviewed branch |
 
@@ -132,12 +152,12 @@ Example: "review this codebase against our spec"
 
 These task shapes look routable and have no playbook. Say "no playbook covers this" and stop. Do not substitute the nearest-direction match.
 
-- **Session notes, brainstorm output, or a planning transcript → issues in a tracker.** No playbook runs this direction. `issue-to-ready-specs` runs the opposite direction and its entry is a tracked issue the user does not have yet.
-- **Authoring or revising an agent skill, prompt, command, or tool.**
+- **Session notes or a transcript whose decisions are not settled → issues in a tracker.** No playbook or prompt runs this direction. `issue-to-ready-specs` runs the opposite direction and its entry is a tracked issue the user does not have yet. Once the plan *is* settled and work is starting, standing it up in a tracker is `skills/issues-to-roadmap/`, which activates itself — out of this router's scope either way.
+- **Authoring or revising an agent skill, prompt, command, or tool.** Routing *to* a prompt is in scope; *writing* one is not.
 - **Vault lifecycle operations** — promote, deprecate, lint, audit, archive, save an artifact from another project. Those are `_meta/framebook/`.
 - **Anything an experiment would cover.** The `experiments` tree holds procedure-shaped drafts — for example a document-driven design pipeline (PRD → RFD → NRFD → tech spec) tagged `playbook` with its own `playbook.md`. These collide hardest with `plan`-intent tasks, which is exactly when the temptation to reach for one is strongest. Decline. An experiment becomes routable by being promoted into `playbooks/` and added to the manifest, never by being found.
 
-This router routes playbooks, and only those listed above. A task that would be served by a prompt, skill, agent, tool, or experiment gets a decline, not a near-miss.
+This router routes the playbooks and prompts listed above, and nothing else. A task that would be served by a skill, agent, tool, or experiment gets a decline, not a near-miss.
 
 ## Routing examples
 
@@ -151,7 +171,16 @@ This router routes playbooks, and only those listed above. A task that would be 
 → a sequence: `playbooks/decision-making/` then `playbooks/product-brief/`. No single playbook spans it. Start at `decision-making`; re-enter at `product-brief` with the ranked shortlist.
 
 **Task:** "Break down these planning notes into issues in our tracker."
-→ No playbook covers this. The direction is notes → issues; the vault's playbooks run issue → specs. Decline and stop.
+→ Nothing here covers this. The direction is notes → issues; the vault's playbooks run issue → specs. If the plan is settled and work is starting, `skills/issues-to-roadmap/` owns that and activates itself. Decline and stop.
+
+**Task:** "Here's our PRD and here's the codebase. Does the code actually do what the doc says?"
+→ `prompts/loop-implementation-readiness/` (intent: `review`). Entry: a finished doc plus the codebase meant to implement it. Not `adversarial-code-review` — that attacks a diff; this verifies a whole codebase against a requirement list. Surface `prompt.md` as text to paste.
+
+**Task:** "This plan doc is half-written and full of holes. Get it to where a dev could build from it."
+→ `prompts/loop-prd-readiness/` (intent: `plan`). Entry: an existing doc with known gaps. Not `quick-spec` — that writes a new spec from discovery; this drives an existing doc to ready.
+
+**Task:** "We shipped a hard week. I want what we learned written down somewhere it'll be used."
+→ Two candidates, discriminated by entry: `prompts/knowledge-extraction/` for durable knowledge out of one session's decisions and dead ends, `playbooks/retrospective/` for lessons and SMART actions out of a finished body of work. Surface both with their disambiguating sentences and let the user pick — priority rule, final tiebreak.
 
 **Task:** "Ship a CLI that installs our agents into Claude Code, Cursor and OpenCode, interactive and CI-safe."
 → `playbooks/agent-installer/` (intent: `implement`). Entry: a requirement to ship a multi-platform installer. Building an installer is build work — do not read "a new installer" as a blank-page `ideate` task.

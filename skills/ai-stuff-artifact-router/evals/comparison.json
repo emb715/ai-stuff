@@ -68,6 +68,23 @@
     "conclusion": "On 5 of 23 assertions the configurations differ at all; all 5 favour the candidate, and no assertion regressed against the baseline. 18 assertions are non-discriminating and prove nothing about the skill. The candidate's margin comes from finding playbooks an unaided session does not find (R1, R5, R7, R10) and from answering with an ordered sequence where no single playbook fits (R6).",
     "superseded_note": "These are revision-1 figures. The shipped artifact is revision 2; see routing_revision_2, which did not reproduce them."
   },
+  "routing_revision_5": {
+    "date": "2026-10-27",
+    "sha256_short": "3ca6d81a",
+    "what_changed": "Two owner decisions. (1) Scope widened from playbooks-only to playbooks plus five of six prompts, with a second Entry/Exit manifest, per-type surfacing (playbook.md vs prompt.md), chain legs now routable, and two entry-discriminated prompt-vs-playbook pairs. (2) skills/issues-to-roadmap narrowed to the execution-setup moment, which is the upstream fix for the round-3 description collision.",
+    "runs": 6,
+    "scope": "Verification batch, not a full round. Does not supersede round-3 figures.",
+    "results": {
+      "P1_doc_vs_codebase": "FAIL, recorded inconclusive. Did not route prompts/loop-implementation-readiness; named prompts/repo-primitive-audit as closest fit. Confound: the session's ambient instructions contain a detailed PRD-claim-verification workflow for exactly this task shape, so it had a strong non-vault prior. A cleaner P1 needs a task shape the ambient instructions do not cover.",
+      "P2_gappy_plan_doc": "PASS. Routed prompts/loop-prd-readiness, excluded quick-spec and raa on entry grounds, and stated the surfacing distinction unprompted: 'it's a prompt, not a procedure I run here'.",
+      "R3_ambiguous_original": "PASS - collision fixed. The same prompt that went to issues-to-roadmap 3/3 in rounds 1-3 routed to playbooks/issue-to-ready-specs and volunteered 'Tracker issues afterward are a separate step: skills/issues-to-roadmap'.",
+      "I2R_settled_plan": "PASS. The narrowed trigger fired at its intended moment and typed the pieces by kind (4 spec, 1 bug, 1 nfrd with enforcing gate).",
+      "T5_named_playbook": "silent",
+      "T6_vault_lifecycle": "silent"
+    },
+    "headline": "A one-sentence change to each of two descriptions converted a 0/3 case into a pass without touching the router's routing logic. Strongest result in four rounds, and it confirms round 3's generalisation: when two artifacts fight over a task, state the boundary in both descriptions, not only in their READMEs.",
+    "not_run": "R1, R2, R4-R12 and the eight discovery probes were not rerun on revision 5. All earlier figures describe earlier revisions."
+  },
   "routing_revision_4": {
     "date": "2026-10-27",
     "sha256": "7503824dfa91cda64256927bde5ecafbdb6f3476ae93f3df7d12145c96340c1f",

@@ -1,6 +1,6 @@
 ---
 name: issues-to-roadmap
-description: File planning decisions as agent-ready issues in a tracker (GitHub, Linear or Jira), then group them upward into milestones, a project and a roadmap proposal. Use after a planning, brainstorming or decision session, when notes or a transcript are pasted, or when asked to break work down, create issues, or build a roadmap. Also use when handed a list of work already agreed and asked to sequence it, order it, or map what blocks what — dependencies between work items belong on the issues. Not for deciding what to build, not for writing spec documents in the repo, and not for implementing an issue.
+description: Stand a settled plan up as agent-ready work in a tracker (GitHub, Linear or Jira) so execution can start and be followed: one issue per decision, each from the template for its kind — spec, bug, prd, frd, nfrd — with dependencies mapped, then grouped upward into milestones, a project and a roadmap proposal. Use at the point where the plan is agreed and work is about to begin, and the tracker has to become the home where a human reader or a later agent picks up scope, ordering and status. Also use when handed work already agreed and asked to sequence it or map what blocks what. Not for deciding what to build, not for breaking down notes whose decisions are not settled yet, not for writing spec documents in the repo (that is playbooks/issue-to-ready-specs/), and not for implementing an issue or moving its status.
 user-invocable: true
 argument-hint: "[notes file, transcript, or what was decided]"
 ---

@@ -229,6 +229,47 @@ Run on revision 4: R1 (2/2), R2 (3/3), R3a (2/2), R5 (1/2), and all 8 discovery 
 
 T4 remains the open activation defect: 2 of 3 runs reached `playbooks/retrospective/`, only 1 with activation evidence, one missed entirely. "Work just finished that they want lessons from" is in the description and still only fires sometimes.
 
+## Round 4 — 2026-10-27, prompts added to scope + the collision fixed upstream
+
+Candidate revision 5, `3ca6d81a…`. Two owner decisions landed together, so this is a 6-run verification batch, not a full round. It does not supersede round 3's figures.
+
+**Scope widened to prompts** — five of six, where each fills a gap no playbook covers. `prompts/ai-stuff-command-installer/` excluded: it installs vault tooling and is not work to route. Two of the five pair with a playbook on the same verb, discriminated by entry: `loop-implementation-readiness` (doc + codebase) against `adversarial-code-review` (a diff), and `knowledge-extraction` (one session's decisions) against `retrospective` (a finished body of work).
+
+**`skills/issues-to-roadmap/` narrowed** to the execution-setup moment, which is the upstream fix for the description collision round 3 identified.
+
+| Case | Expected | Result |
+|---|---|---|
+| **P1** — "here's the PRD, here's the codebase, does the code do what the doc says?" | `prompts/loop-implementation-readiness/` | **✗** |
+| **P2** — "plan doc is half-written with conflicts, get it buildable" | `prompts/loop-prd-readiness/` | **✓** |
+| **R3 (the ambiguous original)** — "break down issue #214 into work items with acceptance criteria" | no longer `issues-to-roadmap` | **✓ fixed** |
+| **I2R** — "plan is signed off, we build Monday, stand it up in the tracker" | `issues-to-roadmap` activates | **✓** |
+| T5 — playbook already named | silent | ✓ |
+| T6 — vault lifecycle operation | silent | ✓ |
+
+### The upstream fix worked
+
+R3's ambiguous phrasing went to `skills/issues-to-roadmap` three times out of three in rounds 1–3, because its description claimed "break work down" and the playbook's did not. After narrowing that description to settled-plan-about-to-be-executed, the same prompt routed to `playbooks/issue-to-ready-specs/` and volunteered the boundary itself:
+
+> "Tracker issues afterward are a separate step: `skills/issues-to-roadmap`."
+
+And the narrowed trigger still fires at its own moment — the settled-plan prompt activated it, and it typed the pieces by kind (four `spec`, one `bug`, one `nfrd` with its enforcing gate), which is exactly the "document each piece by the type of file" the narrowing was asked to serve.
+
+**This is the strongest result in four rounds, because it was a one-sentence change to each of two descriptions and it converted a 0/3 case into a pass without touching the router's logic at all.** The generalisation from round 3 holds: descriptions are the activation surface, and the fix for two artifacts fighting is to state the boundary in both descriptions rather than only in their READMEs.
+
+### P1, and a confound worth naming
+
+P1 built its own claim-verification procedure and named `prompts/repo-primitive-audit/` as "the closest existing fit". Wrong — `loop-implementation-readiness`'s entry is literally "a finished doc **and** a codebase meant to implement it".
+
+The confound: the session's ambient instructions include a detailed PRD-claim-verification workflow for exactly this task shape. The session had a strong non-vault prior and followed it. That makes P1 a poor discriminator of the router in this environment rather than clean evidence of a routing defect, and a cleaner P1 would use a task shape the ambient instructions do not cover. Recorded as inconclusive, not as a pass.
+
+### Prompt routing is mechanically understood
+
+P2 showed the surfacing distinction landing correctly, unprompted:
+
+> "read `prompts/loop-prd-readiness/prompt.md` and surface it as text to paste into a session in that other project — **it's a prompt, not a procedure I run here**."
+
+It also excluded `quick-spec` ("writes a new spec from discovery, yours already exists") and `raa` ("entry is a request against a codebase, not a doc") on entry grounds, and named the follow-on prompt as a separate step.
+
 ## Incidental findings about the repo
 
 Not about the router. Recorded because they were observed, and they do not count for or against promotion.
