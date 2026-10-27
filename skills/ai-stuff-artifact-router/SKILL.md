@@ -33,7 +33,7 @@ Do not activate when the user already named the artifact to use. Do not activate
 3. **Disambiguate.** If several rows match, apply the disambiguation rule (see Footgun), then the priority rule.
 4. State the recommendation: playbook name, why it fits, what it produces, and its status as a caveat.
 5. **Confirm before invoking.** Ask the user whether to surface it. On yes, read the route's consumable file from disk — `<playbook-folder>/playbook.md` for a playbook, `<prompt-folder>/prompt.md` for a prompt — and surface it in the session: a playbook as the active procedure, a prompt as text to paste. On no, stop — the recommendation alone is the output.
-6. If no playbook matches, say "no playbook covers this" — do not improvise and do not substitute the nearest-looking playbook.
+6. If nothing in the manifests matches, decline — and if the task is one of the shapes in **Covered elsewhere** below, name the artifact that does cover it. Do not surface it, do not read its file, do not route into it. Say what it is, say it is out of scope here, and stop. Never improvise and never substitute the nearest-looking playbook.
 
 ### Signal sufficiency — what to check and what not to
 
@@ -148,16 +148,26 @@ Example: "review this codebase against our spec"
 - Candidate B: `adversarial-code-review` — entry: git changes plus a finite requirement list. Task has a doc as the requirement list. Match.
 - Route: B.
 
-## Known coverage gaps — decline, do not substitute
+## Covered elsewhere — decline, and name it
 
-These task shapes look routable and have no playbook. Say "no playbook covers this" and stop. Do not substitute the nearest-direction match.
+These task shapes look routable and are not in the manifests. Decline, name the artifact below that does cover it, and stop. Naming is not routing: do not surface the artifact, do not read its file, do not start it. The user decides what to do with the name.
 
-- **Session notes or a transcript whose decisions are not settled → issues in a tracker.** No playbook or prompt runs this direction. `issue-to-ready-specs` runs the opposite direction and its entry is a tracked issue the user does not have yet. Once the plan *is* settled and work is starting, standing it up in a tracker is `skills/issues-to-roadmap/`, which activates itself — out of this router's scope either way.
-- **Authoring or revising an agent skill, prompt, command, or tool.** Routing *to* a prompt is in scope; *writing* one is not.
-- **Vault lifecycle operations** — promote, deprecate, lint, audit, archive, save an artifact from another project. Those are `_meta/framebook/`.
-- **Anything an experiment would cover.** `experiments/` holds procedure-shaped drafts — for example a document-driven design pipeline (PRD → RFD → NRFD → tech spec) tagged `playbook` with its own `playbook.md`. These collide hardest with `plan`-intent tasks, which is exactly when the temptation to reach for one is strongest. Decline. An experiment becomes routable by being promoted into `playbooks/` and added to the manifest, never by being found.
+| Task shape | Covered by | Note |
+|---|---|---|
+| A settled plan to stand up in a tracker so work can start and be followed | `skills/issues-to-roadmap/` | A skill — it activates itself. Mention it and stop |
+| Authoring or revising a skill, prompt, command or tool | `skills/skill-authoring/` | Routing *to* a prompt is in scope; *writing* one is not |
+| Vault lifecycle — promote, deprecate, lint, audit, archive, save an artifact | `_meta/framebook/` | The matching procedure folder, not a playbook |
+| Diagramming how a change ripples through a codebase | `skills/change-impact-diagram/` | A skill; activates itself |
+| Assessing a repo's AI-engineering setup against the Lean Agentic pillars | `skills/lean-agentic-baseline/` | A skill; activates itself |
 
-This router routes the playbooks and prompts listed above, and nothing else. A task that would be served by a skill, agent, tool, or experiment gets a decline, not a near-miss.
+This list is fixed. It is not permission to go looking: an artifact absent from both the manifests and this table gets a plain decline with no pointer invented for it.
+
+### Genuinely uncovered
+
+- **Unsettled notes or a transcript → issues in a tracker.** Nothing covers this, by design. The vault's playbooks run issue → specs, the opposite direction. `issues-to-roadmap` requires the decisions to be settled and work about to start, which is the point: unsettled work wants a human decision before it becomes a backlog. Decline with no pointer, and say the decisions need settling first.
+- **Anything an experiment would cover.** `experiments/` holds procedure-shaped drafts — for example a document-driven design pipeline (PRD → RFD → NRFD → tech spec) tagged `playbook` with its own `playbook.md`. These collide hardest with `plan`-intent tasks, which is exactly when the temptation to reach for one is strongest. Decline, and do **not** name it: an experiment is not a thing to point a user at. It becomes routable by promotion into `playbooks/` plus a manifest row, never by being found.
+
+This router routes the playbooks and prompts in its manifests, and nothing else. Everything else is a decline — with a name when the table above has one, without one when it does not.
 
 ## Routing examples
 
@@ -170,8 +180,11 @@ This router routes the playbooks and prompts listed above, and nothing else. A t
 **Task:** "Forty brainstormed ideas, I need something structured for planning."
 → a sequence: `playbooks/decision-making/` then `playbooks/product-brief/`. No single playbook spans it. Start at `decision-making`; re-enter at `product-brief` with the ranked shortlist.
 
-**Task:** "Break down these planning notes into issues in our tracker."
-→ Nothing here covers this. The direction is notes → issues; the vault's playbooks run issue → specs. If the plan is settled and work is starting, `skills/issues-to-roadmap/` owns that and activates itself. Decline and stop.
+**Task:** "The plan's signed off — break it into issues in our tracker so we can start."
+→ Nothing in the manifests covers this; the vault's playbooks run issue → specs, the opposite direction. Name it and stop: `skills/issues-to-roadmap/` covers standing a settled plan up in a tracker, and it is a skill that activates itself. Do not surface it.
+
+**Task:** "We talked a lot yesterday, nothing's really decided — break it into issues anyway."
+→ Decline with no pointer. The direction is notes → issues, which nothing runs, and the decisions are not settled, which is the one condition `issues-to-roadmap` refuses. Say the decisions need settling first.
 
 **Task:** "Here's our PRD and here's the codebase. Does the code actually do what the doc says?"
 → `prompts/loop-implementation-readiness/` (intent: `review`). Entry: a finished doc plus the codebase meant to implement it. Not `adversarial-code-review` — that attacks a diff; this verifies a whole codebase against a requirement list. Surface `prompt.md` as text to paste.

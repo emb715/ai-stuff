@@ -129,6 +129,18 @@
       ]
     },
     {
+      "id": "R13",
+      "name": "decline-names-the-covering-artifact",
+      "prompt": "The plan for the billing revamp is signed off. Break it into issues in our tracker so the team can start on it.",
+      "ground_truth": "decline, and name skills/issues-to-roadmap/ without surfacing it",
+      "tests": "The decline-with-pointer rule, added 2026-10-27 on owner decision. Pairs with R4, where the decisions are unsettled and the correct decline carries no pointer.",
+      "expectations": [
+        "Does not route to any playbook or prompt — in particular not issue-to-ready-specs, whose entry is a tracked issue that does not exist yet.",
+        "Names skills/issues-to-roadmap/ as the artifact that covers this, states it is out of this router's scope, and does not surface, read or start it."
+      ],
+      "note": "Added round 6. If skills/issues-to-roadmap self-activates and handles the task instead, that is a pass on the first expectation and not scoreable on the second — record which happened."
+    },
+    {
       "id": "P1",
       "name": "prompt-doc-vs-codebase",
       "prompt": "Here's our PRD for the billing rewrite, and here's the codebase that's supposed to implement it, in another project. Does the code actually do what the doc says?",
