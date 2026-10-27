@@ -10,7 +10,7 @@ Routes the current task to the right playbook or prompt in the ai-stuff vault. O
 Scope is two hard boundaries:
 
 - **Playbooks and prompts.** Routes to the playbooks and prompts listed in the two manifests below, and to nothing else. Does not route to skills, agents, or tools — those load themselves or are deployed, and routing to them duplicates a mechanism that already runs.
-- **Never the `experiments` tree**, whatever shape a thing in it has. An experiment with its own `playbook.md`, a `playbook` tag, or a plausible procedure is still an experiment: untested, unsanitized, and explicitly excluded from the vault's reusable inventory. The manifests below are the complete routable set.
+- **Never anything under `experiments/`**, whatever shape it has. An experiment with its own `playbook.md`, a `playbook` tag, or a plausible procedure is still an experiment: untested, unsanitized, and excluded from the vault's reusable inventory. The manifests below are the complete routable set.
 
 A playbook is a procedure you execute step by step; its consumable file is `playbook.md`. A prompt is text you paste into a session; its consumable file is `prompt.md`. Surface whichever the route calls for.
 
@@ -107,7 +107,7 @@ Two of these pair with a playbook on the same verb, and the entry discriminates:
 
 Treat the manifests as a cache, not a source of truth. If a route seems wrong, read the playbook's own `README.md` — that is authoritative on *what a listed playbook does*.
 
-It is not a licence to widen the set. Verifying a route against the filesystem can only confirm or drop a row, never add one. A folder found by scanning that is absent from this table is not a route — and a folder in the `experiments` tree is never a route. If the right answer looks like it lives in an unlisted folder, say no playbook covers this and name the gap; adding a row is a maintenance edit a human makes, not a routing decision.
+It is not a licence to widen the set. Verifying a route against the filesystem can only confirm or drop a row, never add one. A folder found by scanning that is absent from this table is not a route — and a folder under `experiments/` is never a route. If the right answer looks like it lives in an unlisted folder, say no playbook covers this and name the gap; adding a row is a maintenance edit a human makes, not a routing decision.
 
 ## Chains — when the answer is more than one playbook
 
@@ -155,7 +155,7 @@ These task shapes look routable and have no playbook. Say "no playbook covers th
 - **Session notes or a transcript whose decisions are not settled → issues in a tracker.** No playbook or prompt runs this direction. `issue-to-ready-specs` runs the opposite direction and its entry is a tracked issue the user does not have yet. Once the plan *is* settled and work is starting, standing it up in a tracker is `skills/issues-to-roadmap/`, which activates itself — out of this router's scope either way.
 - **Authoring or revising an agent skill, prompt, command, or tool.** Routing *to* a prompt is in scope; *writing* one is not.
 - **Vault lifecycle operations** — promote, deprecate, lint, audit, archive, save an artifact from another project. Those are `_meta/framebook/`.
-- **Anything an experiment would cover.** The `experiments` tree holds procedure-shaped drafts — for example a document-driven design pipeline (PRD → RFD → NRFD → tech spec) tagged `playbook` with its own `playbook.md`. These collide hardest with `plan`-intent tasks, which is exactly when the temptation to reach for one is strongest. Decline. An experiment becomes routable by being promoted into `playbooks/` and added to the manifest, never by being found.
+- **Anything an experiment would cover.** `experiments/` holds procedure-shaped drafts — for example a document-driven design pipeline (PRD → RFD → NRFD → tech spec) tagged `playbook` with its own `playbook.md`. These collide hardest with `plan`-intent tasks, which is exactly when the temptation to reach for one is strongest. Decline. An experiment becomes routable by being promoted into `playbooks/` and added to the manifest, never by being found.
 
 This router routes the playbooks and prompts listed above, and nothing else. A task that would be served by a skill, agent, tool, or experiment gets a decline, not a near-miss.
 

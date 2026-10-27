@@ -72,6 +72,78 @@ ARTIFACT_ASSET_RE = re.compile(
 )
 
 
+# DL011: words that make a line about experiments/ a prohibition rather than a
+# dependency. A runtime artifact that forbids routing into experiments is
+# self-contained by definition — it is declaring the opposite of a dependency.
+PROHIBITION_MARKERS = (
+    "never",
+    "not ",
+    "n't",
+    "no ",
+    "exclude",
+    "excluded",
+    "forbid",
+    "decline",
+    "out of scope",
+    "non-routable",
+    "unroutable",
+    "must not",
+    "do not",
+    "rather than",
+    "instead of",
+    "is not a route",
+)
+
+
+def is_prohibition(line: str) -> bool:
+    """True when a line mentioning experiments/ forbids it rather than depending on it."""
+    lowered = line.lower()
+    return any(marker in lowered for marker in PROHIBITION_MARKERS)
+
+
+def index_rows_for(
+    rel_path: str,
+    root_readme: str,
+    section_readmes: Dict[str, str],
+) -> List[Tuple[str, str, str]]:
+    """Index texts that should carry a status row for this artifact README.
+
+    Yields (index_rel_path, index_text, link_target). The root README links
+    `<section>/<folder>/`; a section README links `<folder>/`.
+    """
+    parts = rel_path.split("/")
+    if len(parts) != 3 or parts[2] != "README.md":
+        return []
+    section, folder = parts[0], parts[1]
+    out: List[Tuple[str, str, str]] = []
+    if root_readme:
+        out.append(("README.md", root_readme, f"{section}/{folder}/"))
+    section_index = f"{section}/README.md"
+    section_text = section_readmes.get(section_index)
+    if section_text:
+        out.append((section_index, section_text, f"{folder}/"))
+    return out
+
+
+def index_row_statuses(index_text: str, link_target: str) -> List[str]:
+    """Statuses in markdown table rows that link `link_target`.
+
+    An index row is `| [name](target) | ... | status |`. Only rows whose last
+    cell is a known lifecycle value are considered, so prose links and tables
+    without a status column are ignored rather than guessed at.
+    """
+    statuses: List[str] = []
+    needle = f"]({link_target})"
+    for line in index_text.splitlines():
+        stripped = line.strip()
+        if not stripped.startswith("|") or needle not in stripped:
+            continue
+        cells = [c.strip() for c in stripped.strip("|").split("|")]
+        if cells and cells[-1] in ALLOWED_STATUS:
+            statuses.append(cells[-1])
+    return statuses
+
+
 def is_artifact_asset(rel_path: str) -> bool:
     """True for markdown under an artifact folder's asset subdirectory."""
     if rel_path.rsplit("/", 1)[-1] == "README.md":
@@ -160,6 +232,7 @@ GATE_LABELS = {
     "DL014": "Gate 5",
     "DL015": "Gate 2",
     "DL016": "Gate 7",
+    "DL017": "Gate 6",
     # DL000 is the meta-rule: it checks that every gate AGENTS.md declares has at
     # least one rule above. It belongs to no single gate.
     "DL000": "Gate 0",
@@ -578,6 +651,11 @@ def lint() -> Tuple[List[Finding], int]:
         # DL011 — non-experiment runtime self-containment
         # Runtime-consumable files outside experiments must not depend on files
         # under experiments/ for execution.
+        #
+        # The check is per line, and a line that *forbids* experiments is not a
+        # dependency on them. A routing artifact legitimately needs to say "never
+        # route into experiments/"; failing that is the opposite of the rule's
+        # intent. See is_prohibition below.
         is_non_experiment = not rel_path.startswith("experiments/")
         is_artifact_runtime_area = rel_path.startswith(("skills/", "prompts/", "tools/", "agents/", "playbooks/"))
         is_runtime_file = (
@@ -586,14 +664,22 @@ def lint() -> Tuple[List[Finding], int]:
             or "/templates/" in rel_path
             or rel_path.startswith("skills/") and file_path.name != "README.md" and file_path.name != "humans.md"
         )
-        if is_non_experiment and is_artifact_runtime_area and is_runtime_file and "experiments/" in text:
-            findings.append(
-                Finding(
-                    "DL011",
-                    rel_path,
-                    "Non-experiment runtime artifact references experiments/ path; move dependency to canonical artifact location",
+        if is_non_experiment and is_artifact_runtime_area and is_runtime_file:
+            offending = [
+                (i, line)
+                for i, line in enumerate(text.splitlines(), start=1)
+                if "experiments/" in line and not is_prohibition(line)
+            ]
+            for line_no, _line in offending:
+                findings.append(
+                    Finding(
+                        "DL011",
+                        rel_path,
+                        f"line {line_no}: runtime artifact depends on an experiments/ path; "
+                        "move the dependency to a canonical artifact location "
+                        "(a line that forbids experiments/ is allowed)",
+                    )
                 )
-            )
 
         # DL016 — Gate 7: a consumable must not point at humans.md. Checked before
         # the bare-file skip below, because every consumable is a bare file.
@@ -774,6 +860,24 @@ def lint() -> Tuple[List[Finding], int]:
                     "Artifact is not linked from root README.md or relevant section README.md",
                 )
             )
+
+        # DL017 — index status must match the artifact's own frontmatter.
+        # DL008 checks that an artifact is linked; this checks that the linked
+        # row tells the truth about its lifecycle state. Index rows drift
+        # silently otherwise, which is the same failure class as manifest drift
+        # and equally cheap to catch: skills/README.md carried liteparse as
+        # draft while the artifact said validated.
+        for index_rel, index_text, link_target in index_rows_for(rel_path, root_readme, section_readmes):
+            for row_status in index_row_statuses(index_text, link_target):
+                if row_status != status:
+                    findings.append(
+                        Finding(
+                            "DL017",
+                            rel_path,
+                            f"{index_rel} lists this artifact as '{row_status}' but its frontmatter says "
+                            f"'{status}' — update the index row",
+                        )
+                    )
 
         # DL010 (agent-specific structure)
         # Every agent folder README must have a sibling system-prompt.md.

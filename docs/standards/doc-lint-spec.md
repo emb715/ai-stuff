@@ -198,11 +198,30 @@ Failure: BLOCKED.
 
 Applies to runtime-consumable artifacts outside `experiments/`.
 
-Check:
-- Block if runtime artifact content references `experiments/` paths as execution dependencies.
+Check (per line, so the report names the offending line number):
+- Block if a runtime artifact line references an `experiments/` path as an execution dependency.
 
 Allowed:
 - Provenance/evidence mentions in human-facing docs (`README.md`, `humans.md`) when not required for runtime execution.
+- **Lines that forbid `experiments/` rather than depend on it.** A line carrying a prohibition marker — `never`, `not`, `no`, `n't`, `exclude`, `forbid`, `decline`, `must not`, `do not`, `out of scope`, `non-routable`, `rather than`, `instead of` — is declaring the opposite of a dependency and passes.
+
+The allowance exists because a routing artifact must be able to say "never route into `experiments/`". Before 2026-10-27 this rule was a bare substring check, so stating that prohibition failed the rule whose intent it served; the only workaround was to avoid writing the path.
+
+Failure: BLOCKED.
+
+### DL017 — Index status matches the artifact
+
+Applies to artifact `README.md` files in `agents/`, `prompts/`, `playbooks/`, `skills/`, `tools/`.
+
+DL008 checks that an artifact is *linked* from an index. DL017 checks that the linked row tells the truth about its lifecycle state.
+
+Check:
+- For each markdown table row in the root `README.md` or the section `README.md` that links the artifact's folder, compare the row's last cell against the artifact's frontmatter `status`.
+- Block on any mismatch.
+
+Only rows whose last cell is a known lifecycle value (`draft|validated|vetted|deprecated`) are considered, so prose links and tables without a status column are ignored rather than guessed at.
+
+Rationale: index rows drift silently, and this is the same failure class as manifest drift — cheap to catch, invisible otherwise. Two instances existed when the rule was added: `skills/README.md` carried `liteparse` as `draft` against a `validated` artifact, and the root `README.md` carried `adversarial-code-review` as `draft` against a `validated` artifact. The second had survived a manual status audit, because that audit compared the router's manifest to the artifacts and never looked at the root index.
 
 Failure: BLOCKED.
 
@@ -264,7 +283,7 @@ PROMOTION_DECISION: <allowed|not allowed>
 
 ## Severity
 
-All of DL001–DL016 are **blocking** in this repository.
+All of DL001–DL017 are **blocking** in this repository.
 
 Every gate declared in `AGENTS.md` must have at least one rule mapped to it in `GATE_LABELS` (`scripts/doc_lint.py`). `DL000` enforces that mapping: a gate declared in prose with no rule behind it is a gate nobody checks. Gate 7 sat unenforced that way until 2026-10-09.
 

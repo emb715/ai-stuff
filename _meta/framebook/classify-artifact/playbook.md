@@ -23,9 +23,10 @@ Ask: if you removed the core of this artifact, what would be lost?
 |---|---|
 | The exact wording / instruction text | → `prompts/` |
 | The execution procedure / steps | → `playbooks/` |
-| The packaged behavior or tooling | → `skills/` (knowledge) or `tools/` (deployable) |
+| The packaged behavior or tooling | → `skills/` (harness-activated) or `tools/` (deployable) |
 | The explanatory policy or reference | → `docs/` |
-| Proven, reusable asset that's none of the above | → `vetted/` |
+
+There is no destination for "proven and reusable". Trust level is frontmatter (`status: vetted`), not a folder — a vetted artifact stays in its type folder. See `docs/standards/artifact-classification.md`.
 
 If two answers apply equally → the artifact is hybrid. Go to step "Handle hybrid artifacts" below.
 
@@ -44,10 +45,13 @@ If two answers apply equally → the artifact is hybrid. Go to step "Handle hybr
 - [ ] Has defined outputs
 - [ ] Has failure/rollback paths
 
-**`skills/`** — knowledge artifact, all must be true:
-- [ ] Explains how to build, author, or use a tool/framework
-- [ ] Reference material, not a deployable artifact
-- [ ] Not a step-by-step procedure (that's a playbook)
+**`skills/`** — harness-activated behavior package, all must be true:
+- [ ] Packaged as a `SKILL.md` whose `description` the harness matches to activate it, with no human loading it
+- [ ] Gives the agent a capability — how to build, author, use or decide something
+- [ ] Not a deployable artifact (that is `tools/`)
+- [ ] Not something a human opens and walks
+
+Ordered steps do **not** disqualify a skill. Every skill in this vault is procedural inside — what separates it from a playbook is *who loads it*: a skill activates itself from its description, a playbook is opened and followed. Judge the activation path, not the shape of the body.
 
 **`tools/`** — deployable artifact, all must be true:
 - [ ] Ready to deploy directly (copy-paste or symlink into a project)
@@ -59,10 +63,12 @@ If two answers apply equally → the artifact is hybrid. Go to step "Handle hybr
 - [ ] No standalone consumable form (no copy-paste artifact)
 - [ ] Policy or explanatory value, not execution value
 
-**`vetted/`** — all must be true:
+**`status: vetted`** — not a placement, a frontmatter value. All must be true:
 - [ ] Passes vetting rubric (≥ 12/14, no zero axes)
 - [ ] Proven, repeatable, sanitized
-- [ ] Not a prompt, tool, or playbook (those go to their own folders)
+- [ ] Already `validated`, in its own type folder — `draft -> vetted` is forbidden
+
+The artifact does not move when it reaches `vetted`. Promotion is `_meta/framebook/promote-artifact/`, not a classification decision.
 
 If any criterion fails → `experiments/` with a note on which criterion failed.
 
