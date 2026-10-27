@@ -31,12 +31,23 @@
       "id": "R3",
       "name": "footgun-breakdown-verb-issue-object",
       "prompt": "In another project I have GitHub issue #214: \"Users can't export reports to CSV. Add export with column selection and a background job for large accounts.\" Break it down into implementable work items with acceptance criteria.",
+      "status": "RETIRED 2026-10-27 — defective case, do not run or score",
+      "retirement_reason": "Ground truth was contested by construction. playbooks/issue-to-ready-specs/ claims this exact phrasing in its README, but skills/issues-to-roadmap/ claims the same verb and object in its description. The only boundary between them is where the output lands — repo spec documents versus tracker issues — and this prompt never says. Three runs chose issues-to-roadmap and may simply have been right. Replaced by R3a, which states the output location.",
+      "ground_truth": "contested — none",
+      "tests": "Nothing. Retained only so the round-1 and round-2 records remain readable.",
+      "expectations": []
+    },
+    {
+      "id": "R3a",
+      "name": "breakdown-verb-issue-object-output-location-stated",
+      "prompt": "In another project I have GitHub issue #214: \"Users can't export reports to CSV. Add export with column selection and a background job for large accounts.\" Turn it into implementation spec documents in the repo — file-level tasks and test plans, not tracker tickets.",
       "ground_truth": "playbooks/issue-to-ready-specs/",
-      "tests": "Footgun disambiguation: verb 'break down', object is a tracked issue. Pairs with R4, which reverses the direction.",
+      "tests": "Replaces the retired R3. Same verb and object, but the output location is stated, which is the actual boundary against skills/issues-to-roadmap. Tests whether the router holds a boundary that the competing descriptions do not state.",
       "expectations": [
         "Names playbooks/issue-to-ready-specs/ as the route.",
-        "Does not name issue-to-pr — the task asks for work items, not a merged PR."
-      ]
+        "Does not name issue-to-pr (exit is a merged PR, excluded), quick-spec alone (one feature, this is three), or skills/issues-to-roadmap (tracker, wrong direction)."
+      ],
+      "note": "Added round 3. Scored on revision 4 only: 2/2."
     },
     {
       "id": "R4",
