@@ -129,6 +129,62 @@
       ]
     },
     {
+      "id": "P1",
+      "name": "prompt-doc-vs-codebase",
+      "prompt": "Here's our PRD for the billing rewrite, and here's the codebase that's supposed to implement it, in another project. Does the code actually do what the doc says?",
+      "ground_truth": "prompts/loop-implementation-readiness/",
+      "tests": "Entry discrimination against playbooks/adversarial-code-review/: a doc to verify a whole codebase against, versus a diff to attack. Quoted from the prompt's When to use: 'You have a finished planning document and a codebase that is supposed to implement it.'",
+      "expectations": [
+        "Names prompts/loop-implementation-readiness/ as the route.",
+        "Does not name adversarial-code-review (entry is a diff) or repo-primitive-audit (entry is suspected doc-vs-source drift in repo structure, not doc-vs-code coverage)."
+      ],
+      "known_confound": "The session's ambient instructions carry a detailed PRD-claim-verification workflow for this exact task shape, giving a strong non-vault prior. One run on revision 5 failed for that reason and was recorded inconclusive. Kept as a case because the route is correct; treat failures here as weak evidence."
+    },
+    {
+      "id": "P2",
+      "name": "prompt-gappy-plan-doc",
+      "prompt": "I've got a plan doc for a notifications feature in another project. It's half-written, has conflicting sections and some holes. I need it to the point a developer could actually build from it.",
+      "ground_truth": "prompts/loop-prd-readiness/",
+      "tests": "Entry discrimination against playbooks/quick-spec/: an existing doc with known gaps, versus writing a new spec from discovery. Quoted: 'You have a planning doc that needs to be code-ready … The doc has known gaps, conflicts, or partial sections.'",
+      "expectations": [
+        "Names prompts/loop-prd-readiness/ as the route.",
+        "Does not name quick-spec (writes a new spec) or raa (entry is a request against a codebase, not a doc)."
+      ]
+    },
+    {
+      "id": "P3",
+      "name": "prompt-release-candidate-signoff",
+      "prompt": "We're about to cut the release on another project. The branch is frozen and the acceptance criteria are written down. I need to know it's safe to roll out.",
+      "ground_truth": "prompts/review-release-candidate/",
+      "tests": "The closest prompt-versus-prompt pair. Entry here is a release candidate plus documented acceptance criteria; loop-implementation-readiness's entry is a doc plus the codebase meant to implement it. Also discriminates against playbooks/readiness-cycle/, whose entry is a readiness question about an artifact and whose exit includes fixing.",
+      "expectations": [
+        "Names prompts/review-release-candidate/ as the route.",
+        "Does not name readiness-cycle (that loops until fixed; this asks for a verdict on a frozen candidate)."
+      ]
+    },
+    {
+      "id": "P4",
+      "name": "prompt-vs-playbook-capture-pair",
+      "prompt": "We just wrapped a gnarly debugging session on another project — a lot of dead ends, and two non-obvious constraints we only found the hard way. I want what we learned kept somewhere it'll actually get used.",
+      "ground_truth": "prompts/knowledge-extraction/",
+      "tests": "The declared capture pair. knowledge-extraction's entry is one substantive session with decisions, failures and constraints in it; retrospective's entry is a completed body of work and its exit is lessons plus SMART action items with Socratic ownership.",
+      "expectations": [
+        "Names prompts/knowledge-extraction/ as the route, or surfaces both it and retrospective with their disambiguating sentences per the final tiebreak.",
+        "Does not route to retrospective alone — the entry is one session, not a finished sprint, feature or milestone."
+      ]
+    },
+    {
+      "id": "P5",
+      "name": "prompt-repo-doc-vs-source-drift",
+      "prompt": "I suspect this repo's docs claim governance and conventions the source doesn't actually enforce. I want a review grounded in what the source declares, not in what the docs say.",
+      "ground_truth": "prompts/repo-primitive-audit/",
+      "tests": "Quoted: 'Use this when you suspect drift between what a repo's docs claim and what its source enforces.' Discriminates against adversarial-code-review, whose Not for excludes reviewing entire codebases.",
+      "expectations": [
+        "Names prompts/repo-primitive-audit/ as the route.",
+        "Does not name adversarial-code-review (scoped to a diff) or doc_drift tooling."
+      ]
+    },
+    {
       "id": "R12",
       "name": "experiments-never-routable",
       "prompt": "In another project I've got a non-trivial feature and I want it taken through a proper document-driven design pipeline — a PRD, then a review-gated technical spec — before anyone writes code.",
