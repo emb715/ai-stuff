@@ -323,6 +323,30 @@ P1 passing this round, after failing on the same file, confirms the confound rea
 
 P4 has no such excuse and is the one genuine open defect: the capture situation now fires reliably as a *pair* (T4, 5/5) but not when the task emphasises durable knowledge over lessons.
 
+## Context cost, measured 2026-10-27
+
+Never measured before, and it is two separate costs that were being conflated:
+
+| | size | ~tokens |
+|---|---|---|
+| `description` — loaded in **every** session in this repo | 1,292 chars | **~349** |
+| `SKILL.md` body — loaded only when the skill activates | 198 lines / 21.8 KB | ~5,900 |
+
+Estimated at ~3.7 chars/token, not measured against a tokeniser, and the harness envelope is excluded.
+
+The number that matters is **~349 tokens of always-on cost**, because the description is what sits in context whether or not the skill is ever used. That is the price of the situation-rich rewrite, and it is what it bought:
+
+| Cell | before | after |
+|---|---|---|
+| R2 | 0/3 | 3/3 |
+| R5 | 2/4 | 5/5 |
+| T4 | 1/3 | 5/5 |
+| Discovery | 7/8 | 8/8 |
+
+~349 always-on tokens for that is a trade worth making. Worth re-measuring if the description grows again — and worth noting that the dilution hypothesis being dead removes the main argument for keeping it short.
+
+The ~5,900-token body is a per-activation cost and competes with nothing when the skill stays silent, which measured across 16 negative probes it reliably does.
+
 ## Incidental findings about the repo
 
 Not about the router. Recorded because they were observed, and they do not count for or against promotion.
@@ -330,7 +354,11 @@ Not about the router. Recorded because they were observed, and they do not count
 1. **An eval run committed a 141,148-line deletion to this repo.** Baseline run R2 in plan revision 1 read "this internal template repo" as *this* repo, judged it unpublishable, deleted `experiments/design-skill/laws/sources/**`, wrote a `LICENSE`, swept in unrelated untracked files, and committed as `7a67eaf`. Root cause: open-ended eval prompts dispatched with write permissions into a live repo. The tracked tree was restored to `ae9343d` and verified byte-identical; the commit is preserved as tag `eval-accident-7a67eaf`. All prompts from revision 2 onward carry a read-only constraint.
 2. **The underlying licensing concern it raised is real and unresolved.** `experiments/design-skill/laws/sources/` contains full-text captures of nine copyrighted design books (~106 MB, `raw.txt` + `extract.md` per book) plus an unpacked EPUB. They are in git history. `scripts/doc_lint.py` exempts that directory from DL006 PII checks, so the lint will never flag it. If this repo is ever made public, that is a redistribution problem that deleting files will not fix. Flagged, not acted on.
 3. **`scripts/doc_lint.py` does not exclude `experiments/*/evals/**`.** `EXCLUDE_GLOBS` covers `skills/*/evals/**/*.md` and `prompts/*/evals/**/*.md` only, while the comment above them states the general policy ("Evaluation working files … The vault record of an eval is the artifact README's Evidence section"). Eval files placed under `experiments/` are therefore linted for frontmatter and structural sections, which the house pattern deliberately omits from eval files. Fixed by adding the matching glob.
-4. **One probe asserted that `skills/liteparse/` does not exist.** It does. The session's own glob returned nothing and it reported the absence as fact while also hedging ("I'd confirm with a content grep"). Unrelated to the router; a reminder that a single session's negative filesystem claim is not evidence.
+4. **Three sessions asserted that `skills/liteparse/` does not exist. It does, and the cause is the tool, not the repo.** Checked 2026-10-27: it is an ordinary directory with `README.md`, `SKILL.md`, `humans.md` and `references/`, no symlink, no ignore file inside, and no `.gitignore` pattern matching it. All three reports came from a `glob **/*liteparse*` returning nothing while `grep` found it immediately. One session worked it out itself and wrote the right conclusion:
+
+   > "glob `**/*liteparse*` returned nothing here; grep found it. **Don't trust that negative.**"
+
+   Nothing to fix in the repo. Recorded because a glob that silently returns nothing produces confidently false absence claims, and two of the three sessions stated the absence as fact before hedging.
 
 ## Limitations
 
