@@ -2,7 +2,7 @@
 title: "artifact-router"
 status: validated
 confidence: medium
-last_tested: 2026-10-26
+last_tested: 2026-10-27
 scope: personal
 tooling:
   - "agnostic/any-LLM"
