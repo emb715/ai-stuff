@@ -9,28 +9,40 @@
       "query": "A feature request came in on another project — bulk invite for team admins. I want it taken from request to shipped properly rather than winging it.",
       "should_trigger": true,
       "probe_shape": "task maps to a playbook domain, no playbook named",
-      "observed": { "rev1": "trigger", "rev4": "trigger" }
+      "observed": {
+        "rev1": "trigger",
+        "rev4": "trigger"
+      }
     },
     {
       "id": "T2",
       "query": "Which playbook should I use to turn a rough product idea into something a developer can actually build?",
       "should_trigger": true,
       "probe_shape": "explicit which-playbook question",
-      "observed": { "rev1": "trigger", "rev4": "trigger" }
+      "observed": {
+        "rev1": "trigger",
+        "rev4": "trigger"
+      }
     },
     {
       "id": "T3",
       "query": "I'm about to start a big multi-step change in another project and I'd rather do it in some structured way than improvise it.",
       "should_trigger": true,
       "probe_shape": "multi-step work, right procedure non-obvious, object absent",
-      "observed": { "rev1": "trigger, and correctly asked for the object first", "rev4": "trigger, and correctly asked for the object first" }
+      "observed": {
+        "rev1": "trigger, and correctly asked for the object first",
+        "rev4": "trigger, and correctly asked for the object first"
+      }
     },
     {
       "id": "T4",
       "query": "We finished the Q3 migration last week and I want to capture what we learned before everyone forgets it.",
       "should_trigger": true,
       "probe_shape": "playbook domain described as a situation, without the playbook's own vocabulary ('retro' never said)",
-      "observed": { "rev1": "miss", "rev4": "1 of 3 clear activation, 2 of 3 reached playbooks/retrospective/, 1 of 3 missed entirely" },
+      "observed": {
+        "rev1": "miss",
+        "rev4": "1 of 3 clear activation, 2 of 3 reached playbooks/retrospective/, 1 of 3 missed entirely"
+      },
       "open_defect": true
     },
     {
@@ -38,28 +50,76 @@
       "query": "Run the quick-spec playbook on the CSV export feature in another project.",
       "should_trigger": false,
       "probe_shape": "user already named the playbook — stated non-activation condition",
-      "observed": { "rev1": "silent", "rev4": "silent, and reasoned it: 'it's the named playbook, so no router needed'" }
+      "observed": {
+        "rev1": "silent",
+        "rev4": "silent, and reasoned it: 'it's the named playbook, so no router needed'",
+        "rev7_claude_code": "silent"
+      }
     },
     {
       "id": "T6",
       "query": "Promote the liteparse skill from draft to validated.",
       "should_trigger": false,
       "probe_shape": "vault lifecycle operation — owned by _meta/framebook/",
-      "observed": { "rev1": "silent", "rev4": "silent, routed to _meta/framebook/promote-artifact/" }
+      "observed": {
+        "rev1": "silent",
+        "rev4": "silent, routed to _meta/framebook/promote-artifact/"
+      }
     },
     {
       "id": "T7",
       "query": "The DL012 owner check in scripts/doc_lint.py is failing on a template file. Work out why.",
       "should_trigger": false,
       "probe_shape": "repo tooling bug, adjacent domain, no playbook object",
-      "observed": { "rev1": "silent", "rev4": "silent" }
+      "observed": {
+        "rev1": "silent",
+        "rev4": "silent"
+      }
     },
     {
       "id": "T8",
       "query": "What's the difference between the spec paradigm and the plan paradigm in this vault?",
       "should_trigger": false,
       "probe_shape": "documentation question, not a task to route",
-      "observed": { "rev1": "silent", "rev4": "silent, treated the skill as a document to read rather than a route to take" }
+      "observed": {
+        "rev1": "silent",
+        "rev4": "silent, treated the skill as a document to read rather than a route to take"
+      }
+    },
+    {
+      "id": "T9",
+      "query": "Payments latency on our service jumped to 8 seconds right after we shipped this morning, and customers are complaining.",
+      "should_trigger": true,
+      "round": 7,
+      "observed": {
+        "rev7_claude_code": [
+          "trigger",
+          "trigger"
+        ]
+      }
+    },
+    {
+      "id": "T10",
+      "query": "My PR's preview build is up. I want to check it really does what the ticket says before I merge.",
+      "should_trigger": true,
+      "round": 7,
+      "observed": {
+        "rev7_claude_code": [
+          "miss",
+          "trigger"
+        ]
+      }
+    },
+    {
+      "id": "T11",
+      "query": "Write unit tests for the parse_amount function in our billing module. It takes a string like '12.50' and returns cents.",
+      "should_trigger": false,
+      "round": 7,
+      "observed": {
+        "rev7_claude_code": [
+          "silent"
+        ]
+      }
     }
   ],
   "totals": {

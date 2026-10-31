@@ -61,7 +61,7 @@ This table is a snapshot. The filesystem is authoritative — `ls` the content d
 | [issue-to-pr](playbooks/issue-to-pr/) | Chain issue-to-ready-specs → raa → implementation-orchestration into a full-cycle issue→merged PR flow | draft |
 | [raa](playbooks/raa/) | Research, Analyze, Assess: turn a feature/change request into a validated file-scoped implementation-ready plan | draft |
 | [readiness-cycle](playbooks/readiness-cycle/) | Cycle an artifact from "ready to share?" to verified-ready or blocked-with-fix-plan; loops until ship | draft |
-| [request-triage](playbooks/request-triage/) | Route a raw request to the correct planning artifact (spec vs plan paradigm); does not execute | draft |
+| [request-triage](playbooks/request-triage/) | Route a raw request to the correct planning artifact (spec vs plan paradigm); does not execute. Superseded by the artifact router | deprecated |
 
 ### Skills
 

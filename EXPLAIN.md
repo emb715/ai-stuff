@@ -100,7 +100,7 @@ Chains issue-to-ready-specs → raa → implementation-orchestration into one fu
 
 Takes an existing artifact (template, repo, package) from "is it ready to share?" to "verified ready or blocked with a fix plan." Chains raa → implementation-orchestration → review-release-candidate. Loops until the verifier says ship, or you explicitly defer the remaining gaps. Use before open-sourcing or releasing anything.
 
-#### [request-triage](playbooks/request-triage/) — `draft`
+#### [request-triage](playbooks/request-triage/) — `deprecated`, superseded by [ai-stuff-artifact-router](skills/ai-stuff-artifact-router/)
 
 Routes a raw request to the correct planning artifact. Two paradigms: spec (quick-spec, issue-to-ready-specs) or plan (raa, build-to-release). Does not execute — only routes. Use when a request arrives and you don't know which playbook to run.
 
@@ -169,7 +169,7 @@ Entry points by situation:
 - **Build done, does it match the doc?:** loop-implementation-readiness
 - **Ready to ship?:** review-release-candidate or readiness-cycle
 - **Session produced real learning:** knowledge-extraction
-- **Don't know where to start?:** request-triage
+- **Don't know where to start?:** ai-stuff-artifact-router
 
 ---
 

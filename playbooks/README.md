@@ -46,6 +46,18 @@ playbooks/<name>/
 
 Use `templates/playbook-template.md` to start. Follow `_meta/framebook/save-artifact/` for intake.
 
+## Which path from a request
+
+Three playbooks start from a request. They differ in where they end:
+
+| You have | You want to end with | Playbook |
+|---|---|---|
+| a GitHub issue | spec documents in the repo (a PRD plus N implementation specs) | [issue-to-ready-specs](issue-to-ready-specs/) |
+| a GitHub issue | a merged PR, with optional human gates between phases | [issue-to-pr](issue-to-pr/) (wraps issue-to-ready-specs, raa and implementation-orchestration) |
+| an idea or proof of concept | a released, adversarially reviewed implementation | [build-to-release](build-to-release/) (13 gated phases) |
+| one feature, one implementer | a single implementation-ready spec | [quick-spec](quick-spec/) |
+| a request for a fleet of agents | a file-scoped phased plan | [raa](raa/), then [implementation-orchestration](implementation-orchestration/) |
+
 ## Index
 
 | Playbook | Purpose | Status |
@@ -61,6 +73,6 @@ Use `templates/playbook-template.md` to start. Follow `_meta/framebook/save-arti
 | [retrospective](retrospective/) | Run a retrospective on completed work; lessons, follow-through check, readiness assessment, SMART action items | draft |
 | [agent-installer](agent-installer/) | Build a multi-platform agent installer with a `@clack/prompts` TUI — agnostic engine, registry-driven platforms, idempotent routing, temp-dir tests | draft |
 | [decision-making](decision-making/) | Take N options and produce a ranked shortlist with rationale using multi-criteria decision analysis; fills the brainstorming → product-brief convergence gap | draft |
-| [request-triage](request-triage/) | Route a raw request to the correct planning artifact (spec paradigm vs plan paradigm) based on execution model and scope; does not execute, only routes | draft |
+| [request-triage](request-triage/) | Route a raw request to the correct planning artifact (spec paradigm vs plan paradigm) based on execution model and scope; does not execute, only routes. Superseded by [`ai-stuff-artifact-router`](../skills/ai-stuff-artifact-router/) | deprecated |
 | [issue-to-pr](issue-to-pr/) | Chain a GitHub issue to a merged PR through issue-to-ready-specs → raa → implementation-orchestration; two modes: gated (human review at each phase) and continuous (end-to-end) | draft |
 | [readiness-cycle](readiness-cycle/) | Take an existing artifact from "is it ready to share/release?" to verified-ready or blocked with a fix plan; chains raa → implementation-orchestration → review-release-candidate | draft |

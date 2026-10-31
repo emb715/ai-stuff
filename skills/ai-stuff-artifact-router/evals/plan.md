@@ -379,3 +379,127 @@ Variance will still be unquantified at 2–3 repeats. The round can show a fix w
 ## Results
 
 See `results.md`, written after the runs.
+
+## Round 7 — 2026-10-31, the QA-line routes. Pre-registered before any run
+
+The QA line (merged 2026-10-31) added two playbooks, `acceptance-verification` and `incident-response`, a `respond` intent, a disambiguation line between `review-release-candidate` and `acceptance-verification`, and a **Covered elsewhere** row for `skills/test-authoring/`. None of it had been measured. This round measures only those additions plus two regression cells. The manifest, priority rule and chain rule are not edited for it.
+
+### Constants for this round
+
+| Setting | Value |
+|---|---|
+| Executor | Claude Code headless (`claude -p`), one fresh process per run. **Different from rounds 1 to 6**, which ran in OpenCode: results here describe Claude Code skill discovery and do not combine with earlier rounds for variance |
+| Model | the harness default, recorded per run from the JSON output |
+| Directory | a detached worktree of `main` at `f25c4ef`, one per condition, never the working repo |
+| Skill delivery | project-level symlinks under `.claude/skills/`. Never named in any prompt |
+| Competing skills, every condition | `issues-to-roadmap` and `test-authoring`, both symlinked. `test-authoring` is present because R18 and T11 are about its territory |
+| SKILL.md under test | sha256 `70a072cd24cb007d875e0eb84d6b1a042657156f09664f32a422b368659342fc` (main at `f25c4ef`) |
+| Suffixes | Half B: `shared_prompt_suffix` from `evals.json`, unchanged. Half A: "Don't do it yet, just tell me how you'd start." plus the same read-only sentence and `SKILLS_USED:` line |
+
+### Cases
+
+Ground truth is quoted from each target's own README.
+
+**R14 — running build against its criteria.** *"On another project a PR is CI-green and deployed to a preview URL at commit a1b2c3d. Its issue lists five acceptance criteria: invites send within a minute, expired invites show an error, admins can revoke, non-admins see no invite button, and the invite list paginates at 25. Before I merge, I want to know whether the running build actually meets each one."*
+Ground truth: `playbooks/acceptance-verification/`. Evidence: its `When to use`, "A branch is CI-green and about to merge, and the acceptance criteria need checking against real behavior"; its `Not for` excludes reviewing a diff.
+
+| # | Assertion |
+|---|---|
+| R14.1 | Names `acceptance-verification` as the route |
+| R14.2 | Does not route to `adversarial-code-review` |
+
+**R15 — production broken by a shipped change.** *"On another project the checkout API's error rate went from 0.2% to 9% about twenty minutes after this morning's deploy. Customers are seeing failed payments right now. We have dashboards and a rollback."*
+Ground truth: `playbooks/incident-response/`. Evidence: its `When to use`, "An alert, error-rate spike, or failed health check on a production system"; `Not for` excludes a failing CI check, which is `implementation-orchestration`'s fix loop.
+
+| # | Assertion |
+|---|---|
+| R15.1 | Names `incident-response` as the route |
+| R15.2 | Puts mitigation (rollback or equivalent) before root-cause diagnosis |
+| R15.3 | Does not route to `implementation-orchestration` or `retrospective` |
+
+**R16 — the footgun pair for R14: candidate to triage, fix and sign off.** *"Release candidate v2.3.0-rc1 on another project is tagged. The PRD has acceptance criteria for about thirty features. I need every user-facing surface inventoried against them, defects triaged by root cause, fixed in batches, re-verified and signed off before rollout."*
+Ground truth: `prompts/review-release-candidate/`. Evidence: its `When to use`, "The prompt drives the full verification lifecycle: inventory → evidence capture → triage → fix batches → re-verification → sign-off"; the router's own disambiguation line gives fixing and sign-off to the prompt.
+
+| # | Assertion |
+|---|---|
+| R16.1 | Names `review-release-candidate` as the route |
+| R16.2 | Does not route to `acceptance-verification` alone, which observes and does not fix |
+
+**R17 — after the incident.** *"The outage on another project last week is resolved; service has been stable for five days and the rollback held. I want to go over what happened and turn it into action items the team owns."*
+Ground truth: `playbooks/retrospective/`. Evidence: its `When to use`, "after completing a significant body of work … turns them into actions"; `incident-response` runs only while users are affected and hands the causal record onward.
+
+| # | Assertion |
+|---|---|
+| R17.1 | Names `retrospective` as the route (offering `knowledge-extraction` beside it, per the router's own tiebreak, still passes) |
+| R17.2 | Does not route to `incident-response` |
+
+**R18 — covered elsewhere: tests from a spec.** *"On another project the spec for bulk invite is approved: admins can paste up to 100 emails, duplicates are dropped with a count shown, and invalid addresses are listed without blocking the rest. Before anyone implements it, I want the tests written from the spec."*
+Ground truth: no playbook or prompt. The router declines and names `skills/test-authoring/`, or `test-authoring` activates itself and the router stays out.
+
+| # | Assertion |
+|---|---|
+| R18.1 | Does not route to any playbook or prompt (`quick-spec`, `acceptance-verification`, `implementation-orchestration` are the likely wrong ones) |
+| R18.2 | Observation, not scored: does `test-authoring` self-activate, or does the router name it? |
+
+**Discovery probes.**
+
+| # | Probe | Expected |
+|---|---|---|
+| T9 | "Payments latency on our service jumped to 8 seconds right after we shipped this morning, and customers are complaining." | trigger |
+| T10 | "My PR's preview build is up. I want to check it really does what the ticket says before I merge." | trigger |
+| T11 | "Write unit tests for the parse_amount function in our billing module. It takes a string like '12.50' and returns cents." | **no trigger** (test-authoring or plain work, not the router) |
+
+**Regression cells:** R1 (diff to tear apart) and T5 (playbook already named), one run each.
+
+### Runs
+
+| Cell | Baseline | Candidate |
+|---|---|---|
+| R14, R15 | 1 each | 2 each |
+| R16, R17, R18 | 1 each | 1 each |
+| T9, T10 | — | 2 each |
+| T11, R1, T5 | — | 1 each |
+
+19 runs. Discovery is not run on baseline: with the router absent there is nothing to activate.
+
+### Success criteria, fixed now
+
+| # | Criterion | Consequence if missed |
+|---|---|---|
+| S1 | R14 and R15 each pass ≥ 1/2 on their first assertion | The new routes are not reachable |
+| S2 | R16 passes | The new disambiguation line does not hold |
+| S3 | **T11 stays silent and R18.1 passes** | **Blocker.** The router would be claiming test-authoring's territory |
+| S4 | T9 and T10 each trigger ≥ 1/2 | The new situations in the description do not activate |
+| S5 | R1 passes and T5 stays silent | Regression |
+| S6 | Candidate does not score below baseline on R14 to R18 | Blocks any status change, as in round 1 |
+
+Variance stays unquantified at 1 to 2 repeats; nothing here supports `vetted`.
+
+## Round 8 — 2026-10-31, request-triage retired. Pre-registered before any run
+
+`playbooks/request-triage/` is deprecated (owner go-ahead, 2026-10-31). Its manifest row is removed, and the router now asks the paradigm question itself. A "which readiness check" table was added. SKILL.md under test: sha256 `a624c124927bd243bc40735ec073aac5f76503d7ffd5c1f7ba74ded21c52a8ef`, at `815f14e`. Constants as round 7.
+
+**R8 is re-scored.** Its pre-registered ground truth ("names `request-triage`") no longer holds by design. R8.2 ("does not answer the spec-vs-plan question itself in place of routing") is reversed for the same reason. New ground truth, from the planning playbooks' `Paradigm` lines: ask whether one implementer in one session or a fleet in parallel will build it, and surface the spec pair (`quick-spec` / `issue-to-ready-specs`) or the plan pair (`raa` → `implementation-orchestration`) accordingly.
+
+| # | Assertion |
+|---|---|
+| R8b.1 | Asks who implements (one session or a fleet), or an equivalent question, before committing to a paradigm |
+| R8b.2 | Names the spec-paradigm and plan-paradigm playbooks as the candidates |
+| R8b.3 | Does not route to `request-triage` |
+
+**R19 — paradigm answered in the prompt.** *"A change request came in on another project: add SSO via SAML for enterprise accounts. Five agents will build it in parallel, and I want a plan they can split up."* Ground truth: `playbooks/raa/` (then `implementation-orchestration`). Evidence: `raa`'s `Paradigm` line, "Use the plan paradigm … when a fleet will implement in parallel".
+
+| # | Assertion |
+|---|---|
+| R19.1 | Names `raa` as the route |
+| R19.2 | Does not route to `quick-spec` or `request-triage` |
+
+**Regression cells:** R14 and R16 (the readiness table sits beside their rows), one run each.
+
+| Cell | Candidate runs |
+|---|---|
+| R8b | 2 |
+| R19 | 1 |
+| R14, R16 | 1 each |
+
+5 runs. Success: R8b passes ≥ 1/2 on all three assertions, R19 passes, R14 and R16 still pass. A route to `request-triage` in any run is a blocker.

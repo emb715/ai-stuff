@@ -394,6 +394,82 @@ See `comparison.json` → `limitations` for the full list. The four that most co
 3. **Activation is self-reported.** Three candidate runs claimed `SKILLS_USED: none` while reasoning in the manifest's own Entry/Exit vocabulary. Activation counts are a floor.
 4. **The read-only constraint flatters the baseline.** Asked how it *would* proceed, a session names procedures more readily than one told to act. The measured gap is probably narrower than the real one, which is the safe direction for a promotion decision.
 
+## Round 7 — 2026-10-31, the QA-line routes, first run in Claude Code
+
+Pre-registered in `plan.md`, Round 7. 19 runs, all `claude -p` headless sessions in detached worktrees of `main` at `f25c4ef`. Every run reported the same models (`claude-sonnet-5-5` with `claude-haiku-5-5` as the harness's helper). `git status` in both worktrees after the batch showed only the `.claude/` symlink directory, so no run wrote to the repo.
+
+### Routing, R14 to R18
+
+| Case | Baseline | Candidate | Result |
+|---|---|---|---|
+| R14 running build vs criteria | no route named | `acceptance-verification` 2/2, adversarial review not routed | **pass** |
+| R15 production broken | no route named, rollback first | `incident-response` 2/2, rollback before diagnosis, escalation to a human | **pass** |
+| R16 candidate to fix and sign off | no route named | `review-release-candidate`, `acceptance-verification` named only as the observe-without-fixing alternative | **pass** |
+| R17 after the incident | no route named | **router not activated**, no route named | **fail** on R17.1, pass on R17.2 |
+| R18 tests from a spec | `test-authoring` self-activated | `test-authoring` self-activated, router silent | **pass** |
+
+The baseline never named a vault artifact on R14 to R17. Its procedures were reasonable (R15's baseline also rolled back first), so the router's contribution on these routes is the vault's specific procedure and its evidence rules, not basic sense.
+
+### Discovery
+
+| Probe | Expected | Observed |
+|---|---|---|
+| T9 latency after a ship | trigger | trigger 2/2, both to `incident-response` |
+| T10 preview build vs ticket | trigger | 1/2. The miss said it *would* use the router and then answered alone |
+| T11 unit tests for a function | silent | silent; mentioned `test-authoring` as an option |
+| T5 playbook already named | silent | silent |
+
+### Regression
+
+| Cell | Result |
+|---|---|
+| R1 diff to tear apart | **fail.** Not activated; the session wrote its own review plan. It passed in every OpenCode round |
+| T5 | pass |
+
+### Success criteria
+
+| # | Criterion | Result |
+|---|---|---|
+| S1 | R14 and R15 ≥ 1/2 | **met**, 2/2 each |
+| S2 | R16 passes | **met** |
+| S3 | T11 silent and R18.1 passes | **met**. No blocker |
+| S4 | T9 and T10 ≥ 1/2 | **met**, 2/2 and 1/2 |
+| S5 | R1 passes and T5 silent | **missed** on R1 |
+| S6 | candidate not below baseline on R14 to R18 | **met**, 4/5 against 1/5 |
+
+### What this round shows
+
+- **The new routes work when the router engages.** Every candidate run that activated routed correctly, as in rounds 1 to 6.
+- **Activation is the weak half again, and the misses share one shape.** R1, R17 and the T10 miss all said they would consult the router, from `AGENTS.md`'s session-start rule, and then did not load it. In Claude Code the skill competes with the repo's own start-up instructions, which tell the session how to look for a procedure by hand.
+- **R17's miss is also a description gap.** "Work just finished that they want lessons from" does not obviously cover a resolved outage. The description has no post-incident situation in the user's words.
+- **`test-authoring` owns its territory.** It self-activated on both R18 runs and the router stayed out, which is what the Covered elsewhere row intends.
+
+### Limitations
+
+- First round in Claude Code. It does not combine with rounds 1 to 6 (OpenCode) for variance, and the R1 regression may be a harness difference rather than a skill change. Rerunning R1 in OpenCode would separate the two.
+- One or two runs per cell; no reliability claim.
+- Activation judged from the `SKILLS_USED` line plus fingerprints (manifest paths, Entry/Exit wording, confirm-before-surfacing). R14 and R15 candidates self-reported `none` while reading the playbooks the router names, so activation counts remain a floor.
+
+### Round 7 verdict
+
+The two new playbooks and the `respond` intent are reachable, and the new disambiguation line holds. No blocker was hit. The status stays `validated`; the R1 regression and the R17 miss are the next things to fix, by adding a post-incident situation to the description and checking whether `AGENTS.md`'s session-start rule should point at the router instead of a manual scan.
+
+## Round 8 — 2026-10-31, request-triage retired
+
+Pre-registered in `plan.md`, Round 8. 5 headless Claude Code runs at `bfc9ed2`, SKILL.md `a624c124…`. `git status` after the batch showed only `.claude/`.
+
+| Cell | Result |
+|---|---|
+| R8b run 1 | **pass** 3/3. Asked the one-session-or-fleet question, named the spec pair and the plan pair with statuses, no `request-triage` |
+| R8b run 2 | R8b.3 pass; R8b.1 and R8b.2 **fail**. Router not loaded; asked whether decisions were settled instead and named only `issue-to-ready-specs` |
+| R19 fleet stated | **fail** on R19.1. Router not loaded; routed to `issue-to-ready-specs` although the prompt says five agents in parallel. R19.2 pass |
+| R14 regression | pass, `acceptance-verification` |
+| R16 regression | pass, `review-release-candidate` |
+
+No run routed to `request-triage`, so the blocker did not trigger. R8b meets its ≥ 1/2 bar; R19 misses.
+
+Both failures repeat round 7's pattern exactly: the session says it would start with the router, then answers from `AGENTS.md`'s manual scan without loading it. When the router loaded (R8b run 1), the new rule worked as written. Activation in Claude Code is now 2 misses in 5 here and 3 in 12 in round 7, and it is the one thing to fix next.
+
 ## Round 1 verdict
 
 Routing correctness: the candidate is better than an unaided session on every assertion where the two differ, with no regression. The blocking conditions in `plan.md` were checked: R4.1 passed, no stated non-activation condition triggered, and the candidate did not score below the baseline. None of the three blockers fired.

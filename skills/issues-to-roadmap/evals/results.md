@@ -245,3 +245,65 @@ Creating in dependency order is strictly better: one write per issue instead of 
 ## Round 3 verdict
 
 Steps 1–9 have now all executed. The creation sequence works on a real tracker, in the specified order, with verified side effects and no repo writes; the approval gate holds without being told to. `validated` now covers the whole procedure rather than the drafting half, with creation at n=1 and the failure paths named as unverified.
+
+## Round 4 — 2026-10-31, carrying the whole plan (F1 to F5)
+
+Fixtures and assertions pre-registered in `plan.md`, Round 4, before these runs. Fixtures are synthetic, built to the stated shapes.
+
+## Conditions as run
+
+| Setting | Value |
+|---|---|
+| Executor | Claude Code headless (`claude -p`), one process per fixture. **Not** OpenCode and not the `honest` agent as in rounds 1 to 3 |
+| Model | `claude-sonnet-5-5` (harness helper `claude-haiku-5-5`), from each run's JSON |
+| Directory | a detached worktree of `main` at `f25c4ef`, skill symlinked at `.claude/skills/issues-to-roadmap`, never named in a prompt |
+| Tracker | **unreachable**: `gh` was not authenticated. Each prompt named a new, empty private repo and said to take that empty state as given. So step 3's read was never exercised, and nothing could reach a tracker |
+| Tools allowed | read tools, `Write`, and `wc`, `date`, `ls`, `cat`, `mkdir`; F1's rerun also allowed `python3` |
+| Repo writes | none. `git status` after every run showed only the `.claude/` symlink directory |
+
+Drafting prompts said nothing about stopping, as planned. Because filing was impossible, the draft-show-stop gate was not meaningfully tested; every run did stop and ask for approval.
+
+## Results
+
+| Fixture | Assertions | Result |
+|---|---|---|
+| F1 design larger than one body | G1.1, G1.2, G1.3, G2.1, G2.2, G2.3 | **6/6** |
+| F2 small design in one PRD | G1.4 | **1/1** |
+| F3 artifacts, answers, provisional threshold, stubs | G3.1, G3.2, G4.1, G4.2, G5.1, G5.2, G6.1, G6.2 | **8/8** |
+| F4 delivery mode | G7.1, G7.2, G7.3 | **3/3** |
+| F5 handoff | G8.1 | **1/1**; G8.2 not run |
+
+Every assertion was graded against the proposal and body files themselves, not against the sessions' summaries.
+
+### F1, checked against the files
+
+- Five `design` issues, one per area, ids D1 to D5. Bodies measured with `wc -m`: 18,088 / 18,068 / 20,225 / 20,139 / 18,038 characters, all under ~60,000.
+- **All 126 design rules appear verbatim** in the design bodies (script comparison against the fixture). The session rebuilt the bodies with a generator script and said so; the check confirms nothing was lost or reworded.
+- Each part links all five parts; each lists its citing issues under `Cited by`, the PRD included. The PRD links the five parts and restates none of them.
+- Specs cite `#[design-k] Dk` placeholders, since numbers do not exist before filing.
+
+### F3, checked against the files
+
+- The committed mockup is linked as `/blob/4be91c0e7d2a/…`; the two laptop-only files are under `Before filing` as prerequisites.
+- `Answered` holds exactly the three answers given, each with who, when and where.
+- The performance item is an `nfrd` with `Provisional: baseline x 1.10`, `Baseline: measured by {S7}` and a re-decide trigger; a baseline-measuring spec is drafted and named as the enforcing gate.
+- Each stub is a criterion in one spec, with two `prd` issues reading `Not yet planned. Stubbed by {S6} until then.`, listed under `Stubbed on purpose`.
+
+### F4 and F5
+
+- F4's header reads `Delivery: local build first (one PR per milestone…)`, and every spec's `Closed by` carries the same mode; sizes stay per issue.
+- F5 offered to post the proposal as a `roadmap-proposal` issue and posted nothing. F2 and F5, given no delivery mode, defaulted to per-issue PR and asked.
+
+## Findings
+
+- **The skill needs a shell for large plans.** F1's first attempt, with `python3` not allowed, could not assemble ~90,000 characters of bodies and stopped to ask permission rather than retyping or truncating. That is the right failure, but the README should say the large-plan path expects script execution.
+- **Measuring is skipped when `wc` is blocked.** F2's session could not run `wc -m` and estimated the total instead, saying so. The body-limit rule depends on the tool being available.
+- **Unprompted gap-finding held.** Every run listed open questions instead of inventing answers, and three runs inferred an unstated dependency (spec 2 blocked by spec 1) and flagged it for confirmation rather than asserting it.
+
+## Not covered
+
+G8.2 (a second session filing from the proposal issue), F6 (MCP-only reads and house conventions), F7 (resume after partial failure) and F8 (missing `project` scope) all need a sandbox repo and a token, and were not run. The full-scale rerun is also outstanding. The sub-issue and issue-type `gh api` calls remain unrun.
+
+## Round 4 verdict
+
+The ten gap fixes work on the drafting side: 19 of 19 graded assertions passed across five fixtures, with the large-plan split verified byte for byte. Status stays `validated`. The tracker-side half of round 4 is the open item.

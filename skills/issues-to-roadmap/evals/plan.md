@@ -103,7 +103,7 @@ See `results.md`, written after the runs. The round-1 to round-3 behavioural res
 
 # Round 4 — carrying the whole plan (written 2026-10-31, not run)
 
-Written before any run, per the authoring standard, after the edits that close ten filing gaps found in a dry run on a large plan and specify the two untested failure paths (see `humans.md`, "Carrying the whole plan in the tracker"). **Status: not run** (owner decision, 2026-10-31). Nothing below is evidence until a results section exists in `results.md`.
+Written before any run, per the authoring standard, after the edits that close ten filing gaps found in a dry run on a large plan and specify the two untested failure paths (see `humans.md`, "Carrying the whole plan in the tracker"). **Status: F1 to F5 run 2026-10-31; F6 to F8 and G8.2 not run.** Results in `results.md`, Round 4.
 
 ## Constants
 

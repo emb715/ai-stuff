@@ -2,7 +2,7 @@
 title: "issues-to-roadmap"
 status: validated
 confidence: medium
-last_tested: 2026-10-27
+last_tested: 2026-10-31
 scope: personal
 tooling:
   - "agnostic/any-LLM"
@@ -51,7 +51,7 @@ Use [`SKILL.md`](SKILL.md) — the nine-step procedure with its tracker-neutral 
 
 # Evidence / Results
 
-> **Ten filing gaps closed in the text, not yet measured (2026-10-31).** A dry run on a plan larger than GitHub's issue-body limit, with design content and non-text artifacts, found ten gaps: no home for design content, tracker body limits, non-text artifacts, no record of answered questions, provisional thresholds, deliberate stubs, delivery modes other than one PR per issue, handoff after approval, reads without `gh`, and house conventions. The skill now covers them with a sixth kind (`design`, with citable `D` ids), a measured body-limit split, pinned artifact links, an `Answered` record, a provisional NFRD form, a stub pattern, a delivery-mode table, a `roadmap-proposal` handoff, a stop-and-name rule for missing reads, and a house-conventions read. The two failure paths left open below — resume after partial failure and a missing `project` scope — now have explicit procedures, with the proposal file as a ledger. **None of this has been run.** Round 4 in [`evals/plan.md`](evals/plan.md) holds the fixtures and assertions, written before any run; the evidence below predates these changes. Reasons per gap are in [`humans.md`](humans.md).
+> **Ten filing gaps closed in the text; drafting half measured (2026-10-31).** A dry run on a plan larger than GitHub's issue-body limit, with design content and non-text artifacts, found ten gaps: no home for design content, tracker body limits, non-text artifacts, no record of answered questions, provisional thresholds, deliberate stubs, delivery modes other than one PR per issue, handoff after approval, reads without `gh`, and house conventions. The skill now covers them with a sixth kind (`design`, with citable `D` ids), a measured body-limit split, pinned artifact links, an `Answered` record, a provisional NFRD form, a stub pattern, a delivery-mode table, a `roadmap-proposal` handoff, a stop-and-name rule for missing reads, and a house-conventions read. The two failure paths left open below — resume after partial failure and a missing `project` scope — now have explicit procedures, with the proposal file as a ledger. Round 4's drafting fixtures F1 to F5 ran on 2026-10-31 (Claude Code, tracker unreachable): 19 of 19 graded assertions passed, including a ~91,000-character plan split into five design issues of at most 20,225 characters with all 126 rules carried verbatim. Not run: the second-session handoff (G8.2), MCP-only reads (F6), resume after partial failure (F7) and the missing `project` scope (F8), which all need a sandbox repo. See [`evals/results.md`](evals/results.md), Round 4. Reasons per gap are in [`humans.md`](humans.md).
 
 > **Trigger narrowed 2026-10-27 (owner instruction), and re-measured the same day.** Everything below the next paragraph was measured against the previous, broader trigger. The **behavioural** evidence still applies unchanged — the nine steps, the five kinds, the draft-show-stop discipline and the refusal to invent criteria were not touched. The **discovery** evidence was superseded and has been replaced.
 >
@@ -138,6 +138,6 @@ Open gaps: drafting variance is n=2, which detects gross instability but not a 1
 
 - [`skills/lean-agentic-baseline/`](../lean-agentic-baseline/) — pillar 22 (`Lean workflow: issues to roadmap`) inventory and assessment; this skill executes what that one audits, and `references/tier-3-scale.md` holds the same pillar's distilled content
 - [`playbooks/issue-to-ready-specs/`](../../playbooks/issue-to-ready-specs/) — the repo-document path for the same problem; runs *from* an issue, where this skill runs *to* one
-- [`playbooks/request-triage/`](../../playbooks/request-triage/) — routes a raw request to the right planning artifact
+- [`skills/ai-stuff-artifact-router/`](../ai-stuff-artifact-router/) — routes a raw request to the right planning artifact (replaces the deprecated `playbooks/request-triage/`)
 - [`playbooks/brainstorming/`](../../playbooks/brainstorming/), [`playbooks/decision-making/`](../../playbooks/decision-making/) — produce the session output this skill consumes
 - Source: `lean-agile-agentic` pillar 22, revision `23d61db` — https://emb715.github.io/lean-agile-agentic/guide/#tracker

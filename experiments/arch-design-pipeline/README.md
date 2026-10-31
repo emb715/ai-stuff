@@ -83,4 +83,4 @@ To be filled after pilot run.
 - [templates/tech-spec-template.md](templates/tech-spec-template.md) — Tech Spec template
 - [prompts/loop-prd-readiness/](../../prompts/loop-prd-readiness/) — optional PRD refinement
 - [playbooks/quick-spec/](../../playbooks/quick-spec/) — downstream spec paradigm
-- [playbooks/request-triage/](../../playbooks/request-triage/) — paradigm router (hand-off target)
+- [playbooks/request-triage/](../../playbooks/request-triage/) — paradigm router (hand-off target; deprecated 2026-10-31, see [`skills/ai-stuff-artifact-router/`](../../skills/ai-stuff-artifact-router/))

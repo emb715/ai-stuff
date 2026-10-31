@@ -15,6 +15,8 @@ owner: "@emb715"
 
 # Claude Code QA Skills Starter Pack
 
+> **Overlap note (2026-10-31).** [`skills/test-authoring/`](../../skills/test-authoring/) now covers writing unit and end-to-end tests from a spec, and [`tools/e2e-web/`](../../tools/e2e-web/) runs Playwright with a criteria ledger. Prefer those for that work. `deepeval-llm-evaluation` and `jira-qa-workflows` have no vault counterpart, and `deepeval-llm-evaluation` is the test source for `skills/skill-authoring/`'s evaluation, so this experiment stays.
+
 4 production-ready QA skills for Claude Code (and any Agent Skills compatible agent: Cursor, Copilot, Windsurf, Codex, and 30+ more). From QASkills.sh, the open registry of 400+ QA skills.
 
 ## What's inside

@@ -66,7 +66,7 @@ Apply in order. Stop at the first step that leaves one candidate.
 4. **Containment.** If one candidate embeds another (see Chains), and the task's exit is the container's exit, route to the container and name the embedded playbook as its phase. Do not route to a sub-playbook that the right chain already runs.
 5. **Final tiebreak — unconditional.** If two or more candidates survive steps 1-4, surface all of them with one disambiguating sentence each, taken from their `When to use`, and let the user pick. Never pick silently.
 
-**Status is not a fit criterion.** The vault has zero `vetted` playbooks and 12 of 16 are `draft`, so lifecycle state cannot discriminate on most routes, and where it can it is measuring maturity, not fit. Preferring a `validated` playbook over a `draft` one actively misroutes when the `draft` playbook is the one that matches the entry — the `validated` candidate is often a *phase* of the `draft` one. Report status alongside the route as a caveat ("status `draft` — confirm preconditions before starting"), never as a reason for the route.
+**Status is not a fit criterion.** The vault has zero `vetted` playbooks and 11 of 15 are `draft`, so lifecycle state cannot discriminate on most routes, and where it can it is measuring maturity, not fit. Preferring a `validated` playbook over a `draft` one actively misroutes when the `draft` playbook is the one that matches the entry — the `validated` candidate is often a *phase* of the `draft` one. Report status alongside the route as a caveat ("status `draft` — confirm preconditions before starting"), never as a reason for the route.
 
 ## Manifest
 
@@ -77,7 +77,6 @@ Indexed by `Entry` (what the user must already have) and `Exit` (what the playbo
 | `playbooks/brainstorming/` | `ideate` | a topic, and 30-60+ min of interactive time | 100+ ideas, themed and prioritised | validated |
 | `playbooks/product-brief/` | `ideate` | a rough idea, or brainstorm output already converged | structured brief: problem, users, success, scope, constraints | validated |
 | `playbooks/decision-making/` | `decide` | N existing options and no clear winner | ranked top 3-5 with per-criterion rationale and a robustness verdict | draft |
-| `playbooks/request-triage/` | `decide` | a raw request, and no idea whether it wants a spec or a plan | a routing decision between paradigms; executes nothing | draft |
 | `playbooks/quick-spec/` | `plan` | one feature or change, one implementer, one session | one implementation-ready spec, 6-criterion gated | validated |
 | `playbooks/issue-to-ready-specs/` | `plan` | an existing tracked issue, big enough for several stories | a PRD plus N implementation-ready specs | draft |
 | `playbooks/raa/` | `plan` | a feature/change/readiness request against a real codebase | a validated phased plan with file-level scope, risks, handoffs | draft |
@@ -108,6 +107,18 @@ Two of these pair with a playbook on the same verb, and the entry discriminates:
 - `loop-implementation-readiness` vs `adversarial-code-review` — a **doc to verify code against** versus a **diff to attack**. Doc and whole codebase: the prompt. Diff and acceptance criteria: the playbook.
 - `review-release-candidate` vs `playbooks/acceptance-verification/` — **a candidate to triage, fix and sign off** versus **a running build to observe**. Inventory, fix batches and a sign-off verdict: the prompt. Runtime evidence for each criterion from the executing program, no fixing: the playbook.
 - `knowledge-extraction` vs `retrospective` — **durable knowledge out of one session** versus **lessons and SMART actions out of a body of work**. One session's decisions and dead ends: the prompt. A finished sprint, feature or milestone, with ownership of the lessons: the playbook.
+
+### Which readiness check
+
+Five artifacts answer some form of "is it ready?". The object the user already has picks one:
+
+| The user has | Route |
+|---|---|
+| a planning doc with gaps | `prompts/loop-prd-readiness/` |
+| a codebase and the doc it should implement | `prompts/loop-implementation-readiness/` |
+| a running build and its acceptance criteria, to observe | `playbooks/acceptance-verification/` |
+| a release candidate to triage, fix and sign off | `prompts/review-release-candidate/` |
+| an existing repo, template, package or document to make share-ready, fixes included | `playbooks/readiness-cycle/` |
 
 Treat the manifests as a cache, not a source of truth. If a route seems wrong, read the playbook's own `README.md` — that is authoritative on *what a listed playbook does*.
 
@@ -204,7 +215,7 @@ This router routes the playbooks and prompts in its manifests, and nothing else.
 → `playbooks/agent-installer/` (intent: `implement`). Entry: a requirement to ship a multi-platform installer. Building an installer is build work — do not read "a new installer" as a blank-page `ideate` task.
 
 **Task:** "A change request came in; I don't know if it wants a spec or a plan."
-→ `playbooks/request-triage/` (intent: `decide`). Entry: a raw request and paradigm uncertainty. Route to it rather than answering the paradigm question directly — it is the playbook that owns that decision.
+→ Not enough signal to pick one route. Ask the one question the planning playbooks' `Paradigm` lines turn on: will one agent or human implement it in a single session, or a fleet in parallel? One session: the spec paradigm, `playbooks/quick-spec/` for one feature or `playbooks/issue-to-ready-specs/` for an issue that splits into several stories. A fleet: the plan paradigm, `playbooks/raa/` and then `playbooks/implementation-orchestration/`. Surface the pair that matches the answer. (`playbooks/request-triage/` used to own this choice; it is deprecated in favour of this rule.)
 
 **Task:** "Run an adversarial review on this PR's diff."
 → `playbooks/adversarial-code-review/` (intent: `review`). Entry: a diff plus acceptance criteria. Minimum 3 findings, fix menu. Status: validated.
