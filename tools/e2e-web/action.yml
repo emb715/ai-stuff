@@ -1,0 +1,36 @@
+name: e2e-web
+description: Run a Playwright suite and post a criteria ledger with runtime evidence anchors
+inputs:
+  url:
+    description: Base URL to run the suite against (sets PLAYWRIGHT_TEST_BASE_URL)
+    required: false
+  build:
+    description: Build identifier recorded on the ledger. Defaults to the PR head SHA.
+    required: false
+  environment:
+    description: Environment name recorded on the ledger (e.g. preview, staging)
+    required: false
+  criteria:
+    description: Path to the criteria document; every AC<n> in it becomes a ledger row
+    required: false
+  report:
+    description: Path to an existing Playwright JSON report (skips running the suite)
+    required: false
+  fail-on:
+    description: "Fail the check on: fail (default) | unverified | never"
+    required: false
+    default: fail
+  github-token:
+    description: Token used to upsert the sticky PR comment. Omit to skip commenting.
+    required: false
+    default: ${{ github.token }}
+outputs:
+  verdict:
+    description: VERIFIED | VERIFIED_WITH_CONDITIONS | NOT_VERIFIED
+  block:
+    description: The rendered markdown ledger block
+  unverified:
+    description: Count of criteria with no passing anchor
+runs:
+  using: node20
+  main: dist/action/index.js
