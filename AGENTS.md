@@ -7,8 +7,9 @@ At the start of every session in this repo, before responding to any request:
 1. **Orient** — read `README.md` for the directory map and lifecycle rules
 2. **Identify the session type** — classify the request (new artifact / research / continue experiment / audit / patch)
 3. **Find the right procedure** — read `_meta/framebook/README.md` and follow the matching framebook procedure
-4. **Check for prior work** — before building anything new, scan `experiments/`, `prompts/`, `skills/`, `agents/` for related artifacts and report what exists
-5. **Enforce structure** — any artifact with a consumable form uses the three-file folder. See `docs/standards/artifact-structure.md`. Never create a flat file for a prompt, skill, agent, or tool.
+4. **Route work to a procedure** — when the request is work to do (here or in another project) rather than a vault operation, and the user has not named a playbook or prompt, load the `ai-stuff-artifact-router` skill to pick one, or read `skills/ai-stuff-artifact-router/SKILL.md` if your tool has no skill support. Do not scan `playbooks/` or `prompts/` by hand for this. Vault operations stay with step 3.
+5. **Check for prior work** — before building anything new, scan `experiments/`, `prompts/`, `skills/`, `agents/` for related artifacts and report what exists
+6. **Enforce structure** — any artifact with a consumable form uses the three-file folder. See `docs/standards/artifact-structure.md`. Never create a flat file for a prompt, skill, agent, or tool.
 
 If the user's intent is unclear after the first message, ask: "Is this a new artifact, continuing an experiment, or a research session?" Do not proceed without knowing.
 
