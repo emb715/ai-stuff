@@ -20,9 +20,11 @@ If over the ~400-line ceiling: <the exemption claimed, and the number of decisio
 
 ## Governing decisions
 <ADR numbers and titles, or "None recorded">
+Design cited: <`#<design or prd> D<n>` for each design entry this builds against, or "None">
 
 ## Validation
 <the repo's validate command>, plus <the check specific to this slice>.
 
 ## Closed by
 <the human or the gate that closes this. The implementing agent moves it to review and stops.>
+Delivery: <per-issue PR | per-milestone PR | local build first — as the proposal states>. Progress is reported as comments on this issue.

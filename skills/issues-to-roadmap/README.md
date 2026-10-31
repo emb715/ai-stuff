@@ -47,9 +47,11 @@ The failure this skill is built against is not "no document" but "no shared home
 
 # Skill
 
-Use [`SKILL.md`](SKILL.md) — the nine-step procedure with its tracker-neutral read and create contracts plus the verified `gh` worked examples, the agent-ready rules, the two-gate two-phase size model, the proposal layout, and the creation order. Issue bodies come from [`templates/`](templates/): `spec.md`, `bug.md`, `prd.md`, `frd.md`, `nfrd.md`.
+Use [`SKILL.md`](SKILL.md) — the nine-step procedure with its tracker-neutral read and create contracts plus the verified `gh` worked examples, the agent-ready rules, the two-gate two-phase size model, the proposal layout, and the creation order. Issue bodies come from [`templates/`](templates/): `spec.md`, `bug.md`, `prd.md`, `frd.md`, `nfrd.md`, `design.md`.
 
 # Evidence / Results
+
+> **Ten filing gaps closed in the text, not yet measured (2026-10-31).** A dry run on a plan larger than GitHub's issue-body limit, with design content and non-text artifacts, found ten gaps: no home for design content, tracker body limits, non-text artifacts, no record of answered questions, provisional thresholds, deliberate stubs, delivery modes other than one PR per issue, handoff after approval, reads without `gh`, and house conventions. The skill now covers them with a sixth kind (`design`, with citable `D` ids), a measured body-limit split, pinned artifact links, an `Answered` record, a provisional NFRD form, a stub pattern, a delivery-mode table, a `roadmap-proposal` handoff, a stop-and-name rule for missing reads, and a house-conventions read. The two failure paths left open below — resume after partial failure and a missing `project` scope — now have explicit procedures, with the proposal file as a ledger. **None of this has been run.** Round 4 in [`evals/plan.md`](evals/plan.md) holds the fixtures and assertions, written before any run; the evidence below predates these changes. Reasons per gap are in [`humans.md`](humans.md).
 
 > **Trigger narrowed 2026-10-27 (owner instruction), and re-measured the same day.** Everything below the next paragraph was measured against the previous, broader trigger. The **behavioural** evidence still applies unchanged — the nine steps, the five kinds, the draft-show-stop discipline and the refusal to invent criteria were not touched. The **discovery** evidence was superseded and has been replaced.
 >
@@ -127,8 +129,10 @@ Open gaps: drafting variance is n=2, which detects gross instability but not a 1
 - **Partial creation is reported, not rolled back.** On failure mid-sequence the proposal file is kept and the missing objects named. Nothing is deleted from the tracker automatically.
 - **Nothing is written to the repo.** The proposal goes to `${TMPDIR:-/tmp}`, and the path is reported. No scratch directory, no `.gitignore` edit — an earlier draft caused both, on this vault's own repo, during the 2026-10-08 eval.
 - **It does not move status.** Filing an issue is not readiness, and the skill makes no claim that an issue it created is ready to pick up — a human owner approves that.
-- **Templates are fixed-shape.** A tracker with required custom fields (Jira in particular) will reject or mangle these bodies; the five templates assume a free-form markdown body.
-- **The templates are a hard dependency.** All five must be installed alongside `SKILL.md`. The skill stops and names the missing file rather than inventing a shape, so a partial install fails on first use instead of producing malformed issues.
+- **Templates are fixed-shape.** A tracker with required custom fields (Jira in particular) will reject or mangle these bodies; the six templates assume a free-form markdown body.
+- **Body limits are measured, not enforced.** GitHub caps a body at 65,536 characters and the skill splits design content to stay under ~60,000; Linear and Jira limits are looked up per instance, not built in.
+- **Sub-issue and issue-type commands are unrun.** They are written from GitHub's REST documentation; `gh` 2.89 has no flag for either.
+- **The templates are a hard dependency.** All six must be installed alongside `SKILL.md`. The skill stops and names the missing file rather than inventing a shape, so a partial install fails on first use instead of producing malformed issues.
 
 # Related artifacts
 

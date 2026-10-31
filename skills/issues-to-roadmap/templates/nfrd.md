@@ -4,6 +4,10 @@ The quality: performance, size, accessibility, i18n, availability.
 
 ## Threshold
 <the number>, measured by <the tool or query>, on <what>.
+<or, when the owner decided to measure first:>
+Provisional: <the number in force until re-decided>, measured by <the tool or query>, on <what>.
+Baseline: measured by #<spec>.
+Re-decide when: <the trigger — the baseline spec closes, a date, a sample size>. Decided by <name>.
 
 ## Applies to
 #<spec>, #<spec>, or the surface it covers.
@@ -15,4 +19,4 @@ The quality: performance, size, accessibility, i18n, availability.
 <the ADR the threshold comes from, or "None recorded">
 
 ## Closed by
-Closes when the gate above is in place and passing. Never implemented on its own.
+Closes when the gate above is in place and passing against a final threshold. A provisional threshold keeps this open until it is re-decided. Never implemented on its own.
