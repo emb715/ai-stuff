@@ -1,5 +1,5 @@
 ---
-description: Generate a ready-to-paste prompt from a plan source. Guided interactive flow: select type and shape in one reply. Usage: /prompt-factory [plan-doc-path] or /prompt-factory [type-shape]
+description: "Generate a ready-to-paste prompt from a plan source. Guided interactive flow: select type and shape in one reply. Usage: /prompt-factory [plan-doc-path] or /prompt-factory [type-shape]"
 skill: ../README.md
 ---
 
