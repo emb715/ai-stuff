@@ -218,6 +218,94 @@
         "Names playbooks/quick-spec/ as the route.",
         "Does not name issue-to-ready-specs."
       ]
+    },
+    {
+      "id": "R14",
+      "name": "running-build-against-criteria",
+      "round": 7,
+      "prompt": "see plan.md, Round 7",
+      "ground_truth": "playbooks/acceptance-verification/",
+      "expectations": [
+        "Names playbooks/acceptance-verification/ as the route.",
+        "Does not route to adversarial-code-review."
+      ],
+      "observed": {
+        "baseline": "no route named; R14.2 pass",
+        "rev7_claude_code": [
+          "pass",
+          "pass"
+        ]
+      }
+    },
+    {
+      "id": "R15",
+      "name": "production-broken-by-shipped-change",
+      "round": 7,
+      "prompt": "see plan.md, Round 7",
+      "ground_truth": "playbooks/incident-response/",
+      "expectations": [
+        "Names playbooks/incident-response/ as the route.",
+        "Puts mitigation before root-cause diagnosis.",
+        "Does not route to implementation-orchestration or retrospective."
+      ],
+      "observed": {
+        "baseline": "no route named; mitigation-first pass",
+        "rev7_claude_code": [
+          "pass",
+          "pass"
+        ]
+      }
+    },
+    {
+      "id": "R16",
+      "name": "footgun-candidate-to-fix-and-sign-off",
+      "round": 7,
+      "prompt": "see plan.md, Round 7",
+      "ground_truth": "prompts/review-release-candidate/",
+      "expectations": [
+        "Names prompts/review-release-candidate/ as the route.",
+        "Does not route to acceptance-verification alone."
+      ],
+      "observed": {
+        "baseline": "no route named",
+        "rev7_claude_code": [
+          "pass"
+        ]
+      }
+    },
+    {
+      "id": "R17",
+      "name": "after-the-incident",
+      "round": 7,
+      "prompt": "see plan.md, Round 7",
+      "ground_truth": "playbooks/retrospective/",
+      "expectations": [
+        "Names playbooks/retrospective/ as the route (knowledge-extraction beside it still passes).",
+        "Does not route to incident-response."
+      ],
+      "observed": {
+        "baseline": "no route named",
+        "rev7_claude_code": [
+          "fail: router not activated, no route named; R17.2 pass"
+        ]
+      }
+    },
+    {
+      "id": "R18",
+      "name": "covered-elsewhere-tests-from-spec",
+      "round": 7,
+      "prompt": "see plan.md, Round 7",
+      "ground_truth": "none: decline and name skills/test-authoring/, or test-authoring self-activates",
+      "expectations": [
+        "Does not route to any playbook or prompt.",
+        "Observation: does test-authoring self-activate?"
+      ],
+      "observed": {
+        "baseline": "test-authoring self-activated",
+        "rev7_claude_code": [
+          "pass: test-authoring self-activated, router silent"
+        ]
+      }
     }
   ]
 }

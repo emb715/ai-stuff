@@ -2,7 +2,7 @@
 title: "artifact-router"
 status: validated
 confidence: medium
-last_tested: 2026-10-27
+last_tested: 2026-10-31
 scope: personal
 tooling:
   - "agnostic/any-LLM"
@@ -74,6 +74,8 @@ Case counts are not directly comparable across revisions — the baseline predat
 **Manifest accuracy, checked rather than assumed.** 14 of 14 manifest rows matched reality on 2026-10-21: no playbook added, renamed, or status-changed since 2026-08-04. The four artifacts the vault gained in that window were all skills, outside this manifest's scope. The hand-maintained manifest has consequently never faced a drift event — see `humans.md` for what that does and does not say about the design.
 
 **The `experiments/` boundary (R12, 2026-10-23).** On owner instruction, `experiments/` is an explicit hard boundary alongside playbooks-only, and filesystem verification may only confirm or drop a manifest row, never add one. Given a prompt paraphrasing `experiments/arch-design-pipeline/`'s own purpose, the session declined the experiment by name-shape — "not routable — untested, unsanitized, outside `playbooks/`" — and answered with a valid `product-brief` → `quick-spec` sequence.
+
+**Round 7, 2026-10-31 — the QA-line routes, first run in Claude Code.** 19 headless runs on `main` at `f25c4ef`, criteria pre-registered. `acceptance-verification` 2/2, `incident-response` 2/2, `review-release-candidate` against `acceptance-verification` held, `test-authoring` territory left alone. Two misses, both activation: R17 (resolved outage to retrospective) and the R1 regression (diff review), which passed in every OpenCode round. Does not combine with OpenCode rounds for variance. Details in `evals/results.md`, Round 7.
 
 **Round 4, 2026-10-27 — prompts in scope, collision fixed upstream (shipped revision 5, `3ca6d81a`).** Six-run verification batch on two owner decisions; does not supersede round 3's figures. Scope widened to 5 of 6 prompts (`ai-stuff-command-installer` excluded as vault tooling, not work). `skills/issues-to-roadmap/` narrowed to the execution-setup moment.
 
