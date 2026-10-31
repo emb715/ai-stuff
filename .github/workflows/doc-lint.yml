@@ -2,10 +2,6 @@ name: Doc Lint
 
 on:
   pull_request:
-    paths:
-      - "**/*.md"
-      - "scripts/doc_lint.py"
-      - ".github/workflows/doc-lint.yml"
   push:
     branches:
       - main
