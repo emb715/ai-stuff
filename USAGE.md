@@ -104,7 +104,7 @@ All artifact paths below are relative to the repo root (https://github.com/emb71
 | Run an interactive brainstorming session (61 techniques, 10 categories) | `playbooks/brainstorming/` | playbook | `playbook.md` |
 | Take N options and produce a ranked shortlist with rationale (multi-criteria) | `playbooks/decision-making/` | playbook | `playbook.md` |
 | Turn a rough idea or brainstorm output into a structured product brief | `playbooks/product-brief/` | playbook | `playbook.md` |
-| Route a raw request to the correct planning artifact (spec vs plan paradigm) | `playbooks/request-triage/` | playbook | `playbook.md` |
+| Route a raw request to the correct planning artifact (spec vs plan paradigm) | `skills/ai-stuff-artifact-router/` (replaces the deprecated `playbooks/request-triage/`) | skill | `SKILL.md` |
 | Turn a GitHub issue into implementation-ready specs (PRD + N specs) | `playbooks/issue-to-ready-specs/` | playbook | `playbook.md` |
 | Create one implementation-ready spec via discovery + code investigation | `playbooks/quick-spec/` | playbook | `playbook.md` |
 | Research, Analyze, Assess a feature request → validated file-scoped plan | `playbooks/raa/` | playbook | `playbook.md` |

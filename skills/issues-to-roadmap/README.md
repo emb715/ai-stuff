@@ -138,6 +138,6 @@ Open gaps: drafting variance is n=2, which detects gross instability but not a 1
 
 - [`skills/lean-agentic-baseline/`](../lean-agentic-baseline/) — pillar 22 (`Lean workflow: issues to roadmap`) inventory and assessment; this skill executes what that one audits, and `references/tier-3-scale.md` holds the same pillar's distilled content
 - [`playbooks/issue-to-ready-specs/`](../../playbooks/issue-to-ready-specs/) — the repo-document path for the same problem; runs *from* an issue, where this skill runs *to* one
-- [`playbooks/request-triage/`](../../playbooks/request-triage/) — routes a raw request to the right planning artifact
+- [`skills/ai-stuff-artifact-router/`](../ai-stuff-artifact-router/) — routes a raw request to the right planning artifact (replaces the deprecated `playbooks/request-triage/`)
 - [`playbooks/brainstorming/`](../../playbooks/brainstorming/), [`playbooks/decision-making/`](../../playbooks/decision-making/) — produce the session output this skill consumes
 - Source: `lean-agile-agentic` pillar 22, revision `23d61db` — https://emb715.github.io/lean-agile-agentic/guide/#tracker

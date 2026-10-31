@@ -17,7 +17,7 @@ owner: "@emb715"
 
 # Purpose
 
-Routes the current task to the right playbook or prompt in the ai-stuff vault. On user confirmation, reads and surfaces that artifact's consumable file — `playbook.md` as the active procedure, `prompt.md` as text to paste. Scope is the 16 playbooks and 5 prompts in its manifests; it does not route to skills, agents, tools, or anything in `experiments/`.
+Routes the current task to the right playbook or prompt in the ai-stuff vault. On user confirmation, reads and surfaces that artifact's consumable file — `playbook.md` as the active procedure, `prompt.md` as text to paste. Scope is the 15 active playbooks and 5 prompts in its manifests; it does not route to skills, agents, tools, or anything in `experiments/`.
 
 # When to use
 

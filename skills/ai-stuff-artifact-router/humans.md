@@ -29,7 +29,7 @@ Four routing defects were worked, after an audit of all 14 intent assignments ra
 |---|---|---|---|
 | `agent-installer` | `ideate` | `implement` | Shipping an installer CLI is build work. "A new installer" reads like a blank page only if you look at the noun instead of the verb. |
 | `decision-making` | `ideate` | `decide` | It starts from N options that already exist and converges them. `ideate` was defined as "starting from a rough idea, issue, or blank page" — the opposite end. |
-| `request-triage` | `plan` | `decide` | Its own README says it "does not execute the chosen artifact; only routes". It produces a choice, not a spec or a plan. |
+| `request-triage` | `plan` | `decide` | Its own README says it "does not execute the chosen artifact; only routes". It produces a choice, not a spec or a plan. Deprecated 2026-10-31: the router now asks the paradigm question itself. |
 | `build-to-release` | `implement` | `implement`, with its entry corrected | Intent was defensible; the row was not. Its entry is an idea or PoC, not a validated plan, and nothing in a single Intent column could express that it spans ideate→release. |
 
 `decide` is a new category covering two playbooks, which respects the rule below about not adding a category for one playbook.

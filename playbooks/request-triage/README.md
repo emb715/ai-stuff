@@ -1,8 +1,8 @@
 ---
 title: "Request Triage"
-status: draft
+status: deprecated
 confidence: medium
-last_tested: 2026-07-30
+last_tested: 2026-10-31
 scope: personal
 tooling:
   - "agnostic/any-LLM"
@@ -15,6 +15,13 @@ tags:
   - paradigm-selection
 owner: "@emb715"
 ---
+
+# Deprecation
+
+**Reason**: superseded
+**Date**: 2026-10-31
+**Replacement**: [`skills/ai-stuff-artifact-router/`](../../skills/ai-stuff-artifact-router/)
+**Notes**: The router routes the same raw requests and holds the spec-versus-plan rule in its manifest and in each planning playbook's `Paradigm` line, so a second router added a choice without adding a route. Left in place for harnesses without skill support, where this copy-paste procedure still works.
 
 # Purpose
 

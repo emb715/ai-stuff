@@ -1,0 +1,42 @@
+name: e2e-web
+
+on:
+  pull_request:
+    paths:
+      - "tools/e2e-web/**"
+      - ".github/workflows/e2e-web.yml"
+
+jobs:
+  e2e-web:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tools/e2e-web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Rebuild dist
+        run: npm run build:all
+
+      - name: Fail if committed dist differs from a fresh build
+        run: |
+          if [ -n "$(git status --porcelain -- dist)" ]; then
+            echo "dist/ is out of date with src/. Run 'npm run build:all' in tools/e2e-web and commit the result."
+            git status --short -- dist
+            exit 1
+          fi
