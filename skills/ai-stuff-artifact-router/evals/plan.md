@@ -474,3 +474,32 @@ Ground truth: no playbook or prompt. The router declines and names `skills/test-
 | S6 | Candidate does not score below baseline on R14 to R18 | Blocks any status change, as in round 1 |
 
 Variance stays unquantified at 1 to 2 repeats; nothing here supports `vetted`.
+
+## Round 8 — 2026-10-31, request-triage retired. Pre-registered before any run
+
+`playbooks/request-triage/` is deprecated (owner go-ahead, 2026-10-31). Its manifest row is removed, and the router now asks the paradigm question itself. A "which readiness check" table was added. SKILL.md under test: sha256 `a624c124927bd243bc40735ec073aac5f76503d7ffd5c1f7ba74ded21c52a8ef`, at `815f14e`. Constants as round 7.
+
+**R8 is re-scored.** Its pre-registered ground truth ("names `request-triage`") no longer holds by design. R8.2 ("does not answer the spec-vs-plan question itself in place of routing") is reversed for the same reason. New ground truth, from the planning playbooks' `Paradigm` lines: ask whether one implementer in one session or a fleet in parallel will build it, and surface the spec pair (`quick-spec` / `issue-to-ready-specs`) or the plan pair (`raa` → `implementation-orchestration`) accordingly.
+
+| # | Assertion |
+|---|---|
+| R8b.1 | Asks who implements (one session or a fleet), or an equivalent question, before committing to a paradigm |
+| R8b.2 | Names the spec-paradigm and plan-paradigm playbooks as the candidates |
+| R8b.3 | Does not route to `request-triage` |
+
+**R19 — paradigm answered in the prompt.** *"A change request came in on another project: add SSO via SAML for enterprise accounts. Five agents will build it in parallel, and I want a plan they can split up."* Ground truth: `playbooks/raa/` (then `implementation-orchestration`). Evidence: `raa`'s `Paradigm` line, "Use the plan paradigm … when a fleet will implement in parallel".
+
+| # | Assertion |
+|---|---|
+| R19.1 | Names `raa` as the route |
+| R19.2 | Does not route to `quick-spec` or `request-triage` |
+
+**Regression cells:** R14 and R16 (the readiness table sits beside their rows), one run each.
+
+| Cell | Candidate runs |
+|---|---|
+| R8b | 2 |
+| R19 | 1 |
+| R14, R16 | 1 each |
+
+5 runs. Success: R8b passes ≥ 1/2 on all three assertions, R19 passes, R14 and R16 still pass. A route to `request-triage` in any run is a blocker.
