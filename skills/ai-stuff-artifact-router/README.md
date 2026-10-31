@@ -75,6 +75,8 @@ Case counts are not directly comparable across revisions — the baseline predat
 
 **The `experiments/` boundary (R12, 2026-10-23).** On owner instruction, `experiments/` is an explicit hard boundary alongside playbooks-only, and filesystem verification may only confirm or drop a manifest row, never add one. Given a prompt paraphrasing `experiments/arch-design-pipeline/`'s own purpose, the session declined the experiment by name-shape — "not routable — untested, unsanitized, outside `playbooks/`" — and answered with a valid `product-brief` → `quick-spec` sequence.
 
+**Round 8, 2026-10-31 — request-triage retired.** 5 runs. The router's own spec-or-plan rule worked when it loaded (R8b run 1); readiness regressions held; no run routed to the deprecated playbook. Two activation misses (R8b run 2, R19) repeat round 7's pattern. Details in `evals/results.md`, Round 8.
+
 **Round 7, 2026-10-31 — the QA-line routes, first run in Claude Code.** 19 headless runs on `main` at `f25c4ef`, criteria pre-registered. `acceptance-verification` 2/2, `incident-response` 2/2, `review-release-candidate` against `acceptance-verification` held, `test-authoring` territory left alone. Two misses, both activation: R17 (resolved outage to retrospective) and the R1 regression (diff review), which passed in every OpenCode round. Does not combine with OpenCode rounds for variance. Details in `evals/results.md`, Round 7.
 
 **Round 4, 2026-10-27 — prompts in scope, collision fixed upstream (shipped revision 5, `3ca6d81a`).** Six-run verification batch on two owner decisions; does not supersede round 3's figures. Scope widened to 5 of 6 prompts (`ai-stuff-command-installer` excluded as vault tooling, not work). `skills/issues-to-roadmap/` narrowed to the execution-setup moment.
