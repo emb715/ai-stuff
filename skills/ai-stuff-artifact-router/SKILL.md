@@ -1,6 +1,6 @@
 ---
 name: ai-stuff-artifact-router
-description: Picks the right ai-stuff playbook or prompt for the work at hand and surfaces it on confirmation. Activates when none is named and the user has any of these: a topic or rough idea to shape; more options than they can choose between; a request, feature or tracked issue to turn into specs or a phased plan; a planning doc with gaps that has to become implementation-ready; a validated plan that needs building; a multi-platform installer CLI to ship; a diff to tear apart before merging; a doc to verify a codebase actually implements; a repo whose docs may have drifted from its source; a release candidate to sign off against acceptance criteria; work just finished that they want lessons or durable knowledge from; or an existing repo, template, package or document they want checked and fixed before sharing, releasing, handing off or open-sourcing it. Also activates on "which playbook", "how do I do this here", and "what's the right way to start this". Stays silent when the user already named the artifact to use, when the work is a vault lifecycle operation (promote, deprecate, lint, audit, archive, save an artifact), when the task is to author a skill or prompt rather than use one, when a settled plan is being stood up in a tracker, and when nothing in the vault covers the task.
+description: Picks the right ai-stuff playbook or prompt for the work at hand and surfaces it on confirmation. Activates when none is named and the user has any of these: a topic or rough idea to shape; more options than they can choose between; a request, feature or tracked issue to turn into specs or a phased plan; a planning doc with gaps that has to become implementation-ready; a validated plan that needs building; a multi-platform installer CLI to ship; a diff to tear apart before merging; a doc to verify a codebase actually implements; a repo whose docs may have drifted from its source; a release candidate to sign off against acceptance criteria; a running build to verify against its acceptance criteria; a production system broken by a shipped change; work just finished that they want lessons or durable knowledge from; or an existing repo, template, package or document they want checked and fixed before sharing, releasing, handing off or open-sourcing it. Also activates on "which playbook", "how do I do this here", and "what's the right way to start this". Stays silent when the user already named the artifact to use, when the work is a vault lifecycle operation (promote, deprecate, lint, audit, archive, save an artifact), when the task is to author a skill or prompt rather than use one, when a settled plan is being stood up in a tracker, and when nothing in the vault covers the task.
 ---
 
 # artifact-router
@@ -52,6 +52,7 @@ The boundary: routing signal is the router's job. Input validation is the playbo
 | `review` | Verify code against a finite requirement list |
 | `release` | Take an existing artifact to verified-ready |
 | `capture` | Post-session: retro on completed work |
+| `respond` | Production is broken now; restore service before diagnosing |
 
 Intent is a coarse filter, not the route. Two playbooks sharing an intent are separated by `Entry`, never by intent.
 
@@ -65,7 +66,7 @@ Apply in order. Stop at the first step that leaves one candidate.
 4. **Containment.** If one candidate embeds another (see Chains), and the task's exit is the container's exit, route to the container and name the embedded playbook as its phase. Do not route to a sub-playbook that the right chain already runs.
 5. **Final tiebreak — unconditional.** If two or more candidates survive steps 1-4, surface all of them with one disambiguating sentence each, taken from their `When to use`, and let the user pick. Never pick silently.
 
-**Status is not a fit criterion.** The vault has zero `vetted` playbooks and 10 of 14 are `draft`, so lifecycle state cannot discriminate on most routes, and where it can it is measuring maturity, not fit. Preferring a `validated` playbook over a `draft` one actively misroutes when the `draft` playbook is the one that matches the entry — the `validated` candidate is often a *phase* of the `draft` one. Report status alongside the route as a caveat ("status `draft` — confirm preconditions before starting"), never as a reason for the route.
+**Status is not a fit criterion.** The vault has zero `vetted` playbooks and 12 of 16 are `draft`, so lifecycle state cannot discriminate on most routes, and where it can it is measuring maturity, not fit. Preferring a `validated` playbook over a `draft` one actively misroutes when the `draft` playbook is the one that matches the entry — the `validated` candidate is often a *phase* of the `draft` one. Report status alongside the route as a caveat ("status `draft` — confirm preconditions before starting"), never as a reason for the route.
 
 ## Manifest
 
@@ -84,9 +85,11 @@ Indexed by `Entry` (what the user must already have) and `Exit` (what the playbo
 | `playbooks/issue-to-pr/` | `implement` | an existing tracked issue, well-scoped | a merged PR (gated or continuous mode) | draft |
 | `playbooks/build-to-release/` | `implement` | an idea or proof-of-concept, work worth 3+ stories | a released implementation, through 13 gated phases | draft |
 | `playbooks/agent-installer/` | `implement` | a requirement to ship a multi-platform installer CLI | an installer with TUI and CI mode, idempotent, config-driven | draft |
+| `playbooks/acceptance-verification/` | `review` | a running build (URL or build ID plus commit) **and** its acceptance criteria | a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED) | draft |
 | `playbooks/adversarial-code-review/` | `review` | a git diff, and a finite list of claims or acceptance criteria | ≥3 categorised findings plus a fix menu | validated |
 | `playbooks/readiness-cycle/` | `release` | an existing artifact and a readiness question | a verified-ready verdict or a fix plan, looped until ship | draft |
 | `playbooks/retrospective/` | `capture` | a completed body of work | lessons, follow-through check, SMART action items | draft |
+| `playbooks/incident-response/` | `respond` | a production system misbehaving after a shipped change, and access to its dashboards, logs or rollback | service restored or escalated, an incident timeline, owned follow-ups | draft |
 
 ### Prompts
 
@@ -103,6 +106,7 @@ Prompts are text you paste, not procedures you walk. These five fill gaps no pla
 Two of these pair with a playbook on the same verb, and the entry discriminates:
 
 - `loop-implementation-readiness` vs `adversarial-code-review` — a **doc to verify code against** versus a **diff to attack**. Doc and whole codebase: the prompt. Diff and acceptance criteria: the playbook.
+- `review-release-candidate` vs `playbooks/acceptance-verification/` — **a candidate to triage, fix and sign off** versus **a running build to observe**. Inventory, fix batches and a sign-off verdict: the prompt. Runtime evidence for each criterion from the executing program, no fixing: the playbook.
 - `knowledge-extraction` vs `retrospective` — **durable knowledge out of one session** versus **lessons and SMART actions out of a body of work**. One session's decisions and dead ends: the prompt. A finished sprint, feature or milestone, with ownership of the lessons: the playbook.
 
 Treat the manifests as a cache, not a source of truth. If a route seems wrong, read the playbook's own `README.md` — that is authoritative on *what a listed playbook does*.
@@ -159,6 +163,7 @@ These task shapes look routable and are not in the manifests. Decline, name the 
 | Vault lifecycle — promote, deprecate, lint, audit, archive, save an artifact | `_meta/framebook/` | The matching procedure folder, not a playbook |
 | Diagramming how a change ripples through a codebase | `skills/change-impact-diagram/` | A skill; activates itself |
 | Assessing a repo's AI-engineering setup against the Lean Agentic pillars | `skills/lean-agentic-baseline/` | A skill; activates itself |
+| Writing tests from a spec or acceptance criteria | `skills/test-authoring/` | A skill; activates itself |
 
 This list is fixed. It is not permission to go looking: an artifact absent from both the manifests and this table gets a plain decline with no pointer invented for it.
 
@@ -203,6 +208,12 @@ This router routes the playbooks and prompts in its manifests, and nothing else.
 
 **Task:** "Run an adversarial review on this PR's diff."
 → `playbooks/adversarial-code-review/` (intent: `review`). Entry: a diff plus acceptance criteria. Minimum 3 findings, fix menu. Status: validated.
+
+**Task:** "The PR is green and deployed to preview. Does it actually meet the acceptance criteria?"
+→ `playbooks/acceptance-verification/` (intent: `review`). Entry: a running build plus criteria. Not `adversarial-code-review` — that attacks the diff; this observes the executing program. Status: draft.
+
+**Task:** "Error rate spiked right after this morning's deploy."
+→ `playbooks/incident-response/` (intent: `respond`). Mitigate first, diagnose second. Not the `implementation-orchestration` fix loop — that is for pre-merge failures. Status: draft.
 
 **Task:** "We finished a project phase, want to retro."
 → `playbooks/retrospective/` (intent: `capture`). Lessons, SMART action items. Status: draft.
