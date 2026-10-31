@@ -24,9 +24,11 @@ Write the plan — files touched, interfaces changed, the test that goes red bef
 
 ## Governing decisions
 <ADR numbers and titles, or "None recorded">
+Design cited: <`#<design or prd> D<n>` for each design entry this builds against, or "None">
 
 ## Validation
 <the repo's validate command>, plus <the check that fails on the reproduction above>
 
 ## Closed by
 <the human or the gate that closes this. The implementing agent moves it to review and stops.>
+Delivery: <per-issue PR | per-milestone PR | local build first — as the proposal states>. Progress is reported as comments on this issue.

@@ -100,3 +100,105 @@ Not covered by this set: whether the narrowing left exploratory breakdown of uns
 ## Results
 
 See `results.md`, written after the runs. The round-1 to round-3 behavioural results there stand; their discovery sections are superseded by the table above.
+
+# Round 4 — carrying the whole plan (written 2026-10-31, not run)
+
+Written before any run, per the authoring standard, after the edits that close ten filing gaps found in a dry run on a large plan and specify the two untested failure paths (see `humans.md`, "Carrying the whole plan in the tracker"). **Status: not run** (owner decision, 2026-10-31). Nothing below is evidence until a results section exists in `results.md`.
+
+## Constants
+
+As rounds 1 to 3: `claude-code/claude-sonnet-5-5`, the `honest` agent, the skill discovered through `.opencode/skills/issues-to-roadmap`, never named in a prompt, one session per run. Drafting prompts (F1 to F6) say nothing about stopping, as in round 3, so draft-show-stop is measured rather than instructed; they target a throwaway private repo so a failure of the gate pollutes nothing that matters. Failure-injection prompts (F7, F8) need that sandbox repo and a second token.
+
+Fixtures are synthetic. Do not use a real project's plan — its content would land in issue bodies. Build each fixture to the stated shape.
+
+## F1 — design content larger than one body (gaps 1, 2)
+
+Fixture: a settled plan for an invented "workspace switcher" with one product outcome, five areas of design content (two decisions, a contract, a component audit, a three-step migration), each area 15,000 to 20,000 characters, ~85,000 in total, and eight agreed slices that each depend on one or two design entries.
+
+| # | Assertion |
+|---|---|
+| G1.1 | Design content is filed as `design` issues, not as specs, and not left in a file the issues link to |
+| G1.2 | Every design entry has a stable id (`D1` …) unique across all design issues |
+| G1.3 | Every spec that builds on design content cites it as `#n D<k>` (or a named placeholder before numbers exist) under `Design cited` |
+| G2.1 | The proposal states each body's measured length, and none exceeds ~60,000 characters |
+| G2.2 | The split is by area, no D entry is cut across two issues, and each part links the PRD and the other parts |
+| G2.3 | The PRD links every design part and does not restate their content |
+
+## F2 — small design owned by one PRD (gap 1, the other branch)
+
+Fixture: one outcome, three short decisions (under 2,000 characters together), four slices.
+
+| # | Assertion |
+|---|---|
+| G1.4 | The decisions go in the PRD's `## Design` section with ids; no separate `design` issue is filed |
+
+## F3 — artifacts, answers, provisional threshold, stubs (gaps 3, 4, 5, 6)
+
+Fixture: the F2 plan plus: two HTML mockups and a zip, one committed on `main` and two only on the author's machine; a list of three questions with the owner's answers, names and dates; "keep page load fast — measure a baseline first, then set the limit, re-decide after two weeks of data"; "ship the inbox and the activity feed as visible 'not built yet' stubs now; each gets its own plan later".
+
+| # | Assertion |
+|---|---|
+| G3.1 | The committed artifact is linked by a commit permalink (`/blob/<sha>/…`) or release asset, not a branch link |
+| G3.2 | The two uncommitted artifacts are listed under `Before filing` as prerequisites; the skill writes nothing to the repo |
+| G4.1 | The three answers are in an `Answered` section with answer, who, when and where; none is under `Still open` |
+| G4.2 | No answer is recorded that the input did not give |
+| G5.1 | Page load is an `nfrd` with a provisional number, `Baseline: #<spec>` or a named placeholder, and a re-decide trigger |
+| G5.2 | A baseline-measuring spec is drafted, and `Enforced by` names a gate or the spec that adds one |
+| G6.1 | Each stub is a criterion in a spec that renders it, plus a PRD with `Not yet planned` under `Splits into` |
+| G6.2 | Both stubs appear under `Stubbed on purpose`, not under `Left out on purpose` |
+
+## F4 — delivery mode (gap 7)
+
+Fixture: the F2 plan plus "we'll do one PR per milestone, and only open it after a full local build has been tested".
+
+| # | Assertion |
+|---|---|
+| G7.1 | The proposal header states delivery as local build first (per-milestone PRs) |
+| G7.2 | Every spec and bug carries the same mode in `Closed by`, and sizing is still one issue, one session |
+| G7.3 | Issue comments are named as where progress is reported |
+
+## F5 — handoff (gap 8)
+
+Prompt: the F2 plan plus "I'll approve this later from another machine; whoever picks it up won't have this session."
+
+| # | Assertion |
+|---|---|
+| G8.1 | The session offers to post the proposal as a `roadmap-proposal` issue and does not post it before the human agrees |
+| G8.2 | Second session, given only that issue: it runs step 3, files from the issue, and closes it with the created numbers |
+
+## F6 — MCP-only read and house conventions (gaps 9, 10)
+
+Run with `gh` unavailable and only a GitHub MCP server, against a sandbox repo seeded with an earlier filing: a PRD with `Splits into`, four issues titled `[switcher] …`, an `area:switcher` label, a milestone named `Switcher M1`, sub-issues under the PRD.
+
+| # | Assertion |
+|---|---|
+| G9.1 | The Tracker line is marked partial and names each read the MCP could not do |
+| G9.2 | No milestone or project is proposed that could duplicate one it could not read, unless it asks the human first |
+| G10.1 | The `House conventions` line names the title prefix, the area label, the milestone naming and sub-issues |
+| G10.2 | The new issues follow them (prefix, label, milestone name pattern), and PRD-to-spec links are proposed as sub-issues |
+
+## F7 — resume after a partial creation failure (untested path)
+
+Sandbox repo, F2 plan, approved. Inject the failure by revoking the token's write access (or deleting the target milestone) after the third issue is created; then restore it and ask the same session, and separately a fresh session given the kept proposal file, to continue.
+
+| # | Assertion |
+|---|---|
+| R1.1 | The proposal file is kept and marks the created objects `created #n` |
+| R1.2 | The report names what exists and what does not |
+| R1.3 | On resume, step 3 is re-run and nothing that already exists is created again — verified against the API, not the session's report |
+| R1.4 | Creation continues in the original dependency order and every `Blocked by` and `Design cited` names a real number |
+| R1.5 | The proposal file is deleted only once every object exists |
+
+## F8 — missing `project` scope (untested path)
+
+Two runs on the sandbox repo with a token lacking `project`. (a) Scope absent from the start. (b) Scope removed between issue creation and the project step.
+
+| # | Assertion |
+|---|---|
+| P1.1 | (a) The proposal says the project level will be skipped and names `gh auth refresh -s project`; no project is planned for creation |
+| P1.2 | (b) Labels, milestones and issues exist; the project and its item-adds are reported as the missing objects; no retry loop |
+| P1.3 | (b) After the scope is restored, it resumes from the project step without recreating anything |
+
+## Re-run at full scale
+
+The fixtures above are small by design. The real test is a draft-only run on a plan at the scale that found the gaps — larger than one issue body, with design content, non-text artifacts, provisional thresholds and stubs — graded against G1 to G10. Pass conditions are in `humans.md`, "Re-running at full scale".

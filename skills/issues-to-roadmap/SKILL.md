@@ -1,6 +1,6 @@
 ---
 name: issues-to-roadmap
-description: Stand a settled plan up as agent-ready work in a tracker (GitHub, Linear or Jira) so execution can start and be followed: one issue per decision, each from the template for its kind — spec, bug, prd, frd, nfrd — with dependencies mapped, then grouped upward into milestones, a project and a roadmap proposal. Use at the point where the plan is agreed and work is about to begin, and the tracker has to become the home where a human reader or a later agent picks up scope, ordering and status. Also use when handed work already agreed and asked to sequence it or map what blocks what. Not for deciding what to build, not for breaking down notes whose decisions are not settled yet, not for writing spec documents in the repo (that is playbooks/issue-to-ready-specs/), and not for implementing an issue or moving its status.
+description: Stand a settled plan up as agent-ready work in a tracker (GitHub, Linear or Jira) so execution can start and be followed: one issue per decision, each from the template for its kind — spec, bug, prd, frd, nfrd, design — with design content, decisions and artifacts carried in the issues themselves, dependencies mapped, then grouped upward into milestones, a project and a roadmap proposal. Use at the point where the plan is agreed and work is about to begin, and the tracker has to become the home where a human reader or a later agent picks up scope, ordering and status. Also use when handed work already agreed and asked to sequence it or map what blocks what. Not for deciding what to build, not for breaking down notes whose decisions are not settled yet, not for writing spec documents in the repo (that is playbooks/issue-to-ready-specs/), and not for implementing an issue or moving its status.
 user-invocable: true
 argument-hint: "[notes file, transcript, or what was decided]"
 ---
@@ -12,13 +12,17 @@ One canonical home per project — a home being somewhere a second reader finds 
 Criteria reach the tracker; scratch notes do not. A criterion you cannot state mechanically is a design question for a human — ask, do not guess.
 
 1. Read the input: the argument, a file, or pasted text. No input, ask for it. If the input cannot fill a template, ask before drafting; do not invent criteria.
-2. Find the tracker. Remote on github.com: use `gh`. A Linear or Jira MCP present: use its equivalents for everything below. Neither: stop and say so.
+2. Find the tracker. Remote on github.com: use `gh`; without `gh`, a GitHub MCP server, with the read rule in step 3. A Linear or Jira MCP present: use its equivalents for everything below. None of these: stop and say so.
 3. Read what exists, so a second session on the same work updates instead of duplicates. Read, in any tracker:
    - the owner/repo or team identity that owns issue keys
    - every issue, open and closed, with its title, milestone and labels
    - every milestone, open and closed
    - the projects, and which kind and impact labels already exist
    - the repo's own decision index (`docs/decisions/INDEX.md`, `docs/adr/`). Templates or examples of ADRs are not decisions.
+   - **house conventions**: how this team already files. The best evidence is an earlier run of this skill — a PRD with `Splits into`, issues with `Closed by`. Note its title prefixes, area labels, milestone naming, whether the repo uses issue types and sub-issues, and where design content went. Adopt them, and write them on the proposal's `House conventions` line so a reviewer sees what was copied. A convention that contradicts this skill (no out-of-scope, criteria nobody can check) is named, not copied.
+   - the token's scopes, before the project level is planned (GitHub: `gh auth status`).
+
+   Every read above either happened or is named as missing. With no `gh` and only an MCP server, use its tools for each read; for any read it has no tool for — milestones and projects are the usual ones — stop and list which reads are missing. Mark the Tracker line partial, and propose no milestone or project that could duplicate one you could not see unless the human confirms none exists.
 
    Worked example, GitHub:
    ```sh
@@ -28,7 +32,7 @@ Criteria reach the tracker; scratch notes do not. A criterion you cannot state m
    gh label list
    gh project list --owner <owner>   # only with the `project` token scope
    ```
-   `gh project list` needs the `project` scope — check `gh auth status`, and if it is absent, skip the project level and say so.
+   `gh project list` needs the `project` scope — check `gh auth status`. If it is absent, the proposal says the project level will be skipped and that `gh auth refresh -s project` (run by the human) restores it; do not plan a project you cannot create.
 
    Past ~200 issues, listing is no longer a reliable dedup source. Search per outcome instead, and say the read was partial:
    ```sh
@@ -36,13 +40,24 @@ Criteria reach the tracker; scratch notes do not. A criterion you cannot state m
      --json number,title,state "<the distinctive words from this outcome>"
    ```
 4. Sort the input into three piles: decisions, open questions, and everything else. A decision is something you can state as a mechanically checkable criterion. An open question is anything you cannot. When a decision is mechanical for part of the input and not the rest, the mechanical part becomes an issue and the rest an open question. A criterion that is checkable but matches nothing today is an open question too. Open questions never become issues. "Discuss X" is not an issue.
+
+   Settled design content — a decision with its reason, a contract, an audit's findings, a migration step — belongs in none of the three piles as a work item. It is kept, whole, for a `design` issue or a PRD `## Design` section (step 6), and the specs built on it cite it. Dropping it into "everything else" loses the context an implementer needs.
+
+   A question the input shows a human already answered is not open: it goes in the `Answered` section of its PRD or design issue — question, answer, who decided, when, where. Record only answers a human gave; an answer you infer is still an open question.
 5. Match each decision against what step 3 read, before drafting. Same work as an existing issue when **the outcome line describes the same user-visible change** — not when titles merely share words. Same outcome: `update #n`, and name which sections change. Different outcome touching the same files: a new issue. Cannot tell: ask, naming the candidate.
-6. Write one issue per decision, from the template for its kind in `templates/` — `spec.md`, `bug.md`, `prd.md`, `frd.md`, `nfrd.md`, which ship with this skill and are required. If the file for a kind is not there, say which one is missing and stop; do not invent a shape for it.
+6. Write one issue per decision, from the template for its kind in `templates/` — `spec.md`, `bug.md`, `prd.md`, `frd.md`, `nfrd.md`, `design.md`, which ship with this skill and are required. If the file for a kind is not there, say which one is missing and stop; do not invent a shape for it.
    - `bug`: something that works wrong today. Observed, expected, how to reproduce.
    - `spec`: one vertical slice of new behaviour. One session, one PR.
    - `prd`: a product outcome too large for one slice. It names the specs it splits into. A PRD is never implemented directly.
    - `frd`: a functional requirement several specs must satisfy.
-   - `nfrd`: a non-functional requirement with a measured threshold **and** the gate that enforces it. If no gate exists today, name the spec that adds one — a threshold nothing checks is a wish, not a requirement.
+   - `nfrd`: a non-functional requirement with a measured threshold **and** the gate that enforces it. If no gate exists today, name the spec that adds one in `Enforced by` — do not leave it open. A threshold nothing checks is a wish, not a requirement. When the owner decided to measure first, use the provisional form: the number in force now, the spec that measures the baseline, and the trigger to re-decide.
+   - `design`: the decisions, contracts, audits and migration steps that specs build against, each under a stable id (`D1`, `D2` …) that a spec cites as `#n D3`. Never implemented. A design that serves one PRD and fits its body goes in that PRD's `## Design` section instead; it becomes its own `design` issue when more than one PRD cites it or when it would push the PRD past the body limit. Either way the tracker is its home — a design that only lives in a chat, a notes file or an unreviewed branch has none.
+
+   **Body limit.** A tracker caps an issue body: GitHub at 65,536 characters. Measure each body before showing the proposal (`wc -m <file>`) and keep it under ~60,000, which leaves room for later edits. Linear and Jira have their own limits; look the number up for the instance, do not guess one. A design over the limit splits into one `design` issue per area, never in the middle of a D entry, each linked from the PRD and from the other parts. Ids stay unique across the parts.
+
+   **Artifacts that are not text.** HTML pages, archives, images and large prototypes do not go in a body, and GitHub attachments cannot be uploaded through its API. Each one lives at a link that never moves — a commit permalink (`/blob/<sha>/<path>`) or a release asset — listed under `## Artifacts` on the design or PRD issue that uses it. A branch link is not pinned. This skill writes nothing to the repo, so an artifact with no pinned home yet is a prerequisite in the proposal for a human or another session to commit; the issue is filed with the link once it exists.
+
+   **Deliberate stubs.** When the owner wants a surface shipped now as a visible "not built yet" placeholder, with the real thing planned later, that is two pieces of work, not one left out: a criterion in the spec that renders the stub (`/inbox renders the "not built yet" panel and no data request`), and a PRD for the real surface whose `Splits into` reads `Not yet planned. Stubbed by #n until then.` List both under `Stubbed on purpose` in the proposal. `Left out on purpose` is for things that are not work at all.
 
    Every section filled, briefly. Out of scope is required. Size on specs and bugs only (see below). An issue that depends on another starts with `Blocked by: #n`, or names the blocker in words when it has no number yet.
 7. Group upward, as far as the issues justify:
@@ -64,11 +79,13 @@ Criteria reach the tracker; scratch notes do not. A criterion you cannot state m
    ```
 
    Read it bottom-up, which is the direction it gets built: issues exist, milestones are the boundaries they ship across, the project is the outcome they add up to, the roadmap is the goal the projects serve. A quarterly goal named in the input is a roadmap entry, not a milestone.
-8. Write the proposal to `${TMPDIR:-/tmp}/issues-<date>.md`, outside the repo, and report the resolved absolute path — not the unexpanded variable, which nobody can open. Nothing goes in the working tree: do not create a scratch directory in it, and do not edit `.gitignore` to accommodate one. Show the proposal in the layout below. Stop. Wait for approval. Create nothing in the tracker until the human says so. On a public repo, say so before creating: issue bodies are public the moment they exist, so anything in the input that should not be published gets left out or rewritten with synthetic values.
+8. Write the proposal to `${TMPDIR:-/tmp}/issues-<date>.md`, outside the repo, and report the resolved absolute path — not the unexpanded variable, which nobody can open. Nothing goes in the working tree: do not create a scratch directory in it, and do not edit `.gitignore` to accommodate one. Show the proposal in the layout below, with every body's measured length and the delivery mode. Stop. Wait for approval. Create nothing in the tracker until the human says so. On a public repo, say so before creating: issue bodies are public the moment they exist, so anything in the input that should not be published gets left out or rewritten with synthetic values.
+
+   **Handoff.** The proposal lives outside the repo, so by default the session that drafted it files it. If that session cannot — it is ending, or a different session will do the creating — offer one alternative and take it only on the human's say-so: post the approved proposal to the tracker as a single issue labelled `roadmap-proposal`. A fresh session reads that issue as its input, runs step 3 as a resume, files from it, and closes it with a comment listing every number created. Posting it is the approved step, so nothing reaches the tracker unapproved.
 9. After approval, create in this order — labels, then milestones, then issues into them in dependency order, then the project, then any dependency still unresolved:
    1. Missing kind labels, and the project's impact label if it uses them — impact is what sets how much a picking-up agent may do unattended.
    2. Milestones, before issues, so an issue can be filed into one.
-   3. Issues, each with its milestone, **in dependency order** — a blocker before the work it blocks — so every `Blocked by` names a real number as it is written and the tracker never holds a broken dependency graph.
+   3. Issues, each with its milestone, **in dependency order** — a blocker before the work it blocks — so every `Blocked by` names a real number as it is written and the tracker never holds a broken dependency graph. Design issues and PRDs go before the specs that cite them, so every `#n D3` names a real number too.
    4. The project, then its issues.
    5. A rewrite pass, only for what step 3's ordering could not resolve — a dependency cycle, or a blocker filed in another session. Each such issue gets edited to the real number: `gh issue edit <n> --body-file <updated>`. An unresolved `Blocked by` is a broken dependency graph. Ordering usually leaves this step empty; say so rather than inventing work for it.
 
@@ -83,7 +100,20 @@ Criteria reach the tracker; scratch notes do not. A criterion you cannot state m
    ```
    `gh issue create` also takes `--project <title>`, which replaces step 4 for an existing project.
 
-   Report every number created. Delete the proposal file only after every object in it exists; on partial failure, keep it, report what exists and what does not, and resume from the first missing object.
+   **Sub-issues and issue types**, when step 3 found the repo uses them. `gh` 2.89 has no flag for either, so they go through the REST API. A PRD's specs and a design's citing specs become its sub-issues; the kind maps to the repo's issue type if one matches (do not create types — they are an org setting):
+   ```sh
+   gh api "orgs/<org>/issue-types"                                    # the types that exist, org-owned repos only
+   gh api --method PATCH "repos/<owner>/<repo>/issues/<n>" -f type="<type name>"
+   id=$(gh api "repos/<owner>/<repo>/issues/<child>" -q .id)          # the numeric id, not the issue number
+   gh api --method POST "repos/<owner>/<repo>/issues/<parent>/sub_issues" -F sub_issue_id="$id"
+   ```
+   These endpoints were written from GitHub's REST documentation and have not been run by an eval; check `gh api` errors rather than assuming success.
+
+   **The proposal file is the ledger.** Mark each object in it `created #n` (or the URL) the moment it exists, before the next create. Report every number created. Delete the file only after every object in it exists.
+
+   **On failure, resume — never restart.** Keep the file. Report what exists and what does not. To resume, in this session or a fresh one: re-run step 3, match every object the ledger does not mark as created against what the tracker now holds — by exact title, then by outcome — because a create can succeed after its response is lost. Mark the matches, then continue from the first object that truly does not exist, in the original order. Creating an object twice is the failure this prevents.
+
+   **Missing `project` scope mid-sequence.** Labels, milestones and issues need only repo access, so they all exist when the project step fails. Do not retry in a loop and do not skip silently: report the project and its item-adds as the missing objects, say that `gh auth refresh -s project` restores the scope, and resume from the project step once the human has run it.
 
 ## What makes an issue agent-ready
 
@@ -92,6 +122,15 @@ Criteria reach the tracker; scratch notes do not. A criterion you cannot state m
 - **Out of scope is required.** It stops scope creep and answers the reviewer's "why didn't this also handle X".
 - **Slice vertically.** One thin path through every layer that does one thing end to end, not a layer at a time. One criterion per issue, or a small group, so it merges and is checked on its own. An unfinished slice ships behind a feature flag. Criteria that cannot be cut that way are a design question for a human.
 - **Agent-complete is not done.** The issue says who closes it: a human or a gate. The agent that implements it moves it to review and stops. This skill files issues; it does not move status, and it does not claim an issue is ready because it exists.
+- **Sizing and delivery are separate.** One issue, one session stays the sizing rule whatever the delivery. How the work reaches review is the owner's choice, stated once in the proposal and on every spec and bug:
+
+  | Delivery mode | "Moved to review" means | Closed by |
+  |---|---|---|
+  | per-issue PR (default) | the issue's PR is open and linked | the human or gate that merges that PR |
+  | per-milestone PR | the issue's commits are on the milestone branch, criteria pass there, and a comment says so | the human who merges the milestone PR, closing each of its issues |
+  | local build first | as per-milestone, and the full build has been run and tested locally before the PR opens | as per-milestone, after the local test is recorded |
+
+  In every mode the implementing agent reports progress as comments on the issue — plan and size at pickup, then what landed and where — so the tracker stays the log.
 
 ## Size
 
@@ -121,17 +160,26 @@ The numbers come from the guide's trunk-based size budget, measured on human-aut
 ```md
 # Issues: <session name> · <date>
 
-Tracker: <what was read: n issues, n milestones, n projects, decision index or none — and whether the read was partial>
+Tracker: <what was read: n issues, n milestones, n projects, decision index or none — and whether the read was partial, naming each missing read>
 Canonical home: <tracker, or the home the issues link to instead of restating>
+House conventions: <what was adopted from earlier filings: title prefix, labels, milestone naming, issue types, sub-issues — or "none found">
+Delivery: <per-issue PR | per-milestone PR | local build first>. Progress is reported as issue comments.
+Project scope: <present | absent — project level skipped; `gh auth refresh -s project` restores it>
+
+## Before filing
+- <artifact with no pinned home yet, and who commits it> — or "nothing"
 
 ## Issues
-### <kind>: <outcome>   <size, spec and bug only>   new | update #12: <what changes>
+### <kind>: <outcome>   <size, spec and bug only>   <body length> chars   new | update #12: <what changes>   ledger: planned | created #n
 <filled template>
 
 ## Grouped upward
 - Project: <name>. <its milestones or issues>. <the outcome>
 - Milestone: <name>. #a, #b. <why they ship together>
 - Roadmap: <name>. <the projects in it>. <manual UI step on GitHub>
+
+## Stubbed on purpose
+- <surface>. Stub rendered by: <spec>. Real thing: <prd, "Not yet planned">.
 
 ## Still a human question
 - <question>. Blocks: <issue or nothing>.
@@ -146,3 +194,4 @@ Canonical home: <tracker, or the home the issues link to instead of restating>
 - Scope is two lines, not a file list. The pickup plan lists files.
 - Do not close the open questions yourself, and do not pad a section. "None recorded" is a valid Governing decisions entry.
 - Draft, show, stop. Nothing reaches the tracker before a human approves it.
+- The tracker is the whole record of the plan: decisions, contracts, audits and answers go into issues, split to fit the body limit, with non-text material at pinned links. A reader with tracker access needs nothing else to build the feature.
