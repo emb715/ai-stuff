@@ -16,6 +16,18 @@ One skill, not five. A UI review needs all clusters simultaneously: perception (
 
 Extraction pipeline: pymupdf text extraction from PDFs → per-book `extract.md` (structured per-chapter) → per-book `candidates.md` (candidate law discovery) → two-pass triage (dedup against existing 34 laws, then cluster assignment) → cross-book consolidation → aggregate files. All 125 raw candidates were triaged; 64 promoted, 45 merged into existing or promoted laws, 16 rejected as process/rhetoric/factoid.
 
+## Taste layer (added 2026-11-01)
+
+The laws describe usability. They do not stop an agent from shipping the generic generated look, and a baseline run showed the model already knows most of the laws. The taste layer adds what the laws leave out: concrete values.
+
+- **`refs/taste.csv`** is one row per design decision. Columns: `id, area, property, context, default, range, smell, why, laws, check`. Ids are prefixed by area (T type, S space, C color, F surface, L layout, H hierarchy, K components, M motion, W copy, N data) so they never collide with D-numbers. The `check` column says whether a row is measurable from a rendered page or needs an eyeball pass, so a future audit script can read it directly.
+- **`refs/presets.csv`** maps the intents in `build-moves.md` to concrete values (scale ratio, body size, section spacing, radius, shadow, accent use, type pairing, motion, density) and the taste rows each leans on.
+- **`refs/examples.md`** has before/after snippets for the 17 laws agents break most, each tied to its taste rows.
+
+All three are original writing. None of them quote the source books, and they must stay that way: real book text never goes into this repo.
+
+Why a CSV: it is compact, greppable, diffable row by row, and machine-readable. Markdown prose would have cost several times the tokens for the same decisions.
+
 ## Structure rationale
 
 8 refs files: 5 cluster refs (laws grouped by cluster) + 3 actionable refs (patterns, heuristics, antipatterns) + 1 generative ref (build-moves).
