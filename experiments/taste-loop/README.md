@@ -38,8 +38,9 @@ M1: `m1-picks/page.html` is the published picks page. It shows two full-page scr
 
 ## Evidence / Results
 
-- **M1:** the picks page is published, and the owner's picks are pending.
+- **M1:** the owner made all 30 picks: 8 clear winners, 4 ties and 18 "neither".
 - **M2:** the smoke run passed (`m2-smoke/README.md`). One brief ran end to end for about $0.84. Three distinct concepts all scored 18 of 18 on the audit, and two blind judges agreed on the winner.
+- **M3, step 1:** the uncalibrated judge agrees with the owner on 2 of 8 decisive picks and never holds a bar (0 of 18 "neither"). Details in `m3-judge/README.md`. Calibration is blocked until the picks carry reasons.
 
 ## Failure Modes / Boundaries
 
