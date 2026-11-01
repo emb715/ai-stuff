@@ -82,3 +82,20 @@ What that means in practice:
 - n = 3 per cell. Two of six judge pairs were order-dependent, which shows how noisy one-shot taste judgments are.
 - The judge is the same model family as the builder and may share its taste. A human pass over the screenshots is the missing check.
 - The presets were never tuned. A preset with more flourish for "premium" might change P5, but changing it after seeing these results and re-testing on the same tasks would be fitting to the test. A new round would need new briefs.
+
+## After the verdict: audit validation
+
+Following the verdict, the skill was cut down to a build guardrail, and `skill/scripts/taste-audit.js` now grades a rendered page against the 18 `taste.csv` rows that carry a `rule`. Scores on the same pages:
+
+| Page | Score | Failing rows |
+|---|---|---|
+| `flawed.html` | 10/18 | T-01 T-06 T-08 T-09 S-01 C-03 K-01 K-02 |
+| `subtle.html` | 10/18 | T-01 T-06 T-08 S-01 S-02 C-03 K-01 K-04 |
+| T1 new (3 runs) | 18, 15, 18 | S-01 S-02 F-01 on one run |
+| T1 none (3 runs) | 13, 13, 13 | T-01 T-03 S-01 S-02, plus T-09 or M-03 |
+| T3 new (3 runs) | 17, 17, 14 | S-01; one run also T-01 C-03 K-01 |
+| T3 none (3 runs) | 13, 13, 13 | T-01 S-01 S-02 C-03 K-01 |
+
+On `subtle.html` the audit catches 6 of the 11 planted defects without a model: scale step, spacing drift, contrast, target size, measure and focus. The 5 it cannot see are color temperature, the two primary buttons, the label gap, the nested radius and the color-only status. Those still need a reviewer.
+
+The audit separates skilled from unskilled runs as cleanly as the metrics did. Remember that the blind judge did not prefer the skilled runs: a high audit score means "not sloppy", not "good".

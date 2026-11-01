@@ -16,6 +16,16 @@ One skill, not five. A UI review needs all clusters simultaneously: perception (
 
 Extraction pipeline: pymupdf text extraction from PDFs → per-book `extract.md` (structured per-chapter) → per-book `candidates.md` (candidate law discovery) → two-pass triage (dedup against existing 34 laws, then cluster assignment) → cross-book consolidation → aggregate files. All 125 raw candidates were triaged; 64 promoted, 45 merged into existing or promoted laws, 16 rejected as process/rhetoric/factoid.
 
+## Pivot to a lint (2026-11-01)
+
+Round 2 (`../evals/results-round-2.md`) found that the taste layer reliably improves consistency but not how a blind judge rates the result, and that the 98-law list changes nothing measurable. Following the pre-registered verdict, the skill is now a **build guardrail plus an audit**:
+
+- `SKILL.md` is about 50 lines: pick a preset, write tokens first, build, then run `scripts/taste-audit.js`.
+- The 98-law quick reference and the cross-cluster failure patterns moved to `refs/laws-index.md`, a citation index for reviews.
+- `taste.csv` gained a `rule` column on 18 measurable rows. The audit reads it directly, so adding a check means adding a rule, not editing prose.
+
+The open question is now taste itself (distinctiveness, coherence, fit), which the lint deliberately does not try to answer.
+
 ## Taste layer (added 2026-11-01)
 
 The laws describe usability. They do not stop an agent from shipping the generic generated look, and a baseline run showed the model already knows most of the laws. The taste layer adds what the laws leave out: concrete values.

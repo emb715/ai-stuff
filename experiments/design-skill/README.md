@@ -59,6 +59,10 @@ Consequences to know:
 
 The skill gained a taste layer next to the laws: `skill/refs/taste.csv` (58 concrete design decisions with defaults, ranges, smells and checks), `skill/refs/presets.csv` (10 intent presets with concrete values), `skill/refs/examples.md` (before/after snippets for 17 laws), and a tokens-first build mode in `SKILL.md`. All of it is original writing with no book text. The first eval round is in `evals/results.md`. With n = 1, the new description triggers on build tasks where the old one did not, and the landing page build used 8 font sizes and 1 radius against the baseline's 15 and 4. Review quality did not change.
 
+### Round 2 and the pivot to a lint (2026-11-01)
+
+Round 2 (n = 3, pre-registered in `evals/plan-round-2.md`): the skill triggers on build work, stays quiet on unrelated tasks, and improves consistency on all 4 metrics. A blind judge preferred it in only 3 of 6 pairs, and review found +0.7 defects. The verdict was "continue as a lint, not a skill". The skill is now a short build guardrail plus `skill/scripts/taste-audit.js`, which grades a rendered page against the `rule` column of `taste.csv`. Results are in `evals/results-round-2.md`.
+
 ## Failure Modes / Boundaries
 
 - Laws are prescriptive guidance drawn from books, not empirical measurements taken in this repo.
