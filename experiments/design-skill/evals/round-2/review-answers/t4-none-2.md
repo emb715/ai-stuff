@@ -1,0 +1,17 @@
+Review of `subtle.html` (settings page), most severe first:
+
+1. **Focus is removed (`*:focus{outline:none}`).** Keyboard users can't see where they are. Fix: delete the rule, or use `:focus-visible{outline:2px solid #2f5bd3;outline-offset:2px}`.
+2. **Member status is conveyed by colour alone.** Ana, Ben and Chen each get a green, red or amber dot with no text or accessible name. Fix: add a visible label ("Active", "Suspended", "Pending") with an icon or text, and give the dot `aria-hidden` or an `aria-label`.
+3. **Remove is a one-click destructive action.** It's a tiny ✕ with a generic label, no confirmation or undo, and it sits next to the status dot. Fix: label it "Remove Ana Torres", use a confirm dialog or an undo toast, and style it as a destructive action, separated from the other controls.
+4. **Two primary buttons with unclear semantics.** "Save" and "Publish changes" have identical weight, and a settings page doesn't need both. Fix: keep one primary "Save changes" and make any secondary action a ghost button. Also add a disabled or dirty state and success feedback.
+5. **The URL change warning is a dense, low-contrast wall of text.** The 7d838c grey on the cream/blue panel is below 4.5:1, and the 60-word sentence is hard to scan. The warning also sits below both fields rather than next to the URL one. Fix: shorten it to about 15 words ("Existing links redirect for 30 days."), place it under the URL input, and darken the text to about #5b616a or darker.
+6. **The URL field is a bare slug with no context.** Users can't tell what it affects. Fix: show a prefix or suffix ("app.example.com/") and add a live preview.
+7. **Heading hierarchy and sizes are inverted or arbitrary.** The h1 (21.3px) is only slightly larger than h2 (19.4px) and h3 (17.6px), so the levels barely differ. Member names are h3s, which is semantically wrong. Fix: use a clear scale (e.g. 28/20/16), make the names plain text or list items, and put the members in a `<ul>`.
+8. **Member rows have no structure.** Name, dot and ✕ stack inline instead of forming a row, and there's no role, email or avatar. Fix: make each row a flex layout with an avatar, name and role on the left, and status and actions right-aligned.
+9. **Contrast is weak on the "lede" and the panel backgrounds.** The pale blue-grey panel (#eef2f7) on the beige page (#f5f1ea), with white nested cards, makes the layers muddy and the cool and warm tones clash. Fix: use one neutral surface with a subtle border instead of cards inside cards.
+10. **The icon button hit target is 32px, below the 44px touch guideline, and its glyph is a text "✕".** Fix: enlarge it to 40–44px and use an SVG icon with a hover state.
+11. **Spacing is inconsistent.** The values 13, 17, 23, 15, 9, 8, 11, 4 and 10px follow no scale, and the field gap (20px) is larger than the margin below the fields (8px). Fix: adopt a 4/8px scale and group each label with its input more tightly than the gaps between fields.
+12. **Native-ish inputs are minimally styled.** Inputs have no hover or error state, and the fixed 16px text is fine, but the input width isn't constrained (it stretches across 1100px). Fix: cap the form at about 480px and add error and help associations (`aria-describedby`).
+13. **No responsive or empty states.** There's no handling for a long member list, an empty list or narrow screens. Fix: add a wrapping layout, an invite button and an empty state.
+
+SKILLS_USED: none

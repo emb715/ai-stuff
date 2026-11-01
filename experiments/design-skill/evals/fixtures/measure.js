@@ -9,7 +9,7 @@ const {chromium} = require('playwright');
     await p.waitForTimeout(800);
     await p.screenshot({path: d + '/shot.png', fullPage: true});
     const m = await p.evaluate(() => {
-      const rgb = s => (s.match(/[\d.]+/g) || []).map(Number);
+      const rgb = s => { const v = (s.match(/[\d.]+/g) || []).map(Number); return s.startsWith('color(') ? [v[0] * 255, v[1] * 255, v[2] * 255, v[3]] : v; }; // color-mix() computes to color(srgb r g b) in 0–1
       const lum = ([r, g, b]) => { const f = c => { c /= 255; return c <= .03928 ? c / 12.92 : ((c + .055) / 1.055) ** 2.4; }; return .2126 * f(r) + .7152 * f(g) + .0722 * f(b); };
       const bgOf = e => { for (let n = e; n; n = n.parentElement) { const c = rgb(getComputedStyle(n).backgroundColor); if (c.length >= 3 && (c[3] === undefined || c[3] > .5)) return c; } return [255, 255, 255]; };
       const sizes = new Set(), fams = new Set(), radii = new Set(), shadows = new Set(), spacing = new Set();
