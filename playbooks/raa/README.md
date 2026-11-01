@@ -2,7 +2,7 @@
 title: "Research, Analyze, Assess (RAA)"
 status: draft
 confidence: medium
-last_tested: 2026-07-30
+last_tested: 2026-11-01
 scope: personal
 tooling:
   - "agnostic/any-LLM"
@@ -44,10 +44,11 @@ See [`playbook.md`](playbook.md) — standalone copy-paste procedure.
 
 # Evidence
 
-<!-- GATE 3 PLACEHOLDER — required: at least one documented outcome. -->
-<!-- This playbook is draft status — not yet validated through real use. -->
+First real run (2026-11-01), headless and solo, against this repo: plan a lint rule that blocks unmarked links into deprecated artifacts, plus retargeting four stale links that rule would flag. 28 turns, about 2 minutes, no files edited. The plan had 3 phases, 8 streams over 9 files, a file-overlap matrix, a 5-row handoff ledger, a 5-row risk register, and an estimate of 8 SP (worst case 12, medium confidence). Every claim carried a file:line anchor; spot checks found them correct. It found the ordering constraint unprompted: the stale links must be fixed first or the new rule fails on its own commit.
 
-_TODO: Document at least one real run — what feature was planned, how many files the research map covered, how many P0/P1 findings the analysis produced, whether the plan was consumed successfully by implementation-orchestration, and how the effort estimate compared to actual implementation effort. Quantitative preferred (e.g. "RAA on [feature], research map covered 14 files across 3 layers, analysis found 2 P0 + 4 P1, plan consumed by orchestration without rework, estimated 13 SP vs actual 18 SP")._
+implementation-orchestration consumed the plan with no rework and no follow-up questions. Two small plan errors surfaced during the build: one table reference pointed at the wrong of two tables in the same file, and one risk (an unverified lint baseline) came from the run's sandbox refusing to run the linter, not from the repo. The SP estimate was not compared with actual effort: the build took one agent about 2 minutes.
+
+Not yet tested: a change large enough to hit SCOPE TOO LARGE, a BLOCKED outcome, or a multi-agent fleet.
 
 # Failure Modes / Boundaries
 

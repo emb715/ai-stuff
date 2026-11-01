@@ -2,7 +2,7 @@
 title: "Implementation Orchestration"
 status: draft
 confidence: medium
-last_tested: 2026-07-30
+last_tested: 2026-11-01
 scope: personal
 tooling:
   - "agnostic/any-LLM"
@@ -55,10 +55,11 @@ See [`playbook.md`](playbook.md) — standalone copy-paste procedure.
 
 # Evidence
 
-<!-- GATE 3 PLACEHOLDER — required: at least one documented outcome. -->
-<!-- Draft status — not yet tested in real use. -->
+First real run (2026-11-01), headless and solo (one agent playing every role), consuming the raa plan above with no other context. 26 turns, about 2.5 minutes. All 3 phases landed as 3 commits with the repo linter green after each; the mandatory review found 0 P0/P1. The tester role ran its own negative and positive cases, including restoring the old text to prove the phase order mattered. An independent check afterwards (a new unmarked link in a `humans.md`) was blocked as expected. The resulting commits shipped unchanged, in the same pull request as this evidence.
 
-_TODO: Document at least one real run — which plan, how many phases/streams, fleet used, parallel streams dispatched, review loops to PASS, CI failures hit and fixed, time to DONE. Quantitative preferred (e.g. "3-phase plan on [repo], 7 streams across 2 parallel groups, 1 review loop (2 passes), 3 CI fixes, 90 min to merge-ready PR")._
+Deviations: Steps 7–8 (PR creation and CI loop) were not exercised, since the run had no `gh` and no remote; the PR text was written instead and the linter stood in for CI. It reported its deviations from the plan (one row placed in a better-fitting table, conditional handoffs not triggered) rather than hiding them.
+
+Not yet tested: a real parallel fleet, the PR and CI fix loop, and a review that finds P0/P1 issues.
 
 # Failure Modes / Boundaries
 
