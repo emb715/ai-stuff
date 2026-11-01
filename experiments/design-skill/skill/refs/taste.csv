@@ -1,0 +1,59 @@
+id,area,property,context,default,range,smell,why,laws,check
+T-01,type,type scale ratio,app UI,1.2,1.125–1.25,adjacent sizes that differ by 1–2px (14/15/16),"steps too small read as mistakes, not hierarchy",D-14;D-30,measure: ratio between consecutive font sizes ≥1.125
+T-02,type,type scale ratio,marketing / editorial,1.333,1.25–1.5,hero only 1.2× body,display type needs a visible jump to set the entry point,D-14;D-67,measure
+T-03,type,distinct font sizes per screen,any,5,4–6,8+ sizes in one view,each size is a hierarchy level; more levels than meaning is noise,D-14;D-30,measure: count unique computed font-size
+T-04,type,typefaces per product,any,1,1–2,"3+ families, or two similar sans faces paired","pairs need contrast in role (serif display + sans text), not near-duplicates",D-13;D-26,measure: count unique font-family
+T-05,type,body size,screen text,16px,15–18px,body under 14px,"small body raises reading cost; secondary text can drop, body cannot",D-80;D-85,measure
+T-06,type,body line-height,paragraphs,1.5,1.4–1.7,1.2 on long paragraphs,tight leading on long text makes lines blur together,D-85,measure
+T-07,type,heading line-height,headings ≥24px,1.15,1.05–1.25,1.5 on large display type,large type with body leading falls apart into separate lines,D-5;D-85,measure
+T-08,type,line length (measure),paragraphs,65ch,45–75ch,full-width text across a wide container,long lines lose the eye on the return sweep,D-49;D-85,measure: max-width of text blocks in ch
+T-09,type,alignment of running text,"paragraphs, lists, forms",left (start),—,centered paragraphs longer than two lines,a ragged left edge makes every line start in a new place,D-93;D-13,eyeball
+T-10,type,emphasis weight,body copy,regular + one bold step,400/600,"bold paragraphs, or 4+ weights on screen","if everything is bold, weight stops carrying meaning",D-74;D-30,measure: share of text nodes ≥600
+T-11,type,letter-spacing,all caps labels,+0.04em to +0.08em,0.02–0.1em,caps with default tracking; tracked lowercase body,caps crowd at default tracking; body needs none,D-80,measure
+T-12,type,all caps,any,labels ≤3 words only,—,caps headlines or caps sentences,caps remove word shapes and read as shouting,D-80;D-12,eyeball
+T-13,type,numerals,"tables, prices, timers",tabular figures,—,proportional digits jumping in a column or counter,columns of numbers should align on the digit,D-5;D-63,eyeball: font-variant-numeric
+S-01,space,spacing base unit,any,"4px grid, 8px rhythm",4 or 8,"values like 7px, 13px, 22px scattered around",arbitrary values break repetition and make alignment drift,D-13;D-26,measure: share of margins/paddings on the grid
+S-02,space,distinct spacing values,per screen,6,5–8,15+ different paddings,a small spacing set is what makes a layout feel decided,D-26;D-13,measure
+S-03,space,inner vs outer spacing,grouped elements,outer ≥ 2× inner,1.5–3×,gap between groups equals gap inside groups,proximity is the cheapest grouping signal; equal gaps erase groups,D-5;D-13,measure
+S-04,space,section spacing,marketing pages,96px desktop / 64px mobile,64–160px,sections separated only by 24–32px,calm and premium both come from room between ideas,D-17;D-67,measure
+S-05,space,card padding,cards and panels,24px,16–32px,8–12px padding with 20px+ radius,padding smaller than radius makes content crash into the curve,D-13,measure: padding ≥ radius
+S-06,space,content max width,app or page body,1120–1280px,960–1440px,no max width on a 2560px screen,content stretched edge to edge loses its focal point,D-14;D-49,measure
+S-07,space,density,"expert tools, tables",row height 32–40px,28–44px,marketing spacing inside a data tool,experts want more on screen; generous spacing there is a tax,D-83;D-81,measure
+C-01,color,accent colors,any,1,1–2,3+ saturated hues used for decoration,one accent makes the primary action findable; several make it a guess,D-30;D-74;D-14,measure: count saturated hues
+C-02,color,neutrals,"backgrounds, borders, text","one gray ramp, lightly tinted toward the accent",8–11 steps,pure #000 text on pure #fff; mixed cool and warm grays,a single tinted ramp reads as one system; mixed grays look accidental,D-26;D-80,eyeball
+C-03,color,body text contrast,text on background,≥7:1,4.5:1 minimum,mid-gray body text (#999 on #fff is 2.8:1),low contrast is the most common reason a 'clean' design is unreadable,D-4;D-80,measure: WCAG contrast
+C-04,color,secondary text contrast,"captions, meta",≥4.5:1,4.5–7:1,placeholder-gray used for real content,secondary still has to be readable,D-4;D-80,measure
+C-05,color,semantic colors,"status, errors","red=error, amber=warning, green=success, used only for that",—,red for brand or decoration; green delete button,threat colors pull attention; spending them on decoration cries wolf,D-90;D-77,eyeball
+C-06,color,color-only meaning,"status, charts, form errors",color + icon or text,—,error shown only as a red border,about 1 in 12 men cannot rely on the hue,D-62;D-86,eyeball
+C-07,color,gradients,"backgrounds, buttons","none, or one subtle two-stop gradient in hue family",—,purple-to-pink hero gradient as a default,the default gradient is the fastest way to look generated,D-30;D-15,eyeball
+C-08,color,dark mode surfaces,dark theme,"#111–#1a1a1a base, elevation by lighter surface",—,pure black with pure white text; shadows for elevation,"on dark, light surfaces show depth; shadows disappear",D-4;D-80,eyeball
+C-09,color,highlighted area,any screen,≤10% of surface,5–10%,"highlight on every sentence, badge on every card",highlight works by being rare,D-74,eyeball
+F-01,surface,corner radius scale,components,"one scale: 4 / 8 / 12, plus full for pills",2–3 steps,a different radius on every component,radius is part of the shape language; mixing reads as several products,D-26;D-13,measure: count unique border-radius
+F-02,surface,nested radius,"card inside card, button in input",inner = outer − padding,—,same radius inside and out,"equal radii on nested shapes leave a thick, uneven corner",D-13,measure
+F-03,surface,shadow levels,elevation,"2–3 levels, low opacity (≤0.12), y-offset > blur/3",—,heavy 0.3+ black shadows; shadow on everything,shadow is elevation information; on everything it means nothing,D-30;D-14,measure: count unique box-shadow
+F-04,surface,borders vs shadows,separating surfaces,pick one per level: border OR shadow,—,border + shadow + background change on one card,"stacking three separators is decoration, not structure",D-17;D-30,eyeball
+F-05,surface,card nesting,layout,no cards inside cards,max 1 level,card in card in card,nesting boxes is the visual form of a deep menu,D-17;D-81,eyeball
+F-06,surface,border weight,"dividers, inputs","1px, low-contrast line",1–2px,3px colored borders as decoration,heavy borders compete with content,D-30,measure
+L-01,layout,alignment edges,any screen,"few strong edges, shared left edge for text",—,every block with its own indent,a strong shared edge is what makes a page look ordered,D-13,eyeball: draw the edges
+L-02,layout,hero composition,landing pages,"one headline, one supporting line, one primary CTA",≤2 CTAs,headline + 3 CTAs + carousel,the entry point must say one thing,D-67;D-10;D-14,count
+L-03,layout,feature grid,marketing,"3 or 4 items, icon optional",2–4,6 identical cards with emoji icons,uniform cards with emoji are the stock generated layout,D-8;D-30;D-51,eyeball
+L-04,layout,symmetry,marketing,centered hero is fine; body sections left-aligned or asymmetric,—,every section centered,all-centered pages have no reading line,D-89;D-93,eyeball
+L-05,layout,responsive behavior,mobile ≤480px,"single column, 16–20px gutters",—,horizontal scroll; desktop grid squeezed,the layout must work at the smallest real size,D-87;D-69,measure: no overflow at 375px
+H-01,hierarchy,primary actions per view,any,1,1,two filled buttons side by side,one primary is the answer to 'what do I do here',D-14;D-16;D-10,count filled buttons per region
+H-02,hierarchy,button order,"dialogs, forms",primary last (right on desktop),—,Cancel styled same as Submit,equal styling turns a one-click choice into a reading task,D-14;D-16;D-35,eyeball
+H-03,hierarchy,contrast between levels,any pair of different elements,differ clearly in 1–2 properties,—,differ slightly in 4 properties,a weak difference looks like a mistake; a clear one looks intentional,D-14;D-4,eyeball: squint test
+H-04,hierarchy,squint test,any screen,3–5 visual stops,—,10 things competing at the same weight,"if you squint and see no order, users won't either",D-14;D-30,eyeball
+K-01,components,tap target,touch and pointer,44px,40–48px,"24px icon buttons, 12px text buttons",small targets are slow and error-prone,D-18,measure: bounding box ≥44
+K-02,components,form labels,inputs,visible label above input,—,placeholder as the only label,the placeholder vanishes the moment the user needs it,D-9;D-32,eyeball
+K-03,components,input height,forms,"40–48px, matches button height",—,inputs 24px next to 40px buttons,matched heights make a row read as one unit,D-13;D-26,measure
+K-04,components,states,interactive elements,"hover, focus-visible, active, disabled all designed",—,no focus ring; disabled looks like enabled,missing states are missing feedback,D-19;D-16,eyeball: tab through
+K-05,components,empty states,"lists, dashboards",one line of why + one action,—,blank area or 'No data',an empty state is the first screen a new user sees,D-27;D-67,eyeball
+K-06,components,icons,UI icons,"one icon set, one stroke width, paired with labels when unfamiliar",—,emoji as icons; mixed outline and filled sets,mixed sets read as collage; unlabeled icons are guesses,D-75;D-26,eyeball
+M-01,motion,duration,UI transitions,150–200ms,100–300ms,500ms+ on every hover,slow motion feels like lag,D-20,measure
+M-02,motion,easing,enter / exit,"ease-out to enter, ease-in to exit",—,linear easing on movement,linear movement looks mechanical,D-79,eyeball
+M-03,motion,reduced motion,any animation,respect prefers-reduced-motion,—,parallax with no opt-out,motion can make people sick,D-57,measure: media query present
+W-01,copy,headline,"hero, section titles","plain claim of what it does, ≤8 words",—,'Unlock your potential' / 'Revolutionize your workflow',generic claims say nothing; specific ones are trusted,D-38;D-11,eyeball
+W-02,copy,button labels,actions,verb + object ('Start writing'),1–3 words,"'Submit', 'OK', 'Click here'",the label should predict the result,D-35;D-2,eyeball
+W-03,copy,exclamation and caps,UI copy,none,—,'WELCOME!!!',"shouting reads as cheap, the opposite of premium and calm",D-25;D-15,eyeball
+N-01,data,table alignment,tables,"text left, numbers right, header aligned with its column",—,centered numbers,right-aligned numbers compare by magnitude at a glance,D-5;D-13,eyeball
+N-02,data,chart decoration,charts,"no 3D, no gradient fills, light or no gridlines",—,3D pie with legend,decoration in charts is noise on top of the signal,D-30,eyeball

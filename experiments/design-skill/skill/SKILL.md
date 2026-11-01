@@ -1,31 +1,37 @@
 ---
 name: design-laws
-description: UI/UX review, design critique, and interface building using 98 evidence-backed design laws from 9 canonical books (Norman, Krug, Maeda, Lidwell, Williams, Weinschenk, Johnson, Gothelf, Greever). Activates when reviewing a UI, critiquing a design, evaluating layout, hierarchy, or flow, building a new interface, auditing for usability issues, or making principled design decisions. Covers perception, cognition, composition, interaction, and decision clusters plus concrete patterns, heuristics, and antipatterns mapped to each law.
+description: "Design laws plus a taste layer for building and reviewing UI. Activates before writing any interface (a page, landing page, pricing section, dashboard, component, form, HTML/CSS, or styles) and when reviewing, critiquing, or auditing a UI for usability, hierarchy, layout, or polish. Gives concrete defaults (type scale, spacing, color, radius, shadow) in taste.csv, intent presets (calm, premium, dense...), before/after examples, and 98 D-numbered laws with patterns, heuristics, and antipatterns."
 ---
 
 # design-laws
 
-98 evidence-backed design laws from 9 canonical design books, with concrete patterns, heuristics, and antipatterns mapped to each law — for UI/UX review, design critique, interface building, and principled design decisions.
 
-Cite laws by D-number. Load the cluster ref for the checkable statement, example, and source anchor. Use `refs/build-moves.md` when building from intent (creative application, law tensions, deliberate breaks, named compositions). Use `refs/patterns.md` for concrete solutions to known problems, `refs/heuristics.md` for review checks, `refs/antipatterns.md` for named mistakes with corrections.
+Two layers. **Laws** say what is usable; **taste** says what looks decided. Agents already know most laws, so the taste layer is where most of the gain is: concrete defaults, a small token set, and named smells.
 
-## When to load
+## Build mode: tokens first
 
-- Reviewing, critiquing, or auditing a UI
-- Building a new interface — from a problem (patterns) or from intent (build-moves)
-- Making or defending a design decision
-- Designing flows, layouts, or interactions
+Use this whenever you write UI, even if the request does not say "design".
 
-## Build mode — start from intent
+1. **Pick a preset.** Match the brief's intent to a row in `refs/presets.csv` (calm, premium, trustworthy, urgent, playful, authoritative, intimate, learnable, delightful, dense). If none fits, use `trustworthy`.
+2. **Write tokens before markup.** Declare the type scale, spacing scale, radius scale, colors (one accent plus one neutral ramp), and shadow levels as variables, using the preset values and the `default` column of `refs/taste.csv`. Every later value must use a token.
+3. **Build.** Use the ✓ shapes in `refs/examples.md`. One primary action per view.
+4. **Self-check.** Walk the `taste.csv` rows whose `check` starts with `measure` (font-size count, contrast, spacing grid, radius count, target size, measure). Fix every row whose `smell` you see, then do the squint test (H-04).
 
-When building from creative intent (not reviewing an existing surface), load `refs/build-moves.md` for:
-- Intent → laws (calm, premium, trustworthy, urgent, playful, authoritative, intimate, learnable, delightful, scalable)
-- Law tensions and resolution principles (e.g., D-17 Reduction vs D-86 Redundancy)
-- Deliberate breaks — when breaking a law is the move, with the cost named
-- Compositions — named law combinations producing emergent effects (Negative Space as Luxury, Progress as Motivation, Conversational Warmth, Expert Density, Trust Through Transparency, The Deliberate Surprise, The Recovery Story, The Familiar Stranger, The Calm Expert, The Honest Warning)
-- Generative prompts
+For intent beyond the preset (law tensions, deliberate breaks, named compositions), load `refs/build-moves.md`.
 
-See [refs/build-moves.md](refs/build-moves.md) for the full build-mode toolkit.
+## Review mode
+
+Cite laws by D-number and taste rows by id (T-03, C-01). Load the cluster ref for the law's checkable statement. Use `refs/heuristics.md` for review questions, `refs/antipatterns.md` and `refs/examples.md` for named mistakes, and `refs/patterns.md` for fixes. Lead with what breaks the user's task, then taste.
+
+## Refs
+
+| File | Use |
+|---|---|
+| `refs/taste.csv` | 58 concrete decisions: area, property, context, default, range, smell, why, laws, check |
+| `refs/presets.csv` | 10 intent presets with concrete values and the taste rows they lean on |
+| `refs/examples.md` | before/after snippets for the 17 laws agents break most |
+| `refs/{perception,cognition,composition,interaction,decision}.md` | law statements by cluster |
+| `refs/patterns.md`, `heuristics.md`, `antipatterns.md`, `build-moves.md` | solutions, review checks, named mistakes, generative moves |
 
 ## The 98 laws — quick reference
 
@@ -171,10 +177,4 @@ See [refs/decision.md](refs/decision.md) for checkable statements, examples, and
 
 ## Skill output example
 
-Bad — principle named informally, no source anchor, generic fix:
-
-> The submit and cancel buttons look identical. Users might hit cancel by accident. This violates Fitts's Law and visual hierarchy. Fix: make them look different.
-
-Good — law cited by D-number, concrete pattern, cluster referenced:
-
-> Submit and Cancel are the same size, color, and weight — **violates D-14 (Visual Hierarchy) + D-16 (Clickability) + D-1 (Affordance)**. This is the **invisible primary action** cross-cluster pattern (D-1 + D-14 + D-16): the most important action on the surface is not findable. Fix: Submit becomes the large filled primary button (Single-Feature Pop-Out, refs/patterns.md → D-30); Cancel becomes a ghost/text secondary. Place Submit bottom-right per D-73 (Gutenberg Diagram). See refs/interaction.md for D-18, D-35, D-37.
+> Submit and Cancel share size, color and weight: **D-14 + D-16** (invisible primary action), taste row **H-02**. Fix: Submit becomes the filled primary labelled "Create account"; Cancel becomes a ghost button (see `refs/examples.md` → D-16).

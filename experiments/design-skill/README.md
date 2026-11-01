@@ -2,7 +2,7 @@
 title: "Design Laws Research"
 status: draft
 confidence: medium
-last_tested: 2026-08-18
+last_tested: 2026-11-01
 scope: personal
 tooling:
   - "research/qualitative"
@@ -54,6 +54,10 @@ Consequences to know:
 - The derived artifacts in `laws/` (`extracted.md`, `quotes.md`, `proposed-laws-ready.md`) stay tracked and still cite `sources/B*/` paths. Those citations now point at files only present in a local checkout. That is intended — the citation records provenance, it is not a dependency a reader can follow.
 - Anyone cloning this repo gets the derived work and not the corpora. Re-running the extraction requires supplying the books yourself.
 - **Untracking does not remove them from git history.** They remain reachable in the public history from 2026-07-30 onward. Removing them for real needs a history rewrite or a fresh squashed repo — an open decision, recorded in `changelog/week-2026-44.md`.
+
+### Taste layer (2026-11-01)
+
+The skill gained a taste layer next to the laws: `skill/refs/taste.csv` (58 concrete design decisions with defaults, ranges, smells and checks), `skill/refs/presets.csv` (10 intent presets with concrete values), `skill/refs/examples.md` (before/after snippets for 17 laws), and a tokens-first build mode in `SKILL.md`. All of it is original writing with no book text. The first eval round is in `evals/results.md`. With n = 1, the new description triggers on build tasks where the old one did not, and the landing page build used 8 font sizes and 1 radius against the baseline's 15 and 4. Review quality did not change.
 
 ## Failure Modes / Boundaries
 
