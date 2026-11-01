@@ -1,0 +1,2 @@
+const {chromium}=require('playwright');const key=require(process.argv[2]+'/key.json');
+(async()=>{const b=await chromium.launch();for(const [run,id] of Object.entries(key.ids)){const p=await b.newPage({viewport:{width:1280,height:800},deviceScaleFactor:0.75});await p.goto('file://'+process.argv[3]+'/'+run+'/index.html');await p.waitForTimeout(600);await p.screenshot({path:process.argv[2]+'/img/'+id+'.jpg',type:'jpeg',quality:72,fullPage:true});await p.close()}await b.close()})();

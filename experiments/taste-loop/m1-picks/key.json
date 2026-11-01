@@ -1,0 +1,198 @@
+{
+ "ids": {
+  "t3-none-1": "p01",
+  "t1-new-3": "p02",
+  "t3-new-3": "p03",
+  "t3-new-1": "p04",
+  "t3-none-2": "p05",
+  "t1-new-2": "p06",
+  "t1-none-1": "p07",
+  "t3-new-2": "p08",
+  "t1-new-1": "p09",
+  "t1-none-3": "p10",
+  "t1-none-2": "p11",
+  "t3-none-3": "p12"
+ },
+ "pairs": [
+  {
+   "task": "t3",
+   "left": "p12",
+   "right": "p05",
+   "id": "q01"
+  },
+  {
+   "task": "t1",
+   "left": "p11",
+   "right": "p10",
+   "id": "q02"
+  },
+  {
+   "task": "t3",
+   "left": "p08",
+   "right": "p03",
+   "id": "q03"
+  },
+  {
+   "task": "t1",
+   "left": "p02",
+   "right": "p10",
+   "id": "q04"
+  },
+  {
+   "task": "t3",
+   "left": "p04",
+   "right": "p08",
+   "id": "q05"
+  },
+  {
+   "task": "t1",
+   "left": "p09",
+   "right": "p10",
+   "id": "q06"
+  },
+  {
+   "task": "t1",
+   "left": "p07",
+   "right": "p10",
+   "id": "q07"
+  },
+  {
+   "task": "t1",
+   "left": "p07",
+   "right": "p09",
+   "id": "q08"
+  },
+  {
+   "task": "t3",
+   "left": "p01",
+   "right": "p03",
+   "id": "q09"
+  },
+  {
+   "task": "t3",
+   "left": "p01",
+   "right": "p04",
+   "id": "q10"
+  },
+  {
+   "task": "t1",
+   "left": "p02",
+   "right": "p09",
+   "id": "q11"
+  },
+  {
+   "task": "t1",
+   "left": "p06",
+   "right": "p09",
+   "id": "q12"
+  },
+  {
+   "task": "t1",
+   "left": "p10",
+   "right": "p06",
+   "id": "q13"
+  },
+  {
+   "task": "t1",
+   "left": "p11",
+   "right": "p02",
+   "id": "q14"
+  },
+  {
+   "task": "t3",
+   "left": "p01",
+   "right": "p05",
+   "id": "q15"
+  },
+  {
+   "task": "t3",
+   "left": "p01",
+   "right": "p08",
+   "id": "q16"
+  },
+  {
+   "task": "t1",
+   "left": "p11",
+   "right": "p06",
+   "id": "q17"
+  },
+  {
+   "task": "t1",
+   "left": "p11",
+   "right": "p07",
+   "id": "q18"
+  },
+  {
+   "task": "t3",
+   "left": "p04",
+   "right": "p03",
+   "id": "q19"
+  },
+  {
+   "task": "t3",
+   "left": "p05",
+   "right": "p03",
+   "id": "q20"
+  },
+  {
+   "task": "t1",
+   "left": "p02",
+   "right": "p06",
+   "id": "q21"
+  },
+  {
+   "task": "t1",
+   "left": "p09",
+   "right": "p11",
+   "id": "q22"
+  },
+  {
+   "task": "t3",
+   "left": "p08",
+   "right": "p12",
+   "id": "q23"
+  },
+  {
+   "task": "t3",
+   "left": "p03",
+   "right": "p12",
+   "id": "q24"
+  },
+  {
+   "task": "t3",
+   "left": "p01",
+   "right": "p12",
+   "id": "q25"
+  },
+  {
+   "task": "t3",
+   "left": "p05",
+   "right": "p08",
+   "id": "q26"
+  },
+  {
+   "task": "t3",
+   "left": "p04",
+   "right": "p05",
+   "id": "q27"
+  },
+  {
+   "task": "t1",
+   "left": "p07",
+   "right": "p06",
+   "id": "q28"
+  },
+  {
+   "task": "t3",
+   "left": "p04",
+   "right": "p12",
+   "id": "q29"
+  },
+  {
+   "task": "t1",
+   "left": "p07",
+   "right": "p02",
+   "id": "q30"
+  }
+ ]
+}
