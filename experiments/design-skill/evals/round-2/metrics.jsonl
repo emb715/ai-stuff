@@ -1,0 +1,12 @@
+{"run":"t1-new-1","fontSizes":6,"families":2,"radii":2,"shadows":1,"spacingValues":8,"offGridPct":0,"minContrastSmallText":6.8,"centeredLong":0,"gradient":false}
+{"run":"t1-new-2","fontSizes":5,"families":2,"radii":4,"shadows":1,"spacingValues":12,"offGridPct":12,"minContrastSmallText":6.4,"centeredLong":0,"gradient":false}
+{"run":"t1-new-3","fontSizes":5,"families":2,"radii":1,"shadows":1,"spacingValues":5,"offGridPct":0,"minContrastSmallText":6.3,"centeredLong":0,"gradient":false}
+{"run":"t1-none-1","fontSizes":13,"families":2,"radii":3,"shadows":2,"spacingValues":21,"offGridPct":46,"minContrastSmallText":4.6,"centeredLong":0,"gradient":true}
+{"run":"t1-none-2","fontSizes":15,"families":2,"radii":3,"shadows":2,"spacingValues":22,"offGridPct":30,"minContrastSmallText":4.5,"centeredLong":1,"gradient":false}
+{"run":"t1-none-3","fontSizes":17,"families":2,"radii":3,"shadows":2,"spacingValues":23,"offGridPct":36,"minContrastSmallText":4.6,"centeredLong":1,"gradient":false}
+{"run":"t3-new-1","fontSizes":4,"families":1,"radii":1,"shadows":1,"spacingValues":9,"offGridPct":38,"minContrastSmallText":4.5,"centeredLong":0,"gradient":false}
+{"run":"t3-new-2","fontSizes":5,"families":1,"radii":2,"shadows":1,"spacingValues":9,"offGridPct":27,"minContrastSmallText":4.5,"centeredLong":0,"gradient":false}
+{"run":"t3-new-3","fontSizes":5,"families":1,"radii":2,"shadows":1,"spacingValues":9,"offGridPct":22,"minContrastSmallText":4.4,"centeredLong":0,"gradient":false}
+{"run":"t3-none-1","fontSizes":5,"families":1,"radii":2,"shadows":0,"spacingValues":13,"offGridPct":92,"minContrastSmallText":4.3,"centeredLong":0,"gradient":false}
+{"run":"t3-none-2","fontSizes":5,"families":2,"radii":2,"shadows":0,"spacingValues":11,"offGridPct":92,"minContrastSmallText":2.9,"centeredLong":0,"gradient":false}
+{"run":"t3-none-3","fontSizes":5,"families":2,"radii":2,"shadows":1,"spacingValues":12,"offGridPct":93,"minContrastSmallText":4.4,"centeredLong":0,"gradient":false}

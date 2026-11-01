@@ -1,0 +1,1 @@
+In NOTES.md, add a 1.4.1 section above 1.4.0 with one bullet: "Fixed the CSV export header order." Also add the missing full stop on the last 1.4.0 bullet. Do not ask questions. End with one line: SKILLS_USED: <names or none>.

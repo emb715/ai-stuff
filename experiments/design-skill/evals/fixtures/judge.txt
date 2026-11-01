@@ -1,0 +1,5 @@
+You are judging two versions of the same web page built from the same brief. Brief: BRIEF
+Open A.png and B.png in the current directory and look at both carefully. Judge on visual craft and taste: hierarchy, typography, spacing rhythm, restraint, consistency, and how well it fits the brief. Ignore content differences in the copy.
+Reply with exactly two lines:
+WINNER: A or B or TIE
+WHY: one sentence.

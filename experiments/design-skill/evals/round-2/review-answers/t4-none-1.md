@@ -1,0 +1,19 @@
+Problems, most severe first:
+
+1. **Focus outlines removed** (`*:focus{outline:none}`). Keyboard users can't see where they are. Fix: delete the rule, or add a visible `:focus-visible` ring (2px, #2f5bd3, 2px offset).
+2. **Status is shown by color alone.** The green, red and amber dots have no text or label, so color-blind users and screen readers get nothing. Fix: add a text label ("Active", "Suspended", "Pending") plus a distinct icon or shape, and give each dot an accessible name.
+3. **Destructive "✕" removes a member with no protection.** The 32px target is small, nothing says who it removes (the label is just "Remove"), and there's no confirmation or undo. Fix: use a 44px target, `aria-label="Remove Ana Torres"`, a confirm dialog or undo toast, and danger styling on hover and focus.
+4. **Two identical primary buttons: "Save" and "Publish changes".** Same weight, so the primary action is unclear. The difference between saving and publishing is also undefined, and the two are placed side by side. Fix: one primary button. Make the other secondary or put it elsewhere, and explain what publishing does.
+5. **Low-contrast secondary text.** #7d838c on #f5f1ea or #eef2f7 is about 3.3:1, below the 4.5:1 minimum. The lede and the help text are affected. Fix: darken to about #59606a.
+6. **The URL help text is a single dense paragraph of about 60 words.** The key warning (links break after 30 days) is buried in the middle. Fix: split it into 2–3 short lines or bullets, lead with the consequence, and put it right next to the URL field.
+7. **The Workspace URL input holds a bare slug** with no prefix or suffix (e.g. `app.example.com/`), no validation, and no hint of the format. Fix: add an input prefix or suffix, inline validation, and a confirm step for this risky change.
+8. **The type scale is inverted and nearly flat.** The h1 is 21.3px, only slightly above the h2 (19.4px), the h3 (17.6px) and the 16px body, and h3 is used for member names, which isn't a real heading. Fix: use a clear scale (e.g. 28/20/16), make names plain 16px text with weight 500, and keep headings for structure.
+9. **The member rows are empty cards.** Each has a name, a dot and an ✕, stacked inline with no alignment, role, email or avatar. The `.inner` card sits inside a `.panel`, which makes two levels of nesting for a plain list. Fix: use a flat list with dividers, a flex row with the name on the left, the status and actions on the right, and a role column.
+10. **Panel surface is bluish (#eef2f7) on a warm cream page (#f5f1ea).** The temperatures clash, and the panels barely separate from the background. Fix: pick one neutral family and give the panels a white surface with a subtle border.
+11. **Spacing is arbitrary and inconsistent.** Values like 17/23, 13, 11, 4/10, 20 and 8 don't follow a scale, and the gap between fields (20px) is larger than the gap before the help text and buttons. Fix: use a 4/8 spacing scale, and keep a label and its input closer together than they are to the next field.
+12. **Inputs are missing state and type affordances.** There's no hover or error state, no `autocomplete` or `type`, and the 1px #cfd4da border is about 1.5:1 against the surface, so it's below 3:1 for UI components. Fix: darken the border to about #8a9199 and add the missing states.
+13. **No page structure.** There's no way to add or invite members, and no page-level nav or sections. There's also no section-level save feedback. Fix: add an "Invite member" button and show saved confirmation.
+14. **Buttons have no hover, active or disabled states.** And `<button>` elements in the HTML use the default `font-family` instead of inheriting from the page. Fix: add `font:inherit` and state styles.
+15. **Layout is a 1100px container with full-width inputs** that stretch to about 1050px, which makes short values like "Northline" look lost and hurts scanning. Fix: cap the form width at about 480px.
+
+SKILLS_USED: none

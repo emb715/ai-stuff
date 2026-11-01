@@ -1,0 +1,50 @@
+{
+ "judge/t1-1": [
+  "new",
+  "none"
+ ],
+ "judge/t1-2": [
+  "new",
+  "none"
+ ],
+ "judge/t1-3": [
+  "none",
+  "new"
+ ],
+ "judge/t3-1": [
+  "new",
+  "none"
+ ],
+ "judge/t3-2": [
+  "new",
+  "none"
+ ],
+ "judge/t3-3": [
+  "new",
+  "none"
+ ],
+ "judge/t1-1-swap": [
+  "none",
+  "new"
+ ],
+ "judge/t1-2-swap": [
+  "none",
+  "new"
+ ],
+ "judge/t1-3-swap": [
+  "new",
+  "none"
+ ],
+ "judge/t3-1-swap": [
+  "none",
+  "new"
+ ],
+ "judge/t3-2-swap": [
+  "none",
+  "new"
+ ],
+ "judge/t3-3-swap": [
+  "none",
+  "new"
+ ]
+}
