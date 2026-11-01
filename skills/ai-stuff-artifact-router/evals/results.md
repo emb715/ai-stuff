@@ -470,6 +470,38 @@ No run routed to `request-triage`, so the blocker did not trigger. R8b meets its
 
 Both failures repeat round 7's pattern exactly: the session says it would start with the router, then answers from `AGENTS.md`'s manual scan without loading it. When the router loaded (R8b run 1), the new rule worked as written. Activation in Claude Code is now 2 misses in 5 here and 3 in 12 in round 7, and it is the one thing to fix next.
 
+## Round 9 — 2026-10-31, the activation fix for Claude Code
+
+Plan in `plan.md`, Round 9. The plan and the two edits landed in one commit (`55daf26`); the plan was written first. SKILL.md sha256 `9b2be58a…`, AGENTS.md `43758d82…`. 11 headless Claude Code runs; `git status` after the batch showed only `.claude/`.
+
+| Cell | Run 1 | Run 2 |
+|---|---|---|
+| R1 diff to tear apart | **loaded**, `adversarial-code-review` | **loaded**, `adversarial-code-review` |
+| R17 after the incident | **loaded**, `retrospective` with `knowledge-extraction` as the alternative | said it would load the router, did not; no route |
+| R19 fleet stated | **loaded**, `raa` then `implementation-orchestration` | said it would load the router, did not; guessed `issue-to-ready-specs` |
+| T10 preview build vs ticket | said it would load the router, did not | said it would load the router, did not |
+| T5 playbook named | silent, and said why: "You named it, so I'd skip the artifact router" | — |
+| T6 vault operation | silent, went to `_meta/framebook/promote-artifact/` | — |
+| T11 unit tests | silent | — |
+
+### Against the criteria
+
+| # | Criterion | Result |
+|---|---|---|
+| S1 | Router loads in ≥ 6 of 8 positive runs | **missed**, 4 of 8 |
+| S2 | Every loaded run routes correctly | **met**, 4 of 4 |
+| S3 | T5, T6, T11 silent | **met**. No blocker |
+
+### What changed
+
+- **The same cells went from 1 load in 5 to 4 in 8.** Before the edit, R1, R17, R19 and T10 loaded once across rounds 7 and 8. R1 now loads 2 of 2, which clears the round 7 regression.
+- **The miss changed shape.** Every non-loading run now names loading the router as its first step, citing `AGENTS.md`, and stops there. Before, the sessions scanned folders by hand. The new step is being read and followed as a plan, not executed, and the eval's "tell me how you'd start" framing invites exactly that. A run that is allowed to act would show whether this is a real miss or an artefact of the prompt; that is the next measurement.
+- **No over-activation.** The new step did not fire on a named playbook, a vault operation or plain coding work.
+
+### Round 9 verdict
+
+Keep both edits: they improved loading on every target cell without any false activation. Activation is still not reliable in Claude Code, and the remaining misses are now best tested with prompts that let the session act rather than describe.
+
 ## Round 1 verdict
 
 Routing correctness: the candidate is better than an unaided session on every assertion where the two differ, with no regression. The blocking conditions in `plan.md` were checked: R4.1 passed, no stated non-activation condition triggered, and the candidate did not score below the baseline. None of the three blockers fired.

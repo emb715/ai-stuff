@@ -503,3 +503,38 @@ Variance stays unquantified at 1 to 2 repeats; nothing here supports `vetted`.
 | R14, R16 | 1 each |
 
 5 runs. Success: R8b passes ≥ 1/2 on all three assertions, R19 passes, R14 and R16 still pass. A route to `request-triage` in any run is a blocker.
+
+## Round 9 — 2026-10-31, the activation fix for Claude Code. Pre-registered before the edit
+
+Rounds 7 and 8 missed activation in 5 of 16 Claude Code runs where the router should have loaded. Every miss had the same shape: the session said it would use the router, then followed `AGENTS.md`'s session-start step 4 ("scan `experiments/`, `prompts/`, `skills/`, `agents/`") and answered by hand. R17 also exposed a description gap: nothing names a resolved incident.
+
+### What changes, and nothing else
+
+1. `AGENTS.md`, session start: one new step between "Find the right procedure" and "Check for prior work". When the request is work to do rather than a vault operation, and no playbook or prompt is named, load the `ai-stuff-artifact-router` skill (or read its `SKILL.md` where skills are unsupported) instead of scanning by hand. Vault operations still go to the framebook.
+2. The router's `description`: "work just finished that they want lessons or durable knowledge from" gains "or an outage or incident that is over".
+
+The manifest, rules and examples are untouched. Hashes are recorded in `results.md`.
+
+### Runs
+
+Constants as round 7. Worktree at the commit that carries both edits.
+
+| Cell | Runs | Expected |
+|---|---|---|
+| R1 diff to tear apart | 2 | `adversarial-code-review` |
+| R17 after the incident | 2 | `retrospective` |
+| R19 fleet stated | 2 | `raa` |
+| T10 preview build vs ticket | 2 | trigger, `acceptance-verification` |
+| T5 playbook already named | 1 | silent |
+| T6 vault lifecycle operation | 1 | silent, framebook |
+| T11 unit tests for a function | 1 | silent |
+
+11 runs.
+
+### Success criteria, fixed now
+
+| # | Criterion | Consequence if missed |
+|---|---|---|
+| S1 | The router loads in ≥ 6 of the 8 positive runs | The fix did not move activation |
+| S2 | Every run where it loads routes correctly | A routing regression |
+| S3 | **T5, T6 and T11 stay silent** | **Blocker.** The `AGENTS.md` step must not make the router fire on named playbooks, vault operations or plain coding work |
