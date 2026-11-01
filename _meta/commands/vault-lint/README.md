@@ -18,5 +18,5 @@ Runs `python scripts/doc_lint.py` and reports COMPLIANCE: PASS or BLOCKED with e
 
 ## Related
 
-- `docs/standards/doc-lint-spec.md` — lint rules DL001–DL010
+- `docs/standards/doc-lint-spec.md` — lint rules DL001–DL018
 - `_meta/framebook/fix-compliance-failures/` — how to resolve BLOCKED results

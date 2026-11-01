@@ -71,7 +71,8 @@ If the user disagrees with a score, ask why. If the disagreement is about the cr
 ## Step 6 — Compute weighted totals
 
 Matrix × weights = ranked list. For each option:
-- weighted_total = Σ (score × normalized_weight) across all criteria.
+- For a higher-is-worse criterion (Effort, Risk by default), use (6 − score) in the total so that a higher total is always better. Show the raw score in the matrix and say that it was inverted.
+- weighted_total = Σ (score × normalized_weight) across all criteria, using the inverted value for higher-is-worse criteria.
 - Rank options by weighted_total, highest first.
 
 Record the totals and ranks. Present the full ranked list to the user, not just the shortlist.

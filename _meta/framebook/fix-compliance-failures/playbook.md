@@ -41,6 +41,7 @@ Troubleshooting by lint code:
 | Code | Symptom | Fix |
 |---|---|---|
 | DL014 | last_tested date is stale (>180 days) | Re-verify the artifact against current state, bump `last_tested` to today. If no longer relevant, mark `status: deprecated` with a reason. |
+| DL018 | Markdown link into a deprecated artifact with no note on the line | Retarget the link to the replacement, or add a deprecation or fallback note on the same line. |
 
 ### 2. Order the fixes
 

@@ -2,7 +2,7 @@
 title: "Documentation Lint Specification"
 status: validated
 confidence: high
-last_tested: 2026-06-24
+last_tested: 2026-11-01
 scope: personal
 tooling:
   - "markdown/yaml"
@@ -225,6 +225,26 @@ Rationale: index rows drift silently, and this is the same failure class as mani
 
 Failure: BLOCKED.
 
+### DL018 — No links to deprecated artifacts
+
+Gate 5 (lifecycle integrity). Applies to all lint target files, including bare consumables (`playbook.md`, `SKILL.md`, `humans.md`).
+
+A deprecated artifact stays in place for readers who still need it, but live guidance must not send readers there. Deprecated artifacts are found from their folder `README.md` frontmatter (`status: deprecated`) under `agents/`, `prompts/`, `playbooks/`, `skills/` and `tools/`; nothing is hardcoded.
+
+Check:
+- For each line, resolve every markdown link `](target)` against the file's directory (ignoring `#fragment`, `http(s)`, `mailto` and in-page targets).
+- Block when the resolved path falls inside a deprecated artifact's folder and the line carries no deprecation note.
+
+Allowed:
+- **Lines with a deprecation or fallback note.** A line containing `deprecated`, `superseded`, `fallback`, `fall back` or `replaced by` (case-insensitive) passes. This matches the cross-reference convention in `_meta/framebook/deprecate-and-archive/`.
+- Files inside the deprecated artifact's own folder.
+- Files whose own frontmatter says `status: deprecated`.
+- Out-of-scope locations: `changelog/`, `skills/*/evals/**`, `archive/`, `_meta/` and root files are not lint targets.
+
+Failure: BLOCKED. Fix: retarget the link to the replacement, or keep the link and add the note on the same line.
+
+Boundary: only markdown links are checked; a backtick path mention is not. The marker test is per line, so a long single-line paragraph that says `deprecated` anywhere passes, the same leniency as DL011.
+
 ### DL013 — No absolute or machine-specific paths
 
 Catches leaked filesystem paths that betray a specific machine or user. Blocks:
@@ -283,7 +303,7 @@ PROMOTION_DECISION: <allowed|not allowed>
 
 ## Severity
 
-All of DL001–DL017 are **blocking** in this repository.
+All of DL001–DL018 are **blocking** in this repository.
 
 Every gate declared in `AGENTS.md` must have at least one rule mapped to it in `GATE_LABELS` (`scripts/doc_lint.py`). `DL000` enforces that mapping: a gate declared in prose with no rule behind it is a gate nobody checks. Gate 7 sat unenforced that way until 2026-10-09.
 
@@ -296,4 +316,5 @@ Initial execution of `scripts/doc_lint.py` in this repo produced `COMPLIANCE: BL
 - Pattern-based sanitization can produce false positives/negatives.
 - Evidence detection is heuristic (keyword/format based), not semantic proof.
 - Linkage check depends on explicit path references in index files.
+- DL018's deprecation-note test is per line, so a long single-line paragraph can pass on an unrelated marker word; it also does not skip fenced code blocks.
 - Three-file folder exception requires the linter to detect folder structure before applying rules — a flat file scan will incorrectly flag `<thing>.md` and `humans.md` for missing frontmatter.

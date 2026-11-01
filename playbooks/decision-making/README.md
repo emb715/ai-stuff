@@ -2,7 +2,7 @@
 title: "Decision-Making (Convergence)"
 status: draft
 confidence: medium
-last_tested: 2026-07-30
+last_tested: 2026-11-01
 scope: personal
 tooling:
   - "agnostic/any-LLM"
@@ -46,10 +46,11 @@ See [`playbook.md`](playbook.md) — standalone copy-paste procedure.
 
 # Evidence
 
-<!-- GATE 3 PLACEHOLDER — required: at least one documented outcome. -->
-<!-- Draft, not yet tested in this repo. -->
+First real run (2026-11-01), headless and non-interactive, with the context, options and "accept the defaults" answers supplied up front: deciding which vault improvement to do next. 7 options, default criteria (impact, effort, novelty, risk) at equal weight. 7 turns, about 1 minute. Every score carried a one-sentence reason anchored in repo facts (it checked which tools were installed and found the stale links it was told about). Sensitivity verdict: fragile, the top two tied at 3.75 and swapped under every ±20% shift, while the top-3 set stayed stable. It noted that option D was a prerequisite of option E without choosing for the user. The shortlist was usable: the tied pair was then planned with raa and built with implementation-orchestration.
 
-_TODO: Document at least one real run — what decision, how many options, which criteria/weights, whether the shortlist was usable, whether the sensitivity verdict held, how long it took. Quantitative preferred (e.g. "decision on [X], 8 options, criteria impact/effort/risk weighted 5/3/4, top option robust to ±20%, fed to product-brief")._
+Gap found and fixed: Step 6 did not say how to total higher-is-worse criteria (effort, risk). The run inverted them as (6 − score) on its own and said so; Step 6 now makes that the rule.
+
+Not yet tested: an interactive run where the user sets criteria and weights.
 
 # Failure Modes / Boundaries
 
