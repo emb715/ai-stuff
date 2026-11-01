@@ -25,7 +25,7 @@ When the user says "create a quick spec" or "generate a tech spec", or when a fe
 
 Not for: full PRD creation (use `prompts/loop-prd-readiness/`), architectural decision records, or research documents.
 
-**Paradigm:** this playbook belongs to the spec paradigm. Use the spec paradigm ([quick-spec](../quick-spec/), [issue-to-ready-specs](../issue-to-ready-specs/)) when a single agent or human will implement the feature in one session — the spec is the contract, the implementer handles phasing. Use the plan paradigm ([raa](../raa/), [implementation-orchestration](../implementation-orchestration/)) when a fleet will implement in parallel — the plan handles phasing, file ownership, and handoffs. The paradigms compose: specs feed RAA as the feature description. See [request-triage](../request-triage/) if unsure which to use.
+**Paradigm:** this playbook belongs to the spec paradigm. Use the spec paradigm ([quick-spec](../quick-spec/), [issue-to-ready-specs](../issue-to-ready-specs/)) when a single agent or human will implement the feature in one session — the spec is the contract, the implementer handles phasing. Use the plan paradigm ([raa](../raa/), [implementation-orchestration](../implementation-orchestration/)) when a fleet will implement in parallel — the plan handles phasing, file ownership, and handoffs. The paradigms compose: specs feed RAA as the feature description. If unsure which to use, load the [ai-stuff-artifact-router](../../skills/ai-stuff-artifact-router/) skill. In a tool without skill support, fall back to the deprecated [request-triage](../request-triage/) playbook.
 
 # Preconditions
 
