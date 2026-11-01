@@ -101,6 +101,25 @@ def is_prohibition(line: str) -> bool:
     return any(marker in lowered for marker in PROHIBITION_MARKERS)
 
 
+# DL018: words that make a line about a deprecated artifact a deprecation or
+# fallback note rather than a live recommendation.
+DEPRECATION_MARKERS = (
+    "deprecated",
+    "superseded",
+    "fallback",
+    "fall back",
+    "replaced by",
+)
+
+MARKDOWN_LINK_RE = re.compile(r"\]\(([^)\s]+)\)")
+
+
+def mentions_deprecation(line: str) -> bool:
+    """True when a line carries a deprecation or fallback note."""
+    lowered = line.lower()
+    return any(marker in lowered for marker in DEPRECATION_MARKERS)
+
+
 def index_rows_for(
     rel_path: str,
     root_readme: str,
@@ -233,6 +252,7 @@ GATE_LABELS = {
     "DL015": "Gate 2",
     "DL016": "Gate 7",
     "DL017": "Gate 6",
+    "DL018": "Gate 5",
     # DL000 is the meta-rule: it checks that every gate AGENTS.md declares has at
     # least one rule above. It belongs to no single gate.
     "DL000": "Gate 0",
@@ -606,8 +626,66 @@ def artifact_folder_findings() -> List[Finding]:
     return findings
 
 
+def deprecated_artifact_folders() -> set[str]:
+    """Repo-relative folders (trailing slash) of artifacts whose README says status: deprecated."""
+    folders: set[str] = set()
+    for section in ("agents", "prompts", "playbooks", "skills", "tools"):
+        section_dir = ROOT / section
+        if not section_dir.is_dir():
+            continue
+        for folder in sorted(p for p in section_dir.iterdir() if p.is_dir()):
+            readme = folder / "README.md"
+            if not readme.exists():
+                continue
+            fm, _ = parse_frontmatter(readme.read_text(encoding="utf-8"))
+            if str((fm or {}).get("status", "")).strip().lower() == "deprecated":
+                folders.add(folder.relative_to(ROOT).as_posix() + "/")
+    return folders
+
+
+def deprecated_link_findings(
+    file_path: Path, rel_path: str, text: str, deprecated: set[str]
+) -> List[Finding]:
+    """DL018 — markdown links into a deprecated artifact need a deprecation or fallback note.
+
+    Checked per line. Files inside a deprecated folder, and files whose own
+    frontmatter says `status: deprecated`, are exempt.
+    """
+    if not deprecated or any(rel_path.startswith(d) for d in deprecated):
+        return []
+    fm, _ = parse_frontmatter(text)
+    if str((fm or {}).get("status", "")).strip().lower() == "deprecated":
+        return []
+
+    findings: List[Finding] = []
+    for line_no, line in enumerate(text.splitlines(), start=1):
+        if mentions_deprecation(line):
+            continue
+        for match in MARKDOWN_LINK_RE.finditer(line):
+            target = match.group(1).split("#", 1)[0]
+            if not target or target.startswith(("http:", "https:", "mailto:")):
+                continue
+            resolved = Path(os.path.normpath(file_path.parent / target))
+            try:
+                resolved_rel = resolved.relative_to(ROOT).as_posix() + "/"
+            except ValueError:
+                continue
+            hit = next((d for d in deprecated if resolved_rel.startswith(d)), None)
+            if hit:
+                findings.append(
+                    Finding(
+                        "DL018",
+                        rel_path,
+                        f"line {line_no}: links to deprecated artifact {hit}; point at its "
+                        "replacement, or add a deprecation or fallback note on the same line",
+                    )
+                )
+    return findings
+
+
 def lint() -> Tuple[List[Finding], int]:
     findings: List[Finding] = []
+    deprecated = deprecated_artifact_folders()
 
     # --- Pass 0: gate coverage (DL000) and artifact folder completeness (DL015) ---
     findings.extend(gate_coverage_findings())
@@ -691,6 +769,10 @@ def lint() -> Tuple[List[Finding], int]:
                     "Consumable file references humans.md, which is never loaded as agent context",
                 )
             )
+
+        # DL018 — Gate 5: no unmarked links into deprecated artifacts. Also before
+        # the bare-file skip, so playbook.md, SKILL.md and humans.md are covered.
+        findings.extend(deprecated_link_findings(file_path, rel_path, text, deprecated))
 
         is_bare = (
             file_path.name in NO_FRONTMATTER_NAMES
