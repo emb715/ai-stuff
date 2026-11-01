@@ -1,0 +1,1 @@
+Review the settings page in subtle.html as a senior product designer. It looks fine at first glance. List every design problem you find, most severe first, each with a concrete fix. Be concise: one or two lines per problem. Do not edit the file. End with one line: SKILLS_USED: <names or none>.

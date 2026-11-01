@@ -1,0 +1,1 @@
+average() in stats.py returns the wrong value and median() is wrong for even-length lists. Fix both bugs in place. Do not ask questions. End with one line: SKILLS_USED: <names or none>.
