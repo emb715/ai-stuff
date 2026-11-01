@@ -38,13 +38,18 @@ M1: `m1-picks/page.html` is the published picks page. It shows two full-page scr
 
 ## Evidence / Results
 
-None yet.
+- **M1:** the picks page is published, and the owner's picks are pending.
+- **M2:** the smoke run passed (`m2-smoke/README.md`). One brief ran end to end for about $0.84. Three distinct concepts all scored 18 of 18 on the audit, and two blind judges agreed on the winner.
 
 ## Failure Modes / Boundaries
 
 - The picks come from one person, so the judge is calibrated to that person's taste, by design.
 - 30 picks from 12 pages is a small, narrow seed: two briefs only.
 - Screenshots are static, so motion and interaction are not judged.
+
+## Skill
+
+`skill/SKILL.md` covers diverge, build, render and look, floor, blind select, and refine. `skill/scripts/render.js` takes desktop and mobile screenshots and warns when web fonts fail to load. The floor is `design-laws` `scripts/taste-audit.js`.
 
 ## Related artifacts
 
