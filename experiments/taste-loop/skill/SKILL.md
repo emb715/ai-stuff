@@ -1,6 +1,6 @@
 ---
 name: taste-loop
-description: "Design a page by divergence and selection instead of a single shot: three distinct concepts, each built, rendered and looked at, held to the taste-audit floor, then shown to the user, who picks the one to refine. Use when the user asks to design, redesign or make a page look great, distinctive, premium or on-brand (a landing page, marketing page, dashboard, app screen, HTML/CSS mockup) and quality matters more than speed. Needs Playwright. Not for small style fixes or a single component."
+description: "Design a page by divergence and selection instead of a single shot: three distinct concepts, each built, rendered and looked at, held to the taste-audit floor, then handed to the user as three options to pick from, before the pick is refined. Use when the user asks to design, redesign or make a page look great, distinctive, premium or on-brand (a landing page, marketing page, dashboard, app screen, HTML/CSS mockup) and quality matters more than speed. Needs Playwright. Not for small style fixes or a single component."
 ---
 
 # taste-loop
@@ -66,11 +66,13 @@ Fix every failing row and run the audit again, at most three rounds. A concept t
 
 A model judge does not share the user's taste: in testing it agreed with the owner's picks on only 2 of 8 pairs and never said "none of these". So the user selects, not a model.
 
-Show the user the three concepts side by side: for each one, its name, its idea in one sentence, the path to `desktop.png`, and its audit score. Ask which one to take forward, or whether none is good enough. Do not recommend one, because a recommendation anchors the choice. Stop and wait for the answer.
+End this step by presenting the three concepts side by side: for each one, its name, its idea in one sentence, the path to `desktop.png`, and its audit score. Do not recommend one, because a recommendation anchors the choice.
 
-- **One is picked:** go on to step 6 with it.
-- **None is good enough:** ask what is missing in one line, then go back to step 1 with three new concepts that answer it.
-- **Nobody can be asked** (a headless or scheduled run): stop here and report the three concepts. Do not pick one.
+This is a hand-off, not a question. The three concepts are the deliverable of this step, so it also applies when the user said not to ask questions. Present them, say the user can reply with a pick or "none", and end your turn.
+
+- **The user picks one:** go on to step 6 with it.
+- **The user says none is good enough:** ask what is missing in one line, then go back to step 1 with three new concepts that answer it.
+- **The user already named the concept they want:** skip the hand-off, build only that one, and go to step 6.
 
 ## 6. Refine the winner
 
