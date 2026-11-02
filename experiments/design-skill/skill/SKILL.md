@@ -5,7 +5,7 @@ description: "Build-time design guardrail and taste audit for UI. Activates befo
 
 # design-laws
 
-A floor, not a ceiling. Two eval rounds showed this skill reliably makes UI **more consistent** (fewer type sizes, spacing on the grid, fewer one-off radii) but does **not** make it look better to a blind judge, and the law list adds nothing to reviews. Use it to stop sloppy output, not to supply taste. Evidence: `../evals/results-round-2.md`.
+A floor, not a ceiling. Two eval rounds showed this skill reliably makes UI **more consistent** (fewer type sizes, spacing on the grid, fewer one-off radii) but does **not** make it look better to a blind judge, and the law list adds nothing to reviews. Use it to stop sloppy output, not to supply taste. Evidence: `../evals/results-round-2.md`. A later experiment found the audit score does not predict which pages the owner prefers either (`../../taste-loop/m4-round3/results.md`).
 
 ## Build guardrail
 
@@ -14,7 +14,13 @@ Use this whenever you write UI, even if the request does not say "design".
 1. **Pick a preset.** Match the brief's intent to a row in `refs/presets.csv` (calm, premium, trustworthy, urgent, playful, authoritative, intimate, learnable, delightful, dense). If none fits, use `trustworthy`. The preset sets the floor. Distinctiveness (a concept, a signature move) still has to come from the brief.
 2. **Write tokens before markup.** Declare the type scale, spacing scale, radius scale, colors (one accent plus one neutral ramp) and shadow levels as variables, from the preset and the `default` column of `refs/taste.csv`. Every later value uses a token.
 3. **Build.** Use the ✓ shapes in `refs/examples.md`. One primary action per view.
-4. **Audit.** If the page can be rendered locally, run the audit and fix every failure:
+4. **Look.** If the page can be rendered locally, screenshot it and actually read the images before calling it done. Fix what is visibly wrong: the hierarchy reads in the wrong order, the page is cramped or empty, the mobile layout breaks.
+
+   ```bash
+   node <skill-dir>/scripts/render.js path/to/page.html   # writes desktop.png and mobile.png next to the page
+   ```
+
+5. **Audit.** Run the audit and fix every failure:
 
    ```bash
    node <skill-dir>/scripts/taste-audit.js path/to/page.html
@@ -44,6 +50,7 @@ Run the audit first and report its failures by taste row id (T-03, C-03). Then r
 | `refs/presets.csv` | 10 intent presets with concrete values |
 | `refs/examples.md` | before/after snippets for 17 laws |
 | `scripts/taste-audit.js` | rendered-page audit against `taste.csv` |
+| `scripts/render.js` | desktop and mobile screenshots of a page, to look at before finishing |
 | `refs/laws-index.md` | the 98 laws by cluster, plus cross-cluster failure patterns |
 | `refs/{perception,cognition,composition,interaction,decision}.md` | law statements by cluster |
 | `refs/patterns.md`, `heuristics.md`, `antipatterns.md`, `build-moves.md` | solutions, review checks, named mistakes, generative moves |

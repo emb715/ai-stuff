@@ -20,7 +20,7 @@ Extraction pipeline: pymupdf text extraction from PDFs → per-book `extract.md`
 
 Round 2 (`../evals/results-round-2.md`) found that the taste layer reliably improves consistency but not how a blind judge rates the result, and that the 98-law list changes nothing measurable. Following the pre-registered verdict, the skill is now a **build guardrail plus an audit**:
 
-- `SKILL.md` is about 50 lines: pick a preset, write tokens first, build, then run `scripts/taste-audit.js`.
+- `SKILL.md` is about 55 lines: pick a preset, write tokens first, build, look at screenshots from `scripts/render.js`, then run `scripts/taste-audit.js`.
 - The 98-law quick reference and the cross-cluster failure patterns moved to `refs/laws-index.md`, a citation index for reviews.
 - `taste.csv` gained a `rule` column on 18 measurable rows. The audit reads it directly, so adding a check means adding a rule, not editing prose.
 

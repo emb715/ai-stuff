@@ -63,6 +63,8 @@ The skill gained a taste layer next to the laws: `skill/refs/taste.csv` (58 conc
 
 Round 2 (n = 3, pre-registered in `evals/plan-round-2.md`): the skill triggers on build work, stays quiet on unrelated tasks, and improves consistency on all 4 metrics. A blind judge preferred it in only 3 of 6 pairs, and review found +0.7 defects. The verdict was "continue as a lint, not a skill". The skill is now a short build guardrail plus `skill/scripts/taste-audit.js`, which grades a rendered page against the `rule` column of `taste.csv`. Results are in `evals/results-round-2.md`.
 
+The follow-up taste-loop experiment (`../taste-loop/`) failed. Generating three concepts and selecting among them did no better than three plain single shots, and the audit score did not predict which pages the owner kept. One piece survived: `skill/scripts/render.js`, which takes screenshots so the model looks at its page before finishing.
+
 ## Failure Modes / Boundaries
 
 - Laws are prescriptive guidance drawn from books, not empirical measurements taken in this repo.
