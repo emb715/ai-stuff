@@ -1,0 +1,156 @@
+{
+ "briefs": {
+  "b1-launch": [
+   {
+    "slot": 1,
+    "id": "b1-1",
+    "cond": "single3",
+    "src": "b1-launch-single3/index.html"
+   },
+   {
+    "slot": 2,
+    "id": "b1-2",
+    "cond": "loop-c1",
+    "src": "b1-launch-loop/loop/flint/c1/index.html"
+   },
+   {
+    "slot": 3,
+    "id": "b1-3",
+    "cond": "single2",
+    "src": "b1-launch-single2/index.html"
+   },
+   {
+    "slot": 4,
+    "id": "b1-4",
+    "cond": "loop-c2",
+    "src": "b1-launch-loop/loop/flint/c2/index.html"
+   },
+   {
+    "slot": 5,
+    "id": "b1-5",
+    "cond": "single1",
+    "src": "b1-launch-single1/index.html"
+   },
+   {
+    "slot": 6,
+    "id": "b1-6",
+    "cond": "loop-c3",
+    "src": "b1-launch-loop/loop/flint/c3/index.html"
+   }
+  ],
+  "b2-editorial": [
+   {
+    "slot": 1,
+    "id": "b2-1",
+    "cond": "single2",
+    "src": "b2-editorial-single2/index.html"
+   },
+   {
+    "slot": 2,
+    "id": "b2-2",
+    "cond": "loop-c1",
+    "src": "b2-editorial-loop/loop/lighthouse/c1/index.html"
+   },
+   {
+    "slot": 3,
+    "id": "b2-3",
+    "cond": "single3",
+    "src": "b2-editorial-single3/index.html"
+   },
+   {
+    "slot": 4,
+    "id": "b2-4",
+    "cond": "loop-c2",
+    "src": "b2-editorial-loop/loop/lighthouse/c2/index.html"
+   },
+   {
+    "slot": 5,
+    "id": "b2-5",
+    "cond": "single1",
+    "src": "b2-editorial-single1/index.html"
+   },
+   {
+    "slot": 6,
+    "id": "b2-6",
+    "cond": "loop-c3",
+    "src": "b2-editorial-loop/loop/lighthouse/c3/index.html"
+   }
+  ],
+  "b3-settings": [
+   {
+    "slot": 1,
+    "id": "b3-1",
+    "cond": "loop-c2",
+    "src": "b3-settings-loop/loop/settings/c2/index.html"
+   },
+   {
+    "slot": 2,
+    "id": "b3-2",
+    "cond": "loop-c1",
+    "src": "b3-settings-loop/loop/settings/c1/index.html"
+   },
+   {
+    "slot": 3,
+    "id": "b3-3",
+    "cond": "single1",
+    "src": "b3-settings-single1/index.html"
+   },
+   {
+    "slot": 4,
+    "id": "b3-4",
+    "cond": "single2",
+    "src": "b3-settings-single2/index.html"
+   },
+   {
+    "slot": 5,
+    "id": "b3-5",
+    "cond": "loop-c3",
+    "src": "b3-settings-loop/loop/settings/c3/index.html"
+   },
+   {
+    "slot": 6,
+    "id": "b3-6",
+    "cond": "single3",
+    "src": "b3-settings-single3/index.html"
+   }
+  ],
+  "b4-playful": [
+   {
+    "slot": 1,
+    "id": "b4-1",
+    "cond": "single2",
+    "src": "b4-playful-single2/index.html"
+   },
+   {
+    "slot": 2,
+    "id": "b4-2",
+    "cond": "single3",
+    "src": "b4-playful-single3/index.html"
+   },
+   {
+    "slot": 3,
+    "id": "b4-3",
+    "cond": "loop-c3",
+    "src": "b4-playful-loop/loop/sprout-onboarding/c3/index.html"
+   },
+   {
+    "slot": 4,
+    "id": "b4-4",
+    "cond": "single1",
+    "src": "b4-playful-single1/index.html"
+   },
+   {
+    "slot": 5,
+    "id": "b4-5",
+    "cond": "loop-c1",
+    "src": "b4-playful-loop/loop/sprout-onboarding/c1/index.html"
+   },
+   {
+    "slot": 6,
+    "id": "b4-6",
+    "cond": "loop-c2",
+    "src": "b4-playful-loop/loop/sprout-onboarding/c2/index.html"
+   }
+  ]
+ }
+}
