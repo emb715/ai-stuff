@@ -1,9 +1,11 @@
 ---
 name: taste-loop
-description: "Design a page by divergence and selection instead of a single shot: three distinct concepts, each built, rendered and looked at, held to the taste-audit floor, then handed to the user as three options to pick from, before the pick is refined. Use when the user asks to design, redesign or make a page look great, distinctive, premium or on-brand (a landing page, marketing page, dashboard, app screen, HTML/CSS mockup) and quality matters more than speed. Needs Playwright. Not for small style fixes or a single component."
+description: "Deprecated experiment, do not use. Design a page by divergence and selection instead of a single shot: three distinct concepts, each built, rendered and looked at, held to the taste-audit floor, then handed to the user as three options to pick from, before the pick is refined. Use when the user asks to design, redesign or make a page look great, distinctive, premium or on-brand (a landing page, marketing page, dashboard, app screen, HTML/CSS mockup) and quality matters more than speed. Needs Playwright. Not for small style fixes or a single component."
 ---
 
 # taste-loop
+
+> **Deprecated.** This skill failed its evaluation: three plain single shots did as well for less. Use the design-laws build guardrail instead, which now includes the render-and-look step.
 
 A single shot gives you the median design, and rules only make that median tidier. Taste is a choice between options, so this skill makes options, looks at them, and lets the user choose. It is about 5 to 6 times the cost of a single build, so use it when the look matters.
 

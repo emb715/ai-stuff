@@ -1,6 +1,6 @@
 ---
 title: "Taste Loop"
-status: draft
+status: deprecated
 confidence: low
 last_tested: 2026-11-02
 scope: personal
@@ -15,6 +15,8 @@ owner: "@emb715"
 ---
 
 # Taste Loop
+
+> **Deprecated (2026-11-02).** The experiment failed its pre-registered round 3: the loop cost more and did not propose better options than three plain single shots. `render.js` moved to the design-laws skill (`../design-skill/skill/scripts/render.js`). This folder is kept as the record.
 
 ## Context / Problem
 
