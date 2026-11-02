@@ -100,6 +100,58 @@ See `_meta/framebook/promote-artifact/` for the full promotion procedure.
 - Update related indexes in same change
 - If deprecating content, state replacement path
 
+## Commit messages
+
+Commits and PR titles follow [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/):
+
+```
+type(scope): subject
+
+optional body: what changed and why
+
+optional footer, e.g. BREAKING CHANGE: ...
+```
+
+- **type** (required), one of:
+
+  | Type | Use for |
+  |---|---|
+  | `feat` | a new artifact, or new capability in an existing one |
+  | `fix` | a correction to wrong behavior or content |
+  | `docs` | prose-only changes: READMEs, standards, notes, decisions |
+  | `refactor` | restructuring with no change in behavior (moves, renames, splits) |
+  | `test` | evals, test cases, eval results |
+  | `ci` | `.github/workflows/`, git hooks |
+  | `build` | the site build, dependencies |
+  | `perf` | making something faster or cheaper (tokens, runtime) |
+  | `style` | formatting only |
+  | `chore` | maintenance that fits nothing above (deprecations, cleanup) |
+  | `revert` | undoing an earlier commit |
+
+- **scope** (optional): the artifact or area touched, in lowercase kebab-case, usually its folder name (`issues-to-roadmap`, `doc-lint`, `site`). Leave it out when a change spans many areas.
+- **`!`** after the type or scope marks a breaking change, e.g. a renamed artifact other files link to: `refactor(router)!: rename artifact-router entries`.
+- **subject**: imperative mood ("add", not "added"), no trailing period, whole header at most 72 characters.
+
+Examples:
+
+```
+feat(issues-to-roadmap): carry the whole plan in the tracker
+fix(site): build pages for archived artifacts
+test(taste-loop): add judge check and round 3
+chore(taste-loop): deprecate experiment
+```
+
+PRs are squash-merged, so the **PR title becomes the commit on `main`** and must follow the same format; GitHub appends ` (#N)`, which does not count toward the limit.
+
+Checked by `scripts/commit_lint.py`:
+
+```bash
+python3 scripts/commit_lint.py --title "feat(x): add y"     # one header
+python3 scripts/commit_lint.py --range origin/main..HEAD    # your branch's commits
+```
+
+CI runs it on every PR (`.github/workflows/commit-lint.yml`, PR title and each non-merge commit), and the `commit-msg` git hook runs it locally (see below). Messages git writes itself (`Merge ...`, `Revert "..."`, `fixup!`) are skipped.
+
 ## Linting (required)
 
 Run locally before commit:
@@ -120,8 +172,13 @@ Enable the local pre-push guardrail once after cloning:
 git config core.hooksPath .githooks
 ```
 
-This activates `.githooks/pre-push`, which runs the same documentation lint as CI
-(`python3 scripts/doc_lint.py`) and blocks `git push` if it reports `COMPLIANCE: BLOCKED`.
+This activates two hooks:
+
+- `.githooks/commit-msg` runs `python3 scripts/commit_lint.py` and rejects a commit whose
+  header is not a Conventional Commit (see [Commit messages](#commit-messages)).
+- `.githooks/pre-push` runs the same documentation lint as CI
+  (`python3 scripts/doc_lint.py`) and blocks `git push` if it reports `COMPLIANCE: BLOCKED`.
+
 See `.githooks/README.md` for details.
 
 ## Review rubric

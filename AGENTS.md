@@ -187,6 +187,21 @@ Reject content that is:
 
 ---
 
+## Commits and PRs
+
+Every commit message and PR title is a Conventional Commit: `type(scope): subject`.
+
+- Types: `feat`, `fix`, `docs`, `refactor`, `test`, `ci`, `build`, `perf`, `style`, `chore`, `revert`.
+- Scope: the artifact or area touched, lowercase kebab-case (usually its folder name); omit it for broad changes.
+- Subject: imperative, no trailing period, header at most 72 characters. `!` after the scope marks a breaking change.
+- PRs are squash-merged, so the PR title is the commit on `main`; give it the same format.
+- Check before pushing: `python3 scripts/commit_lint.py --range origin/main..HEAD`. CI (`commit-lint.yml`) blocks PRs that fail.
+- Keep messages project-agnostic, per the sanitization policy.
+
+Full rules and type guide: `CONTRIBUTING.md#commit-messages`.
+
+---
+
 ## Hard enforcement gates (blocking)
 
 Treat these as **must-pass** checks. If any check fails, the artifact is blocked.
