@@ -1,3 +1,19 @@
+---
+title: "Taste loop — round 3 runs and deviations"
+status: draft
+confidence: low
+last_tested: 2026-11-02
+scope: personal
+tooling:
+  - "claude-code"
+  - "playwright"
+tags:
+  - experiment
+  - evals
+  - design
+owner: "@emb715"
+---
+
 # Round 3: runs and deviations
 
 The plan is in `plan.md`, committed before any run. This file records what happened while running it.

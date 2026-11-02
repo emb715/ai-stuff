@@ -1,3 +1,19 @@
+---
+title: "Taste loop — M3 judge check"
+status: draft
+confidence: low
+last_tested: 2026-11-02
+scope: personal
+tooling:
+  - "claude-code"
+  - "playwright"
+tags:
+  - experiment
+  - evals
+  - design
+owner: "@emb715"
+---
+
 # M3, step 1: uncalibrated judge against the owner's picks
 
 Before calibrating anything, the judge from the loop skill was run as is, with no examples, on all 30 pairs the owner picked, in both A/B orders (60 judgments). A judgment counts only when both orders agree. The prompt is in `judge.sh`. It was allowed to answer NEITHER, the owner's "both below the bar".
