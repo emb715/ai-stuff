@@ -81,6 +81,7 @@ This table is a snapshot. The filesystem is authoritative — `ls` the content d
 | Tool | Purpose | Status |
 |---|---|---|
 | [change-impact](tools/change-impact/) | Run change-impact-diagram skill automatically on PRs or locally; LLM-agnostic, marker-delimited PR upsert | validated |
+| [router-hint](tools/router-hint/) | Claude Code hook: a typed-question model names the artifact router and its likely route before each turn; routed 54/54 with it vs 45/54 without | validated |
 
 ### Experiments
 

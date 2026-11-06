@@ -7,19 +7,30 @@
 //                                        hook JSON on stdin, prints a hint line or nothing
 //   node hint.mjs --eval <cases.json>    run every case, print a table, write results JSON
 //
-// Needs TYPESAFE_API_KEY. No dependencies (Node 18+). Every request payload and answer is
-// cached in cache.json, keyed on the payload hash, so reruns replay without calling the API.
+// Install the hook with install.mjs. No dependencies (Node 18+).
+//
+// Environment:
+//   TYPESAFE_API_KEY        the API key, or
+//   TYPESAFE_API_KEY_FILE   a file holding it (e.g. ~/.secrets/jev.key); read at call time
+//   TYPESAFE_MODEL          default jev-1.14.0
+//   AI_STUFF_ROOT           vault checkout to read the router from; default: two levels up
+//   ROUTER_HINT_CACHE       cache file. Default: cache.json beside this file for the CLI and
+//                           --eval modes, none in --hook mode (user turns are not stored)
+//   ROUTER_HINT_LOG         --hook mode: write the full decision JSON to this file
 
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { createHash } from "node:crypto";
+import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const REPO = join(HERE, "..", "..");
+const REPO = process.env.AI_STUFF_ROOT || join(HERE, "..", "..");
 const ROUTER = join(REPO, "skills", "ai-stuff-artifact-router", "SKILL.md");
-const CACHE_FILE = join(HERE, "cache.json");
+const HOOK_MODE = process.argv[2] === "--hook";
+const CACHE_FILE = process.env.ROUTER_HINT_CACHE || (HOOK_MODE ? "" : join(HERE, "cache.json"));
 const MODEL = process.env.TYPESAFE_MODEL || "jev-1.14.0";
+const TIMEOUT_MS = 12000; // under the hook's 20 s timeout, so a slow API never stalls a turn
 
 // Thresholds. Start from the docs' 0.7 / 0.3 defaults; do not fit them to eval cases.
 const GATE_NO = 0.3;      // "is this work to do?" below this: no hint
@@ -63,19 +74,28 @@ function readmeText(path) {
 
 // ---------- TypeSafe call, cached ----------
 
-const cache = existsSync(CACHE_FILE) ? JSON.parse(readFileSync(CACHE_FILE, "utf8")) : {};
+const cache = CACHE_FILE && existsSync(CACHE_FILE) ? JSON.parse(readFileSync(CACHE_FILE, "utf8")) : {};
 let cacheDirty = false;
+
+function apiKey() {
+  if (process.env.TYPESAFE_API_KEY) return process.env.TYPESAFE_API_KEY.trim();
+  const file = process.env.TYPESAFE_API_KEY_FILE;
+  if (!file) return "";
+  const path = file.startsWith("~/") ? join(homedir(), file.slice(2)) : file;
+  return existsSync(path) ? readFileSync(path, "utf8").trim() : "";
+}
 
 async function ask(state, questions) {
   const payload = { model: MODEL, state, questions };
   const key = createHash("sha256").update(JSON.stringify(payload)).digest("hex").slice(0, 16);
   if (cache[key]) return cache[key].response;
-  const apiKey = process.env.TYPESAFE_API_KEY;
-  if (!apiKey) throw new Error("TYPESAFE_API_KEY is not set and the request is not cached");
+  const token = apiKey();
+  if (!token) throw new Error("no TYPESAFE_API_KEY or readable TYPESAFE_API_KEY_FILE, and the request is not cached");
   const res = await fetch("https://api.typesafe.ai/v1/systemone", {
     method: "POST",
-    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
     body: JSON.stringify(payload),
+    signal: AbortSignal.timeout(TIMEOUT_MS),
   });
   // A failed call is an error, never a "no".
   if (!res.ok) throw new Error(`TypeSafe ${res.status}: ${(await res.text()).slice(0, 300)}`);
@@ -86,7 +106,7 @@ async function ask(state, questions) {
 }
 
 function saveCache() {
-  if (cacheDirty) writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 1) + "\n");
+  if (cacheDirty && CACHE_FILE) writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 1) + "\n");
 }
 
 // ---------- the two requests ----------
@@ -175,7 +195,7 @@ export function hintLine(result) {
 async function main() {
   const args = process.argv.slice(2);
   try {
-    if (args[0] === "--hook") {
+    if (HOOK_MODE) {
       const input = JSON.parse(readFileSync(0, "utf8") || "{}");
       const r = await suggest(input.prompt || "");
       process.stdout.write(hintLine(r));
@@ -196,7 +216,7 @@ async function main() {
   } catch (e) {
     // In hook mode a failure must not block the user's turn: say nothing, log to stderr.
     console.error(`router-hint: ${e.message}`);
-    if (args[0] !== "--hook") process.exitCode = 1;
+    if (!HOOK_MODE) process.exitCode = 1;
   } finally {
     saveCache();
   }
