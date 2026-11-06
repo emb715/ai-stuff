@@ -1,0 +1,35 @@
+{
+ "first": {
+  "top": [
+   [
+    "retrospective",
+    0.97
+   ],
+   [
+    "incident-response",
+    0.02
+   ],
+   [
+    "knowledge-extraction",
+    0.01
+   ]
+  ],
+  "work": 0.97,
+  "named": 0.08,
+  "vault": 0.09
+ },
+ "second": {
+  "probabilities": {
+   "retrospective": 0.4,
+   "incident-response": 0.42,
+   "knowledge-extraction": 0.18
+  },
+  "fits": {
+   "retrospective": 0.3,
+   "incident-response": 0.1,
+   "knowledge-extraction": 0.15
+  }
+ },
+ "decision": "none",
+ "reason": "best candidate fits 0.10"
+}

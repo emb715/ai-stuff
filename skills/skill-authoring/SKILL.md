@@ -102,6 +102,7 @@ SKILL.md covers:
 - Minimal valid examples for the intended tasks
 - Essential safety constraints, important limitations, and failure recovery
 - Conditional routes to deeper resources
+- Pointers to the live, version-matched docs when the target publishes them (an `llms.txt` index or plain-text pages), with a fallback: when they are unreachable, use the installed package's types or local docs, say so, and leave out version-dependent details rather than guessing them
 
 `references/` covers exhaustive API/configuration tables, advanced variants, detailed response contracts, and migration history. Organize by concern. Use `scripts/` for verified deterministic work that otherwise repeats, and `assets/` for output resources.
 
@@ -112,6 +113,8 @@ Bundle required resources with the skill or declare an explicit, supported depen
 Lead with the correct action. State limitations, removed behavior, or unsupported operations when a consumer would plausibly reach for them and the distinction affects correctness or safety. Avoid unrelated lists of absent features.
 
 Use imperative instructions and brief rationale when it changes a decision or prevents misapplication. Distinguish recommending a command from being authorized to execute it.
+
+Separate hard constraints from guidance. Safety rules, permission boundaries and verified API facts are constraints. Patterns that usually work are guidance; say so once, near the top, so the consumer tests an alternative when a situation calls for one instead of forcing the pattern.
 
 Check that a new consumer has enough information to perform the intended task safely. This establishes authoring completeness, not behavioral validation.
 
@@ -167,6 +170,12 @@ Behavioral check:
 4. Compare correctness, unsupported claims, unsafe recommendations, tool misuse, recovery, and total context cost including skill loading and tool results. Record model, versions, settings, repeat count, outputs, and grading evidence. Repeat runs before making reliability claims; flag non-discriminating assertions and variance.
 
 Use isolated comparison runs, evidence-backed grading, and human review of outputs. Grade against the predefined assertions using the produced artifacts and observed execution evidence, not the executor's self-assessment. Record each assertion's pass/fail result with its supporting evidence. Adapt execution tools to the target harness; report unavailable checks explicitly.
+
+When revising after a failed check, prefer a structural fix (clearer scope, better inputs, a separate instruction) over wording tuned to the failing prompt. Treat these as overfitting signals and recheck on prompts not used while revising:
+- instructions or examples that quote specific evaluation prompts, or gain a clause per failing case
+- caveats that explain away one model's quirk
+- thresholds or counts fitted to a handful of cases
+- assertions on exact values where a range or a property would do
 
 Critical factual or safety defects block shipping regardless of average score. Accept only when observed gaps close without correctness/safety regression or inappropriate activation; do not claim efficiency gains from line counts or incomplete usage counters.
 

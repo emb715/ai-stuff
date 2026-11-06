@@ -1,0 +1,304 @@
+[
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "acceptance-verification",
+   "loop-implementation-readiness"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "yes",
+  "text": "Route: `prompts/loop-implementation-readiness/` (status `validated`). I'd read only, and I'd change nothing.\n\n1. Read `README.md` and `_meta/framebook/README.md`, then check `experiments/`, `prompts/`, `skills/` and `agents/` for related prior work.\n2. After you confirm, read that prompt's `prompt.md` and run it against the PRD and the other project's codebase.\n3. The prompt breaks the PRD into requirements, finds evidence for each in the code, and gives a verdict per requirement. For each gap it names the smallest next action.\n4. I'd use read-only commands only (`grep`, `git log`, `git diff`). No git command that changes state.\n5. I'd mark claims I can't verify as lower confidence.\n\nIf you'd rather test a running build, `playbooks/acceptance-verification/` fits instead.\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "P1-1"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "retrospective",
+   "knowledge-extraction"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "yes",
+  "text": "I'd treat this as a single finished session with decisions, dead ends and constraints, so the router sends it to `prompts/knowledge-extraction/`. It's `validated`. `playbooks/retrospective/` is the alternative, but it fits a finished body of work with owned actions, not one session.\n\n1. **Confirm the route with you.** I'd ask before surfacing the prompt, and I haven't read its `prompt.md` yet.\n2. **Run the prompt on the session.** It proposes durable knowledge writes, and nothing is written until you approve.\n3. **Place each approved item.** The two constraints would go through `_meta/framebook/save-artifact/` and `classify-artifact/`. Anything uncertain starts in `experiments/` as `draft`, in the three-file folder structure.\n4. **Sanitize** with `sanitize-before-publish/`, so the entries carry no project-specific identifiers.\n5. **Finish the paperwork.** I'd add the required frontmatter with `owner: @emb715`, link the new entries from an index, and run lint.\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "P4-1"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "adversarial-code-review"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "yes",
+  "text": "I'd route this to `playbooks/adversarial-code-review/`. I haven't read its files yet, so this comes from the router's manifest. It's the \"diff to attack before merging\" route. It's marked `validated`, and it produces at least 3 categorised findings and a fix menu.\n\n**Procedure:**\n1. Confirm with you, then read that playbook's `playbook.md` and follow it step by step.\n2. The playbook needs a finite list of claims or acceptance criteria. I'd ask you for the caching layer's intended behaviour, such as invalidation, TTLs and failure modes.\n3. In the other project, I'd use read-only commands only (`git diff`, `git log`, `git show`). I wouldn't check out, edit or commit anything.\n4. I'd attack the six files against those criteria, including whether the tests prove the claims.\n5. I'd report categorised findings and a fix menu. I'd apply nothing unless you choose items from it.\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "R1-1"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "adversarial-code-review"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "yes",
+  "text": "Route: `playbooks/adversarial-code-review/` (routing row 7). I'd read its `README.md` for `When to use` and `Not for` first. I haven't read it yet, so this comes from the router's manifest.\n\n- **Entry:** a git diff plus a finite list of claims or acceptance criteria. I'd ask you for the criteria if you haven't got them.\n- **Exit:** at least three categorised findings plus a fix menu.\n- **Status:** validated.\n- **Read-only:** I'd inspect the branch with `git diff`, `git log` and `git show` only. The playbook's fix-menu step would stay a proposal until you approve it.\n- **Confirmation:** I'd ask you to confirm before loading `playbook.md`.\n- **Review focus:** the cache layer (invalidation, staleness, concurrency, key collisions, eviction) and whether the tests actually exercise those paths.\n- **Report format:** compliance-style findings.\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "R1-2"
+ },
+ {
+  "loaded": false,
+  "skills": [],
+  "named": [
+   "issues-to-roadmap"
+  ],
+  "skills_used": "none",
+  "model": "claude-sonnet-5-5",
+  "hint": "",
+  "text": "I haven't run anything yet. Here is how I would approach it.\n\n1. **Session start:** read `README.md` and `_meta/framebook/README.md`, and classify this as \"work to do in a tracker\". This is read-only.\n2. **Routing:** skip `ai-stuff-artifact-router`, since a settled plan going into a tracker is outside its scope. Load `issues-to-roadmap` and follow its procedure.\n3. **Intake:** read the signed-off plan and confirm which tracker (GitHub, Linear or Jira) and which project to use.\n4. **Issues:** write one issue per decision, each from the template for its kind (spec, bug, prd, frd, nfrd or design). Design content and decisions go in the issues themselves.\n5. **Structure:** map dependencies, then group the issues into milestones, a project and a roadmap proposal.\n6. **Confirm first:** show you the full issue list as a draft before creating anything. Creating issues is outward-facing and hard to undo, so I'd wait for your go-ahead.\n\nI wouldn't implement anything or change issue status.\n\nSKILLS_USED: none",
+  "run": "R13-1"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "acceptance-verification"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "yes",
+  "text": "I'd route this to `playbooks/acceptance-verification/` (status `draft`, so confirm its preconditions before starting). It fits because you have a running build at a known commit plus its criteria, and you want it observed, not fixed.\n\nI haven't opened the playbook, so the steps below come from its manifest entry, not its text. I'd read `playbook.md` once you confirm.\n\n1. Confirm the preview URL serves a1b2c3d, since CI-green doesn't prove that.\n2. Take each of the five criteria in turn and observe the running build, using admin and non-admin accounts.\n3. Record per-criterion evidence in a ledger: invite delivery time, an expired-invite error, a revoke, button visibility by role, and a 26+ item list paginating at 25.\n4. Give a tri-state verdict: VERIFIED, WITH_CONDITIONS or NOT_VERIFIED.\n\nNothing would be edited, created or committed. The one caveat is that the checks write test data to the preview, which I'd flag first.\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "R14-1"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "acceptance-verification",
+   "review-release-candidate"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "yes",
+  "text": "Route: `prompts/review-release-candidate/`, row 5 of the router. You have a release candidate (v2.3.0-rc1), documented acceptance criteria, and you want defects fixed and a sign-off. Status is `draft`, so confirm its preconditions first.\n\nProcedure, which I'd confirm against its `prompt.md` before starting:\n1. **Inventory:** enumerate every user-facing surface and map each to a PRD criterion, with gaps flagged.\n2. **Triage:** classify defects by root cause, not by symptom.\n3. **Fix batches:** group fixes by shared cause, then run each batch separately.\n4. **Re-verify:** re-check affected criteria after each batch.\n5. **Sign-off:** give a verdict backed by per-criterion evidence.\n\nIf you only want observation, not fixes, `playbooks/acceptance-verification/` fits better. It needs a running build.\n\nI've edited, created, deleted and committed nothing. I'd only read files.\n\nConfirm and I'll read `prompt.md` and surface it.\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "R16-1"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "retrospective",
+   "knowledge-extraction"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "",
+  "text": "Row 23 of the router applies: the outage is over and you want lessons and owned actions. Row 4 doesn't apply because service is stable. I would recommend `playbooks/retrospective/` (status: draft, so confirm its preconditions). It takes a completed body of work and produces lessons, a follow-through check and SMART action items with owners.\n\nI would run it in three steps:\n1. Ask you for the timeline, the rollback details and the team roster. I'd also ask whether any follow-ups already exist.\n2. After you confirm, read its `playbook.md` and follow it step by step.\n3. Draft the lessons and owner-assigned action items for your review.\n\nIf you also want durable knowledge from one specific session, `prompts/knowledge-extraction/` is the alternative. Its writes need your approval first.\n\nNothing would be edited, created, deleted or committed unless you ask. Which of the two do you want?\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "R17-1"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "retrospective",
+   "knowledge-extraction"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "",
+  "text": "Route: row 23 of the router table. The outage is over, and you want lessons and owned actions. That points to `playbooks/retrospective/` (status `draft`, so confirm its preconditions first).\n\nHow I'd approach it, if you say go:\n1. Confirm the router's recommendation with you. I'd read the playbook's `README.md` and `playbook.md` first, which is read-only.\n2. Gather the outage evidence you have: timeline, the shipped change, the rollback, and any logs or notes.\n3. Walk the playbook's steps. Those are lessons, a follow-through check, then SMART action items, each with a named owner and a due date.\n4. Show you the draft items. Nothing is written without your approval.\n\nOptional extra: `prompts/knowledge-extraction/` would capture durable knowledge from one session. It's an alternative, not a substitute.\n\nI'd also run the other session-start orientation reads, and I'd stay read-only unless you ask for more. I've changed nothing so far.\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "R17-2"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "raa",
+   "implementation-orchestration",
+   "adversarial-code-review"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "yes",
+  "text": "**Approach:** this is one feature request that five agents will build in parallel, so the router sends it to the plan paradigm. That is a sequence of two playbooks, not one.\n\n1. **`playbooks/raa/`** (status `draft`). I'd run it against the target project's codebase. It produces a validated, phased plan with file-level scope, risks and handoffs. For SAML SSO I'd expect the split to follow the real code boundaries, for example the SP/IdP config model, the ACS/metadata endpoints, session and user provisioning, the admin UI, and tests. The file scope per agent is what stops them colliding.\n2. **`playbooks/implementation-orchestration/`** (status `draft`). It takes that plan to a committed, reviewed, CI-green branch. `adversarial-code-review` runs inside it as the review phase.\n\nI'd re-enter at step 2 only once the plan is validated. Both playbooks are `draft`, so I'd check their preconditions first.\n\nI haven't surfaced either playbook's file. Should I read `raa/playbook.md` next?\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "R19-1"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "raa",
+   "implementation-orchestration",
+   "adversarial-code-review"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "yes",
+  "text": "Row 19 applies: one feature request, built by a fleet in parallel. That routes to `playbooks/raa/`, then `playbooks/implementation-orchestration/`.\n\n**Approach (nothing run or changed):**\n1. Follow AGENTS.md session-start steps: README read, framebook index, prior-work scan.\n2. **RAA** (status `draft`, so confirm its preconditions first) would research the target codebase's auth, sessions, tenancy and user model. It would then produce a phased plan with file-level scope, risks and handoffs. I'd split that scope into five non-overlapping tracks:\n   - SP/IdP config and tenant model\n   - ACS/metadata endpoints\n   - user provisioning and session linking\n   - admin UI\n   - tests and security hardening\n3. **Implementation-orchestration** (also `draft`) would then run the five agents. It includes `adversarial-code-review` as its mandatory review phase.\n\nPer the router, I'd ask you to confirm before surfacing either playbook's `playbook.md`.\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "R19-2"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "raa",
+   "implementation-orchestration",
+   "readiness-cycle",
+   "review-release-candidate",
+   "repo-primitive-audit"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "yes",
+  "text": "I'd use `playbooks/readiness-cycle/`. It takes an existing repo or template and a readiness question, and loops until the repo is verified ready. It is status `draft`, so I'd check its preconditions first.\n\n**Procedure (nothing run now):**\n1. Check its README for \"Not for\" and the inputs it needs.\n2. Define \"ready to open-source\" for your repo: license, secrets and private identifiers scrubbed, docs matching the source, onboarding, and contribution files.\n3. Run the cycle, which chains `raa` \u2192 `implementation-orchestration` \u2192 `prompts/review-release-candidate/`. It audits, writes a plan, applies fixes, and re-verifies.\n4. Do the work in the other repo on a branch, so nothing lands without your review.\n5. End with a ship verdict plus a record of what changed.\n\nIf you want a check that the docs match the code, `prompts/repo-primitive-audit/` could be added. I'd only confirm and surface the playbook once you say go.\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "R2-1"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "product-brief",
+   "decision-making",
+   "quick-spec",
+   "raa"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "",
+  "text": "I'd route this through the vault's artifact router, which treats a pile of unranked options as a sequence of two playbooks. I haven't started either, and nothing has been edited, created or committed.\n\n1. **`playbooks/decision-making/`** (status `draft`). You have ~40 options and no clear winner. It produces a ranked top 3\u20135 with per-criterion rationale and a robustness verdict.\n2. **`playbooks/product-brief/`** (status `validated`). It takes that shortlist and produces a structured brief: problem, users, success, scope, constraints.\n\nWhy not just `product-brief`: its entry point is a rough idea or already-converged brainstorm output, and forty unranked ideas aren't converged.\n\nBefore that, per AGENTS.md, I'd read `README.md` and `_meta/framebook/README.md`. I'd also check `experiments/`, `prompts/` and `playbooks/` for prior onboarding work.\n\nFor handoff to planning, a settled brief can go to `quick-spec` (one session) or `raa` (parallel fleet). I'd ask which at that point.\n\nI'd ask you to confirm before loading `decision-making/playbook.md`.\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "R6-1"
+ },
+ {
+  "loaded": false,
+  "skills": [],
+  "named": [
+   "quick-spec",
+   "raa"
+  ],
+  "skills_used": "none",
+  "model": "claude-sonnet-5-5",
+  "hint": "",
+  "text": "I haven't changed anything. I only read `README.md` and the framebook index, per the repo's session-start rules.\n\nYou haven't said what you want to plan yet, so I'd start by asking the question AGENTS.md requires: is this a new artifact, a continuation of an experiment, or a research session?\n\nOnce I know, I'd:\n1. Classify the request. A plan for work to do, here or in another project, goes to the `ai-stuff-artifact-router` skill. That skill picks a playbook, such as `raa` or `quick-spec`, and I'd confirm the pick with you. A vault operation, such as promoting or saving an artifact, goes to the matching `_meta/framebook/` procedure instead.\n2. Scan `experiments/`, `prompts/`, `skills/` and `agents/` for related prior work, and report what exists.\n3. Run the chosen procedure read-only and return a plan only.\n4. Edit, create or commit only after you approve. Anything I write would use the three-file folder, `@emb715` as owner, and a Conventional Commit message.\n\nSKILLS_USED: none",
+  "run": "R9-1"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "acceptance-verification"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "yes",
+  "text": "I'd route this to `playbooks/acceptance-verification/` (status `draft`, so confirm its preconditions first). It fits because you have a running preview build and want to check it against the ticket. It observes the build rather than reviewing the diff, and it doesn't fix anything.\n\nBefore starting I'd need two things from you:\n1. The preview URL or build ID, plus the commit it was built from.\n2. The ticket's acceptance criteria, or the ticket itself.\n\nOnce you confirm, I'd:\n- Read that playbook's `playbook.md` and the `README.md` files the repo instructions point to, and check `experiments/`, `prompts/`, `skills/` and `agents/` for related prior work.\n- Turn each criterion into something I can observe in the running preview.\n- Exercise the build to gather evidence for each one.\n- Report a per-criterion evidence ledger with a verdict of VERIFIED, WITH_CONDITIONS or NOT_VERIFIED.\n\nI'd change nothing in the repo along the way.\n\nShould I surface that playbook?\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "T10-1"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "acceptance-verification",
+   "adversarial-code-review"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "yes",
+  "text": "I'd route this to `playbooks/acceptance-verification/`. You have a running preview build and a ticket, and you want to observe the build, not fix it. Its status is `draft`, so I'd confirm its preconditions before starting. I haven't opened its README or `playbook.md` yet, and I'd read both before running anything.\n\nTo begin, I'd ask for:\n1. The preview URL, or the build ID plus the commit it was built from.\n2. The ticket's acceptance criteria. If the ticket is vague, I'd turn it into a finite checklist and have you confirm it.\n\nThen I'd run the playbook. It checks each criterion against the running preview and records the evidence. It ends with a verdict of VERIFIED, WITH_CONDITIONS or NOT_VERIFIED.\n\nIf you'd rather attack the diff than observe the build, `playbooks/adversarial-code-review/` is the alternative.\n\nDo you want me to surface the playbook and start?\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "T10-2"
+ },
+ {
+  "loaded": false,
+  "skills": [],
+  "named": [
+   "test-authoring"
+  ],
+  "skills_used": "none",
+  "model": "claude-sonnet-5-5",
+  "hint": "",
+  "text": "I searched this repo and found no billing module and no `parse_amount` source. The only hits are in router eval files, so the code is probably in another project.\n\nHow I'd start:\n\n1. **Locate it.** Get the real path and read `parse_amount`. I'd check how it handles bad input (raise or return a default), what type it returns, and how it rounds.\n2. **Find the test setup.** Look at the billing module's existing test framework and conventions, such as pytest or unittest, so the new tests match them.\n3. **Write a case table**, parametrized if the framework supports it:\n   - Normal values: `'12.50'` \u2192 1250, `'0.99'` \u2192 99, `'0'` \u2192 0.\n   - Edge cases: `'12'`, `'12.5'`, `'.5'`, and `'12.345'` (rounding), plus float traps like `'0.29'` and `'1.10'`.\n   - Invalid input: empty string, `'abc'`, negative values, thousands separators, whitespace, `None`.\n4. **Run and report.** I'd run the tests and flag any behavior that looks like a bug rather than silently asserting it.\n\nI'd use the `test-authoring` skill for this. Can you point me at the module's path?\n\nSKILLS_USED: none",
+  "run": "T11-1"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "retrospective",
+   "knowledge-extraction"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "yes",
+  "text": "This is a body of work that's finished and shared by a team, so I'd route it to `playbooks/retrospective/`. It's status `draft`, so I'd confirm its preconditions before starting. It produces lessons, a follow-through check, and SMART action items with owners.\n\nIf you only want the decisions and dead ends from one working session, `prompts/knowledge-extraction/` fits better. It's `validated`, and it proposes durable writes that you approve before anything is saved.\n\nIf you confirm, I'd:\n1. Read `README.md` and `_meta/framebook/README.md`, as the repo asks at session start.\n2. Scan `experiments/`, `prompts/`, `skills/` and `agents/` for related work on the migration.\n3. Read the retrospective's `playbook.md` and ask you for the migration timeline, participants and sources.\n4. Keep everything synthetic or sanitized.\n\nNothing is written until you approve. Should I use the retrospective playbook?\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "T4-1"
+ },
+ {
+  "loaded": true,
+  "skills": [
+   "ai-stuff-artifact-router"
+  ],
+  "named": [
+   "retrospective",
+   "knowledge-extraction"
+  ],
+  "skills_used": "ai-stuff-artifact-router",
+  "model": "claude-sonnet-5-5",
+  "hint": "yes",
+  "text": "Your request matches the \"work is over, capture lessons\" route. I haven't opened or run anything yet.\n\n**Recommended: `playbooks/retrospective/`.** The Q3 migration was a finished body of work with a team behind it. This playbook produces lessons, a follow-through check and SMART action items with owners. Its status is `draft`, so I'd confirm its preconditions before starting.\n\n**Alternative: `prompts/knowledge-extraction/`.** This fits if you only want durable knowledge from one session's decisions and dead ends. It proposes the writes, and you approve each one first.\n\n**How I'd start:**\n1. Ask which of the two you want.\n2. Read the chosen `playbook.md` or `prompt.md`.\n3. Gather the migration's inputs (timeline, incidents, decisions, who was involved).\n4. Run it, without sensitive details, since this repo requires sanitization.\n5. Only then ask where to save the result.\n\nSKILLS_USED: ai-stuff-artifact-router",
+  "run": "T4-2"
+ },
+ {
+  "loaded": false,
+  "skills": [],
+  "named": [
+   "quick-spec"
+  ],
+  "skills_used": "none",
+  "model": "claude-sonnet-5-5",
+  "hint": "",
+  "text": "I'd start by loading `playbooks/quick-spec/playbook.md`, the copy-paste procedure. The README says it's `validated` at medium confidence, last tested 2026-06-27. Its Evidence section is still a TODO, so I'd flag that no real run is documented.\n\nThen I'd follow the playbook's steps:\n\n1. Ask you for the CSV export feature description. I'd also ask for the path to the other project, since I can only see this vault. I'd work in that repo read-only until the spec is written.\n2. Investigate that codebase for real files, patterns and schema fields. The playbook says to verify each referenced field against the actual schema.\n3. Ask clarifying questions, then draft the spec from the template.\n4. Validate it against the six Ready-for-Development criteria: Actionable, Logical, Testable, Complete, Self-contained, Consistent.\n\nI wouldn't use the router skill, because you named the playbook. I haven't changed anything.\n\nSKILLS_USED: none",
+  "run": "T5-1"
+ },
+ {
+  "loaded": false,
+  "skills": [],
+  "named": [],
+  "skills_used": "none",
+  "model": "claude-sonnet-5-5",
+  "hint": "",
+  "text": "The liteparse skill is already `validated`, so there's nothing to promote. `skills/liteparse/README.md` has `status: validated`, `confidence: high` and `last_tested: 2026-08-04`. The root `README.md:74` and `skills/README.md:61` list it as validated too.\n\nIf you meant `validated -> vetted`, here's how I'd start:\n1. Read `_meta/framebook/promote-artifact/playbook.md`. I've only skimmed the top of it so far.\n2. Check that the transition is legal.\n3. Score the skill against `docs/standards/vetting-rubric.md`.\n4. Check that `last_tested` isn't stale, since it's three months old.\n5. Run `python scripts/doc_lint.py`, then update the status, the index rows and the `changelog/`.\n\nWhich transition do you want?\n\nSKILLS_USED: none",
+  "run": "T6-1"
+ }
+]

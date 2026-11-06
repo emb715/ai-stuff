@@ -23,6 +23,7 @@ Exploratory work, hypotheses, and trial logs. Everything in here is in-progress 
 | [arch-design-pipeline](arch-design-pipeline/) | Document-driven design pipeline (PRD → RFD → NRFD → Tech Spec) with gated review checkpoints for non-trivial features. | draft |
 | [claude-code-qa-skills](claude-code-qa-skills/) | 5 third-party QA skills for Claude Code and compatible agents: Playwright E2E, LLM evals, unit tests, PR review, Jira. For tests written from a spec, use [`skills/test-authoring/`](../skills/test-authoring/); the LLM-eval and Jira skills here have no vault counterpart. | draft |
 | [design-skill](design-skill/) | Build guardrail plus taste audit for UI: tokens-first presets, `taste.csv`, and a rendered-page lint. Two eval rounds: consistency yes, taste no. | draft |
+| [router-hint](router-hint/) | A typed-question model reads each turn and adds one line naming the artifact router and its likely route. 84-run pilot: loading 13/16 to 16/16, no false hints. | draft |
 | [taste-loop](taste-loop/) | Diverge, look, select: three concepts per brief for the owner to pick from. Failed round 3: plain single shots did as well for less. | deprecated |
 | [primitive-contract-docs](primitive-contract-docs/) | Hypothesis: per-primitive contract files document intent/obligations that rot slower than mechanism-level generated docs. | draft |
 | [workflow-engine](workflow-engine/) | MCP server + workflow schema sequencing prompt-factory phases, tracking state across sessions to cut coordination overhead. | draft |

@@ -1,0 +1,36 @@
+{
+ "first": {
+  "top": [
+   [
+    "loop-implementation-readiness",
+    0.98
+   ],
+   [
+    "repo-primitive-audit",
+    0.02
+   ],
+   [
+    "brainstorming",
+    0
+   ]
+  ],
+  "work": 0.96,
+  "named": 0.11,
+  "vault": 0.04
+ },
+ "second": {
+  "probabilities": {
+   "loop-implementation-readiness": 1,
+   "repo-primitive-audit": 0,
+   "brainstorming": 0
+  },
+  "fits": {
+   "loop-implementation-readiness": 0.85,
+   "repo-primitive-audit": 0.25,
+   "brainstorming": 0.03
+  }
+ },
+ "decision": "suggest",
+ "route": "prompts/loop-implementation-readiness/",
+ "unsettledGate": false
+}

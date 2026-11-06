@@ -1,0 +1,36 @@
+{
+ "first": {
+  "top": [
+   [
+    "adversarial-code-review",
+    0.89
+   ],
+   [
+    "raa",
+    0.05
+   ],
+   [
+    "readiness-cycle",
+    0.04
+   ]
+  ],
+  "work": 0.98,
+  "named": 0.11,
+  "vault": 0.04
+ },
+ "second": {
+  "probabilities": {
+   "adversarial-code-review": 0.98,
+   "raa": 0.02,
+   "readiness-cycle": 0
+  },
+  "fits": {
+   "adversarial-code-review": 0.54,
+   "raa": 0.15,
+   "readiness-cycle": 0.15
+  }
+ },
+ "decision": "suggest",
+ "route": "playbooks/adversarial-code-review/",
+ "unsettledGate": false
+}

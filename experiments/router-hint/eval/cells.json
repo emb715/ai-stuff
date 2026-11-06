@@ -1,0 +1,86 @@
+{
+ "cells": {
+  "R1": {
+   "prompt": "Say I've got a diff sitting on a feature branch in another project \u2014 six files, a new caching layer, plus its tests. Tear it apart before I merge it. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "playbooks/adversarial-code-review/"
+  },
+  "R2": {
+   "prompt": "I want to open-source an internal template repo of ours \u2014 a different repo, not this one. Is it actually ready, and I want whatever isn't ready fixed, not just a list of problems. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "playbooks/readiness-cycle/"
+  },
+  "R6": {
+   "prompt": "A brainstorm on another project threw out about forty ideas for the onboarding revamp. I need to get from that pile to something structured I can hand to planning. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "a sequence: playbooks/decision-making/ then playbooks/product-brief/"
+  },
+  "R9": {
+   "prompt": "I want to plan something. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "ask a clarifying question; do not route"
+  },
+  "R13": {
+   "prompt": "The plan for the billing revamp is signed off. Break it into issues in our tracker so the team can start on it. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "decline, and name skills/issues-to-roadmap/ without surfacing it"
+  },
+  "P1": {
+   "prompt": "Here's our PRD for the billing rewrite, and here's the codebase that's supposed to implement it, in another project. Does the code actually do what the doc says? Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "prompts/loop-implementation-readiness/"
+  },
+  "P4": {
+   "prompt": "We just wrapped a gnarly debugging session on another project \u2014 a lot of dead ends, and two non-obvious constraints we only found the hard way. I want what we learned kept somewhere it'll actually get used. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "prompts/knowledge-extraction/"
+  },
+  "R14": {
+   "prompt": "On another project a PR is CI-green and deployed to a preview URL at commit a1b2c3d. Its issue lists five acceptance criteria: invites send within a minute, expired invites show an error, admins can revoke, non-admins see no invite button, and the invite list paginates at 25. Before I merge, I want to know whether the running build actually meets each one. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "playbooks/acceptance-verification/"
+  },
+  "R16": {
+   "prompt": "Release candidate v2.3.0-rc1 on another project is tagged. The PRD has acceptance criteria for about thirty features. I need every user-facing surface inventoried against them, defects triaged by root cause, fixed in batches, re-verified and signed off before rollout. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "prompts/review-release-candidate/"
+  },
+  "R17": {
+   "prompt": "The outage on another project last week is resolved; service has been stable for five days and the rollback held. I want to go over what happened and turn it into action items the team owns. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "playbooks/retrospective/"
+  },
+  "R19": {
+   "prompt": "A change request came in on another project: add SSO via SAML for enterprise accounts. Five agents will build it in parallel, and I want a plan they can split up. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "playbooks/raa/"
+  },
+  "T4": {
+   "prompt": "We finished the Q3 migration last week and I want to capture what we learned before everyone forgets it. Don't do it yet, just tell me how you'd start. Do not edit, create, delete or commit anything, and do not run any git command that changes state. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "trigger"
+  },
+  "T5": {
+   "prompt": "Run the quick-spec playbook on the CSV export feature in another project. Don't do it yet, just tell me how you'd start. Do not edit, create, delete or commit anything, and do not run any git command that changes state. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "silent"
+  },
+  "T6": {
+   "prompt": "Promote the liteparse skill from draft to validated. Don't do it yet, just tell me how you'd start. Do not edit, create, delete or commit anything, and do not run any git command that changes state. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "silent"
+  },
+  "T10": {
+   "prompt": "My PR's preview build is up. I want to check it really does what the ticket says before I merge. Don't do it yet, just tell me how you'd start. Do not edit, create, delete or commit anything, and do not run any git command that changes state. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "trigger"
+  },
+  "T11": {
+   "prompt": "Write unit tests for the parse_amount function in our billing module. It takes a string like '12.50' and returns cents. Don't do it yet, just tell me how you'd start. Do not edit, create, delete or commit anything, and do not run any git command that changes state. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "silent"
+  }
+ },
+ "runs": {
+  "R1": 2,
+  "R2": 1,
+  "R6": 1,
+  "R9": 1,
+  "R13": 1,
+  "P1": 1,
+  "P4": 1,
+  "R14": 1,
+  "R16": 1,
+  "R17": 2,
+  "R19": 2,
+  "T4": 2,
+  "T5": 1,
+  "T6": 1,
+  "T10": 2,
+  "T11": 1
+ }
+}

@@ -538,3 +538,41 @@ Constants as round 7. Worktree at the commit that carries both edits.
 | S1 | The router loads in ≥ 6 of the 8 positive runs | The fix did not move activation |
 | S2 | Every run where it loads routes correctly | A routing regression |
 | S3 | **T5, T6 and T11 stay silent** | **Blocker.** The `AGENTS.md` step must not make the router fire on named playbooks, vault operations or plain coding work |
+
+## Round 10 — 2026-11-06, routing as yes/no facts in a decision list. Pre-registered before the edit
+
+Rounds 7 to 9 show the router routes correctly whenever it loads, and that loading is the weak half. This round tests one structural edit, borrowed from typed-question classifier design: each manifest `Entry` restated as a yes/no fact the session can check against the user's words, walked as an ordered decision list where the first yes wins and every combination has an outcome (including "ask" and "decline"). The hypothesis is that concrete, observable checks make routing less dependent on the user reusing a playbook's vocabulary, and give a session a short first step it can execute rather than describe.
+
+### What changes, and nothing else
+
+1. `SKILL.md` gains a **Routing table** section: an ordered list of yes/no facts, each with its outcome. Routing procedure step 2 points at it. The manifest, chain table, footgun, covered-elsewhere list and examples are untouched.
+2. The `description` is untouched, so any change in loading comes from the body only through a session that has already opened the file. Loading differences between conditions are therefore expected to be noise; routing differences are the measurement.
+
+### Constants
+
+As round 7, with two changes:
+
+| Setting | Value |
+|---|---|
+| Directory | two detached worktrees, condition A at `main` (`f10a336`, SKILL.md `9b2be58a…`), condition B at the commit carrying the edit |
+| Activation instrument | **new:** `--output-format stream-json`. A run loaded the router if it called the `Skill` tool with `ai-stuff-artifact-router` or read its `SKILL.md`. The `SKILLS_USED` line is kept as a secondary record |
+
+### Cells, identical in both conditions
+
+| Group | Cells | Runs each |
+|---|---|---|
+| Activation-prone | R1, R17, R19, T4, T10 | 2 |
+| Routing correctness | R2, R6, R9, R13, P1, P4, R14, R16 | 1 |
+| Must stay silent | T5, T6, T11 | 1 |
+
+21 runs per condition, 42 total. Ground truth and assertions are those already registered for each cell.
+
+### Success criteria, fixed now
+
+| # | Criterion | Consequence if missed |
+|---|---|---|
+| S1 | B routes correctly on at least as many positive runs as A | The edit does not help routing; revert it |
+| S2 | B loads the router on at least as many positive runs as A, minus one for noise | Investigate before keeping |
+| S3 | **T5, T6 and T11 stay silent in B** | **Blocker.** Revert |
+
+Variance stays unquantified at 1 to 2 repeats.

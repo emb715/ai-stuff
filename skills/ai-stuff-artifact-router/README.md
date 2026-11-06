@@ -2,7 +2,7 @@
 title: "artifact-router"
 status: validated
 confidence: medium
-last_tested: 2026-10-31
+last_tested: 2026-11-06
 scope: personal
 tooling:
   - "agnostic/any-LLM"
@@ -38,7 +38,7 @@ None. The skill reads the task description from the current session and matches 
 
 # Skill
 
-Use [`SKILL.md`](SKILL.md) — routing procedure, intent categories, an Entry/Exit-indexed manifest, the fit-first priority rule, the chain rule and chain table, the disambiguation footgun including direction-of-flow, the known-coverage-gaps decline list, and routing examples.
+Use [`SKILL.md`](SKILL.md) — routing procedure, a yes/no routing table, intent categories, an Entry/Exit-indexed manifest, the fit-first priority rule, the chain rule and chain table, the disambiguation footgun including direction-of-flow, the known-coverage-gaps decline list, and routing examples.
 
 Evaluation records live in [`evals/`](evals/) and are working files, not vault records; this README's Evidence section is the vault record.
 
@@ -74,6 +74,8 @@ Case counts are not directly comparable across revisions — the baseline predat
 **Manifest accuracy, checked rather than assumed.** 14 of 14 manifest rows matched reality on 2026-10-21: no playbook added, renamed, or status-changed since 2026-08-04. The four artifacts the vault gained in that window were all skills, outside this manifest's scope. The hand-maintained manifest has consequently never faced a drift event — see `humans.md` for what that does and does not say about the design.
 
 **The `experiments/` boundary (R12, 2026-10-23).** On owner instruction, `experiments/` is an explicit hard boundary alongside playbooks-only, and filesystem verification may only confirm or drop a manifest row, never add one. Given a prompt paraphrasing `experiments/arch-design-pipeline/`'s own purpose, the session declined the experiment by name-shape — "not routable — untested, unsanitized, outside `playbooks/`" — and answered with a valid `product-brief` → `quick-spec` sequence.
+
+**Round 10, 2026-11-06 — routing as yes/no facts.** `SKILL.md` gains a routing table: each entry restated as a yes/no fact checked against the user's words, walked in order, first yes wins, with ask and decline rows so every task ends somewhere. 42 runs against `main`, activation read from tool calls: routed correctly 16/18 against 15/18, loaded 14/16 against 13/16, negatives silent in both. Within noise; kept because nothing regressed and sessions cite the rows. Details in `evals/results.md`, Round 10.
 
 **Round 9, 2026-10-31 — activation fix for Claude Code.** `AGENTS.md` session start now routes work requests through the router, and the description names a resolved incident. 11 runs: loading on the target cells rose from 1 in 5 to 4 in 8, R1 recovered 2/2, every loaded run routed correctly, and no false activations. The remaining misses name the router as a first step and stop. Details in `evals/results.md`, Round 9.
 

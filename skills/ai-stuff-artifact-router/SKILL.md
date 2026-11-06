@@ -29,7 +29,7 @@ Do not activate when the user already named the artifact to use. Do not activate
    - "I want to plan something" → intent is `plan`, object is vague. Ask: "Plan what — a raw idea, a GitHub issue, or a feature request against a codebase?"
    - "I have GitHub issue #42 and want to ship it as a PR" → intent is `implement`, object is issue #42. Sufficient. Proceed.
 1. **Name the entry and the exit.** What does the user already have, and what do they want to end up with? Both come from the task description, not from a category guess. Every manifest row is indexed by these two things.
-2. **Match.** Find the row whose `Entry` the user already has and whose `Exit` is what they want. One row matching both is the route. If no single row spans entry to exit, apply the chain rule.
+2. **Match.** Walk the **Routing table** below from the top and stop at the first fact that is a clear yes; its outcome is the route. Then confirm it against the manifest row: the user has its `Entry` and wants its `Exit`. If no single row spans entry to exit, apply the chain rule.
 3. **Disambiguate.** If several rows match, apply the disambiguation rule (see Footgun), then the priority rule.
 4. State the recommendation: playbook name, why it fits, what it produces, and its status as a caveat.
 5. **Confirm before invoking.** Ask the user whether to surface it. On yes, read the route's consumable file from disk — `<playbook-folder>/playbook.md` for a playbook, `<prompt-folder>/prompt.md` for a prompt — and surface it in the session: a playbook as the active procedure, a prompt as text to paste. On no, stop — the recommendation alone is the output.
@@ -40,6 +40,40 @@ Do not activate when the user already named the artifact to use. Do not activate
 The skill checks for routing signal only: can intent and object be identified from the task description? It does not validate playbook-specific inputs (issue number format, doc path existence, budget value). Each playbook validates its own inputs — the router does not duplicate that. If the user provides enough to route but the playbook will need more, route and let the playbook ask.
 
 The boundary: routing signal is the router's job. Input validation is the playbook's job.
+
+### Routing table — yes/no facts, first yes wins
+
+Each row is one fact you can check against the user's own words: something they say they have, or something they say is happening. Answer it yes or no without guessing. Walk the rows in order; the first clear yes decides. A fact you cannot settle from the words is neither yes nor no: ask the one question that settles it, then continue. Every task ends at some row, because the last row always matches.
+
+| # | Is this true, from the user's words? | Outcome |
+|---|---|---|
+| 1 | They named the playbook or prompt to use | Stay silent; let them proceed |
+| 2 | The work is a vault lifecycle operation (promote, deprecate, lint, audit, archive, save an artifact) | Stay silent; `_meta/framebook/` owns it |
+| 3 | The work is writing or revising a skill, prompt, command or tool | Decline; name `skills/skill-authoring/` |
+| 4 | A production system is misbehaving right now, after a shipped change | `playbooks/incident-response/` |
+| 5 | They have a release candidate and its acceptance criteria, and want defects fixed and a sign-off | `prompts/review-release-candidate/` |
+| 6 | They have a running build (URL or build ID) and its acceptance criteria, and want it observed, not fixed | `playbooks/acceptance-verification/` |
+| 7 | They have a diff or branch they want attacked before it merges | `playbooks/adversarial-code-review/` |
+| 8 | They have a finished doc and the codebase meant to implement it, and ask whether the code does what the doc says | `prompts/loop-implementation-readiness/` |
+| 9 | They suspect a repo's docs claim things its source does not do | `prompts/repo-primitive-audit/` |
+| 10 | They have an existing repo, template, package or document to make ready to share, release, hand off or open-source | `playbooks/readiness-cycle/` |
+| 11 | They have a planning doc with gaps, conflicts or partial sections to finish | `prompts/loop-prd-readiness/` |
+| 12 | They have a validated plan (phases, file scope, risks, handoffs) and want it built | `playbooks/implementation-orchestration/` |
+| 13 | They have a settled plan and want it stood up as issues in a tracker | Decline; name `skills/issues-to-roadmap/` |
+| 14 | They want unsettled notes or a transcript turned into issues | Decline with no pointer; the decisions need settling first |
+| 15 | They have a tracked issue and want it to end as a merged PR | `playbooks/issue-to-pr/` |
+| 16 | They have a tracked issue big enough for several stories and want specs | `playbooks/issue-to-ready-specs/` |
+| 17 | They need a multi-platform installer CLI shipped | `playbooks/agent-installer/` |
+| 18 | They have an idea or proof of concept worth 3+ stories and want it released | `playbooks/build-to-release/` |
+| 19 | They have one feature or change request to plan | One implementer in one session: `playbooks/quick-spec/`. A fleet in parallel: `playbooks/raa/`, then `playbooks/implementation-orchestration/`. Not stated: ask which |
+| 20 | They have several existing options and no clear winner | `playbooks/decision-making/` (then `playbooks/product-brief/` if they want a brief: a sequence) |
+| 21 | They have a rough idea to shape into a brief | `playbooks/product-brief/` |
+| 22 | They have a topic and want many ideas generated | `playbooks/brainstorming/` |
+| 23 | Work or an incident is over, and they want lessons or durable knowledge from it | A body of work, or lessons with owned actions: `playbooks/retrospective/`. One session's decisions and dead ends: `prompts/knowledge-extraction/`. Unclear: surface both |
+| 24 | The intent or the object is missing | Ask for it (step 0) |
+| 25 | None of the above | Decline. Name an artifact only if **Covered elsewhere** lists the task shape |
+
+Order matters where two facts can both be true. Row 4 before row 23: an incident still affecting users is a response, not a retro. Rows 5 and 6 split on whether they want fixes. Rows 13 and 14 split on whether the decisions are settled. A row's wording is a check, not a keyword: "tear apart this branch" is row 7 although it never says "review".
 
 ### Intent categories
 

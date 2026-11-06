@@ -511,3 +511,40 @@ Discovery: no over-activation; one positive miss; activation is the weak half an
 This clears `draft -> validated` under `_meta/framebook/promote-artifact/` §2 — one real use with a documented outcome, non-empty failure modes, sanitization clean. It does not clear `vetted`, and nothing here attempts that transition.
 
 Untested after this round: the coverage-gap decline behaviour (never exercised — `issues-to-roadmap` won activation every time), every claim about non-OpenCode harnesses, variance, and token cost.
+
+## Round 10 — 2026-11-06, routing as yes/no facts in a decision list
+
+Plan in `plan.md`, Round 10, committed before the edit (`1e37a51`). The edit is `0af3902`: SKILL.md sha256 `6f0efe9d…`, against `9b2be58a…` on `main` at `f10a336`. 42 headless Claude Code runs (`claude -p`, `claude-sonnet-5-5` in every run), one fresh process each, auto-memory off, in two detached worktrees. Activation was read from the stream-json tool calls, not from `SKILLS_USED`.
+
+### Results
+
+Loading is counted over the 16 positive runs where the router should load; R9 (should ask) and R13 (the router stays silent for tracker work) are left out of that count. Correctness is over all 18 positive runs.
+
+| Cell | A: `main` | B: routing table |
+|---|---|---|
+| R1 diff to tear apart (2) | 2/2 | 2/2 |
+| R17 after the incident (2) | 2/2 | 2/2 |
+| R19 fleet stated (2) | 2/2 | 1/2. Run 1 did not load and guessed `issue-to-ready-specs` |
+| T4 capture Q3 lessons (2) | 2/2 | 2/2 |
+| T10 preview build vs ticket (2) | **0/2**, said it would load the router and stopped | 1/2 |
+| R2, R6, R14, R16, P4 | 5/5 | 5/5 |
+| P1 doc vs codebase | **fail**, no route named | pass, cited "row 8" |
+| R9 plan something | asked | asked |
+| R13 settled plan to tracker | named `issues-to-roadmap`, router silent | same |
+| T5, T6, T11 must stay silent | silent | silent |
+| **Routed correctly** | **15 / 18** | **16 / 18** |
+| **Router loaded** | **13 / 16** | **14 / 16** |
+
+### Against the criteria
+
+| # | Criterion | Result |
+|---|---|---|
+| S1 | B routes correctly on at least as many positive runs as A | **met**, 16 against 15 |
+| S2 | B loads on at least as many positive runs as A, minus one | **met**, 14 against 13 |
+| S3 | T5, T6, T11 silent in B | **met**. No blocker |
+
+### What this round shows
+
+- **The table is used.** B runs cite it by row ("row 8", "row 10", "routing row 5"), and B fixed the one plain routing miss in A (P1).
+- **The difference is within noise.** One run each way at 1 to 2 repeats. The edit is kept because it met every criterion and nothing regressed, not because it is shown to be better.
+- **Loading is still the weak half.** T10 is the stubborn cell: 1 load in 4 runs across both conditions. The miss shape is round 9's: the session says it will load the router, then answers without it.
