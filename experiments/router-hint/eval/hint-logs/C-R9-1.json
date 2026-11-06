@@ -1,0 +1,35 @@
+{
+ "first": {
+  "top": [
+   [
+    "product-brief",
+    0.39
+   ],
+   [
+    "brainstorming",
+    0.28
+   ],
+   [
+    "raa",
+    0.2
+   ]
+  ],
+  "work": 0.9,
+  "named": 0.06,
+  "vault": 0.08
+ },
+ "second": {
+  "probabilities": {
+   "product-brief": 0.24,
+   "brainstorming": 0.14,
+   "raa": 0.62
+  },
+  "fits": {
+   "product-brief": 0.18,
+   "brainstorming": 0.13,
+   "raa": 0.23
+  }
+ },
+ "decision": "none",
+ "reason": "best candidate fits 0.23"
+}

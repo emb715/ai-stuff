@@ -1,0 +1,182 @@
+[
+ {
+  "id": "R1",
+  "prompt": "Say I've got a diff sitting on a feature branch in another project \u2014 six files, a new caching layer, plus its tests. Tear it apart before I merge it.",
+  "truth": "playbooks/adversarial-code-review/"
+ },
+ {
+  "id": "R2",
+  "prompt": "I want to open-source an internal template repo of ours \u2014 a different repo, not this one. Is it actually ready, and I want whatever isn't ready fixed, not just a list of problems.",
+  "truth": "playbooks/readiness-cycle/"
+ },
+ {
+  "id": "R3",
+  "prompt": "In another project I have GitHub issue #214: \"Users can't export reports to CSV. Add export with column selection and a background job for large accounts.\" Break it down into implementable work items with acceptance criteria.",
+  "truth": "contested \u2014 none"
+ },
+ {
+  "id": "R3a",
+  "prompt": "In another project I have GitHub issue #214: \"Users can't export reports to CSV. Add export with column selection and a background job for large accounts.\" Turn it into implementation spec documents in the repo \u2014 file-level tasks and test plans, not tracker tickets.",
+  "truth": "playbooks/issue-to-ready-specs/"
+ },
+ {
+  "id": "R4",
+  "prompt": "Notes from today's planning session on another project: we're committing to self-serve billing this quarter; the PDF endpoint 500s on invoices over 200 lines; p95 on the invoice list has to stay under 400ms; still undecided whether dunning emails are in scope. Break this down into issues in our tracker.",
+  "truth": "no playbook covers this"
+ },
+ {
+  "id": "R5",
+  "prompt": "In another project I've got GitHub issue #88, well-scoped, and I want it to end up as a merged PR \u2014 but I want to approve each phase before it moves on.",
+  "truth": "playbooks/issue-to-pr/ (gated mode)"
+ },
+ {
+  "id": "R6",
+  "prompt": "A brainstorm on another project threw out about forty ideas for the onboarding revamp. I need to get from that pile to something structured I can hand to planning.",
+  "truth": "a sequence: playbooks/decision-making/ then playbooks/product-brief/"
+ },
+ {
+  "id": "R7",
+  "prompt": "I need to ship a CLI that installs our agent definitions into Claude Code, Cursor and OpenCode. Interactive, but it also has to work in CI.",
+  "truth": "playbooks/agent-installer/"
+ },
+ {
+  "id": "R8",
+  "prompt": "A change request came in on another project. I genuinely don't know whether this wants a spec or a plan.",
+  "truth": "playbooks/request-triage/"
+ },
+ {
+  "id": "R9",
+  "prompt": "I want to plan something.",
+  "truth": "ask a clarifying question; do not route"
+ },
+ {
+  "id": "R10",
+  "prompt": "For another project I have a validated phased plan with file-level scope and ordered dependencies. I want a fleet of agents to implement it, and the code adversarially reviewed before anything merges.",
+  "truth": "playbooks/implementation-orchestration/"
+ },
+ {
+  "id": "R13",
+  "prompt": "The plan for the billing revamp is signed off. Break it into issues in our tracker so the team can start on it.",
+  "truth": "decline, and name skills/issues-to-roadmap/ without surfacing it"
+ },
+ {
+  "id": "P1",
+  "prompt": "Here's our PRD for the billing rewrite, and here's the codebase that's supposed to implement it, in another project. Does the code actually do what the doc says?",
+  "truth": "prompts/loop-implementation-readiness/"
+ },
+ {
+  "id": "P2",
+  "prompt": "I've got a plan doc for a notifications feature in another project. It's half-written, has conflicting sections and some holes. I need it to the point a developer could actually build from it.",
+  "truth": "prompts/loop-prd-readiness/"
+ },
+ {
+  "id": "P3",
+  "prompt": "We're about to cut the release on another project. The branch is frozen and the acceptance criteria are written down. I need to know it's safe to roll out.",
+  "truth": "prompts/review-release-candidate/"
+ },
+ {
+  "id": "P4",
+  "prompt": "We just wrapped a gnarly debugging session on another project \u2014 a lot of dead ends, and two non-obvious constraints we only found the hard way. I want what we learned kept somewhere it'll actually get used.",
+  "truth": "prompts/knowledge-extraction/"
+ },
+ {
+  "id": "P5",
+  "prompt": "I suspect this repo's docs claim governance and conventions the source doesn't actually enforce. I want a review grounded in what the source declares, not in what the docs say.",
+  "truth": "prompts/repo-primitive-audit/"
+ },
+ {
+  "id": "R12",
+  "prompt": "In another project I've got a non-trivial feature and I want it taken through a proper document-driven design pipeline \u2014 a PRD, then a review-gated technical spec \u2014 before anyone writes code.",
+  "truth": "any playbooks/ route, or a decline \u2014 but never experiments/arch-design-pipeline/"
+ },
+ {
+  "id": "R11",
+  "prompt": "I need an implementation-ready spec for adding CSV export to the reports page of another project. One feature, one session, one implementer.",
+  "truth": "playbooks/quick-spec/"
+ },
+ {
+  "id": "R14",
+  "prompt": "On another project a PR is CI-green and deployed to a preview URL at commit a1b2c3d. Its issue lists five acceptance criteria: invites send within a minute, expired invites show an error, admins can revoke, non-admins see no invite button, and the invite list paginates at 25. Before I merge, I want to know whether the running build actually meets each one.",
+  "truth": "playbooks/acceptance-verification/"
+ },
+ {
+  "id": "R15",
+  "prompt": "On another project the checkout API's error rate went from 0.2% to 9% about twenty minutes after this morning's deploy. Customers are seeing failed payments right now. We have dashboards and a rollback.",
+  "truth": "playbooks/incident-response/"
+ },
+ {
+  "id": "R16",
+  "prompt": "Release candidate v2.3.0-rc1 on another project is tagged. The PRD has acceptance criteria for about thirty features. I need every user-facing surface inventoried against them, defects triaged by root cause, fixed in batches, re-verified and signed off before rollout.",
+  "truth": "prompts/review-release-candidate/"
+ },
+ {
+  "id": "R17",
+  "prompt": "The outage on another project last week is resolved; service has been stable for five days and the rollback held. I want to go over what happened and turn it into action items the team owns.",
+  "truth": "playbooks/retrospective/"
+ },
+ {
+  "id": "R18",
+  "prompt": "On another project the spec for bulk invite is approved: admins can paste up to 100 emails, duplicates are dropped with a count shown, and invalid addresses are listed without blocking the rest. Before anyone implements it, I want the tests written from the spec.",
+  "truth": "none: decline and name skills/test-authoring/, or test-authoring self-activates"
+ },
+ {
+  "id": "R19",
+  "prompt": "A change request came in on another project: add SSO via SAML for enterprise accounts. Five agents will build it in parallel, and I want a plan they can split up.",
+  "truth": "playbooks/raa/"
+ },
+ {
+  "id": "T1",
+  "prompt": "A feature request came in on another project \u2014 bulk invite for team admins. I want it taken from request to shipped properly rather than winging it.",
+  "truth": "trigger: raa or issue-to-pr family"
+ },
+ {
+  "id": "T2",
+  "prompt": "Which playbook should I use to turn a rough product idea into something a developer can actually build?",
+  "truth": "trigger: product-brief/quick-spec"
+ },
+ {
+  "id": "T3",
+  "prompt": "I'm about to start a big multi-step change in another project and I'd rather do it in some structured way than improvise it.",
+  "truth": "trigger: ask or plan"
+ },
+ {
+  "id": "T4",
+  "prompt": "We finished the Q3 migration last week and I want to capture what we learned before everyone forgets it.",
+  "truth": "trigger: retrospective"
+ },
+ {
+  "id": "T5",
+  "prompt": "Run the quick-spec playbook on the CSV export feature in another project.",
+  "truth": "silent"
+ },
+ {
+  "id": "T6",
+  "prompt": "Promote the liteparse skill from draft to validated.",
+  "truth": "silent"
+ },
+ {
+  "id": "T7",
+  "prompt": "The DL012 owner check in scripts/doc_lint.py is failing on a template file. Work out why.",
+  "truth": "silent"
+ },
+ {
+  "id": "T8",
+  "prompt": "What's the difference between the spec paradigm and the plan paradigm in this vault?",
+  "truth": "silent"
+ },
+ {
+  "id": "T9",
+  "prompt": "Payments latency on our service jumped to 8 seconds right after we shipped this morning, and customers are complaining.",
+  "truth": "trigger: incident-response"
+ },
+ {
+  "id": "T10",
+  "prompt": "My PR's preview build is up. I want to check it really does what the ticket says before I merge.",
+  "truth": "trigger: acceptance-verification"
+ },
+ {
+  "id": "T11",
+  "prompt": "Write unit tests for the parse_amount function in our billing module. It takes a string like '12.50' and returns cents.",
+  "truth": "silent"
+ }
+]

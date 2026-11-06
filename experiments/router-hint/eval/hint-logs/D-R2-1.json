@@ -1,0 +1,36 @@
+{
+ "first": {
+  "top": [
+   [
+    "readiness-cycle",
+    0.9
+   ],
+   [
+    "raa",
+    0.08
+   ],
+   [
+    "review-release-candidate",
+    0.02
+   ]
+  ],
+  "work": 0.97,
+  "named": 0.07,
+  "vault": 0.09
+ },
+ "second": {
+  "probabilities": {
+   "readiness-cycle": 0.68,
+   "raa": 0.31,
+   "review-release-candidate": 0.01
+  },
+  "fits": {
+   "readiness-cycle": 0.8,
+   "raa": 0.48,
+   "review-release-candidate": 0.17
+  }
+ },
+ "decision": "suggest",
+ "route": "playbooks/readiness-cycle/",
+ "unsettledGate": false
+}

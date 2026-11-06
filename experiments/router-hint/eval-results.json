@@ -1,0 +1,1319 @@
+[
+ {
+  "id": "R1",
+  "truth": "playbooks/adversarial-code-review/",
+  "first": {
+   "top": [
+    [
+     "adversarial-code-review",
+     0.96
+    ],
+    [
+     "raa",
+     0.02
+    ],
+    [
+     "readiness-cycle",
+     0.02
+    ]
+   ],
+   "work": 0.97,
+   "named": 0.08,
+   "vault": 0.05
+  },
+  "second": {
+   "probabilities": {
+    "adversarial-code-review": 1,
+    "raa": 0,
+    "readiness-cycle": 0
+   },
+   "fits": {
+    "adversarial-code-review": 0.85,
+    "raa": 0.09,
+    "readiness-cycle": 0.15
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/adversarial-code-review/",
+  "unsettledGate": false
+ },
+ {
+  "id": "R2",
+  "truth": "playbooks/readiness-cycle/",
+  "first": {
+   "top": [
+    [
+     "readiness-cycle",
+     0.96
+    ],
+    [
+     "review-release-candidate",
+     0.03
+    ],
+    [
+     "raa",
+     0.01
+    ]
+   ],
+   "work": 0.94,
+   "named": 0.07,
+   "vault": 0.15
+  },
+  "second": {
+   "probabilities": {
+    "readiness-cycle": 0.86,
+    "review-release-candidate": 0,
+    "raa": 0.14
+   },
+   "fits": {
+    "readiness-cycle": 0.87,
+    "review-release-candidate": 0.19,
+    "raa": 0.28
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/readiness-cycle/",
+  "unsettledGate": false
+ },
+ {
+  "id": "R3",
+  "truth": "contested — none",
+  "first": {
+   "top": [
+    [
+     "issue-to-ready-specs",
+     0.9
+    ],
+    [
+     "quick-spec",
+     0.09
+    ],
+    [
+     "raa",
+     0.01
+    ]
+   ],
+   "work": 0.97,
+   "named": 0.09,
+   "vault": 0.03
+  },
+  "second": {
+   "probabilities": {
+    "issue-to-ready-specs": 1,
+    "quick-spec": 0,
+    "raa": 0
+   },
+   "fits": {
+    "issue-to-ready-specs": 0.92,
+    "quick-spec": 0.38,
+    "raa": 0.27
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/issue-to-ready-specs/",
+  "unsettledGate": false
+ },
+ {
+  "id": "R3a",
+  "truth": "playbooks/issue-to-ready-specs/",
+  "first": {
+   "top": [
+    [
+     "issue-to-ready-specs",
+     0.92
+    ],
+    [
+     "raa",
+     0.07
+    ],
+    [
+     "quick-spec",
+     0.01
+    ]
+   ],
+   "work": 0.97,
+   "named": 0.13,
+   "vault": 0.1
+  },
+  "second": {
+   "probabilities": {
+    "issue-to-ready-specs": 1,
+    "raa": 0,
+    "quick-spec": 0
+   },
+   "fits": {
+    "issue-to-ready-specs": 0.9,
+    "raa": 0.24,
+    "quick-spec": 0.36
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/issue-to-ready-specs/",
+  "unsettledGate": false
+ },
+ {
+  "id": "R4",
+  "truth": "no playbook covers this",
+  "first": {
+   "top": [
+    [
+     "loop-prd-readiness",
+     0.33
+    ],
+    [
+     "product-brief",
+     0.3
+    ],
+    [
+     "knowledge-extraction",
+     0.27
+    ]
+   ],
+   "work": 0.94,
+   "named": 0.09,
+   "vault": 0.03
+  },
+  "second": {
+   "probabilities": {
+    "loop-prd-readiness": 0.61,
+    "product-brief": 0.21,
+    "knowledge-extraction": 0.18
+   },
+   "fits": {
+    "loop-prd-readiness": 0.17,
+    "product-brief": 0.08,
+    "knowledge-extraction": 0.08
+   }
+  },
+  "decision": "none",
+  "reason": "best candidate fits 0.17"
+ },
+ {
+  "id": "R5",
+  "truth": "playbooks/issue-to-pr/ (gated mode)",
+  "first": {
+   "top": [
+    [
+     "issue-to-pr",
+     1
+    ],
+    [
+     "brainstorming",
+     0
+    ],
+    [
+     "product-brief",
+     0
+    ]
+   ],
+   "work": 0.92,
+   "named": 0.1,
+   "vault": 0.1
+  },
+  "second": {
+   "probabilities": {
+    "issue-to-pr": 1,
+    "brainstorming": 0,
+    "product-brief": 0
+   },
+   "fits": {
+    "issue-to-pr": 0.96,
+    "brainstorming": 0.02,
+    "product-brief": 0.03
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/issue-to-pr/",
+  "unsettledGate": false
+ },
+ {
+  "id": "R6",
+  "truth": "a sequence: playbooks/decision-making/ then playbooks/product-brief/",
+  "first": {
+   "top": [
+    [
+     "product-brief",
+     0.92
+    ],
+    [
+     "decision-making",
+     0.07
+    ],
+    [
+     "brainstorming",
+     0.01
+    ]
+   ],
+   "work": 0.94,
+   "named": 0.05,
+   "vault": 0.05
+  },
+  "second": {
+   "probabilities": {
+    "product-brief": 0.13,
+    "decision-making": 0.87,
+    "brainstorming": 0
+   },
+   "fits": {
+    "product-brief": 0.71,
+    "decision-making": 0.46,
+    "brainstorming": 0.04
+   }
+  },
+  "decision": "none",
+  "reason": "best candidate fits 0.46"
+ },
+ {
+  "id": "R7",
+  "truth": "playbooks/agent-installer/",
+  "first": {
+   "top": [
+    [
+     "agent-installer",
+     0.99
+    ],
+    [
+     "build-to-release",
+     0.01
+    ],
+    [
+     "brainstorming",
+     0
+    ]
+   ],
+   "work": 0.95,
+   "named": 0.13,
+   "vault": 0.06
+  },
+  "second": {
+   "probabilities": {
+    "agent-installer": 0.98,
+    "build-to-release": 0.02,
+    "brainstorming": 0
+   },
+   "fits": {
+    "agent-installer": 0.78,
+    "build-to-release": 0.34,
+    "brainstorming": 0.05
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/agent-installer/",
+  "unsettledGate": false
+ },
+ {
+  "id": "R8",
+  "truth": "playbooks/request-triage/",
+  "first": {
+   "top": [
+    [
+     "raa",
+     0.43
+    ],
+    [
+     "decision-making",
+     0.26
+    ],
+    [
+     "quick-spec",
+     0.13
+    ]
+   ],
+   "work": 0.71,
+   "named": 0.05,
+   "vault": 0.04
+  },
+  "second": {
+   "probabilities": {
+    "raa": 0.43,
+    "decision-making": 0.46,
+    "quick-spec": 0.11
+   },
+   "fits": {
+    "raa": 0.53,
+    "decision-making": 0.11,
+    "quick-spec": 0.38
+   }
+  },
+  "decision": "none",
+  "reason": "best candidate fits 0.11"
+ },
+ {
+  "id": "R9",
+  "truth": "ask a clarifying question; do not route",
+  "first": {
+   "top": [
+    [
+     "brainstorming",
+     0.6
+    ],
+    [
+     "product-brief",
+     0.33
+    ],
+    [
+     "raa",
+     0.04
+    ]
+   ],
+   "work": 0.67,
+   "named": 0.03,
+   "vault": 0.03
+  },
+  "second": {
+   "probabilities": {
+    "brainstorming": 0.81,
+    "product-brief": 0.03,
+    "raa": 0.16
+   },
+   "fits": {
+    "brainstorming": 0.2,
+    "product-brief": 0.15,
+    "raa": 0.14
+   }
+  },
+  "decision": "none",
+  "reason": "best candidate fits 0.20"
+ },
+ {
+  "id": "R10",
+  "truth": "playbooks/implementation-orchestration/",
+  "first": {
+   "top": [
+    [
+     "implementation-orchestration",
+     1
+    ],
+    [
+     "brainstorming",
+     0
+    ],
+    [
+     "product-brief",
+     0
+    ]
+   ],
+   "work": 0.97,
+   "named": 0.09,
+   "vault": 0.06
+  },
+  "second": {
+   "probabilities": {
+    "implementation-orchestration": 1,
+    "brainstorming": 0,
+    "product-brief": 0
+   },
+   "fits": {
+    "implementation-orchestration": 0.94,
+    "brainstorming": 0.01,
+    "product-brief": 0.02
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/implementation-orchestration/",
+  "unsettledGate": false
+ },
+ {
+  "id": "R13",
+  "truth": "decline, and name skills/issues-to-roadmap/ without surfacing it",
+  "first": {
+   "top": [
+    [
+     "issue-to-ready-specs",
+     0.37
+    ],
+    [
+     "loop-prd-readiness",
+     0.2
+    ],
+    [
+     "implementation-orchestration",
+     0.17
+    ]
+   ],
+   "work": 0.88,
+   "named": 0.09,
+   "vault": 0.04
+  },
+  "second": {
+   "probabilities": {
+    "issue-to-ready-specs": 0.84,
+    "loop-prd-readiness": 0.11,
+    "implementation-orchestration": 0.05
+   },
+   "fits": {
+    "issue-to-ready-specs": 0.16,
+    "loop-prd-readiness": 0.09,
+    "implementation-orchestration": 0.06
+   }
+  },
+  "decision": "none",
+  "reason": "best candidate fits 0.16"
+ },
+ {
+  "id": "P1",
+  "truth": "prompts/loop-implementation-readiness/",
+  "first": {
+   "top": [
+    [
+     "loop-implementation-readiness",
+     0.99
+    ],
+    [
+     "repo-primitive-audit",
+     0.01
+    ],
+    [
+     "brainstorming",
+     0
+    ]
+   ],
+   "work": 0.82,
+   "named": 0.07,
+   "vault": 0.03
+  },
+  "second": {
+   "probabilities": {
+    "loop-implementation-readiness": 1,
+    "repo-primitive-audit": 0,
+    "brainstorming": 0
+   },
+   "fits": {
+    "loop-implementation-readiness": 0.93,
+    "repo-primitive-audit": 0.2,
+    "brainstorming": 0.02
+   }
+  },
+  "decision": "suggest",
+  "route": "prompts/loop-implementation-readiness/",
+  "unsettledGate": false
+ },
+ {
+  "id": "P2",
+  "truth": "prompts/loop-prd-readiness/",
+  "first": {
+   "top": [
+    [
+     "loop-prd-readiness",
+     1
+    ],
+    [
+     "brainstorming",
+     0
+    ],
+    [
+     "product-brief",
+     0
+    ]
+   ],
+   "work": 0.97,
+   "named": 0.06,
+   "vault": 0.06
+  },
+  "second": {
+   "probabilities": {
+    "loop-prd-readiness": 1,
+    "brainstorming": 0,
+    "product-brief": 0
+   },
+   "fits": {
+    "loop-prd-readiness": 0.96,
+    "brainstorming": 0.03,
+    "product-brief": 0.04
+   }
+  },
+  "decision": "suggest",
+  "route": "prompts/loop-prd-readiness/",
+  "unsettledGate": false
+ },
+ {
+  "id": "P3",
+  "truth": "prompts/review-release-candidate/",
+  "first": {
+   "top": [
+    [
+     "review-release-candidate",
+     0.96
+    ],
+    [
+     "acceptance-verification",
+     0.02
+    ],
+    [
+     "readiness-cycle",
+     0.02
+    ]
+   ],
+   "work": 0.88,
+   "named": 0.06,
+   "vault": 0.04
+  },
+  "second": {
+   "probabilities": {
+    "review-release-candidate": 0.98,
+    "acceptance-verification": 0.02,
+    "readiness-cycle": 0
+   },
+   "fits": {
+    "review-release-candidate": 0.91,
+    "acceptance-verification": 0.36,
+    "readiness-cycle": 0.58
+   }
+  },
+  "decision": "suggest",
+  "route": "prompts/review-release-candidate/",
+  "unsettledGate": false
+ },
+ {
+  "id": "P4",
+  "truth": "prompts/knowledge-extraction/",
+  "first": {
+   "top": [
+    [
+     "knowledge-extraction",
+     0.96
+    ],
+    [
+     "retrospective",
+     0.04
+    ],
+    [
+     "brainstorming",
+     0
+    ]
+   ],
+   "work": 0.88,
+   "named": 0.04,
+   "vault": 0.66
+  },
+  "second": {
+   "probabilities": {
+    "knowledge-extraction": 1,
+    "retrospective": 0,
+    "brainstorming": 0
+   },
+   "fits": {
+    "knowledge-extraction": 0.92,
+    "retrospective": 0.39,
+    "brainstorming": 0.04
+   }
+  },
+  "decision": "suggest",
+  "route": "prompts/knowledge-extraction/",
+  "unsettledGate": false
+ },
+ {
+  "id": "P5",
+  "truth": "prompts/repo-primitive-audit/",
+  "first": {
+   "top": [
+    [
+     "repo-primitive-audit",
+     0.99
+    ],
+    [
+     "loop-implementation-readiness",
+     0.01
+    ],
+    [
+     "brainstorming",
+     0
+    ]
+   ],
+   "work": 0.9,
+   "named": 0.08,
+   "vault": 0.29
+  },
+  "second": {
+   "probabilities": {
+    "repo-primitive-audit": 1,
+    "loop-implementation-readiness": 0,
+    "brainstorming": 0
+   },
+   "fits": {
+    "repo-primitive-audit": 0.92,
+    "loop-implementation-readiness": 0.09,
+    "brainstorming": 0.03
+   }
+  },
+  "decision": "suggest",
+  "route": "prompts/repo-primitive-audit/",
+  "unsettledGate": false
+ },
+ {
+  "id": "R12",
+  "truth": "any playbooks/ route, or a decline — but never experiments/arch-design-pipeline/",
+  "first": {
+   "top": [
+    [
+     "issue-to-ready-specs",
+     0.78
+    ],
+    [
+     "product-brief",
+     0.06
+    ],
+    [
+     "quick-spec",
+     0.06
+    ]
+   ],
+   "work": 0.97,
+   "named": 0.47,
+   "vault": 0.05
+  },
+  "second": {
+   "probabilities": {
+    "issue-to-ready-specs": 0.19,
+    "product-brief": 0.79,
+    "quick-spec": 0.02
+   },
+   "fits": {
+    "issue-to-ready-specs": 0.31,
+    "product-brief": 0.23,
+    "quick-spec": 0.14
+   }
+  },
+  "decision": "none",
+  "reason": "best candidate fits 0.23"
+ },
+ {
+  "id": "R11",
+  "truth": "playbooks/quick-spec/",
+  "first": {
+   "top": [
+    [
+     "quick-spec",
+     0.99
+    ],
+    [
+     "raa",
+     0.01
+    ],
+    [
+     "brainstorming",
+     0
+    ]
+   ],
+   "work": 0.93,
+   "named": 0.28,
+   "vault": 0.03
+  },
+  "second": {
+   "probabilities": {
+    "quick-spec": 1,
+    "raa": 0,
+    "brainstorming": 0
+   },
+   "fits": {
+    "quick-spec": 0.85,
+    "raa": 0.11,
+    "brainstorming": 0.03
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/quick-spec/",
+  "unsettledGate": false
+ },
+ {
+  "id": "R14",
+  "truth": "playbooks/acceptance-verification/",
+  "first": {
+   "top": [
+    [
+     "acceptance-verification",
+     1
+    ],
+    [
+     "brainstorming",
+     0
+    ],
+    [
+     "product-brief",
+     0
+    ]
+   ],
+   "work": 0.92,
+   "named": 0.06,
+   "vault": 0.02
+  },
+  "second": {
+   "probabilities": {
+    "acceptance-verification": 1,
+    "brainstorming": 0,
+    "product-brief": 0
+   },
+   "fits": {
+    "acceptance-verification": 0.97,
+    "brainstorming": 0.01,
+    "product-brief": 0.01
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/acceptance-verification/",
+  "unsettledGate": false
+ },
+ {
+  "id": "R15",
+  "truth": "playbooks/incident-response/",
+  "first": {
+   "top": [
+    [
+     "incident-response",
+     1
+    ],
+    [
+     "brainstorming",
+     0
+    ],
+    [
+     "product-brief",
+     0
+    ]
+   ],
+   "work": 0.93,
+   "named": 0.07,
+   "vault": 0.02
+  },
+  "second": {
+   "probabilities": {
+    "incident-response": 1,
+    "brainstorming": 0,
+    "product-brief": 0
+   },
+   "fits": {
+    "incident-response": 0.94,
+    "brainstorming": 0.02,
+    "product-brief": 0.02
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/incident-response/",
+  "unsettledGate": false
+ },
+ {
+  "id": "R16",
+  "truth": "prompts/review-release-candidate/",
+  "first": {
+   "top": [
+    [
+     "review-release-candidate",
+     1
+    ],
+    [
+     "brainstorming",
+     0
+    ],
+    [
+     "product-brief",
+     0
+    ]
+   ],
+   "work": 0.98,
+   "named": 0.08,
+   "vault": 0.04
+  },
+  "second": {
+   "probabilities": {
+    "review-release-candidate": 1,
+    "brainstorming": 0,
+    "product-brief": 0
+   },
+   "fits": {
+    "review-release-candidate": 0.96,
+    "brainstorming": 0.02,
+    "product-brief": 0.02
+   }
+  },
+  "decision": "suggest",
+  "route": "prompts/review-release-candidate/",
+  "unsettledGate": false
+ },
+ {
+  "id": "R17",
+  "truth": "playbooks/retrospective/",
+  "first": {
+   "top": [
+    [
+     "retrospective",
+     0.95
+    ],
+    [
+     "incident-response",
+     0.05
+    ],
+    [
+     "brainstorming",
+     0
+    ]
+   ],
+   "work": 0.97,
+   "named": 0.06,
+   "vault": 0.06
+  },
+  "second": {
+   "probabilities": {
+    "retrospective": 0.61,
+    "incident-response": 0.39,
+    "brainstorming": 0
+   },
+   "fits": {
+    "retrospective": 0.3,
+    "incident-response": 0.09,
+    "brainstorming": 0.09
+   }
+  },
+  "decision": "none",
+  "reason": "best candidate fits 0.30"
+ },
+ {
+  "id": "R18",
+  "truth": "none: decline and name skills/test-authoring/, or test-authoring self-activates",
+  "first": {
+   "top": [
+    [
+     "loop-implementation-readiness",
+     0.7
+    ],
+    [
+     "quick-spec",
+     0.07
+    ],
+    [
+     "issue-to-pr",
+     0.07
+    ]
+   ],
+   "work": 0.82,
+   "named": 0.15,
+   "vault": 0.05
+  },
+  "second": {
+   "probabilities": {
+    "loop-implementation-readiness": 0.84,
+    "quick-spec": 0.14,
+    "issue-to-pr": 0.02
+   },
+   "fits": {
+    "loop-implementation-readiness": 0.2,
+    "quick-spec": 0.08,
+    "issue-to-pr": 0.08
+   }
+  },
+  "decision": "none",
+  "reason": "best candidate fits 0.20"
+ },
+ {
+  "id": "R19",
+  "truth": "playbooks/raa/",
+  "first": {
+   "top": [
+    [
+     "raa",
+     0.76
+    ],
+    [
+     "issue-to-ready-specs",
+     0.22
+    ],
+    [
+     "product-brief",
+     0.01
+    ]
+   ],
+   "work": 0.98,
+   "named": 0.06,
+   "vault": 0.03
+  },
+  "second": {
+   "probabilities": {
+    "raa": 1,
+    "issue-to-ready-specs": 0,
+    "product-brief": 0
+   },
+   "fits": {
+    "raa": 0.9,
+    "issue-to-ready-specs": 0.12,
+    "product-brief": 0.1
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/raa/",
+  "unsettledGate": false
+ },
+ {
+  "id": "T1",
+  "truth": "trigger: raa or issue-to-pr family",
+  "first": {
+   "top": [
+    [
+     "build-to-release",
+     0.35
+    ],
+    [
+     "issue-to-ready-specs",
+     0.28
+    ],
+    [
+     "issue-to-pr",
+     0.2
+    ]
+   ],
+   "work": 0.96,
+   "named": 0.07,
+   "vault": 0.05
+  },
+  "second": {
+   "probabilities": {
+    "build-to-release": 0.37,
+    "issue-to-ready-specs": 0.26,
+    "issue-to-pr": 0.37
+   },
+   "fits": {
+    "build-to-release": 0.65,
+    "issue-to-ready-specs": 0.14,
+    "issue-to-pr": 0.48
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/build-to-release/",
+  "unsettledGate": false
+ },
+ {
+  "id": "T2",
+  "truth": "trigger: product-brief/quick-spec",
+  "first": {
+   "top": [
+    [
+     "product-brief",
+     0.87
+    ],
+    [
+     "quick-spec",
+     0.07
+    ],
+    [
+     "build-to-release",
+     0.05
+    ]
+   ],
+   "work": 0.95,
+   "named": 0.08,
+   "vault": 0.04
+  },
+  "second": {
+   "probabilities": {
+    "product-brief": 0.95,
+    "quick-spec": 0.01,
+    "build-to-release": 0.04
+   },
+   "fits": {
+    "product-brief": 0.46,
+    "quick-spec": 0.25,
+    "build-to-release": 0.5
+   }
+  },
+  "decision": "none",
+  "reason": "best candidate fits 0.46"
+ },
+ {
+  "id": "T3",
+  "truth": "trigger: ask or plan",
+  "first": {
+   "top": [
+    [
+     "raa",
+     0.61
+    ],
+    [
+     "product-brief",
+     0.17
+    ],
+    [
+     "build-to-release",
+     0.09
+    ]
+   ],
+   "work": 0.93,
+   "named": 0.03,
+   "vault": 0.09
+  },
+  "second": {
+   "probabilities": {
+    "raa": 0.84,
+    "product-brief": 0.09,
+    "build-to-release": 0.07
+   },
+   "fits": {
+    "raa": 0.49,
+    "product-brief": 0.22,
+    "build-to-release": 0.26
+   }
+  },
+  "decision": "none",
+  "reason": "best candidate fits 0.49"
+ },
+ {
+  "id": "T4",
+  "truth": "trigger: retrospective",
+  "first": {
+   "top": [
+    [
+     "retrospective",
+     0.93
+    ],
+    [
+     "knowledge-extraction",
+     0.07
+    ],
+    [
+     "brainstorming",
+     0
+    ]
+   ],
+   "work": 0.93,
+   "named": 0.06,
+   "vault": 0.49
+  },
+  "second": {
+   "probabilities": {
+    "retrospective": 0.89,
+    "knowledge-extraction": 0.11,
+    "brainstorming": 0
+   },
+   "fits": {
+    "retrospective": 0.84,
+    "knowledge-extraction": 0.59,
+    "brainstorming": 0.06
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/retrospective/",
+  "unsettledGate": false
+ },
+ {
+  "id": "T5",
+  "truth": "silent",
+  "first": {
+   "top": [
+    [
+     "quick-spec",
+     0.85
+    ],
+    [
+     "raa",
+     0.14
+    ],
+    [
+     "readiness-cycle",
+     0.01
+    ]
+   ],
+   "work": 0.88,
+   "named": 0.94,
+   "vault": 0.13
+  },
+  "decision": "none",
+  "reason": "artifact named"
+ },
+ {
+  "id": "T6",
+  "truth": "silent",
+  "first": {
+   "top": [
+    [
+     "readiness-cycle",
+     0.89
+    ],
+    [
+     "raa",
+     0.05
+    ],
+    [
+     "quick-spec",
+     0.02
+    ]
+   ],
+   "work": 0.39,
+   "named": 0.28,
+   "vault": 0.96
+  },
+  "decision": "none",
+  "reason": "vault operation"
+ },
+ {
+  "id": "T7",
+  "truth": "silent",
+  "first": {
+   "top": [
+    [
+     "issue-to-pr",
+     0.55
+    ],
+    [
+     "readiness-cycle",
+     0.14
+    ],
+    [
+     "adversarial-code-review",
+     0.08
+    ]
+   ],
+   "work": 0.55,
+   "named": 0.21,
+   "vault": 0.7
+  },
+  "second": {
+   "probabilities": {
+    "issue-to-pr": 0.07,
+    "readiness-cycle": 0.57,
+    "adversarial-code-review": 0.36
+   },
+   "fits": {
+    "issue-to-pr": 0.16,
+    "readiness-cycle": 0.49,
+    "adversarial-code-review": 0.2
+   }
+  },
+  "decision": "none",
+  "reason": "best candidate fits 0.49"
+ },
+ {
+  "id": "T8",
+  "truth": "silent",
+  "first": {
+   "top": [
+    [
+     "knowledge-extraction",
+     0.46
+    ],
+    [
+     "decision-making",
+     0.2
+    ],
+    [
+     "brainstorming",
+     0.08
+    ]
+   ],
+   "work": 0.1,
+   "named": 0.16,
+   "vault": 0.1
+  },
+  "decision": "none",
+  "reason": "not work to route"
+ },
+ {
+  "id": "T9",
+  "truth": "trigger: incident-response",
+  "first": {
+   "top": [
+    [
+     "incident-response",
+     1
+    ],
+    [
+     "brainstorming",
+     0
+    ],
+    [
+     "product-brief",
+     0
+    ]
+   ],
+   "work": 0.77,
+   "named": 0.03,
+   "vault": 0.02
+  },
+  "second": {
+   "probabilities": {
+    "incident-response": 1,
+    "brainstorming": 0,
+    "product-brief": 0
+   },
+   "fits": {
+    "incident-response": 0.9,
+    "brainstorming": 0.04,
+    "product-brief": 0.02
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/incident-response/",
+  "unsettledGate": false
+ },
+ {
+  "id": "T10",
+  "truth": "trigger: acceptance-verification",
+  "first": {
+   "top": [
+    [
+     "acceptance-verification",
+     1
+    ],
+    [
+     "brainstorming",
+     0
+    ],
+    [
+     "product-brief",
+     0
+    ]
+   ],
+   "work": 0.79,
+   "named": 0.07,
+   "vault": 0.05
+  },
+  "second": {
+   "probabilities": {
+    "acceptance-verification": 1,
+    "brainstorming": 0,
+    "product-brief": 0
+   },
+   "fits": {
+    "acceptance-verification": 0.84,
+    "brainstorming": 0.02,
+    "product-brief": 0.02
+   }
+  },
+  "decision": "suggest",
+  "route": "playbooks/acceptance-verification/",
+  "unsettledGate": false
+ },
+ {
+  "id": "T11",
+  "truth": "silent",
+  "first": {
+   "top": [
+    [
+     "issue-to-pr",
+     0.39
+    ],
+    [
+     "quick-spec",
+     0.32
+    ],
+    [
+     "raa",
+     0.19
+    ]
+   ],
+   "work": 0.4,
+   "named": 0.14,
+   "vault": 0.04
+  },
+  "second": {
+   "probabilities": {
+    "issue-to-pr": 0.11,
+    "quick-spec": 0.62,
+    "raa": 0.27
+   },
+   "fits": {
+    "issue-to-pr": 0.16,
+    "quick-spec": 0.14,
+    "raa": 0.15
+   }
+  },
+  "decision": "none",
+  "reason": "best candidate fits 0.14"
+ }
+]
