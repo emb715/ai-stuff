@@ -50,7 +50,7 @@ The design copies the "skill suggestion" pattern from the TypeSafe docs ([cookbo
 
 No hint ever fired on a case where the router should stay out.
 
-**In Claude Code, 84 headless runs over 21 cells**, four conditions with the same prompts. A and B are router eval round 10 (`skills/ai-stuff-artifact-router/evals/results.md`); C and D add the hint hook. Loading is over the 16 runs where the router should load; correctness over all 18 positive runs.
+**In Claude Code, 84 headless runs over 16 cells (21 runs per condition)**, four conditions with the same prompts. A and B are router eval round 10 (`skills/ai-stuff-artifact-router/evals/results.md`); C and D add the hint hook. Loading is over the 16 runs where the router should load; correctness over all 18 positive runs.
 
 | Condition | Routed correctly | Router loaded | T10 (stubborn cell) | Silent cells silent |
 |---|---|---|---|---|
@@ -63,15 +63,32 @@ Every run that got a hint loaded the router and routed to the hinted route. C's 
 
 Run records: `eval/` (cells, runner, grader, graded outputs per condition, the hint decision for every C and D run).
 
+**Round 2, 2026-11-06** (plan in `plan.md`, committed before any run). B and D only, on `main` with the routing table. Every round 1 cell was topped up to 3 runs per condition, and 6 new cells written to sit between two routes were added. 90 new runs; B and D now hold 66 runs each.
+
+| Cells | Measure | B: routing table | D: plus hint |
+|---|---|---|---|
+| Round 1 cells, 3 runs each | routed correctly | 36 / 39 | **39 / 39** |
+| | router loaded | 30 / 33 | **33 / 33** |
+| Between-routes cells N2 to N6 | routed correctly | 9 / 15 | **15 / 15** |
+| | router loaded | 7 / 15 | **14 / 15** |
+| N7, T5, T6, T11 | silent, no hint | 12 / 12 | 12 / 12 |
+| **All positive runs** | **routed correctly** | **45 / 54** | **54 / 54** |
+
+The hint named a route in 45 D runs and every one was the ground truth, including all 15 between-routes runs. It gave no hint on any silent cell. B's misses are all one shape: the session did not load the router and either named no route or guessed. On N2 to N6 that happened 6 times in 15. In one D run (N2 run 1) the session took the hinted route without loading the router; it is counted correct because it named the right route, and it shows a hint can stand in for the router's own reasoning.
+
+The hint alone, replayed on the new cells (`node hint.mjs --eval cases.json`), named the ground truth on all 5 between-routes cases and stayed quiet on N7. Total Jev cost for both rounds: under one cent (124 cached requests).
+
+All four success criteria in `plan.md` are met. S3 (wrong hints) was never tested in practice, because no hint was wrong.
+
 # Observations
 
-- **The hint moves loading where it fires, and it never fired wrongly here.** T10 went from 0 of 2 to 2 of 2. That is the cell that resisted rounds 7 to 9.
-- **Its misses are quiet, not wrong.** On R17 the second request split between `retrospective` and `incident-response` and every fit scored low, so it said nothing. A quiet miss costs nothing over no hint; a wrong hint would.
-- **The two changes stack.** B's routing table and the hint touch different halves: the table helps a session that has loaded the router, the hint gets it loaded.
-- **Small n.** One or two runs per cell, one model. The direction is consistent; the size is not established.
+- **The effect holds at 3 runs per cell.** D routed every positive run correctly and loaded the router in 47 of 48 runs where it should load, against B's 45 of 54 and 37 of 48.
+- **The hint helps most where routing is hardest.** On the between-routes cells, B routed 9 of 15 correctly and D 15 of 15. The misses B made were not wrong routes but no route: the session never opened the router.
+- **No wrong hint in 45 hinted runs, and no hint on any silent cell.** The cost of a wrong hint remains unmeasured, because it never happened. Prompts built to fool the first request, not the session, would be the next test of that.
+- **Its misses are quiet, not wrong.** On R17 and R6 it says nothing, and the session loads the router on its own.
+- **One model, one harness.** Every run used `claude-sonnet-5-5` in Claude Code. Nothing here says how OpenCode or another model behaves with the hint.
 
 # Next
 
-- Repeat C and D at 3 runs per cell before calling the effect real.
-- Measure what the hint costs on turns where it is wrong, with prompts written to sit between two routes.
-- Decide whether a third-party API in the session loop is acceptable for the vault. If it is, promotion means a `tools/` entry and an install step, never a router row.
+- Decide whether a third-party API in the session loop is acceptable for the vault. If it is, promotion means a `tools/` entry with an install step for the hook, never a router row.
+- Before promotion: a round in OpenCode, and adversarial prompts aimed at the hint itself.

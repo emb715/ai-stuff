@@ -1,0 +1,35 @@
+{
+ "first": {
+  "top": [
+   [
+    "issue-to-ready-specs",
+    0.3
+   ],
+   [
+    "raa",
+    0.21
+   ],
+   [
+    "product-brief",
+    0.11
+   ]
+  ],
+  "work": 0.95,
+  "named": 0.09,
+  "vault": 0.06
+ },
+ "second": {
+  "probabilities": {
+   "issue-to-ready-specs": 0.28,
+   "raa": 0.59,
+   "product-brief": 0.13
+  },
+  "fits": {
+   "issue-to-ready-specs": 0.21,
+   "raa": 0.28,
+   "product-brief": 0.11
+  }
+ },
+ "decision": "none",
+ "reason": "best candidate fits 0.28"
+}

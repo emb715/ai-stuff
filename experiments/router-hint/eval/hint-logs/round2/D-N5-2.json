@@ -1,0 +1,36 @@
+{
+ "first": {
+  "top": [
+   [
+    "issue-to-ready-specs",
+    0.97
+   ],
+   [
+    "quick-spec",
+    0.03
+   ],
+   [
+    "brainstorming",
+    0
+   ]
+  ],
+  "work": 0.96,
+  "named": 0.17,
+  "vault": 0.09
+ },
+ "second": {
+  "probabilities": {
+   "issue-to-ready-specs": 0.99,
+   "quick-spec": 0.01,
+   "brainstorming": 0
+  },
+  "fits": {
+   "issue-to-ready-specs": 0.85,
+   "quick-spec": 0.24,
+   "brainstorming": 0.04
+  }
+ },
+ "decision": "suggest",
+ "route": "playbooks/issue-to-ready-specs/",
+ "unsettledGate": false
+}

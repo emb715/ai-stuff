@@ -1,0 +1,36 @@
+{
+ "first": {
+  "top": [
+   [
+    "loop-prd-readiness",
+    0.96
+   ],
+   [
+    "raa",
+    0.02
+   ],
+   [
+    "quick-spec",
+    0.01
+   ]
+  ],
+  "work": 0.97,
+  "named": 0.08,
+  "vault": 0.07
+ },
+ "second": {
+  "probabilities": {
+   "loop-prd-readiness": 1,
+   "raa": 0,
+   "quick-spec": 0
+  },
+  "fits": {
+   "loop-prd-readiness": 0.83,
+   "raa": 0.17,
+   "quick-spec": 0.21
+  }
+ },
+ "decision": "suggest",
+ "route": "prompts/loop-prd-readiness/",
+ "unsettledGate": false
+}
