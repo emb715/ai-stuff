@@ -1,0 +1,23 @@
+{
+ "first": {
+  "top": [
+   [
+    "quick-spec",
+    0.66
+   ],
+   [
+    "raa",
+    0.3
+   ],
+   [
+    "brainstorming",
+    0.02
+   ]
+  ],
+  "work": 0.95,
+  "named": 0.94,
+  "vault": 0.12
+ },
+ "decision": "none",
+ "reason": "artifact named"
+}

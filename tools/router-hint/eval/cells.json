@@ -63,24 +63,54 @@
   "T11": {
    "prompt": "Write unit tests for the parse_amount function in our billing module. It takes a string like '12.50' and returns cents. Don't do it yet, just tell me how you'd start. Do not edit, create, delete or commit anything, and do not run any git command that changes state. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
    "truth": "silent"
+  },
+  "N2": {
+   "prompt": "Here's the diff for my PR and the spec it implements. The preview deploy is up. I want to know if what's running actually matches the spec before I merge. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "playbooks/acceptance-verification/"
+  },
+  "N3": {
+   "prompt": "Our PRD for team billing is half-written and some of it is already partly built in the codebase. Get the doc to where a developer could implement the rest from it. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "prompts/loop-prd-readiness/"
+  },
+  "N4": {
+   "prompt": "The release candidate is tagged and deployed to staging. This round I only want each acceptance criterion exercised on staging and a ship or no-ship call. No fixes yet. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "playbooks/acceptance-verification/"
+  },
+  "N5": {
+   "prompt": "Turn GitHub issue #51 into specs. Each spec will be implemented by one agent in a single session. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "playbooks/issue-to-ready-specs/"
+  },
+  "N6": {
+   "prompt": "We have three vendor options for our search backend and need to pick one this week. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "playbooks/decision-making/"
+  },
+  "N7": {
+   "prompt": "What's the difference between raa and quick-spec in this repo? Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical \u2014 I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+   "truth": "silent"
   }
  },
  "runs": {
-  "R1": 2,
-  "R2": 1,
-  "R6": 1,
-  "R9": 1,
-  "R13": 1,
-  "P1": 1,
-  "P4": 1,
-  "R14": 1,
-  "R16": 1,
-  "R17": 2,
-  "R19": 2,
-  "T4": 2,
-  "T5": 1,
-  "T6": 1,
-  "T10": 2,
-  "T11": 1
+  "R1": 3,
+  "R2": 3,
+  "R6": 3,
+  "R9": 3,
+  "R13": 3,
+  "P1": 3,
+  "P4": 3,
+  "R14": 3,
+  "R16": 3,
+  "R17": 3,
+  "R19": 3,
+  "T4": 3,
+  "T5": 3,
+  "T6": 3,
+  "T10": 3,
+  "T11": 3,
+  "N2": 3,
+  "N3": 3,
+  "N4": 3,
+  "N5": 3,
+  "N6": 3,
+  "N7": 3
  }
 }

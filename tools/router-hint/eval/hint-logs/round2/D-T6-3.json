@@ -1,0 +1,23 @@
+{
+ "first": {
+  "top": [
+   [
+    "readiness-cycle",
+    0.81
+   ],
+   [
+    "raa",
+    0.17
+   ],
+   [
+    "quick-spec",
+    0.02
+   ]
+  ],
+  "work": 0.93,
+  "named": 0.2,
+  "vault": 0.95
+ },
+ "decision": "none",
+ "reason": "vault operation"
+}

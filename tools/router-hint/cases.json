@@ -178,5 +178,35 @@
   "id": "T11",
   "prompt": "Write unit tests for the parse_amount function in our billing module. It takes a string like '12.50' and returns cents.",
   "truth": "silent"
+ },
+ {
+  "id": "N2",
+  "prompt": "Here's the diff for my PR and the spec it implements. The preview deploy is up. I want to know if what's running actually matches the spec before I merge.",
+  "truth": "playbooks/acceptance-verification/"
+ },
+ {
+  "id": "N3",
+  "prompt": "Our PRD for team billing is half-written and some of it is already partly built in the codebase. Get the doc to where a developer could implement the rest from it.",
+  "truth": "prompts/loop-prd-readiness/"
+ },
+ {
+  "id": "N4",
+  "prompt": "The release candidate is tagged and deployed to staging. This round I only want each acceptance criterion exercised on staging and a ship or no-ship call. No fixes yet.",
+  "truth": "playbooks/acceptance-verification/"
+ },
+ {
+  "id": "N5",
+  "prompt": "Turn GitHub issue #51 into specs. Each spec will be implemented by one agent in a single session.",
+  "truth": "playbooks/issue-to-ready-specs/"
+ },
+ {
+  "id": "N6",
+  "prompt": "We have three vendor options for our search backend and need to pick one this week.",
+  "truth": "playbooks/decision-making/"
+ },
+ {
+  "id": "N7",
+  "prompt": "What's the difference between raa and quick-spec in this repo?",
+  "truth": "silent"
  }
 ]

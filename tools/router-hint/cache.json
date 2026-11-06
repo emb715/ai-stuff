@@ -8514,5 +8514,1942 @@
     "output_tokens": 118
    }
   }
+ },
+ "337d4723e014fecd": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "Here's the diff for my PR and the spec it implements. The preview deploy is up. I want to know if what's running actually matches the spec before I merge."
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which of these procedures fits what the user in `user_turn` already has and wants to end up with?",
+     "criteria": {
+      "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.",
+      "product-brief": "Starts from: a rough idea, or brainstorm output already converged. Produces: structured brief: problem, users, success, scope, constraints.",
+      "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.",
+      "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.",
+      "issue-to-ready-specs": "Starts from: an existing tracked issue, big enough for several stories. Produces: a PRD plus N implementation-ready specs.",
+      "raa": "Starts from: a feature/change/readiness request against a real codebase. Produces: a validated phased plan with file-level scope, risks, handoffs.",
+      "implementation-orchestration": "Starts from: a validated plan: phases, file scope, named risks, handoff list. Produces: a committed, reviewed, CI-green branch.",
+      "issue-to-pr": "Starts from: an existing tracked issue, well-scoped. Produces: a merged PR (gated or continuous mode).",
+      "build-to-release": "Starts from: an idea or proof-of-concept, work worth 3+ stories. Produces: a released implementation, through 13 gated phases.",
+      "agent-installer": "Starts from: a requirement to ship a multi-platform installer CLI. Produces: an installer with TUI and CI mode, idempotent, config-driven.",
+      "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).",
+      "adversarial-code-review": "Starts from: a git diff, and a finite list of claims or acceptance criteria. Produces: ≥3 categorised findings plus a fix menu.",
+      "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.",
+      "retrospective": "Starts from: a completed body of work. Produces: lessons, follow-through check, SMART action items.",
+      "incident-response": "Starts from: a production system misbehaving after a shipped change, and access to its dashboards, logs or rollback. Produces: service restored or escalated, an incident timeline, owned follow-ups.",
+      "loop-prd-readiness": "Starts from: a planning doc with known gaps, conflicts or partial sections. Produces: the same doc driven to implementation-ready, atomic and traceable.",
+      "loop-implementation-readiness": "Starts from: a finished doc and a codebase meant to implement it. Produces: evidence-based coverage verdict, smallest next action per gap.",
+      "review-release-candidate": "Starts from: a release candidate (branch, build, tag) and documented acceptance criteria. Produces: inventory → triage → fix batches → sign-off verdict.",
+      "repo-primitive-audit": "Starts from: a repo or section to review, and suspected doc-vs-source drift. Produces: a primitive map from source, then an adversarial review against it.",
+      "knowledge-extraction": "Starts from: a finished substantive session with decisions, failures or constraints in it. Produces: proposed durable knowledge writes, user approves before any write."
+     }
+    },
+    "work": {
+     "type": "noul",
+     "instructions": "Does `user_turn` ask for help carrying out a piece of software or product work, such as planning, building, reviewing, releasing, responding to an outage, or learning from finished work?",
+     "criteria": {
+      "true": "The user wants a multi-step piece of work done, or wants to know how to approach one.",
+      "false": "The user asks a factual question, asks about this repository's own files, or asks for a small single-step task such as one function or one test file."
+     }
+    },
+    "named": {
+     "type": "noul",
+     "instructions": "Does `user_turn` name the specific playbook, prompt or procedure the user wants to use?"
+    },
+    "vault": {
+     "type": "noul",
+     "instructions": "Is `user_turn` about maintaining the artifacts of this knowledge repository itself, such as promoting, deprecating, linting, auditing, archiving or saving a skill, prompt or playbook?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "acceptance-verification",
+     "confidence": 0.86,
+     "probabilities": {
+      "brainstorming": 0,
+      "product-brief": 0,
+      "decision-making": 0,
+      "quick-spec": 0,
+      "issue-to-ready-specs": 0,
+      "raa": 0,
+      "implementation-orchestration": 0,
+      "issue-to-pr": 0,
+      "build-to-release": 0,
+      "agent-installer": 0,
+      "acceptance-verification": 0.87,
+      "adversarial-code-review": 0.07,
+      "readiness-cycle": 0,
+      "retrospective": 0,
+      "incident-response": 0,
+      "loop-prd-readiness": 0,
+      "loop-implementation-readiness": 0.06,
+      "review-release-candidate": 0,
+      "repo-primitive-audit": 0,
+      "knowledge-extraction": 0
+     }
+    },
+    "work": {
+     "type": "noul",
+     "noul": 0.79
+    },
+    "named": {
+     "type": "noul",
+     "noul": 0.1
+    },
+    "vault": {
+     "type": "noul",
+     "noul": 0.06
+    }
+   },
+   "usage": {
+    "input_tokens": 1454,
+    "output_tokens": 274
+   }
+  }
+ },
+ "f6566517a917428a": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "Here's the diff for my PR and the spec it implements. The preview deploy is up. I want to know if what's running actually matches the spec before I merge.",
+    "candidates": {
+     "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).\n\n# Purpose\n\nVerifies that a running build satisfies its acceptance criteria, producing a runtime evidence anchor for every criterion and a tri-state verdict. The only playbook here whose input is an executing program rather than text — it observes behavior instead of reading source.\n\n# When to use\n\n- A branch is CI-green and about to merge, and the acceptance criteria need checking against real behavior.\n- build-to-release reaches its release-candidate gate and needs the runtime-check evidence its scorecard already demands.\n- A release candidate is deployed to staging or a preview environment and someone has to decide whether it ships.\n\nNot for: validating a plan against a codebase (use [loop-implementation-readiness](../../prompts/loop-implementation-readiness/) — it reads source), reviewing a diff (use [adversarial-code-review](../adversarial-code-review/)), or exploratory testing with no stated criteria.",
+     "adversarial-code-review": "Starts from: a git diff, and a finite list of claims or acceptance criteria. Produces: ≥3 categorised findings plus a fix menu.\n\n# Purpose\n\nPerforms an adversarial code review on git changes. Cross-references git reality against task/AC claims, validates implementation, checks code and test quality, and presents categorized findings with a fix menu. Forces thoroughness with a minimum-3-findings rule. No lazy \"looks good\" reviews.\n\n# When to use\n\nWhen the user says \"run code review\" or \"review this code\", or when you have a git diff or set of changed files that need quality validation before merge. Works on any git repository — uncommitted changes, staged changes, or branch diffs.\n\nNot for: reviewing entire codebases (scope to a diff), reviewing config/tooling files, or rubber-stamping changes.\n\nDual role: when used inside [implementation-orchestration](../implementation-orchestration/), the orchestration playbook invokes this as its review phase. Run standalone when reviewing code implemented outside this vault (hand-written, another tool, a prior session).",
+     "loop-implementation-readiness": "Starts from: a finished doc and a codebase meant to implement it. Produces: evidence-based coverage verdict, smallest next action per gap.\n\n# Purpose\n\nDrives a codebase toward implementation readiness against a source-of-truth planning document (PRD, PLAN, ADR, or SPECS). Each round picks the highest-risk unresolved requirement, maps it to code evidence, classifies it, and defines the smallest action that closes the gap. Stops with a tri-state verdict when every requirement is evidence-backed, or blocks when P0/P1 unknowns remain without measurable progress.\n\nThis is the inverse of loop-prd-readiness: that loop edits the doc until it is build-ready; this loop tests the implementation until it satisfies the doc. Run them in sequence — loop-prd-readiness first to make the doc build-ready, then loop-implementation-readiness to verify the build matches it.\n\n# When to use\n\nYou have a finished planning document and a codebase that is supposed to implement it. You want to know — with evidence — whether the code actually covers the doc's requirements, and where it does not, you want the smallest next-action to close each gap rather than a vague \"needs work\".\n\nNot for: one-shot review without a finite requirement list, docs that are still being drafted (use loop-prd-readiness first), or codebases without a written source-of-truth doc (no doc = no rubric = nothing to validate against).\n\nThis is a static, copy-paste-ready version — {{DOC}}, {{CODEBASE}}, and {{BUDGET}} are the only variables. Run with explicit paths before st"
+    }
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which procedure in `candidates` should the user in `user_turn` start with, given what they already have?",
+     "criteria": {
+      "acceptance-verification": "The procedure described in `candidates.acceptance-verification`",
+      "adversarial-code-review": "The procedure described in `candidates.adversarial-code-review`",
+      "loop-implementation-readiness": "The procedure described in `candidates.loop-implementation-readiness`"
+     }
+    },
+    "fits__acceptance-verification": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.acceptance-verification` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__adversarial-code-review": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.adversarial-code-review` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__loop-implementation-readiness": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.loop-implementation-readiness` start from what the user in `user_turn` already has and produce what they want?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "acceptance-verification",
+     "confidence": 0.88,
+     "probabilities": {
+      "acceptance-verification": 0.92,
+      "adversarial-code-review": 0.05,
+      "loop-implementation-readiness": 0.03
+     }
+    },
+    "fits__acceptance-verification": {
+     "type": "noul",
+     "noul": 0.74
+    },
+    "fits__adversarial-code-review": {
+     "type": "noul",
+     "noul": 0.29
+    },
+    "fits__loop-implementation-readiness": {
+     "type": "noul",
+     "noul": 0.24
+    }
+   },
+   "usage": {
+    "input_tokens": 1435,
+    "output_tokens": 133
+   }
+  }
+ },
+ "26e456f6c5cc15bb": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "Our PRD for team billing is half-written and some of it is already partly built in the codebase. Get the doc to where a developer could implement the rest from it."
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which of these procedures fits what the user in `user_turn` already has and wants to end up with?",
+     "criteria": {
+      "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.",
+      "product-brief": "Starts from: a rough idea, or brainstorm output already converged. Produces: structured brief: problem, users, success, scope, constraints.",
+      "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.",
+      "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.",
+      "issue-to-ready-specs": "Starts from: an existing tracked issue, big enough for several stories. Produces: a PRD plus N implementation-ready specs.",
+      "raa": "Starts from: a feature/change/readiness request against a real codebase. Produces: a validated phased plan with file-level scope, risks, handoffs.",
+      "implementation-orchestration": "Starts from: a validated plan: phases, file scope, named risks, handoff list. Produces: a committed, reviewed, CI-green branch.",
+      "issue-to-pr": "Starts from: an existing tracked issue, well-scoped. Produces: a merged PR (gated or continuous mode).",
+      "build-to-release": "Starts from: an idea or proof-of-concept, work worth 3+ stories. Produces: a released implementation, through 13 gated phases.",
+      "agent-installer": "Starts from: a requirement to ship a multi-platform installer CLI. Produces: an installer with TUI and CI mode, idempotent, config-driven.",
+      "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).",
+      "adversarial-code-review": "Starts from: a git diff, and a finite list of claims or acceptance criteria. Produces: ≥3 categorised findings plus a fix menu.",
+      "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.",
+      "retrospective": "Starts from: a completed body of work. Produces: lessons, follow-through check, SMART action items.",
+      "incident-response": "Starts from: a production system misbehaving after a shipped change, and access to its dashboards, logs or rollback. Produces: service restored or escalated, an incident timeline, owned follow-ups.",
+      "loop-prd-readiness": "Starts from: a planning doc with known gaps, conflicts or partial sections. Produces: the same doc driven to implementation-ready, atomic and traceable.",
+      "loop-implementation-readiness": "Starts from: a finished doc and a codebase meant to implement it. Produces: evidence-based coverage verdict, smallest next action per gap.",
+      "review-release-candidate": "Starts from: a release candidate (branch, build, tag) and documented acceptance criteria. Produces: inventory → triage → fix batches → sign-off verdict.",
+      "repo-primitive-audit": "Starts from: a repo or section to review, and suspected doc-vs-source drift. Produces: a primitive map from source, then an adversarial review against it.",
+      "knowledge-extraction": "Starts from: a finished substantive session with decisions, failures or constraints in it. Produces: proposed durable knowledge writes, user approves before any write."
+     }
+    },
+    "work": {
+     "type": "noul",
+     "instructions": "Does `user_turn` ask for help carrying out a piece of software or product work, such as planning, building, reviewing, releasing, responding to an outage, or learning from finished work?",
+     "criteria": {
+      "true": "The user wants a multi-step piece of work done, or wants to know how to approach one.",
+      "false": "The user asks a factual question, asks about this repository's own files, or asks for a small single-step task such as one function or one test file."
+     }
+    },
+    "named": {
+     "type": "noul",
+     "instructions": "Does `user_turn` name the specific playbook, prompt or procedure the user wants to use?"
+    },
+    "vault": {
+     "type": "noul",
+     "instructions": "Is `user_turn` about maintaining the artifacts of this knowledge repository itself, such as promoting, deprecating, linting, auditing, archiving or saving a skill, prompt or playbook?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "loop-prd-readiness",
+     "confidence": 0.98,
+     "probabilities": {
+      "brainstorming": 0,
+      "product-brief": 0,
+      "decision-making": 0,
+      "quick-spec": 0.01,
+      "issue-to-ready-specs": 0,
+      "raa": 0.01,
+      "implementation-orchestration": 0,
+      "issue-to-pr": 0,
+      "build-to-release": 0,
+      "agent-installer": 0,
+      "acceptance-verification": 0,
+      "adversarial-code-review": 0,
+      "readiness-cycle": 0,
+      "retrospective": 0,
+      "incident-response": 0,
+      "loop-prd-readiness": 0.98,
+      "loop-implementation-readiness": 0,
+      "review-release-candidate": 0,
+      "repo-primitive-audit": 0,
+      "knowledge-extraction": 0
+     }
+    },
+    "work": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "named": {
+     "type": "noul",
+     "noul": 0.09
+    },
+    "vault": {
+     "type": "noul",
+     "noul": 0.07
+    }
+   },
+   "usage": {
+    "input_tokens": 1455,
+    "output_tokens": 273
+   }
+  }
+ },
+ "e036c40f63d7b782": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "Our PRD for team billing is half-written and some of it is already partly built in the codebase. Get the doc to where a developer could implement the rest from it.",
+    "candidates": {
+     "loop-prd-readiness": "Starts from: a planning doc with known gaps, conflicts or partial sections. Produces: the same doc driven to implementation-ready, atomic and traceable.\n\n# Purpose\n\nDrives a planning document (PRD, spec, ADR, or similar) to implementation readiness through iterative rounds. Each round resolves the highest-risk gap with the smallest doc change. Stops only when two independent reviews materially agree and no P0/P1 unknowns remain.\n\n# When to use\n\nYou have a planning doc that needs to be code-ready — atomic requirements traceable to source, with acceptance criteria and test cases. The doc has known gaps, conflicts, or partial sections. You want the agent to work through them without forking the product unilaterally.\n\nNot for docs already implementation-ready. Not for one-shot review.\n\nThis is a static, copy-paste-ready version of the plan-refinement loop — {{DOC}} is the only variable. When you want a prompt that is customized to a specific plan's context, status, and blockers inlined, use the prompt-factory skill's plan-refine type instead. When you want to paste and go without running the factory, use this.",
+     "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.\n\n# Purpose\n\nCreates implementation-ready technical specifications through conversational discovery, code investigation, and structured documentation. Enforces a six-criterion Ready-for-Development standard: Actionable, Logical, Testable, Complete, Self-contained, Consistent. A spec that fails any criterion is not handed off.\n\n# When to use\n\nWhen the user says \"create a quick spec\" or \"generate a tech spec\", or when a feature or change needs an implementation-ready spec before development starts. Produces a document a fresh agent can implement from without session history.\n\nNot for: full PRD creation (use prompts/loop-prd-readiness/), architectural decision records, or research documents.\n\nParadigm: this playbook belongs to the spec paradigm. Use the spec paradigm ([quick-spec](../quick-spec/), [issue-to-ready-specs](../issue-to-ready-specs/)) when a single agent or human will implement the feature in one session — the spec is the contract, the implementer handles phasing. Use the plan paradigm ([raa](../raa/), [implementation-orchestration](../implementation-orchestration/)) when a fleet will implement in parallel — the plan handles phasing, file ownership, and handoffs. The paradigms compose: specs feed RAA as the feature description. If unsure which to use, load the [ai-stuff-artifact-router](../../skills/ai-stuff-artifact-router/) skill. In a tool without skill support, fall ",
+     "raa": "Starts from: a feature/change/readiness request against a real codebase. Produces: a validated phased plan with file-level scope, risks, handoffs.\n\n# Purpose\n\nTakes a feature request or change description and produces a validated, file-scoped, implementation-ready plan that the [implementation-orchestration](../implementation-orchestration/playbook.md) playbook can consume directly. The output is a plan, not code.\n\n# When to use\n\nWhen a feature request, issue, bug report, change request, or readiness question (e.g., \"is this ready to share/release/open-source?\") needs a plan before implementation or remediation. The input is a description of what to build or what to assess. The output is a phased plan with file-level scope, named risks, a handoff ledger, and an effort estimate.\n\nIf a plan already exists, skip to the readiness loop ([loop-implementation-readiness](../../prompts/loop-implementation-readiness/) prompt) to validate it against the codebase.\n\nParadigm: this playbook belongs to the plan paradigm. Use the spec paradigm ([quick-spec](../quick-spec/), [issue-to-ready-specs](../issue-to-ready-specs/)) when a single agent or human will implement the feature in one session — the spec is the contract, the implementer handles phasing. Use the plan paradigm ([raa](../raa/), [implementation-orchestration](../implementation-orchestration/)) when a fleet will implement in parallel — the plan handles phasing, file ownership, and handoffs. The paradigms compose: specs feed RAA as the feature description. If unsure which to use"
+    }
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which procedure in `candidates` should the user in `user_turn` start with, given what they already have?",
+     "criteria": {
+      "loop-prd-readiness": "The procedure described in `candidates.loop-prd-readiness`",
+      "quick-spec": "The procedure described in `candidates.quick-spec`",
+      "raa": "The procedure described in `candidates.raa`"
+     }
+    },
+    "fits__loop-prd-readiness": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.loop-prd-readiness` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__quick-spec": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.quick-spec` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__raa": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.raa` start from what the user in `user_turn` already has and produce what they want?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "loop-prd-readiness",
+     "confidence": 1,
+     "probabilities": {
+      "loop-prd-readiness": 1,
+      "quick-spec": 0,
+      "raa": 0
+     }
+    },
+    "fits__loop-prd-readiness": {
+     "type": "noul",
+     "noul": 0.9
+    },
+    "fits__quick-spec": {
+     "type": "noul",
+     "noul": 0.32
+    },
+    "fits__raa": {
+     "type": "noul",
+     "noul": 0.14
+    }
+   },
+   "usage": {
+    "input_tokens": 1516,
+    "output_tokens": 110
+   }
+  }
+ },
+ "f0f4a2d1392f4d0b": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "The release candidate is tagged and deployed to staging. This round I only want each acceptance criterion exercised on staging and a ship or no-ship call. No fixes yet."
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which of these procedures fits what the user in `user_turn` already has and wants to end up with?",
+     "criteria": {
+      "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.",
+      "product-brief": "Starts from: a rough idea, or brainstorm output already converged. Produces: structured brief: problem, users, success, scope, constraints.",
+      "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.",
+      "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.",
+      "issue-to-ready-specs": "Starts from: an existing tracked issue, big enough for several stories. Produces: a PRD plus N implementation-ready specs.",
+      "raa": "Starts from: a feature/change/readiness request against a real codebase. Produces: a validated phased plan with file-level scope, risks, handoffs.",
+      "implementation-orchestration": "Starts from: a validated plan: phases, file scope, named risks, handoff list. Produces: a committed, reviewed, CI-green branch.",
+      "issue-to-pr": "Starts from: an existing tracked issue, well-scoped. Produces: a merged PR (gated or continuous mode).",
+      "build-to-release": "Starts from: an idea or proof-of-concept, work worth 3+ stories. Produces: a released implementation, through 13 gated phases.",
+      "agent-installer": "Starts from: a requirement to ship a multi-platform installer CLI. Produces: an installer with TUI and CI mode, idempotent, config-driven.",
+      "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).",
+      "adversarial-code-review": "Starts from: a git diff, and a finite list of claims or acceptance criteria. Produces: ≥3 categorised findings plus a fix menu.",
+      "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.",
+      "retrospective": "Starts from: a completed body of work. Produces: lessons, follow-through check, SMART action items.",
+      "incident-response": "Starts from: a production system misbehaving after a shipped change, and access to its dashboards, logs or rollback. Produces: service restored or escalated, an incident timeline, owned follow-ups.",
+      "loop-prd-readiness": "Starts from: a planning doc with known gaps, conflicts or partial sections. Produces: the same doc driven to implementation-ready, atomic and traceable.",
+      "loop-implementation-readiness": "Starts from: a finished doc and a codebase meant to implement it. Produces: evidence-based coverage verdict, smallest next action per gap.",
+      "review-release-candidate": "Starts from: a release candidate (branch, build, tag) and documented acceptance criteria. Produces: inventory → triage → fix batches → sign-off verdict.",
+      "repo-primitive-audit": "Starts from: a repo or section to review, and suspected doc-vs-source drift. Produces: a primitive map from source, then an adversarial review against it.",
+      "knowledge-extraction": "Starts from: a finished substantive session with decisions, failures or constraints in it. Produces: proposed durable knowledge writes, user approves before any write."
+     }
+    },
+    "work": {
+     "type": "noul",
+     "instructions": "Does `user_turn` ask for help carrying out a piece of software or product work, such as planning, building, reviewing, releasing, responding to an outage, or learning from finished work?",
+     "criteria": {
+      "true": "The user wants a multi-step piece of work done, or wants to know how to approach one.",
+      "false": "The user asks a factual question, asks about this repository's own files, or asks for a small single-step task such as one function or one test file."
+     }
+    },
+    "named": {
+     "type": "noul",
+     "instructions": "Does `user_turn` name the specific playbook, prompt or procedure the user wants to use?"
+    },
+    "vault": {
+     "type": "noul",
+     "instructions": "Is `user_turn` about maintaining the artifacts of this knowledge repository itself, such as promoting, deprecating, linting, auditing, archiving or saving a skill, prompt or playbook?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "acceptance-verification",
+     "confidence": 0.72,
+     "probabilities": {
+      "brainstorming": 0,
+      "product-brief": 0,
+      "decision-making": 0,
+      "quick-spec": 0,
+      "issue-to-ready-specs": 0,
+      "raa": 0,
+      "implementation-orchestration": 0,
+      "issue-to-pr": 0,
+      "build-to-release": 0,
+      "agent-installer": 0,
+      "acceptance-verification": 0.73,
+      "adversarial-code-review": 0,
+      "readiness-cycle": 0.11,
+      "retrospective": 0,
+      "incident-response": 0,
+      "loop-prd-readiness": 0,
+      "loop-implementation-readiness": 0,
+      "review-release-candidate": 0.16,
+      "repo-primitive-audit": 0,
+      "knowledge-extraction": 0
+     }
+    },
+    "work": {
+     "type": "noul",
+     "noul": 0.93
+    },
+    "named": {
+     "type": "noul",
+     "noul": 0.17
+    },
+    "vault": {
+     "type": "noul",
+     "noul": 0.05
+    }
+   },
+   "usage": {
+    "input_tokens": 1453,
+    "output_tokens": 274
+   }
+  }
+ },
+ "81eb91f3320cacbc": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "The release candidate is tagged and deployed to staging. This round I only want each acceptance criterion exercised on staging and a ship or no-ship call. No fixes yet.",
+    "candidates": {
+     "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).\n\n# Purpose\n\nVerifies that a running build satisfies its acceptance criteria, producing a runtime evidence anchor for every criterion and a tri-state verdict. The only playbook here whose input is an executing program rather than text — it observes behavior instead of reading source.\n\n# When to use\n\n- A branch is CI-green and about to merge, and the acceptance criteria need checking against real behavior.\n- build-to-release reaches its release-candidate gate and needs the runtime-check evidence its scorecard already demands.\n- A release candidate is deployed to staging or a preview environment and someone has to decide whether it ships.\n\nNot for: validating a plan against a codebase (use [loop-implementation-readiness](../../prompts/loop-implementation-readiness/) — it reads source), reviewing a diff (use [adversarial-code-review](../adversarial-code-review/)), or exploratory testing with no stated criteria.",
+     "review-release-candidate": "Starts from: a release candidate (branch, build, tag) and documented acceptance criteria. Produces: inventory → triage → fix batches → sign-off verdict.\n\n# Purpose\n\nBuild a release-candidate review harness. Inventory every user-facing surface against its documented acceptance criteria: features, states, workflows, and risk-ranked edge cases. Verify each as a real user would, capture concrete evidence for every defect, regression, and spec deviation, triage by shared root cause and blast radius, and gate fix batches with regression tests until all P0/P1 criteria pass and residual risk is signed off or explicitly deferred.\n\n# When to use\n\nYou have a release candidate (branch, build, tag) and a set of documented acceptance criteria, and you need to verify it is safe to roll out. The prompt drives the full verification lifecycle: inventory → evidence capture → triage → fix batches → re-verification → sign-off.\n\nNot for: pre-release planning, feature design, or ongoing QA without a defined candidate window.",
+     "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.\n\n# Purpose\n\nTakes an existing artifact (template, repo, package, document) from \"is it ready to share/release/open-source?\" to \"verified ready or blocked with a fix plan.\" Chains [raa](../raa/) (assess + plan) → [implementation-orchestration](../implementation-orchestration/) (fix) → [review-release-candidate](../../prompts/review-release-candidate/) (verify) into a single readiness cycle. The cycle loops until the verifier returns ship, or the human explicitly defers the remaining gaps.\n\nThis is a cycle, not a one-shot: fixes can introduce new gaps, so each fix round re-assesses before re-verifying.\n\n## Why chain these two\n\nA consumer's first question is: \"why chain RAA and review-release-candidate — don't they overlap?\" They compose, they don't overlap. RAA tells you what to fix; review-release-candidate verifies you fixed it.\n\n| | RAA (in this cycle) | review-release-candidate (in this cycle) |\n|---|---|---|\n| Question | \"What's a plan to make this ready?\" | \"Does this pass its readiness criteria now?\" |\n| Output | A plan (file-scoped, phased, handoff ledger) | A scorecard (pass/fail per criterion, defects by severity, ship/hold/block verdict) |\n| When | Before fixes — planning the work | After fixes — verifying the result |\n| Mode | Read + map + plan (doesn't touch the artifact) | Read + verify + triage + fix-batch + re-verify (operates on the candidate) |\n| Loop | One pass:"
+    }
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which procedure in `candidates` should the user in `user_turn` start with, given what they already have?",
+     "criteria": {
+      "acceptance-verification": "The procedure described in `candidates.acceptance-verification`",
+      "review-release-candidate": "The procedure described in `candidates.review-release-candidate`",
+      "readiness-cycle": "The procedure described in `candidates.readiness-cycle`"
+     }
+    },
+    "fits__acceptance-verification": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.acceptance-verification` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__review-release-candidate": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.review-release-candidate` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__readiness-cycle": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.readiness-cycle` start from what the user in `user_turn` already has and produce what they want?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "acceptance-verification",
+     "confidence": 0.97,
+     "probabilities": {
+      "acceptance-verification": 0.98,
+      "review-release-candidate": 0.02,
+      "readiness-cycle": 0
+     }
+    },
+    "fits__acceptance-verification": {
+     "type": "noul",
+     "noul": 0.78
+    },
+    "fits__review-release-candidate": {
+     "type": "noul",
+     "noul": 0.32
+    },
+    "fits__readiness-cycle": {
+     "type": "noul",
+     "noul": 0.11
+    }
+   },
+   "usage": {
+    "input_tokens": 1447,
+    "output_tokens": 125
+   }
+  }
+ },
+ "2e3a4106247a8e3b": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "Turn GitHub issue #51 into specs. Each spec will be implemented by one agent in a single session."
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which of these procedures fits what the user in `user_turn` already has and wants to end up with?",
+     "criteria": {
+      "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.",
+      "product-brief": "Starts from: a rough idea, or brainstorm output already converged. Produces: structured brief: problem, users, success, scope, constraints.",
+      "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.",
+      "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.",
+      "issue-to-ready-specs": "Starts from: an existing tracked issue, big enough for several stories. Produces: a PRD plus N implementation-ready specs.",
+      "raa": "Starts from: a feature/change/readiness request against a real codebase. Produces: a validated phased plan with file-level scope, risks, handoffs.",
+      "implementation-orchestration": "Starts from: a validated plan: phases, file scope, named risks, handoff list. Produces: a committed, reviewed, CI-green branch.",
+      "issue-to-pr": "Starts from: an existing tracked issue, well-scoped. Produces: a merged PR (gated or continuous mode).",
+      "build-to-release": "Starts from: an idea or proof-of-concept, work worth 3+ stories. Produces: a released implementation, through 13 gated phases.",
+      "agent-installer": "Starts from: a requirement to ship a multi-platform installer CLI. Produces: an installer with TUI and CI mode, idempotent, config-driven.",
+      "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).",
+      "adversarial-code-review": "Starts from: a git diff, and a finite list of claims or acceptance criteria. Produces: ≥3 categorised findings plus a fix menu.",
+      "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.",
+      "retrospective": "Starts from: a completed body of work. Produces: lessons, follow-through check, SMART action items.",
+      "incident-response": "Starts from: a production system misbehaving after a shipped change, and access to its dashboards, logs or rollback. Produces: service restored or escalated, an incident timeline, owned follow-ups.",
+      "loop-prd-readiness": "Starts from: a planning doc with known gaps, conflicts or partial sections. Produces: the same doc driven to implementation-ready, atomic and traceable.",
+      "loop-implementation-readiness": "Starts from: a finished doc and a codebase meant to implement it. Produces: evidence-based coverage verdict, smallest next action per gap.",
+      "review-release-candidate": "Starts from: a release candidate (branch, build, tag) and documented acceptance criteria. Produces: inventory → triage → fix batches → sign-off verdict.",
+      "repo-primitive-audit": "Starts from: a repo or section to review, and suspected doc-vs-source drift. Produces: a primitive map from source, then an adversarial review against it.",
+      "knowledge-extraction": "Starts from: a finished substantive session with decisions, failures or constraints in it. Produces: proposed durable knowledge writes, user approves before any write."
+     }
+    },
+    "work": {
+     "type": "noul",
+     "instructions": "Does `user_turn` ask for help carrying out a piece of software or product work, such as planning, building, reviewing, releasing, responding to an outage, or learning from finished work?",
+     "criteria": {
+      "true": "The user wants a multi-step piece of work done, or wants to know how to approach one.",
+      "false": "The user asks a factual question, asks about this repository's own files, or asks for a small single-step task such as one function or one test file."
+     }
+    },
+    "named": {
+     "type": "noul",
+     "instructions": "Does `user_turn` name the specific playbook, prompt or procedure the user wants to use?"
+    },
+    "vault": {
+     "type": "noul",
+     "instructions": "Is `user_turn` about maintaining the artifacts of this knowledge repository itself, such as promoting, deprecating, linting, auditing, archiving or saving a skill, prompt or playbook?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "issue-to-ready-specs",
+     "confidence": 0.95,
+     "probabilities": {
+      "brainstorming": 0,
+      "product-brief": 0,
+      "decision-making": 0,
+      "quick-spec": 0.04,
+      "issue-to-ready-specs": 0.95,
+      "raa": 0,
+      "implementation-orchestration": 0,
+      "issue-to-pr": 0.01,
+      "build-to-release": 0,
+      "agent-installer": 0,
+      "acceptance-verification": 0,
+      "adversarial-code-review": 0,
+      "readiness-cycle": 0,
+      "retrospective": 0,
+      "incident-response": 0,
+      "loop-prd-readiness": 0,
+      "loop-implementation-readiness": 0,
+      "review-release-candidate": 0,
+      "repo-primitive-audit": 0,
+      "knowledge-extraction": 0
+     }
+    },
+    "work": {
+     "type": "noul",
+     "noul": 0.95
+    },
+    "named": {
+     "type": "noul",
+     "noul": 0.18
+    },
+    "vault": {
+     "type": "noul",
+     "noul": 0.13
+    }
+   },
+   "usage": {
+    "input_tokens": 1442,
+    "output_tokens": 272
+   }
+  }
+ },
+ "1d33c7bef0ec70c8": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "Turn GitHub issue #51 into specs. Each spec will be implemented by one agent in a single session.",
+    "candidates": {
+     "issue-to-ready-specs": "Starts from: an existing tracked issue, big enough for several stories. Produces: a PRD plus N implementation-ready specs.\n\n# Purpose\n\nTurns a GitHub issue into a complete, implementation-ready spec suite — PRD plus N implementation specs — in one session. Chains the product-brief and quick-spec playbooks with research, architecture, handoff resolution, and a readiness audit. Produces specs that pass a six-criterion Ready-for-Development standard with all decision points resolved.\n\n# When to use\n\nWhen the user says \"spec this issue\", \"break down issue #N\", or when a GitHub issue needs to become implementable work items with acceptance criteria, file-level tasks, and test plans. Usable by any agent or human — does not require a specific agent fleet.\n\nNot for: single-feature quick specs (use quick-spec directly), pure architecture decisions (use an architect), or brainstorming (use brainstorming).\n\nParadigm: this playbook belongs to the spec paradigm. Use the spec paradigm ([quick-spec](../quick-spec/), [issue-to-ready-specs](../issue-to-ready-specs/)) when a single agent or human will implement the feature in one session — the spec is the contract, the implementer handles phasing. Use the plan paradigm ([raa](../raa/), [implementation-orchestration](../implementation-orchestration/)) when a fleet will implement in parallel — the plan handles phasing, file ownership, and handoffs. The paradigms compose: specs feed RAA as the feature description. If unsure which to use, load the [ai-stuff-artifact-rout",
+     "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.\n\n# Purpose\n\nCreates implementation-ready technical specifications through conversational discovery, code investigation, and structured documentation. Enforces a six-criterion Ready-for-Development standard: Actionable, Logical, Testable, Complete, Self-contained, Consistent. A spec that fails any criterion is not handed off.\n\n# When to use\n\nWhen the user says \"create a quick spec\" or \"generate a tech spec\", or when a feature or change needs an implementation-ready spec before development starts. Produces a document a fresh agent can implement from without session history.\n\nNot for: full PRD creation (use prompts/loop-prd-readiness/), architectural decision records, or research documents.\n\nParadigm: this playbook belongs to the spec paradigm. Use the spec paradigm ([quick-spec](../quick-spec/), [issue-to-ready-specs](../issue-to-ready-specs/)) when a single agent or human will implement the feature in one session — the spec is the contract, the implementer handles phasing. Use the plan paradigm ([raa](../raa/), [implementation-orchestration](../implementation-orchestration/)) when a fleet will implement in parallel — the plan handles phasing, file ownership, and handoffs. The paradigms compose: specs feed RAA as the feature description. If unsure which to use, load the [ai-stuff-artifact-router](../../skills/ai-stuff-artifact-router/) skill. In a tool without skill support, fall ",
+     "issue-to-pr": "Starts from: an existing tracked issue, well-scoped. Produces: a merged PR (gated or continuous mode).\n\n# Purpose\n\nChains [issue-to-ready-specs](../issue-to-ready-specs/playbook.md) → [raa](../raa/playbook.md) → [implementation-orchestration](../implementation-orchestration/playbook.md) into a single full-cycle playbook that takes a GitHub issue to a merged PR. Adds optional human review gates between phases so a human can control each phase transition (gated mode) or trust the chain to run end-to-end (continuous mode).\n\n# When to use\n\nWhen you have a GitHub issue and want the full path to a merged PR without manually routing between the underlying playbooks. Two modes:\n\n- Gated (default): human review gates after specs, after the plan, and before PR merge. Safe — the human controls each phase transition. Use for issues with ambiguity or when the human wants oversight.\n- Continuous: no gates. Runs end-to-end from issue to merged PR. Only stops on BLOCKED or ABORT from the underlying playbooks. Use only when the issue is well-scoped and the human trusts the chain.\n\nNot for: partial runs (use the underlying playbooks directly), or issues that need research before a spec can be written (use [issue-to-ready-specs](../issue-to-ready-specs/) alone first)."
+    }
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which procedure in `candidates` should the user in `user_turn` start with, given what they already have?",
+     "criteria": {
+      "issue-to-ready-specs": "The procedure described in `candidates.issue-to-ready-specs`",
+      "quick-spec": "The procedure described in `candidates.quick-spec`",
+      "issue-to-pr": "The procedure described in `candidates.issue-to-pr`"
+     }
+    },
+    "fits__issue-to-ready-specs": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.issue-to-ready-specs` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__quick-spec": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.quick-spec` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__issue-to-pr": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.issue-to-pr` start from what the user in `user_turn` already has and produce what they want?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "issue-to-ready-specs",
+     "confidence": 0.97,
+     "probabilities": {
+      "issue-to-ready-specs": 0.98,
+      "quick-spec": 0.01,
+      "issue-to-pr": 0.01
+     }
+    },
+    "fits__issue-to-ready-specs": {
+     "type": "noul",
+     "noul": 0.87
+    },
+    "fits__quick-spec": {
+     "type": "noul",
+     "noul": 0.14
+    },
+    "fits__issue-to-pr": {
+     "type": "noul",
+     "noul": 0.18
+    }
+   },
+   "usage": {
+    "input_tokens": 1545,
+    "output_tokens": 111
+   }
+  }
+ },
+ "33b80b175b0c293f": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "We have three vendor options for our search backend and need to pick one this week."
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which of these procedures fits what the user in `user_turn` already has and wants to end up with?",
+     "criteria": {
+      "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.",
+      "product-brief": "Starts from: a rough idea, or brainstorm output already converged. Produces: structured brief: problem, users, success, scope, constraints.",
+      "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.",
+      "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.",
+      "issue-to-ready-specs": "Starts from: an existing tracked issue, big enough for several stories. Produces: a PRD plus N implementation-ready specs.",
+      "raa": "Starts from: a feature/change/readiness request against a real codebase. Produces: a validated phased plan with file-level scope, risks, handoffs.",
+      "implementation-orchestration": "Starts from: a validated plan: phases, file scope, named risks, handoff list. Produces: a committed, reviewed, CI-green branch.",
+      "issue-to-pr": "Starts from: an existing tracked issue, well-scoped. Produces: a merged PR (gated or continuous mode).",
+      "build-to-release": "Starts from: an idea or proof-of-concept, work worth 3+ stories. Produces: a released implementation, through 13 gated phases.",
+      "agent-installer": "Starts from: a requirement to ship a multi-platform installer CLI. Produces: an installer with TUI and CI mode, idempotent, config-driven.",
+      "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).",
+      "adversarial-code-review": "Starts from: a git diff, and a finite list of claims or acceptance criteria. Produces: ≥3 categorised findings plus a fix menu.",
+      "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.",
+      "retrospective": "Starts from: a completed body of work. Produces: lessons, follow-through check, SMART action items.",
+      "incident-response": "Starts from: a production system misbehaving after a shipped change, and access to its dashboards, logs or rollback. Produces: service restored or escalated, an incident timeline, owned follow-ups.",
+      "loop-prd-readiness": "Starts from: a planning doc with known gaps, conflicts or partial sections. Produces: the same doc driven to implementation-ready, atomic and traceable.",
+      "loop-implementation-readiness": "Starts from: a finished doc and a codebase meant to implement it. Produces: evidence-based coverage verdict, smallest next action per gap.",
+      "review-release-candidate": "Starts from: a release candidate (branch, build, tag) and documented acceptance criteria. Produces: inventory → triage → fix batches → sign-off verdict.",
+      "repo-primitive-audit": "Starts from: a repo or section to review, and suspected doc-vs-source drift. Produces: a primitive map from source, then an adversarial review against it.",
+      "knowledge-extraction": "Starts from: a finished substantive session with decisions, failures or constraints in it. Produces: proposed durable knowledge writes, user approves before any write."
+     }
+    },
+    "work": {
+     "type": "noul",
+     "instructions": "Does `user_turn` ask for help carrying out a piece of software or product work, such as planning, building, reviewing, releasing, responding to an outage, or learning from finished work?",
+     "criteria": {
+      "true": "The user wants a multi-step piece of work done, or wants to know how to approach one.",
+      "false": "The user asks a factual question, asks about this repository's own files, or asks for a small single-step task such as one function or one test file."
+     }
+    },
+    "named": {
+     "type": "noul",
+     "instructions": "Does `user_turn` name the specific playbook, prompt or procedure the user wants to use?"
+    },
+    "vault": {
+     "type": "noul",
+     "instructions": "Is `user_turn` about maintaining the artifacts of this knowledge repository itself, such as promoting, deprecating, linting, auditing, archiving or saving a skill, prompt or playbook?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "decision-making",
+     "confidence": 1,
+     "probabilities": {
+      "brainstorming": 0,
+      "product-brief": 0,
+      "decision-making": 1,
+      "quick-spec": 0,
+      "issue-to-ready-specs": 0,
+      "raa": 0,
+      "implementation-orchestration": 0,
+      "issue-to-pr": 0,
+      "build-to-release": 0,
+      "agent-installer": 0,
+      "acceptance-verification": 0,
+      "adversarial-code-review": 0,
+      "readiness-cycle": 0,
+      "retrospective": 0,
+      "incident-response": 0,
+      "loop-prd-readiness": 0,
+      "loop-implementation-readiness": 0,
+      "review-release-candidate": 0,
+      "repo-primitive-audit": 0,
+      "knowledge-extraction": 0
+     }
+    },
+    "work": {
+     "type": "noul",
+     "noul": 0.75
+    },
+    "named": {
+     "type": "noul",
+     "noul": 0.03
+    },
+    "vault": {
+     "type": "noul",
+     "noul": 0.02
+    }
+   },
+   "usage": {
+    "input_tokens": 1436,
+    "output_tokens": 269
+   }
+  }
+ },
+ "04dd77d7390ecd52": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "We have three vendor options for our search backend and need to pick one this week.",
+    "candidates": {
+     "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.\n\n# Purpose\n\nTakes N options (typically from brainstorming, but any decision with multiple candidates) and produces a ranked shortlist (top 3-5) with explicit rationale per ranking criterion, using multi-criteria decision analysis. Scores each option against user-defined criteria, computes weighted totals, runs a sensitivity check, and hands off a robustness-verdicted shortlist ready to feed product-brief or direct selection. Fills the brainstorming → product-brief gap where too many options need structured convergence.\n\n# When to use\n\nAfter brainstorming produces too many options, or when facing any decision with multiple candidates and no clear winner.\n\nNot for:\n- Binary decisions (just pick).\n- Decisions requiring stakeholder alignment (use a voting/alignment process).\n- Single-option scenarios (nothing to rank).",
+     "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.\n\n# Purpose\n\nFacilitates interactive brainstorming sessions using a library of 61 structured creativity techniques across 10 categories. Keeps the user in generative exploration mode, aims for 100+ ideas before organizing, and produces themed, prioritized action plans. Standalone — no framework dependencies.\n\n# When to use\n\nWhen the user says \"help me brainstorm\" or \"help me ideate\", or when a topic needs divergent idea generation before convergence. Requires an interactive session (30-60+ minutes) and a user ready for generative exploration.\n\nNot for: quick ideation (<15 min), single-answer questions, or sessions where the user already knows what they want.",
+     "product-brief": "Starts from: a rough idea, or brainstorm output already converged. Produces: structured brief: problem, users, success, scope, constraints.\n\n# Purpose\n\nTurns brainstorm output or a rough idea into a structured product brief through facilitated discovery. Covers five sections — problem, users, success, scope, constraints — one at a time, each confirmed before moving to the next. The output directly feeds into plan refinement. Fills the gap between brainstorming and planning.\n\n# When to use\n\nWhen the user says \"help me create a product brief\" or \"I have an idea I want to structure\", or immediately after a brainstorming session before writing a plan. ~45-60 minutes.\n\nNot for: teams with an existing plan doc (route to plan refinement directly), or pure research sessions with no product direction yet."
+    }
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which procedure in `candidates` should the user in `user_turn` start with, given what they already have?",
+     "criteria": {
+      "decision-making": "The procedure described in `candidates.decision-making`",
+      "brainstorming": "The procedure described in `candidates.brainstorming`",
+      "product-brief": "The procedure described in `candidates.product-brief`"
+     }
+    },
+    "fits__decision-making": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.decision-making` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__brainstorming": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.brainstorming` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__product-brief": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.product-brief` start from what the user in `user_turn` already has and produce what they want?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "decision-making",
+     "confidence": 1,
+     "probabilities": {
+      "decision-making": 1,
+      "brainstorming": 0,
+      "product-brief": 0
+     }
+    },
+    "fits__decision-making": {
+     "type": "noul",
+     "noul": 0.75
+    },
+    "fits__brainstorming": {
+     "type": "noul",
+     "noul": 0.04
+    },
+    "fits__product-brief": {
+     "type": "noul",
+     "noul": 0.05
+    }
+   },
+   "usage": {
+    "input_tokens": 1125,
+    "output_tokens": 106
+   }
+  }
+ },
+ "665842d19c7c320c": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "What's the difference between raa and quick-spec in this repo?"
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which of these procedures fits what the user in `user_turn` already has and wants to end up with?",
+     "criteria": {
+      "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.",
+      "product-brief": "Starts from: a rough idea, or brainstorm output already converged. Produces: structured brief: problem, users, success, scope, constraints.",
+      "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.",
+      "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.",
+      "issue-to-ready-specs": "Starts from: an existing tracked issue, big enough for several stories. Produces: a PRD plus N implementation-ready specs.",
+      "raa": "Starts from: a feature/change/readiness request against a real codebase. Produces: a validated phased plan with file-level scope, risks, handoffs.",
+      "implementation-orchestration": "Starts from: a validated plan: phases, file scope, named risks, handoff list. Produces: a committed, reviewed, CI-green branch.",
+      "issue-to-pr": "Starts from: an existing tracked issue, well-scoped. Produces: a merged PR (gated or continuous mode).",
+      "build-to-release": "Starts from: an idea or proof-of-concept, work worth 3+ stories. Produces: a released implementation, through 13 gated phases.",
+      "agent-installer": "Starts from: a requirement to ship a multi-platform installer CLI. Produces: an installer with TUI and CI mode, idempotent, config-driven.",
+      "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).",
+      "adversarial-code-review": "Starts from: a git diff, and a finite list of claims or acceptance criteria. Produces: ≥3 categorised findings plus a fix menu.",
+      "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.",
+      "retrospective": "Starts from: a completed body of work. Produces: lessons, follow-through check, SMART action items.",
+      "incident-response": "Starts from: a production system misbehaving after a shipped change, and access to its dashboards, logs or rollback. Produces: service restored or escalated, an incident timeline, owned follow-ups.",
+      "loop-prd-readiness": "Starts from: a planning doc with known gaps, conflicts or partial sections. Produces: the same doc driven to implementation-ready, atomic and traceable.",
+      "loop-implementation-readiness": "Starts from: a finished doc and a codebase meant to implement it. Produces: evidence-based coverage verdict, smallest next action per gap.",
+      "review-release-candidate": "Starts from: a release candidate (branch, build, tag) and documented acceptance criteria. Produces: inventory → triage → fix batches → sign-off verdict.",
+      "repo-primitive-audit": "Starts from: a repo or section to review, and suspected doc-vs-source drift. Produces: a primitive map from source, then an adversarial review against it.",
+      "knowledge-extraction": "Starts from: a finished substantive session with decisions, failures or constraints in it. Produces: proposed durable knowledge writes, user approves before any write."
+     }
+    },
+    "work": {
+     "type": "noul",
+     "instructions": "Does `user_turn` ask for help carrying out a piece of software or product work, such as planning, building, reviewing, releasing, responding to an outage, or learning from finished work?",
+     "criteria": {
+      "true": "The user wants a multi-step piece of work done, or wants to know how to approach one.",
+      "false": "The user asks a factual question, asks about this repository's own files, or asks for a small single-step task such as one function or one test file."
+     }
+    },
+    "named": {
+     "type": "noul",
+     "instructions": "Does `user_turn` name the specific playbook, prompt or procedure the user wants to use?"
+    },
+    "vault": {
+     "type": "noul",
+     "instructions": "Is `user_turn` about maintaining the artifacts of this knowledge repository itself, such as promoting, deprecating, linting, auditing, archiving or saving a skill, prompt or playbook?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "decision-making",
+     "confidence": 0.27,
+     "probabilities": {
+      "brainstorming": 0.01,
+      "product-brief": 0.01,
+      "decision-making": 0.31,
+      "quick-spec": 0.03,
+      "issue-to-ready-specs": 0,
+      "raa": 0.13,
+      "implementation-orchestration": 0,
+      "issue-to-pr": 0,
+      "build-to-release": 0,
+      "agent-installer": 0,
+      "acceptance-verification": 0,
+      "adversarial-code-review": 0,
+      "readiness-cycle": 0.02,
+      "retrospective": 0,
+      "incident-response": 0,
+      "loop-prd-readiness": 0,
+      "loop-implementation-readiness": 0,
+      "review-release-candidate": 0,
+      "repo-primitive-audit": 0.29,
+      "knowledge-extraction": 0.2
+     }
+    },
+    "work": {
+     "type": "noul",
+     "noul": 0.06
+    },
+    "named": {
+     "type": "noul",
+     "noul": 0.33
+    },
+    "vault": {
+     "type": "noul",
+     "noul": 0.08
+    }
+   },
+   "usage": {
+    "input_tokens": 1433,
+    "output_tokens": 269
+   }
+  }
+ },
+ "9b27b863905d28e7": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "Here's the diff for my PR and the spec it implements. The preview deploy is up. I want to know if what's running actually matches the spec before I merge. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical — I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`."
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which of these procedures fits what the user in `user_turn` already has and wants to end up with?",
+     "criteria": {
+      "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.",
+      "product-brief": "Starts from: a rough idea, or brainstorm output already converged. Produces: structured brief: problem, users, success, scope, constraints.",
+      "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.",
+      "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.",
+      "issue-to-ready-specs": "Starts from: an existing tracked issue, big enough for several stories. Produces: a PRD plus N implementation-ready specs.",
+      "raa": "Starts from: a feature/change/readiness request against a real codebase. Produces: a validated phased plan with file-level scope, risks, handoffs.",
+      "implementation-orchestration": "Starts from: a validated plan: phases, file scope, named risks, handoff list. Produces: a committed, reviewed, CI-green branch.",
+      "issue-to-pr": "Starts from: an existing tracked issue, well-scoped. Produces: a merged PR (gated or continuous mode).",
+      "build-to-release": "Starts from: an idea or proof-of-concept, work worth 3+ stories. Produces: a released implementation, through 13 gated phases.",
+      "agent-installer": "Starts from: a requirement to ship a multi-platform installer CLI. Produces: an installer with TUI and CI mode, idempotent, config-driven.",
+      "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).",
+      "adversarial-code-review": "Starts from: a git diff, and a finite list of claims or acceptance criteria. Produces: ≥3 categorised findings plus a fix menu.",
+      "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.",
+      "retrospective": "Starts from: a completed body of work. Produces: lessons, follow-through check, SMART action items.",
+      "incident-response": "Starts from: a production system misbehaving after a shipped change, and access to its dashboards, logs or rollback. Produces: service restored or escalated, an incident timeline, owned follow-ups.",
+      "loop-prd-readiness": "Starts from: a planning doc with known gaps, conflicts or partial sections. Produces: the same doc driven to implementation-ready, atomic and traceable.",
+      "loop-implementation-readiness": "Starts from: a finished doc and a codebase meant to implement it. Produces: evidence-based coverage verdict, smallest next action per gap.",
+      "review-release-candidate": "Starts from: a release candidate (branch, build, tag) and documented acceptance criteria. Produces: inventory → triage → fix batches → sign-off verdict.",
+      "repo-primitive-audit": "Starts from: a repo or section to review, and suspected doc-vs-source drift. Produces: a primitive map from source, then an adversarial review against it.",
+      "knowledge-extraction": "Starts from: a finished substantive session with decisions, failures or constraints in it. Produces: proposed durable knowledge writes, user approves before any write."
+     }
+    },
+    "work": {
+     "type": "noul",
+     "instructions": "Does `user_turn` ask for help carrying out a piece of software or product work, such as planning, building, reviewing, releasing, responding to an outage, or learning from finished work?",
+     "criteria": {
+      "true": "The user wants a multi-step piece of work done, or wants to know how to approach one.",
+      "false": "The user asks a factual question, asks about this repository's own files, or asks for a small single-step task such as one function or one test file."
+     }
+    },
+    "named": {
+     "type": "noul",
+     "instructions": "Does `user_turn` name the specific playbook, prompt or procedure the user wants to use?"
+    },
+    "vault": {
+     "type": "noul",
+     "instructions": "Is `user_turn` about maintaining the artifacts of this knowledge repository itself, such as promoting, deprecating, linting, auditing, archiving or saving a skill, prompt or playbook?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "acceptance-verification",
+     "confidence": 0.74,
+     "probabilities": {
+      "brainstorming": 0,
+      "product-brief": 0,
+      "decision-making": 0,
+      "quick-spec": 0,
+      "issue-to-ready-specs": 0,
+      "raa": 0,
+      "implementation-orchestration": 0,
+      "issue-to-pr": 0,
+      "build-to-release": 0,
+      "agent-installer": 0,
+      "acceptance-verification": 0.75,
+      "adversarial-code-review": 0.13,
+      "readiness-cycle": 0.01,
+      "retrospective": 0,
+      "incident-response": 0,
+      "loop-prd-readiness": 0,
+      "loop-implementation-readiness": 0.11,
+      "review-release-candidate": 0,
+      "repo-primitive-audit": 0,
+      "knowledge-extraction": 0
+     }
+    },
+    "work": {
+     "type": "noul",
+     "noul": 0.97
+    },
+    "named": {
+     "type": "noul",
+     "noul": 0.08
+    },
+    "vault": {
+     "type": "noul",
+     "noul": 0.04
+    }
+   },
+   "usage": {
+    "input_tokens": 1536,
+    "output_tokens": 274
+   }
+  }
+ },
+ "c65f20c8d5d6f183": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "Here's the diff for my PR and the spec it implements. The preview deploy is up. I want to know if what's running actually matches the spec before I merge. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical — I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+    "candidates": {
+     "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).\n\n# Purpose\n\nVerifies that a running build satisfies its acceptance criteria, producing a runtime evidence anchor for every criterion and a tri-state verdict. The only playbook here whose input is an executing program rather than text — it observes behavior instead of reading source.\n\n# When to use\n\n- A branch is CI-green and about to merge, and the acceptance criteria need checking against real behavior.\n- build-to-release reaches its release-candidate gate and needs the runtime-check evidence its scorecard already demands.\n- A release candidate is deployed to staging or a preview environment and someone has to decide whether it ships.\n\nNot for: validating a plan against a codebase (use [loop-implementation-readiness](../../prompts/loop-implementation-readiness/) — it reads source), reviewing a diff (use [adversarial-code-review](../adversarial-code-review/)), or exploratory testing with no stated criteria.",
+     "adversarial-code-review": "Starts from: a git diff, and a finite list of claims or acceptance criteria. Produces: ≥3 categorised findings plus a fix menu.\n\n# Purpose\n\nPerforms an adversarial code review on git changes. Cross-references git reality against task/AC claims, validates implementation, checks code and test quality, and presents categorized findings with a fix menu. Forces thoroughness with a minimum-3-findings rule. No lazy \"looks good\" reviews.\n\n# When to use\n\nWhen the user says \"run code review\" or \"review this code\", or when you have a git diff or set of changed files that need quality validation before merge. Works on any git repository — uncommitted changes, staged changes, or branch diffs.\n\nNot for: reviewing entire codebases (scope to a diff), reviewing config/tooling files, or rubber-stamping changes.\n\nDual role: when used inside [implementation-orchestration](../implementation-orchestration/), the orchestration playbook invokes this as its review phase. Run standalone when reviewing code implemented outside this vault (hand-written, another tool, a prior session).",
+     "loop-implementation-readiness": "Starts from: a finished doc and a codebase meant to implement it. Produces: evidence-based coverage verdict, smallest next action per gap.\n\n# Purpose\n\nDrives a codebase toward implementation readiness against a source-of-truth planning document (PRD, PLAN, ADR, or SPECS). Each round picks the highest-risk unresolved requirement, maps it to code evidence, classifies it, and defines the smallest action that closes the gap. Stops with a tri-state verdict when every requirement is evidence-backed, or blocks when P0/P1 unknowns remain without measurable progress.\n\nThis is the inverse of loop-prd-readiness: that loop edits the doc until it is build-ready; this loop tests the implementation until it satisfies the doc. Run them in sequence — loop-prd-readiness first to make the doc build-ready, then loop-implementation-readiness to verify the build matches it.\n\n# When to use\n\nYou have a finished planning document and a codebase that is supposed to implement it. You want to know — with evidence — whether the code actually covers the doc's requirements, and where it does not, you want the smallest next-action to close each gap rather than a vague \"needs work\".\n\nNot for: one-shot review without a finite requirement list, docs that are still being drafted (use loop-prd-readiness first), or codebases without a written source-of-truth doc (no doc = no rubric = nothing to validate against).\n\nThis is a static, copy-paste-ready version — {{DOC}}, {{CODEBASE}}, and {{BUDGET}} are the only variables. Run with explicit paths before st"
+    }
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which procedure in `candidates` should the user in `user_turn` start with, given what they already have?",
+     "criteria": {
+      "acceptance-verification": "The procedure described in `candidates.acceptance-verification`",
+      "adversarial-code-review": "The procedure described in `candidates.adversarial-code-review`",
+      "loop-implementation-readiness": "The procedure described in `candidates.loop-implementation-readiness`"
+     }
+    },
+    "fits__acceptance-verification": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.acceptance-verification` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__adversarial-code-review": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.adversarial-code-review` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__loop-implementation-readiness": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.loop-implementation-readiness` start from what the user in `user_turn` already has and produce what they want?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "acceptance-verification",
+     "confidence": 0.67,
+     "probabilities": {
+      "acceptance-verification": 0.78,
+      "adversarial-code-review": 0.15,
+      "loop-implementation-readiness": 0.07
+     }
+    },
+    "fits__acceptance-verification": {
+     "type": "noul",
+     "noul": 0.75
+    },
+    "fits__adversarial-code-review": {
+     "type": "noul",
+     "noul": 0.4
+    },
+    "fits__loop-implementation-readiness": {
+     "type": "noul",
+     "noul": 0.39
+    }
+   },
+   "usage": {
+    "input_tokens": 1517,
+    "output_tokens": 133
+   }
+  }
+ },
+ "cc0b7d56df0d4119": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "Our PRD for team billing is half-written and some of it is already partly built in the codebase. Get the doc to where a developer could implement the rest from it. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical — I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`."
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which of these procedures fits what the user in `user_turn` already has and wants to end up with?",
+     "criteria": {
+      "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.",
+      "product-brief": "Starts from: a rough idea, or brainstorm output already converged. Produces: structured brief: problem, users, success, scope, constraints.",
+      "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.",
+      "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.",
+      "issue-to-ready-specs": "Starts from: an existing tracked issue, big enough for several stories. Produces: a PRD plus N implementation-ready specs.",
+      "raa": "Starts from: a feature/change/readiness request against a real codebase. Produces: a validated phased plan with file-level scope, risks, handoffs.",
+      "implementation-orchestration": "Starts from: a validated plan: phases, file scope, named risks, handoff list. Produces: a committed, reviewed, CI-green branch.",
+      "issue-to-pr": "Starts from: an existing tracked issue, well-scoped. Produces: a merged PR (gated or continuous mode).",
+      "build-to-release": "Starts from: an idea or proof-of-concept, work worth 3+ stories. Produces: a released implementation, through 13 gated phases.",
+      "agent-installer": "Starts from: a requirement to ship a multi-platform installer CLI. Produces: an installer with TUI and CI mode, idempotent, config-driven.",
+      "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).",
+      "adversarial-code-review": "Starts from: a git diff, and a finite list of claims or acceptance criteria. Produces: ≥3 categorised findings plus a fix menu.",
+      "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.",
+      "retrospective": "Starts from: a completed body of work. Produces: lessons, follow-through check, SMART action items.",
+      "incident-response": "Starts from: a production system misbehaving after a shipped change, and access to its dashboards, logs or rollback. Produces: service restored or escalated, an incident timeline, owned follow-ups.",
+      "loop-prd-readiness": "Starts from: a planning doc with known gaps, conflicts or partial sections. Produces: the same doc driven to implementation-ready, atomic and traceable.",
+      "loop-implementation-readiness": "Starts from: a finished doc and a codebase meant to implement it. Produces: evidence-based coverage verdict, smallest next action per gap.",
+      "review-release-candidate": "Starts from: a release candidate (branch, build, tag) and documented acceptance criteria. Produces: inventory → triage → fix batches → sign-off verdict.",
+      "repo-primitive-audit": "Starts from: a repo or section to review, and suspected doc-vs-source drift. Produces: a primitive map from source, then an adversarial review against it.",
+      "knowledge-extraction": "Starts from: a finished substantive session with decisions, failures or constraints in it. Produces: proposed durable knowledge writes, user approves before any write."
+     }
+    },
+    "work": {
+     "type": "noul",
+     "instructions": "Does `user_turn` ask for help carrying out a piece of software or product work, such as planning, building, reviewing, releasing, responding to an outage, or learning from finished work?",
+     "criteria": {
+      "true": "The user wants a multi-step piece of work done, or wants to know how to approach one.",
+      "false": "The user asks a factual question, asks about this repository's own files, or asks for a small single-step task such as one function or one test file."
+     }
+    },
+    "named": {
+     "type": "noul",
+     "instructions": "Does `user_turn` name the specific playbook, prompt or procedure the user wants to use?"
+    },
+    "vault": {
+     "type": "noul",
+     "instructions": "Is `user_turn` about maintaining the artifacts of this knowledge repository itself, such as promoting, deprecating, linting, auditing, archiving or saving a skill, prompt or playbook?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "loop-prd-readiness",
+     "confidence": 0.97,
+     "probabilities": {
+      "brainstorming": 0,
+      "product-brief": 0,
+      "decision-making": 0,
+      "quick-spec": 0,
+      "issue-to-ready-specs": 0,
+      "raa": 0.02,
+      "implementation-orchestration": 0,
+      "issue-to-pr": 0,
+      "build-to-release": 0,
+      "agent-installer": 0,
+      "acceptance-verification": 0,
+      "adversarial-code-review": 0,
+      "readiness-cycle": 0.01,
+      "retrospective": 0,
+      "incident-response": 0,
+      "loop-prd-readiness": 0.97,
+      "loop-implementation-readiness": 0,
+      "review-release-candidate": 0,
+      "repo-primitive-audit": 0,
+      "knowledge-extraction": 0
+     }
+    },
+    "work": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "named": {
+     "type": "noul",
+     "noul": 0.08
+    },
+    "vault": {
+     "type": "noul",
+     "noul": 0.07
+    }
+   },
+   "usage": {
+    "input_tokens": 1537,
+    "output_tokens": 273
+   }
+  }
+ },
+ "7b4da37151ebb76d": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "Our PRD for team billing is half-written and some of it is already partly built in the codebase. Get the doc to where a developer could implement the rest from it. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical — I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+    "candidates": {
+     "loop-prd-readiness": "Starts from: a planning doc with known gaps, conflicts or partial sections. Produces: the same doc driven to implementation-ready, atomic and traceable.\n\n# Purpose\n\nDrives a planning document (PRD, spec, ADR, or similar) to implementation readiness through iterative rounds. Each round resolves the highest-risk gap with the smallest doc change. Stops only when two independent reviews materially agree and no P0/P1 unknowns remain.\n\n# When to use\n\nYou have a planning doc that needs to be code-ready — atomic requirements traceable to source, with acceptance criteria and test cases. The doc has known gaps, conflicts, or partial sections. You want the agent to work through them without forking the product unilaterally.\n\nNot for docs already implementation-ready. Not for one-shot review.\n\nThis is a static, copy-paste-ready version of the plan-refinement loop — {{DOC}} is the only variable. When you want a prompt that is customized to a specific plan's context, status, and blockers inlined, use the prompt-factory skill's plan-refine type instead. When you want to paste and go without running the factory, use this.",
+     "raa": "Starts from: a feature/change/readiness request against a real codebase. Produces: a validated phased plan with file-level scope, risks, handoffs.\n\n# Purpose\n\nTakes a feature request or change description and produces a validated, file-scoped, implementation-ready plan that the [implementation-orchestration](../implementation-orchestration/playbook.md) playbook can consume directly. The output is a plan, not code.\n\n# When to use\n\nWhen a feature request, issue, bug report, change request, or readiness question (e.g., \"is this ready to share/release/open-source?\") needs a plan before implementation or remediation. The input is a description of what to build or what to assess. The output is a phased plan with file-level scope, named risks, a handoff ledger, and an effort estimate.\n\nIf a plan already exists, skip to the readiness loop ([loop-implementation-readiness](../../prompts/loop-implementation-readiness/) prompt) to validate it against the codebase.\n\nParadigm: this playbook belongs to the plan paradigm. Use the spec paradigm ([quick-spec](../quick-spec/), [issue-to-ready-specs](../issue-to-ready-specs/)) when a single agent or human will implement the feature in one session — the spec is the contract, the implementer handles phasing. Use the plan paradigm ([raa](../raa/), [implementation-orchestration](../implementation-orchestration/)) when a fleet will implement in parallel — the plan handles phasing, file ownership, and handoffs. The paradigms compose: specs feed RAA as the feature description. If unsure which to use",
+     "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.\n\n# Purpose\n\nTakes an existing artifact (template, repo, package, document) from \"is it ready to share/release/open-source?\" to \"verified ready or blocked with a fix plan.\" Chains [raa](../raa/) (assess + plan) → [implementation-orchestration](../implementation-orchestration/) (fix) → [review-release-candidate](../../prompts/review-release-candidate/) (verify) into a single readiness cycle. The cycle loops until the verifier returns ship, or the human explicitly defers the remaining gaps.\n\nThis is a cycle, not a one-shot: fixes can introduce new gaps, so each fix round re-assesses before re-verifying.\n\n## Why chain these two\n\nA consumer's first question is: \"why chain RAA and review-release-candidate — don't they overlap?\" They compose, they don't overlap. RAA tells you what to fix; review-release-candidate verifies you fixed it.\n\n| | RAA (in this cycle) | review-release-candidate (in this cycle) |\n|---|---|---|\n| Question | \"What's a plan to make this ready?\" | \"Does this pass its readiness criteria now?\" |\n| Output | A plan (file-scoped, phased, handoff ledger) | A scorecard (pass/fail per criterion, defects by severity, ship/hold/block verdict) |\n| When | Before fixes — planning the work | After fixes — verifying the result |\n| Mode | Read + map + plan (doesn't touch the artifact) | Read + verify + triage + fix-batch + re-verify (operates on the candidate) |\n| Loop | One pass:"
+    }
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which procedure in `candidates` should the user in `user_turn` start with, given what they already have?",
+     "criteria": {
+      "loop-prd-readiness": "The procedure described in `candidates.loop-prd-readiness`",
+      "raa": "The procedure described in `candidates.raa`",
+      "readiness-cycle": "The procedure described in `candidates.readiness-cycle`"
+     }
+    },
+    "fits__loop-prd-readiness": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.loop-prd-readiness` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__raa": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.raa` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__readiness-cycle": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.readiness-cycle` start from what the user in `user_turn` already has and produce what they want?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "loop-prd-readiness",
+     "confidence": 0.97,
+     "probabilities": {
+      "loop-prd-readiness": 0.98,
+      "raa": 0.02,
+      "readiness-cycle": 0
+     }
+    },
+    "fits__loop-prd-readiness": {
+     "type": "noul",
+     "noul": 0.8
+    },
+    "fits__raa": {
+     "type": "noul",
+     "noul": 0.28
+    },
+    "fits__readiness-cycle": {
+     "type": "noul",
+     "noul": 0.25
+    }
+   },
+   "usage": {
+    "input_tokens": 1653,
+    "output_tokens": 112
+   }
+  }
+ },
+ "97e6315b45c7359c": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "The release candidate is tagged and deployed to staging. This round I only want each acceptance criterion exercised on staging and a ship or no-ship call. No fixes yet. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical — I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`."
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which of these procedures fits what the user in `user_turn` already has and wants to end up with?",
+     "criteria": {
+      "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.",
+      "product-brief": "Starts from: a rough idea, or brainstorm output already converged. Produces: structured brief: problem, users, success, scope, constraints.",
+      "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.",
+      "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.",
+      "issue-to-ready-specs": "Starts from: an existing tracked issue, big enough for several stories. Produces: a PRD plus N implementation-ready specs.",
+      "raa": "Starts from: a feature/change/readiness request against a real codebase. Produces: a validated phased plan with file-level scope, risks, handoffs.",
+      "implementation-orchestration": "Starts from: a validated plan: phases, file scope, named risks, handoff list. Produces: a committed, reviewed, CI-green branch.",
+      "issue-to-pr": "Starts from: an existing tracked issue, well-scoped. Produces: a merged PR (gated or continuous mode).",
+      "build-to-release": "Starts from: an idea or proof-of-concept, work worth 3+ stories. Produces: a released implementation, through 13 gated phases.",
+      "agent-installer": "Starts from: a requirement to ship a multi-platform installer CLI. Produces: an installer with TUI and CI mode, idempotent, config-driven.",
+      "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).",
+      "adversarial-code-review": "Starts from: a git diff, and a finite list of claims or acceptance criteria. Produces: ≥3 categorised findings plus a fix menu.",
+      "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.",
+      "retrospective": "Starts from: a completed body of work. Produces: lessons, follow-through check, SMART action items.",
+      "incident-response": "Starts from: a production system misbehaving after a shipped change, and access to its dashboards, logs or rollback. Produces: service restored or escalated, an incident timeline, owned follow-ups.",
+      "loop-prd-readiness": "Starts from: a planning doc with known gaps, conflicts or partial sections. Produces: the same doc driven to implementation-ready, atomic and traceable.",
+      "loop-implementation-readiness": "Starts from: a finished doc and a codebase meant to implement it. Produces: evidence-based coverage verdict, smallest next action per gap.",
+      "review-release-candidate": "Starts from: a release candidate (branch, build, tag) and documented acceptance criteria. Produces: inventory → triage → fix batches → sign-off verdict.",
+      "repo-primitive-audit": "Starts from: a repo or section to review, and suspected doc-vs-source drift. Produces: a primitive map from source, then an adversarial review against it.",
+      "knowledge-extraction": "Starts from: a finished substantive session with decisions, failures or constraints in it. Produces: proposed durable knowledge writes, user approves before any write."
+     }
+    },
+    "work": {
+     "type": "noul",
+     "instructions": "Does `user_turn` ask for help carrying out a piece of software or product work, such as planning, building, reviewing, releasing, responding to an outage, or learning from finished work?",
+     "criteria": {
+      "true": "The user wants a multi-step piece of work done, or wants to know how to approach one.",
+      "false": "The user asks a factual question, asks about this repository's own files, or asks for a small single-step task such as one function or one test file."
+     }
+    },
+    "named": {
+     "type": "noul",
+     "instructions": "Does `user_turn` name the specific playbook, prompt or procedure the user wants to use?"
+    },
+    "vault": {
+     "type": "noul",
+     "instructions": "Is `user_turn` about maintaining the artifacts of this knowledge repository itself, such as promoting, deprecating, linting, auditing, archiving or saving a skill, prompt or playbook?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "acceptance-verification",
+     "confidence": 0.65,
+     "probabilities": {
+      "brainstorming": 0,
+      "product-brief": 0,
+      "decision-making": 0,
+      "quick-spec": 0,
+      "issue-to-ready-specs": 0,
+      "raa": 0,
+      "implementation-orchestration": 0,
+      "issue-to-pr": 0,
+      "build-to-release": 0,
+      "agent-installer": 0,
+      "acceptance-verification": 0.67,
+      "adversarial-code-review": 0,
+      "readiness-cycle": 0.07,
+      "retrospective": 0,
+      "incident-response": 0,
+      "loop-prd-readiness": 0,
+      "loop-implementation-readiness": 0,
+      "review-release-candidate": 0.26,
+      "repo-primitive-audit": 0,
+      "knowledge-extraction": 0
+     }
+    },
+    "work": {
+     "type": "noul",
+     "noul": 0.97
+    },
+    "named": {
+     "type": "noul",
+     "noul": 0.13
+    },
+    "vault": {
+     "type": "noul",
+     "noul": 0.05
+    }
+   },
+   "usage": {
+    "input_tokens": 1535,
+    "output_tokens": 274
+   }
+  }
+ },
+ "26e2203efd840525": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "The release candidate is tagged and deployed to staging. This round I only want each acceptance criterion exercised on staging and a ship or no-ship call. No fixes yet. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical — I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+    "candidates": {
+     "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).\n\n# Purpose\n\nVerifies that a running build satisfies its acceptance criteria, producing a runtime evidence anchor for every criterion and a tri-state verdict. The only playbook here whose input is an executing program rather than text — it observes behavior instead of reading source.\n\n# When to use\n\n- A branch is CI-green and about to merge, and the acceptance criteria need checking against real behavior.\n- build-to-release reaches its release-candidate gate and needs the runtime-check evidence its scorecard already demands.\n- A release candidate is deployed to staging or a preview environment and someone has to decide whether it ships.\n\nNot for: validating a plan against a codebase (use [loop-implementation-readiness](../../prompts/loop-implementation-readiness/) — it reads source), reviewing a diff (use [adversarial-code-review](../adversarial-code-review/)), or exploratory testing with no stated criteria.",
+     "review-release-candidate": "Starts from: a release candidate (branch, build, tag) and documented acceptance criteria. Produces: inventory → triage → fix batches → sign-off verdict.\n\n# Purpose\n\nBuild a release-candidate review harness. Inventory every user-facing surface against its documented acceptance criteria: features, states, workflows, and risk-ranked edge cases. Verify each as a real user would, capture concrete evidence for every defect, regression, and spec deviation, triage by shared root cause and blast radius, and gate fix batches with regression tests until all P0/P1 criteria pass and residual risk is signed off or explicitly deferred.\n\n# When to use\n\nYou have a release candidate (branch, build, tag) and a set of documented acceptance criteria, and you need to verify it is safe to roll out. The prompt drives the full verification lifecycle: inventory → evidence capture → triage → fix batches → re-verification → sign-off.\n\nNot for: pre-release planning, feature design, or ongoing QA without a defined candidate window.",
+     "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.\n\n# Purpose\n\nTakes an existing artifact (template, repo, package, document) from \"is it ready to share/release/open-source?\" to \"verified ready or blocked with a fix plan.\" Chains [raa](../raa/) (assess + plan) → [implementation-orchestration](../implementation-orchestration/) (fix) → [review-release-candidate](../../prompts/review-release-candidate/) (verify) into a single readiness cycle. The cycle loops until the verifier returns ship, or the human explicitly defers the remaining gaps.\n\nThis is a cycle, not a one-shot: fixes can introduce new gaps, so each fix round re-assesses before re-verifying.\n\n## Why chain these two\n\nA consumer's first question is: \"why chain RAA and review-release-candidate — don't they overlap?\" They compose, they don't overlap. RAA tells you what to fix; review-release-candidate verifies you fixed it.\n\n| | RAA (in this cycle) | review-release-candidate (in this cycle) |\n|---|---|---|\n| Question | \"What's a plan to make this ready?\" | \"Does this pass its readiness criteria now?\" |\n| Output | A plan (file-scoped, phased, handoff ledger) | A scorecard (pass/fail per criterion, defects by severity, ship/hold/block verdict) |\n| When | Before fixes — planning the work | After fixes — verifying the result |\n| Mode | Read + map + plan (doesn't touch the artifact) | Read + verify + triage + fix-batch + re-verify (operates on the candidate) |\n| Loop | One pass:"
+    }
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which procedure in `candidates` should the user in `user_turn` start with, given what they already have?",
+     "criteria": {
+      "acceptance-verification": "The procedure described in `candidates.acceptance-verification`",
+      "review-release-candidate": "The procedure described in `candidates.review-release-candidate`",
+      "readiness-cycle": "The procedure described in `candidates.readiness-cycle`"
+     }
+    },
+    "fits__acceptance-verification": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.acceptance-verification` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__review-release-candidate": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.review-release-candidate` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__readiness-cycle": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.readiness-cycle` start from what the user in `user_turn` already has and produce what they want?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "acceptance-verification",
+     "confidence": 0.96,
+     "probabilities": {
+      "acceptance-verification": 0.97,
+      "review-release-candidate": 0.03,
+      "readiness-cycle": 0
+     }
+    },
+    "fits__acceptance-verification": {
+     "type": "noul",
+     "noul": 0.85
+    },
+    "fits__review-release-candidate": {
+     "type": "noul",
+     "noul": 0.44
+    },
+    "fits__readiness-cycle": {
+     "type": "noul",
+     "noul": 0.15
+    }
+   },
+   "usage": {
+    "input_tokens": 1529,
+    "output_tokens": 125
+   }
+  }
+ },
+ "7c9004370aa191d2": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "Turn GitHub issue #51 into specs. Each spec will be implemented by one agent in a single session. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical — I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`."
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which of these procedures fits what the user in `user_turn` already has and wants to end up with?",
+     "criteria": {
+      "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.",
+      "product-brief": "Starts from: a rough idea, or brainstorm output already converged. Produces: structured brief: problem, users, success, scope, constraints.",
+      "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.",
+      "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.",
+      "issue-to-ready-specs": "Starts from: an existing tracked issue, big enough for several stories. Produces: a PRD plus N implementation-ready specs.",
+      "raa": "Starts from: a feature/change/readiness request against a real codebase. Produces: a validated phased plan with file-level scope, risks, handoffs.",
+      "implementation-orchestration": "Starts from: a validated plan: phases, file scope, named risks, handoff list. Produces: a committed, reviewed, CI-green branch.",
+      "issue-to-pr": "Starts from: an existing tracked issue, well-scoped. Produces: a merged PR (gated or continuous mode).",
+      "build-to-release": "Starts from: an idea or proof-of-concept, work worth 3+ stories. Produces: a released implementation, through 13 gated phases.",
+      "agent-installer": "Starts from: a requirement to ship a multi-platform installer CLI. Produces: an installer with TUI and CI mode, idempotent, config-driven.",
+      "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).",
+      "adversarial-code-review": "Starts from: a git diff, and a finite list of claims or acceptance criteria. Produces: ≥3 categorised findings plus a fix menu.",
+      "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.",
+      "retrospective": "Starts from: a completed body of work. Produces: lessons, follow-through check, SMART action items.",
+      "incident-response": "Starts from: a production system misbehaving after a shipped change, and access to its dashboards, logs or rollback. Produces: service restored or escalated, an incident timeline, owned follow-ups.",
+      "loop-prd-readiness": "Starts from: a planning doc with known gaps, conflicts or partial sections. Produces: the same doc driven to implementation-ready, atomic and traceable.",
+      "loop-implementation-readiness": "Starts from: a finished doc and a codebase meant to implement it. Produces: evidence-based coverage verdict, smallest next action per gap.",
+      "review-release-candidate": "Starts from: a release candidate (branch, build, tag) and documented acceptance criteria. Produces: inventory → triage → fix batches → sign-off verdict.",
+      "repo-primitive-audit": "Starts from: a repo or section to review, and suspected doc-vs-source drift. Produces: a primitive map from source, then an adversarial review against it.",
+      "knowledge-extraction": "Starts from: a finished substantive session with decisions, failures or constraints in it. Produces: proposed durable knowledge writes, user approves before any write."
+     }
+    },
+    "work": {
+     "type": "noul",
+     "instructions": "Does `user_turn` ask for help carrying out a piece of software or product work, such as planning, building, reviewing, releasing, responding to an outage, or learning from finished work?",
+     "criteria": {
+      "true": "The user wants a multi-step piece of work done, or wants to know how to approach one.",
+      "false": "The user asks a factual question, asks about this repository's own files, or asks for a small single-step task such as one function or one test file."
+     }
+    },
+    "named": {
+     "type": "noul",
+     "instructions": "Does `user_turn` name the specific playbook, prompt or procedure the user wants to use?"
+    },
+    "vault": {
+     "type": "noul",
+     "instructions": "Is `user_turn` about maintaining the artifacts of this knowledge repository itself, such as promoting, deprecating, linting, auditing, archiving or saving a skill, prompt or playbook?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "issue-to-ready-specs",
+     "confidence": 0.97,
+     "probabilities": {
+      "brainstorming": 0,
+      "product-brief": 0,
+      "decision-making": 0,
+      "quick-spec": 0.03,
+      "issue-to-ready-specs": 0.97,
+      "raa": 0,
+      "implementation-orchestration": 0,
+      "issue-to-pr": 0,
+      "build-to-release": 0,
+      "agent-installer": 0,
+      "acceptance-verification": 0,
+      "adversarial-code-review": 0,
+      "readiness-cycle": 0,
+      "retrospective": 0,
+      "incident-response": 0,
+      "loop-prd-readiness": 0,
+      "loop-implementation-readiness": 0,
+      "review-release-candidate": 0,
+      "repo-primitive-audit": 0,
+      "knowledge-extraction": 0
+     }
+    },
+    "work": {
+     "type": "noul",
+     "noul": 0.96
+    },
+    "named": {
+     "type": "noul",
+     "noul": 0.17
+    },
+    "vault": {
+     "type": "noul",
+     "noul": 0.09
+    }
+   },
+   "usage": {
+    "input_tokens": 1524,
+    "output_tokens": 272
+   }
+  }
+ },
+ "61bad824413fc18f": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "Turn GitHub issue #51 into specs. Each spec will be implemented by one agent in a single session. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical — I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+    "candidates": {
+     "issue-to-ready-specs": "Starts from: an existing tracked issue, big enough for several stories. Produces: a PRD plus N implementation-ready specs.\n\n# Purpose\n\nTurns a GitHub issue into a complete, implementation-ready spec suite — PRD plus N implementation specs — in one session. Chains the product-brief and quick-spec playbooks with research, architecture, handoff resolution, and a readiness audit. Produces specs that pass a six-criterion Ready-for-Development standard with all decision points resolved.\n\n# When to use\n\nWhen the user says \"spec this issue\", \"break down issue #N\", or when a GitHub issue needs to become implementable work items with acceptance criteria, file-level tasks, and test plans. Usable by any agent or human — does not require a specific agent fleet.\n\nNot for: single-feature quick specs (use quick-spec directly), pure architecture decisions (use an architect), or brainstorming (use brainstorming).\n\nParadigm: this playbook belongs to the spec paradigm. Use the spec paradigm ([quick-spec](../quick-spec/), [issue-to-ready-specs](../issue-to-ready-specs/)) when a single agent or human will implement the feature in one session — the spec is the contract, the implementer handles phasing. Use the plan paradigm ([raa](../raa/), [implementation-orchestration](../implementation-orchestration/)) when a fleet will implement in parallel — the plan handles phasing, file ownership, and handoffs. The paradigms compose: specs feed RAA as the feature description. If unsure which to use, load the [ai-stuff-artifact-rout",
+     "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.\n\n# Purpose\n\nCreates implementation-ready technical specifications through conversational discovery, code investigation, and structured documentation. Enforces a six-criterion Ready-for-Development standard: Actionable, Logical, Testable, Complete, Self-contained, Consistent. A spec that fails any criterion is not handed off.\n\n# When to use\n\nWhen the user says \"create a quick spec\" or \"generate a tech spec\", or when a feature or change needs an implementation-ready spec before development starts. Produces a document a fresh agent can implement from without session history.\n\nNot for: full PRD creation (use prompts/loop-prd-readiness/), architectural decision records, or research documents.\n\nParadigm: this playbook belongs to the spec paradigm. Use the spec paradigm ([quick-spec](../quick-spec/), [issue-to-ready-specs](../issue-to-ready-specs/)) when a single agent or human will implement the feature in one session — the spec is the contract, the implementer handles phasing. Use the plan paradigm ([raa](../raa/), [implementation-orchestration](../implementation-orchestration/)) when a fleet will implement in parallel — the plan handles phasing, file ownership, and handoffs. The paradigms compose: specs feed RAA as the feature description. If unsure which to use, load the [ai-stuff-artifact-router](../../skills/ai-stuff-artifact-router/) skill. In a tool without skill support, fall ",
+     "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.\n\n# Purpose\n\nFacilitates interactive brainstorming sessions using a library of 61 structured creativity techniques across 10 categories. Keeps the user in generative exploration mode, aims for 100+ ideas before organizing, and produces themed, prioritized action plans. Standalone — no framework dependencies.\n\n# When to use\n\nWhen the user says \"help me brainstorm\" or \"help me ideate\", or when a topic needs divergent idea generation before convergence. Requires an interactive session (30-60+ minutes) and a user ready for generative exploration.\n\nNot for: quick ideation (<15 min), single-answer questions, or sessions where the user already knows what they want."
+    }
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which procedure in `candidates` should the user in `user_turn` start with, given what they already have?",
+     "criteria": {
+      "issue-to-ready-specs": "The procedure described in `candidates.issue-to-ready-specs`",
+      "quick-spec": "The procedure described in `candidates.quick-spec`",
+      "brainstorming": "The procedure described in `candidates.brainstorming`"
+     }
+    },
+    "fits__issue-to-ready-specs": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.issue-to-ready-specs` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__quick-spec": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.quick-spec` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__brainstorming": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.brainstorming` start from what the user in `user_turn` already has and produce what they want?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "issue-to-ready-specs",
+     "confidence": 0.98,
+     "probabilities": {
+      "issue-to-ready-specs": 0.99,
+      "quick-spec": 0.01,
+      "brainstorming": 0
+     }
+    },
+    "fits__issue-to-ready-specs": {
+     "type": "noul",
+     "noul": 0.85
+    },
+    "fits__quick-spec": {
+     "type": "noul",
+     "noul": 0.24
+    },
+    "fits__brainstorming": {
+     "type": "noul",
+     "noul": 0.04
+    }
+   },
+   "usage": {
+    "input_tokens": 1520,
+    "output_tokens": 113
+   }
+  }
+ },
+ "87b34b97c6f644cd": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "We have three vendor options for our search backend and need to pick one this week. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical — I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`."
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which of these procedures fits what the user in `user_turn` already has and wants to end up with?",
+     "criteria": {
+      "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.",
+      "product-brief": "Starts from: a rough idea, or brainstorm output already converged. Produces: structured brief: problem, users, success, scope, constraints.",
+      "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.",
+      "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.",
+      "issue-to-ready-specs": "Starts from: an existing tracked issue, big enough for several stories. Produces: a PRD plus N implementation-ready specs.",
+      "raa": "Starts from: a feature/change/readiness request against a real codebase. Produces: a validated phased plan with file-level scope, risks, handoffs.",
+      "implementation-orchestration": "Starts from: a validated plan: phases, file scope, named risks, handoff list. Produces: a committed, reviewed, CI-green branch.",
+      "issue-to-pr": "Starts from: an existing tracked issue, well-scoped. Produces: a merged PR (gated or continuous mode).",
+      "build-to-release": "Starts from: an idea or proof-of-concept, work worth 3+ stories. Produces: a released implementation, through 13 gated phases.",
+      "agent-installer": "Starts from: a requirement to ship a multi-platform installer CLI. Produces: an installer with TUI and CI mode, idempotent, config-driven.",
+      "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).",
+      "adversarial-code-review": "Starts from: a git diff, and a finite list of claims or acceptance criteria. Produces: ≥3 categorised findings plus a fix menu.",
+      "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.",
+      "retrospective": "Starts from: a completed body of work. Produces: lessons, follow-through check, SMART action items.",
+      "incident-response": "Starts from: a production system misbehaving after a shipped change, and access to its dashboards, logs or rollback. Produces: service restored or escalated, an incident timeline, owned follow-ups.",
+      "loop-prd-readiness": "Starts from: a planning doc with known gaps, conflicts or partial sections. Produces: the same doc driven to implementation-ready, atomic and traceable.",
+      "loop-implementation-readiness": "Starts from: a finished doc and a codebase meant to implement it. Produces: evidence-based coverage verdict, smallest next action per gap.",
+      "review-release-candidate": "Starts from: a release candidate (branch, build, tag) and documented acceptance criteria. Produces: inventory → triage → fix batches → sign-off verdict.",
+      "repo-primitive-audit": "Starts from: a repo or section to review, and suspected doc-vs-source drift. Produces: a primitive map from source, then an adversarial review against it.",
+      "knowledge-extraction": "Starts from: a finished substantive session with decisions, failures or constraints in it. Produces: proposed durable knowledge writes, user approves before any write."
+     }
+    },
+    "work": {
+     "type": "noul",
+     "instructions": "Does `user_turn` ask for help carrying out a piece of software or product work, such as planning, building, reviewing, releasing, responding to an outage, or learning from finished work?",
+     "criteria": {
+      "true": "The user wants a multi-step piece of work done, or wants to know how to approach one.",
+      "false": "The user asks a factual question, asks about this repository's own files, or asks for a small single-step task such as one function or one test file."
+     }
+    },
+    "named": {
+     "type": "noul",
+     "instructions": "Does `user_turn` name the specific playbook, prompt or procedure the user wants to use?"
+    },
+    "vault": {
+     "type": "noul",
+     "instructions": "Is `user_turn` about maintaining the artifacts of this knowledge repository itself, such as promoting, deprecating, linting, auditing, archiving or saving a skill, prompt or playbook?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "decision-making",
+     "confidence": 1,
+     "probabilities": {
+      "brainstorming": 0,
+      "product-brief": 0,
+      "decision-making": 1,
+      "quick-spec": 0,
+      "issue-to-ready-specs": 0,
+      "raa": 0,
+      "implementation-orchestration": 0,
+      "issue-to-pr": 0,
+      "build-to-release": 0,
+      "agent-installer": 0,
+      "acceptance-verification": 0,
+      "adversarial-code-review": 0,
+      "readiness-cycle": 0,
+      "retrospective": 0,
+      "incident-response": 0,
+      "loop-prd-readiness": 0,
+      "loop-implementation-readiness": 0,
+      "review-release-candidate": 0,
+      "repo-primitive-audit": 0,
+      "knowledge-extraction": 0
+     }
+    },
+    "work": {
+     "type": "noul",
+     "noul": 0.94
+    },
+    "named": {
+     "type": "noul",
+     "noul": 0.08
+    },
+    "vault": {
+     "type": "noul",
+     "noul": 0.04
+    }
+   },
+   "usage": {
+    "input_tokens": 1518,
+    "output_tokens": 269
+   }
+  }
+ },
+ "e66fb571b24c663b": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "We have three vendor options for our search backend and need to pick one this week. Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical — I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+    "candidates": {
+     "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.\n\n# Purpose\n\nTakes N options (typically from brainstorming, but any decision with multiple candidates) and produces a ranked shortlist (top 3-5) with explicit rationale per ranking criterion, using multi-criteria decision analysis. Scores each option against user-defined criteria, computes weighted totals, runs a sensitivity check, and hands off a robustness-verdicted shortlist ready to feed product-brief or direct selection. Fills the brainstorming → product-brief gap where too many options need structured convergence.\n\n# When to use\n\nAfter brainstorming produces too many options, or when facing any decision with multiple candidates and no clear winner.\n\nNot for:\n- Binary decisions (just pick).\n- Decisions requiring stakeholder alignment (use a voting/alignment process).\n- Single-option scenarios (nothing to rank).",
+     "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.\n\n# Purpose\n\nFacilitates interactive brainstorming sessions using a library of 61 structured creativity techniques across 10 categories. Keeps the user in generative exploration mode, aims for 100+ ideas before organizing, and produces themed, prioritized action plans. Standalone — no framework dependencies.\n\n# When to use\n\nWhen the user says \"help me brainstorm\" or \"help me ideate\", or when a topic needs divergent idea generation before convergence. Requires an interactive session (30-60+ minutes) and a user ready for generative exploration.\n\nNot for: quick ideation (<15 min), single-answer questions, or sessions where the user already knows what they want.",
+     "product-brief": "Starts from: a rough idea, or brainstorm output already converged. Produces: structured brief: problem, users, success, scope, constraints.\n\n# Purpose\n\nTurns brainstorm output or a rough idea into a structured product brief through facilitated discovery. Covers five sections — problem, users, success, scope, constraints — one at a time, each confirmed before moving to the next. The output directly feeds into plan refinement. Fills the gap between brainstorming and planning.\n\n# When to use\n\nWhen the user says \"help me create a product brief\" or \"I have an idea I want to structure\", or immediately after a brainstorming session before writing a plan. ~45-60 minutes.\n\nNot for: teams with an existing plan doc (route to plan refinement directly), or pure research sessions with no product direction yet."
+    }
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which procedure in `candidates` should the user in `user_turn` start with, given what they already have?",
+     "criteria": {
+      "decision-making": "The procedure described in `candidates.decision-making`",
+      "brainstorming": "The procedure described in `candidates.brainstorming`",
+      "product-brief": "The procedure described in `candidates.product-brief`"
+     }
+    },
+    "fits__decision-making": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.decision-making` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__brainstorming": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.brainstorming` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__product-brief": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.product-brief` start from what the user in `user_turn` already has and produce what they want?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "decision-making",
+     "confidence": 1,
+     "probabilities": {
+      "decision-making": 1,
+      "brainstorming": 0,
+      "product-brief": 0
+     }
+    },
+    "fits__decision-making": {
+     "type": "noul",
+     "noul": 0.69
+    },
+    "fits__brainstorming": {
+     "type": "noul",
+     "noul": 0.05
+    },
+    "fits__product-brief": {
+     "type": "noul",
+     "noul": 0.07
+    }
+   },
+   "usage": {
+    "input_tokens": 1207,
+    "output_tokens": 106
+   }
+  }
+ },
+ "2dbc41f856837334": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "What's the difference between raa and quick-spec in this repo? Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical — I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`."
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which of these procedures fits what the user in `user_turn` already has and wants to end up with?",
+     "criteria": {
+      "brainstorming": "Starts from: a topic, and 30-60+ min of interactive time. Produces: 100+ ideas, themed and prioritised.",
+      "product-brief": "Starts from: a rough idea, or brainstorm output already converged. Produces: structured brief: problem, users, success, scope, constraints.",
+      "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.",
+      "quick-spec": "Starts from: one feature or change, one implementer, one session. Produces: one implementation-ready spec, 6-criterion gated.",
+      "issue-to-ready-specs": "Starts from: an existing tracked issue, big enough for several stories. Produces: a PRD plus N implementation-ready specs.",
+      "raa": "Starts from: a feature/change/readiness request against a real codebase. Produces: a validated phased plan with file-level scope, risks, handoffs.",
+      "implementation-orchestration": "Starts from: a validated plan: phases, file scope, named risks, handoff list. Produces: a committed, reviewed, CI-green branch.",
+      "issue-to-pr": "Starts from: an existing tracked issue, well-scoped. Produces: a merged PR (gated or continuous mode).",
+      "build-to-release": "Starts from: an idea or proof-of-concept, work worth 3+ stories. Produces: a released implementation, through 13 gated phases.",
+      "agent-installer": "Starts from: a requirement to ship a multi-platform installer CLI. Produces: an installer with TUI and CI mode, idempotent, config-driven.",
+      "acceptance-verification": "Starts from: a running build (URL or build ID plus commit) and its acceptance criteria. Produces: a per-criterion evidence ledger and a tri-state verdict (VERIFIED, WITH_CONDITIONS, NOT_VERIFIED).",
+      "adversarial-code-review": "Starts from: a git diff, and a finite list of claims or acceptance criteria. Produces: ≥3 categorised findings plus a fix menu.",
+      "readiness-cycle": "Starts from: an existing artifact and a readiness question. Produces: a verified-ready verdict or a fix plan, looped until ship.",
+      "retrospective": "Starts from: a completed body of work. Produces: lessons, follow-through check, SMART action items.",
+      "incident-response": "Starts from: a production system misbehaving after a shipped change, and access to its dashboards, logs or rollback. Produces: service restored or escalated, an incident timeline, owned follow-ups.",
+      "loop-prd-readiness": "Starts from: a planning doc with known gaps, conflicts or partial sections. Produces: the same doc driven to implementation-ready, atomic and traceable.",
+      "loop-implementation-readiness": "Starts from: a finished doc and a codebase meant to implement it. Produces: evidence-based coverage verdict, smallest next action per gap.",
+      "review-release-candidate": "Starts from: a release candidate (branch, build, tag) and documented acceptance criteria. Produces: inventory → triage → fix batches → sign-off verdict.",
+      "repo-primitive-audit": "Starts from: a repo or section to review, and suspected doc-vs-source drift. Produces: a primitive map from source, then an adversarial review against it.",
+      "knowledge-extraction": "Starts from: a finished substantive session with decisions, failures or constraints in it. Produces: proposed durable knowledge writes, user approves before any write."
+     }
+    },
+    "work": {
+     "type": "noul",
+     "instructions": "Does `user_turn` ask for help carrying out a piece of software or product work, such as planning, building, reviewing, releasing, responding to an outage, or learning from finished work?",
+     "criteria": {
+      "true": "The user wants a multi-step piece of work done, or wants to know how to approach one.",
+      "false": "The user asks a factual question, asks about this repository's own files, or asks for a small single-step task such as one function or one test file."
+     }
+    },
+    "named": {
+     "type": "noul",
+     "instructions": "Does `user_turn` name the specific playbook, prompt or procedure the user wants to use?"
+    },
+    "vault": {
+     "type": "noul",
+     "instructions": "Is `user_turn` about maintaining the artifacts of this knowledge repository itself, such as promoting, deprecating, linting, auditing, archiving or saving a skill, prompt or playbook?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "decision-making",
+     "confidence": 0.44,
+     "probabilities": {
+      "brainstorming": 0.04,
+      "product-brief": 0.01,
+      "decision-making": 0.47,
+      "quick-spec": 0.02,
+      "issue-to-ready-specs": 0,
+      "raa": 0.08,
+      "implementation-orchestration": 0,
+      "issue-to-pr": 0,
+      "build-to-release": 0,
+      "agent-installer": 0,
+      "acceptance-verification": 0,
+      "adversarial-code-review": 0,
+      "readiness-cycle": 0,
+      "retrospective": 0,
+      "incident-response": 0,
+      "loop-prd-readiness": 0,
+      "loop-implementation-readiness": 0,
+      "review-release-candidate": 0,
+      "repo-primitive-audit": 0.18,
+      "knowledge-extraction": 0.2
+     }
+    },
+    "work": {
+     "type": "noul",
+     "noul": 0.62
+    },
+    "named": {
+     "type": "noul",
+     "noul": 0.22
+    },
+    "vault": {
+     "type": "noul",
+     "noul": 0.09
+    }
+   },
+   "usage": {
+    "input_tokens": 1515,
+    "output_tokens": 269
+   }
+  }
+ },
+ "fbcb12b801c7882b": {
+  "payload": {
+   "model": "jev-1.14.0",
+   "state": {
+    "user_turn": "What's the difference between raa and quick-spec in this repo? Do not edit, create, delete or commit anything, and do not run any git command that changes state. This is hypothetical — I am not asking you to do the work now. I want to know how you would approach it and what procedure you would follow, before I decide. Answer in under 150 words, then a final line `SKILLS_USED: <names or \"none\">`.",
+    "candidates": {
+     "decision-making": "Starts from: N existing options and no clear winner. Produces: ranked top 3-5 with per-criterion rationale and a robustness verdict.\n\n# Purpose\n\nTakes N options (typically from brainstorming, but any decision with multiple candidates) and produces a ranked shortlist (top 3-5) with explicit rationale per ranking criterion, using multi-criteria decision analysis. Scores each option against user-defined criteria, computes weighted totals, runs a sensitivity check, and hands off a robustness-verdicted shortlist ready to feed product-brief or direct selection. Fills the brainstorming → product-brief gap where too many options need structured convergence.\n\n# When to use\n\nAfter brainstorming produces too many options, or when facing any decision with multiple candidates and no clear winner.\n\nNot for:\n- Binary decisions (just pick).\n- Decisions requiring stakeholder alignment (use a voting/alignment process).\n- Single-option scenarios (nothing to rank).",
+     "knowledge-extraction": "Starts from: a finished substantive session with decisions, failures or constraints in it. Produces: proposed durable knowledge writes, user approves before any write.\n\n# Purpose\n\nMines a completed work session and proposes durable, actionable knowledge writes — skills, ADRs, gotchas, security constraints, reference docs. The user reviews and approves before anything is written. Does not summarize what happened; extracts what should change how future sessions behave.\n\n# When to use\n\nAfter a substantive work session, before closing it. When the session produced decisions, failures, retries, non-obvious constraints, or recurring patterns worth carrying forward — and you want captured knowledge, not a recap.\n\nInject as a system prompt or paste as the first message. Works with any AI tool and any project type.\n\nNot for: live mid-session guidance, session summaries, or sessions with no durable signal.",
+     "repo-primitive-audit": "Starts from: a repo or section to review, and suspected doc-vs-source drift. Produces: a primitive map from source, then an adversarial review against it.\n\n# Purpose\n\nMaps a repository's primitives from its source code, breaks down each section, then runs an adversarial review against a named review playbook. Forces a complete map before any review begins, so the review operates against the actual structure rather than an assumed one. One-shot, model-agnostic.\n\n# When to use\n\nYou are about to review a repo (or a section of it) and need the review grounded in what the source actually declares — governance rules, section membership conventions, lifecycle state, enforcement — rather than a guess at its structure. Use this when you suspect drift between what a repo's docs claim and what its source enforces, or before adding an artifact to confirm the section you're targeting actually accepts it.\n\nNot for: reviewing a single file or diff (use playbooks/adversarial-code-review/ directly), reviewing non-code repos, or one-off exploration with no review goal."
+    }
+   },
+   "questions": {
+    "which": {
+     "type": "choice",
+     "instructions": "Which procedure in `candidates` should the user in `user_turn` start with, given what they already have?",
+     "criteria": {
+      "decision-making": "The procedure described in `candidates.decision-making`",
+      "knowledge-extraction": "The procedure described in `candidates.knowledge-extraction`",
+      "repo-primitive-audit": "The procedure described in `candidates.repo-primitive-audit`"
+     }
+    },
+    "fits__decision-making": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.decision-making` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__knowledge-extraction": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.knowledge-extraction` start from what the user in `user_turn` already has and produce what they want?"
+    },
+    "fits__repo-primitive-audit": {
+     "type": "noul",
+     "instructions": "Does the procedure in `candidates.repo-primitive-audit` start from what the user in `user_turn` already has and produce what they want?"
+    }
+   }
+  },
+  "response": {
+   "model": "jev-1.14.0",
+   "answers": {
+    "which": {
+     "type": "choice",
+     "choice": "repo-primitive-audit",
+     "confidence": 0.94,
+     "probabilities": {
+      "decision-making": 0.03,
+      "knowledge-extraction": 0.01,
+      "repo-primitive-audit": 0.96
+     }
+    },
+    "fits__decision-making": {
+     "type": "noul",
+     "noul": 0.08
+    },
+    "fits__knowledge-extraction": {
+     "type": "noul",
+     "noul": 0.06
+    },
+    "fits__repo-primitive-audit": {
+     "type": "noul",
+     "noul": 0.26
+    }
+   },
+   "usage": {
+    "input_tokens": 1268,
+    "output_tokens": 118
+   }
+  }
  }
 }
