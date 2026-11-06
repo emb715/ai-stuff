@@ -115,6 +115,8 @@ The revision replaces warning/link/length quotas, clarifies source-specific veri
 
 After that comparison, static review prompted evaluation to move after body/description finalization, added a candidate-freeze/retest rule, clarified the installed-package tree, and aligned supporting records. The exact tested and final snapshot hashes are recorded in `evals/comparison.json`; the final corrections received static checks but not a repeated authoring comparison. `last_tested` records this observed testing/review date, not a validated-effectiveness claim. Status remains **draft**, confidence **medium**, with promotion deferred.
 
+**2026-11-06 revision, static only.** Three additions borrowed from a published third-party skill that showed them working together: pointers to live docs with a fallback when they are unreachable (Step 5), a split between hard constraints and guidance (Step 6), and overfitting signals to check when revising after a failed eval (Step 10). No authoring comparison was rerun for them; `last_tested` is unchanged.
+
 A subsequent standalone-use correction removed the optional external-skill workflow pointer, stated grading/reporting instructions directly, and made project lifecycle metadata/policy conditional. This portability correction was statically checked, not behaviorally benchmarked; the earlier 17/17 comparison does not validate the current executable.
 
 # Failure Modes / Boundaries
