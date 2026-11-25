@@ -81,6 +81,7 @@ This table is a snapshot. The filesystem is authoritative — `ls` the content d
 | Tool | Purpose | Status |
 |---|---|---|
 | [change-impact](tools/change-impact/) | Run change-impact-diagram skill automatically on PRs or locally; LLM-agnostic, marker-delimited PR upsert | validated |
+| [strip-attribution](tools/strip-attribution/) | Claude Code hook that removes Claude attribution from PR, issue and comment bodies (`gh` and GitHub MCP); plugin or settings installer, local and cloud | validated |
 
 ### Experiments
 

@@ -6,7 +6,7 @@ Claude Code sessions in claude.ai projects are told by the harness to start ever
 
 ## Origin
 
-Built first in the neurodiveragents repo as a project-level Bash hook (closed PR emb715/neurodiveragents#32). That version missed the main path: cloud sessions create PRs with the GitHub MCP tools, not `gh`. Moved here so one script can be installed globally, locally and in cloud environments.
+Built first in the neurodiveragents repo as a project-level Bash hook (closed PR emb715/neurodiveragents#32). That version missed the main path: cloud sessions create PRs with the GitHub MCP tools, not `gh`. Moved to ai-stuff so one script can be installed globally, locally and in cloud environments.
 
 ## Design decisions
 
@@ -24,5 +24,6 @@ Built first in the neurodiveragents repo as a project-level Bash hook (closed PR
 
 ## Known gaps
 
-- No end-to-end run yet in a live session (local or cloud). A headless child session in the build container was blocked by its permission policy.
 - `gh api` and direct REST calls are not handled.
+
+Promoted from `experiments/` to `tools/` on 2026-11-25 after one local plugin run and one cloud environment run both produced clean bodies.

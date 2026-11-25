@@ -8,7 +8,7 @@ SRC="$(cd "$(dirname "$0")" 2>/dev/null && pwd)/hook.mjs"
 if [ ! -f "$SRC" ]; then
   TMP="$(mktemp -d)"
   git clone --quiet --depth 1 https://github.com/emb715/ai-stuff "$TMP/ai-stuff"
-  SRC="$TMP/ai-stuff/experiments/strip-attribution/hook.mjs"
+  SRC="$TMP/ai-stuff/tools/strip-attribution/hook.mjs"
 fi
 mkdir -p "$CLAUDE_HOME/hooks"
 cp "$SRC" "$CLAUDE_HOME/hooks/strip-attribution.mjs"

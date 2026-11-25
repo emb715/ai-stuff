@@ -4,7 +4,7 @@
   "plugins": [
     {
       "name": "strip-attribution",
-      "source": "./experiments/strip-attribution",
+      "source": "./tools/strip-attribution",
       "description": "Removes Claude attribution lines from PR, issue and comment bodies sent through gh or GitHub MCP tools."
     }
   ]

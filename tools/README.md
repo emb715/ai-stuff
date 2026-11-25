@@ -49,3 +49,4 @@ Frontmatter required on the tool README (same standard as all artifacts):
 | Tool | Tags | Status |
 |---|---|---|
 | [change-impact](change-impact/) | tool, cli, github-action, impact-analysis, mermaid, llm | validated |
+| [strip-attribution](strip-attribution/) | tool, claude-code, hooks, github | validated |
