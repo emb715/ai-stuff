@@ -40,7 +40,7 @@ test('--body-file is cleaned into a temp copy, original untouched', () => {
 });
 
 test('non-gh-body commands are untouched', () => {
-  for (const c of ['echo "Generated with Claude Code"', 'gh pr list', 'git commit -m "Generated with Claude Code"']) {
+  for (const c of ['echo "Generated with Claude Code"', 'gh pr list', 'git log --grep "Generated with Claude Code"']) {
     assert.equal(rewrite(c), c);
   }
 });
@@ -71,4 +71,31 @@ test('MCP: clean body or non-GitHub server returns null', () => {
 test('hook process: MCP call emits updatedInput', () => {
   const r = spawnSync('node', [HOOK], { input: JSON.stringify({ tool_name: 'mcp__github__add_issue_comment', tool_input: { issue_number: 1, body: `${ATTR}hi` } }) });
   assert.deepEqual(JSON.parse(r.stdout).hookSpecificOutput.updatedInput, { issue_number: 1, body: 'hi' });
+});
+const TRAILERS = '\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>\nClaude-Session: ';
+
+test('git commit heredoc: Claude trailers removed, message kept', () => {
+  const out = rewrite(`git commit -m "$(cat <<'EOF'\nfeat(x): add y\n\nBody.${TRAILERS}\nEOF\n)"`);
+  assert.doesNotMatch(out, /Co-Authored-By|Claude-Session/i);
+  assert.match(out, /<<'EOF'\nfeat\(x\): add y\n\nBody\.\nEOF\n\)"$/);
+});
+
+test('git commit -F file: cleaned temp copy; -C prefix recognised', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'hook-test-'));
+  const file = join(dir, 'msg.txt');
+  writeFileSync(file, `fix: z${TRAILERS}\n`);
+  const out = rewrite(`git -C repo commit -F ${file}`);
+  assert.equal(readFileSync(out.match(/-F '([^']+)'/)[1], 'utf8'), 'fix: z\n');
+});
+
+test('human co-authors and non-commit git commands untouched', () => {
+  const keep = 'git commit -m "fix: a\n\nCo-Authored-By: Jane <jane@example.com>"';
+  assert.equal(rewrite(keep), keep);
+  const log = 'git log --grep "Co-Authored-By: Claude <noreply@anthropic.com>"';
+  assert.equal(rewrite(log), log);
+});
+
+test('GitHub MCP commit message field cleaned', () => {
+  const out = updatedInput({ tool_name: 'mcp__github__push_files', tool_input: { branch: 'b', message: `feat: x${TRAILERS}` } });
+  assert.deepEqual(out, { branch: 'b', message: 'feat: x' });
 });

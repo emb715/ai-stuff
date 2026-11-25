@@ -13,11 +13,14 @@ import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 const GH = /\bgh\s+(?:pr\s+(?:create|edit|comment|review)|issue\s+(?:create|edit|comment))\b/;
+const GIT_COMMIT = /\bgit\s+(?:-[Cc]\s+\S+\s+)*commit\b/;
 
 const PATTERNS = [
   /<!--\s*claude-projects-attribution:[^\n]*?-->/g,
   /_?Requested by [^\n]*?\[project thread\]\([^)\n]*\)_?/g,
   /_?(?:🤖\s*)?Generated (?:with|by) \[?Claude Code\]?(?:\([^)\n]*\))?_?/gi,
+  /Co-Authored-By:[ \t]*Claude[^\n<]*<noreply@anthropic\.com>/gi,
+  /Claude-Session:[ \t]*\S*/g,
   /<?https:\/\/claude\.ai\/code\/session_[A-Za-z0-9_-]+>?/g,
 ];
 
@@ -36,10 +39,10 @@ export function clean(text) {
   return out;
 }
 
-const BODY_FILE = /(--body-file(?:=|\s+)|-F\s+)(?:"([^"]+)"|'([^']+)'|([^\s;&|]+))/g;
+const BODY_FILE = /(--body-file(?:=|\s+)|--file(?:=|\s+)|-F\s+)(?:"([^"]+)"|'([^']+)'|([^\s;&|]+))/g;
 
 export function rewrite(command, cwd = process.cwd()) {
-  if (!GH.test(command)) return command;
+  if (!GH.test(command) && !GIT_COMMIT.test(command)) return command;
   let out = clean(command);
   out = out.replace(BODY_FILE, (m, flag, dq, sq, bare) => {
     const path = dq ?? sq ?? bare;
@@ -74,7 +77,7 @@ export function updatedInput({ tool_name: name, tool_input: ti, cwd } = {}) {
       if (!v || typeof v !== 'object') return v;
       const o = {};
       for (const [k, x] of Object.entries(v)) {
-        if (k === 'body' && typeof x === 'string') {
+        if ((k === 'body' || k === 'message') && typeof x === 'string') {
           const c = clean(x);
           if (c !== x) { changed = true; o[k] = c.trim(); continue; }
         }
