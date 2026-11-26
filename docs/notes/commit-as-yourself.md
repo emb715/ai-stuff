@@ -143,5 +143,6 @@ To verify a setup, make a commit and run `git log -1 --format='%an <%ae> | %G?'`
 - **The runtime may reapply its config.** If the cloud runtime rewrites the global git config after `SessionStart`, its own signer comes back. Test one commit before relying on it.
 - **The git proxy may reject your commits.** Some cloud git proxies accept only their own identity or signer. Test one push.
 - **Your key is readable in the session.** Environment variables are stored in plain text and readable by any command in the session. Keep the cloud key separate and signing-only. If it leaks, revoke it on GitHub; past commits it signed then show Unverified.
+- **The container may lack `ssh-keygen`.** SSH signing needs it; install `openssh-client` in the setup script.
 - **A failed hook means unsigned commits.** Branch protection that requires signed commits will reject the push.
 - **Authorship becomes yours.** Commits Claude writes will show you as author. Decide whether that fits your team's review practice.
