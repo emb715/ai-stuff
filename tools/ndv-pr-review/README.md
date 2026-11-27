@@ -58,6 +58,7 @@ Installed plugins cannot read files outside their own folder and do not follow a
 /ndv-pr-review --staged            # review what is staged
 /ndv-pr-review 123 --impact=small  # add badges and the primitives table
 /ndv-pr-review 123 --post          # post one comment and inline Criticals
+/ndv-pr-review 123 --label         # post, then set an ndv-review:<verdict> label
 ```
 
 While testing a local copy: `claude --plugin-dir tools/ndv-pr-review`.
@@ -73,7 +74,17 @@ The fleet must be installed for Claude Code. If it is missing, the review runs `
 3. Add the toolchain the repo's tests need (setup-go, setup-python, ...) and allow its test command in `claude_args`, so the review can compare base and head.
 4. On a self-hosted runner, make sure `unzip` is installed (the action needs it). The template fetches `gh` itself when it is missing.
 
-To review the same head again, push a new commit: the skill skips a head that already has its comment.
+To review a PR, add the label `ndv-review`. When the review is posted, the label is replaced by one result label:
+
+| Verdict | Label |
+|---|---|
+| Ready to merge | `ndv-review:approved` |
+| Merge after fixes | `ndv-review:fixes-needed` |
+| Fix before merge | `ndv-review:changes-requested` |
+
+Add `ndv-review` again to review the PR again, on the same head or a new one. The labels are created on first use. If the review stops early or fails, the trigger label is removed and no result label is set. To review every PR automatically instead, see the comment at the top of the template; in that mode a head that already has a review comment is skipped.
+
+Locally, `/ndv-pr-review 123 --label` does the same: it posts and sets the result label.
 
 Workload identity federation also signs the action in, but the run then bills the organization's API credit as Claude Code usage, and promotional API credit does not cover Claude Code. If you use it, note that a personal account's OIDC subject has the ID form `repo:<owner>@<owner-id>/<repo>@<repo-id>:<event>`, so a subject-prefix rule must match `repo:<owner>@<owner-id>/*`.
 
@@ -223,7 +234,7 @@ v0.8 adds one `ndv-review` agent that checks every Warning together, next to the
 - **Not covered:** OpenCode (no plugin format), Cursor and Copilot (no subagent dispatch).
 - **Headless runs end with the main turn.** Every agent runs in the foreground; a background agent's result never arrives.
 - **Small changes still run every step.** Flow, the base-vs-head tests and explain are required, which doubled time and cost on a one-line change for one extra (base) finding.
-- **One review per head.** The gate skips a head that already has a review comment.
+- **One automatic review per head.** Outside label mode the gate skips a head that already has a review comment.
 
 ## Related
 

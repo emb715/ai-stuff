@@ -1,6 +1,6 @@
 {
   "name": "ndv-pr-review",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Pull request review by the ndv agent fleet, routed by change impact (layer and composes/extends/adds/removes). One summary, written for the reader.",
   "author": {
     "name": "emb715"

@@ -17,6 +17,7 @@ Built from a design session on 2026-11-24. The goal was a PR review that uses th
 - **Foreground agents only (v0.9).** In a headless run the session ends with the main turn, so a background agent's result never arrives and nothing is posted.
 - **Flow, base-vs-head tests and explain are required (v0.9).** On the action's default model (Sonnet) they were skipped when optional. Run details lists each as `done` or `not run (<reason>)`.
 - **OAuth token for the Action.** Workload identity signs in, but it bills API credit, and promotional API credit does not cover Claude Code. The OAuth token bills the subscription.
+- **Label trigger (0.10.0).** The template reviews a PR only when the `ndv-review` label is added, so reviews are opt-in and cost nothing on PRs nobody asked about. The result is a label (`ndv-review:approved`, `:fixes-needed`, `:changes-requested`) so the state shows in the PR list. Adding the label is an explicit request, so label mode skips the already-reviewed-head gate. The concurrency group includes the label name, so adding another label does not cancel a running review.
 - **Promoted to `tools/` on 2026-11-27** after the first end-to-end Action review.
 
 ## Maintenance

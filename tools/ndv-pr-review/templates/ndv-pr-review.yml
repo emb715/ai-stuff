@@ -9,26 +9,31 @@
 #
 # The workflow only runs once this file is on the default branch: the action
 # skips a run whose workflow file differs from the default branch's copy.
+#
+# Add the label `ndv-review` to a PR to review it. When the review is posted,
+# the label is replaced by ndv-review:approved, ndv-review:fixes-needed or
+# ndv-review:changes-requested. Add `ndv-review` again to review the PR again.
+# To review every PR automatically instead, use the trigger types
+# [opened, synchronize, ready_for_review], drop the label check in `if`, and
+# remove `--label` from the prompt.
 name: ndv-pr-review
 on:
   pull_request:
-    types: [opened, synchronize, ready_for_review]
-    # A PR that only changes workflows is skipped: the action will not run
-    # a workflow file that differs from the default branch's copy anyway.
-    paths-ignore:
-      - ".github/workflows/**"
+    types: [labeled]
 permissions:
   id-token: write # the action trades it for its GitHub app token
   contents: read
   pull-requests: write
   issues: write
+# Keyed on the label too, so adding some other label does not cancel a review.
 concurrency:
-  group: ndv-pr-review-${{ github.event.pull_request.number }}
+  group: ndv-pr-review-${{ github.event.pull_request.number }}-${{ github.event.label.name }}
   cancel-in-progress: true
 jobs:
   review:
-    # Forks get no secrets and no write token, so skip them.
-    if: github.event.pull_request.draft == false && github.event.pull_request.head.repo.full_name == github.repository
+    # Only the trigger label starts a review. Forks get no secrets and no
+    # write token, so skip them.
+    if: github.event.label.name == 'ndv-review' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -71,8 +76,17 @@ jobs:
       - uses: anthropics/claude-code-action@v1
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          prompt: /ndv-pr-review ${{ github.event.pull_request.number }} --post
+          prompt: /ndv-pr-review ${{ github.event.pull_request.number }} --post --label
           claude_args: >-
             --allowedTools "Agent,Skill,Read,Grep,Glob,Bash(git:*),Bash(gh:*),Bash(ndv-fleet-check:*),Bash(npx -y neurodiveragents@latest:*),Bash(npm ci:*),Bash(npm test:*),Bash(npm run test:*),Bash(node:*),mcp__github_inline_comment__create_inline_comment"
         env:
           GH_TOKEN: ${{ github.token }}
+
+      # The review swaps the trigger label for a result label. If it stopped
+      # early or failed, drop the trigger label so it can be added again.
+      - name: Clear the trigger label
+        if: always()
+        run: gh pr edit ${{ github.event.pull_request.number }} --remove-label ndv-review || true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
