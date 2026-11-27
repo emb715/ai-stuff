@@ -2,7 +2,7 @@
 import Base from '../../../layouts/Base.astro';
 import { getCollection, getEntry, render, type CollectionEntry } from 'astro:content';
 import { experimental_AstroContainer } from 'astro/container';
-import { rewriteHtmlLinks } from '../../../utils/rewrite-links.mjs';
+import { rewriteHtmlLinks, repoPathOf } from '../../../utils/rewrite-links.mjs';
 
 const rawBase = import.meta.env.BASE_URL;
 const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
@@ -49,7 +49,7 @@ const status = parentEntry?.data?.status ?? 'draft';
 // Render and rewrite links with the same rewriter used by the README page.
 const container = await experimental_AstroContainer.create();
 const html = await container.renderToString(Content);
-const processedHtml = rewriteHtmlLinks(html, base, collectionName, consumableEntry.id);
+const processedHtml = rewriteHtmlLinks(html, base, repoPathOf(consumableEntry.filePath!));
 
 const githubUrl = `${githubBase}/${collectionName}/${consumableEntry.id}/${fileName}`;
 ---
