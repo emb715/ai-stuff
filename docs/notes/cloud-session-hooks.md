@@ -15,6 +15,7 @@ tags:
   - git
   - signing
   - guidance
+owner: "@emb715"
 ---
 
 # Install Session Hooks in a Cloud Environment
