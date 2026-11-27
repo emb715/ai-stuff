@@ -181,6 +181,8 @@ This activates two hooks:
 
 See `.githooks/README.md` for details.
 
+Claude Code sessions in this repo set this up on their own. `.claude/settings.json` runs `.claude/hooks/pr-title-lint.mjs`, which sets `core.hooksPath` at session start. It also denies a GitHub MCP `create_pull_request` or `update_pull_request` call whose title would fail commit-lint, and passes the lint output back so Claude can fix the title. Tests: `node --test .claude/hooks/pr-title-lint.test.mjs`.
+
 ## Review rubric
 
 Reviewers should reject content that is:
