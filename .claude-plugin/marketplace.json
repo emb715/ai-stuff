@@ -11,7 +11,7 @@
       "name": "ndv-pr-review",
       "source": "./tools/ndv-pr-review",
       "description": "Pull request review by the ndv agent fleet, routed by change impact, with one summary comment.",
-      "version": "0.9.0"
+      "version": "0.10.0"
     }
   ]
 }

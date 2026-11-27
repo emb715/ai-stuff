@@ -55,7 +55,7 @@ Raw fleet report.
 
 </details>
 
-<sub>ndv-pr-review 0.8.0</sub>
+<sub>ndv-pr-review 0.10.0</sub>
 ````
 
 Rules:
