@@ -4,7 +4,7 @@ import { spawnSync } from 'node:child_process';
 import { readFileSync, writeFileSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { rewrite, updatedInput } from '../hook.mjs';
+import { rewrite, updatedInput, footerFix } from '../hook.mjs';
 
 const HOOK = new URL('../hook.mjs', import.meta.url).pathname;
 const ATTR = '<!-- claude-projects-attribution: {"github_login":"x"} -->\n_Requested by **X** · [project thread](https://claude.ai/code/project/c?thread=t)_\n\n';
@@ -98,4 +98,38 @@ test('human co-authors and non-commit git commands untouched', () => {
 test('GitHub MCP commit message field cleaned', () => {
   const out = updatedInput({ tool_name: 'mcp__github__push_files', tool_input: { branch: 'b', message: `feat: x${TRAILERS}` } });
   assert.deepEqual(out, { branch: 'b', message: 'feat: x' });
+});
+
+const created = (extra = {}) => ({
+  hook_event_name: 'PostToolUse',
+  tool_name: 'mcp__github__create_pull_request',
+  tool_input: { owner: 'o', repo: 'r', title: 't', head: 'h', base: 'main', body: `${ATTR}Body${FOOT}` },
+  tool_response: [{ type: 'text', text: '{"id":"1","url":"https://github.com/o/r/pull/7"}' }],
+  ...extra,
+});
+
+test('PostToolUse create_pull_request asks for an update with the cleaned body', () => {
+  const ctx = footerFix(created());
+  assert.match(ctx, /call mcp__github__update_pull_request with owner "o", repo "r", pullNumber 7/);
+  assert.match(ctx, /<<<BODY\nBody\nBODY>>>/);
+  assert.doesNotMatch(ctx.split('<<<BODY')[1], LEAK);
+});
+
+test('PostToolUse keeps plugin-scoped tool prefix and accepts a string response', () => {
+  const ctx = footerFix(created({ tool_name: 'mcp__plugin_x_github__create_pull_request', tool_response: 'https://github.com/o/r/pull/12' }));
+  assert.match(ctx, /mcp__plugin_x_github__update_pull_request .*pullNumber 12/);
+});
+
+test('PostToolUse ignores other tools and responses without a PR number', () => {
+  assert.equal(footerFix(created({ tool_name: 'mcp__github__update_pull_request' })), null);
+  assert.equal(footerFix(created({ tool_response: 'error: validation failed' })), null);
+  assert.equal(footerFix(created({ tool_input: { body: 'x' } })), null);
+});
+
+test('PostToolUse output is additionalContext, never updatedInput', () => {
+  const r = spawnSync('node', [HOOK], { input: JSON.stringify(created()) });
+  const out = JSON.parse(r.stdout.toString()).hookSpecificOutput;
+  assert.equal(out.hookEventName, 'PostToolUse');
+  assert.match(out.additionalContext, /pullNumber 7/);
+  assert.equal(out.updatedInput, undefined);
 });
