@@ -64,7 +64,7 @@ const agents = defineCollection({
 // Notes are single-file documents (not three-file folders).
 // Exclude README.md (the index) — only actual notes.
 const notes = defineCollection({
-  loader: glob({ pattern: '[!R]*.md', base: `${vaultRoot}docs/notes`, generateId: folderId }),
+  loader: glob({ pattern: ['*.md', '!README.md'], base: `${vaultRoot}docs/notes`, generateId: folderId }),
   schema: artifactSchema,
 });
 
