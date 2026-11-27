@@ -5,7 +5,7 @@
     {
       "name": "strip-attribution",
       "source": "./tools/strip-attribution",
-      "description": "Removes Claude attribution from PR, issue and comment bodies and commit messages (gh, git commit, GitHub MCP tools)."
+      "description": "Removes Claude attribution from PR, issue and comment bodies and commit messages (gh, gh api, curl to the GitHub API, git commit, GitHub MCP tools)."
     },
     {
       "name": "ndv-pr-review",

@@ -31,7 +31,7 @@ The two hooks do different jobs and can be installed separately:
 | Hook | Event | What it does | Needs |
 | --- | --- | --- | --- |
 | git-signing | `SessionStart` | Writes your key from an environment variable to disk and points git at it, so commits are signed by you and GitHub marks them Verified | A signing key in an environment variable, plus `ssh-keygen` (installed by the script if missing) |
-| strip-attribution | `PreToolUse` | Removes attribution comments, footers and commit trailers from `gh`, `git commit` and GitHub MCP calls before they run | `node` |
+| strip-attribution | `PreToolUse` | Removes attribution comments, footers and commit trailers from `gh` (including `gh api`), `curl` to the GitHub API, `git commit` and GitHub MCP calls before they run | `node` |
 
 ## Scope
 
@@ -77,6 +77,8 @@ sh /tmp/vault/tools/git-signing/install.sh || echo "git-signing install failed; 
 
 Each `install.sh` copies its hook to `~/.claude/hooks/` and adds one entry to `~/.claude/settings.json`, keeping entries already there. Running them again changes nothing. Every line falls through on failure, so a broken install starts the session without the hook instead of blocking it.
 
+Repeat this for **every** environment your projects and threads run in, the Default one included. The setup script belongs to the environment, not to you: a session in an environment without the strip-attribution line has no hook, and PR bodies it writes keep their footer.
+
 ### 4. Start a new session
 
 The setup script runs only when a session starts. Sessions already running keep their old setup.
@@ -100,11 +102,13 @@ git commit --allow-empty -m "test: signing" && git log -1 --format='%an <%ae> | 
 
 ## Failure Modes / Boundaries
 
+- **Environments without the install line don't have the hooks.** Each cloud environment has its own setup script. A project that runs in another environment gets nothing, and its sessions may report that only commits are covered. Check with the grep under Verification in that project's session.
 - **Sessions started before the change don't have the hooks.** A PR opened from such a session still carries attribution. Start a new session after editing the setup script.
 - **The setup script can't read environment variables.** That is why signing runs as a `SessionStart` hook and not in the script.
 - **The runtime may rewrite git config after `SessionStart`.** Its own signer would come back. Not seen as of the last test date; check one commit after platform updates.
 - **Your key is readable by any command in the session.** Keep it signing-only and separate. If it leaks, revoke it on GitHub; commits it signed then show Unverified.
 - **Passphrase-protected keys are not supported.**
+- **PR bodies are covered on every path a session uses**: `gh pr`, `gh api`, `curl` to `api.github.com` and the GitHub MCP tools all go through a tool call, which the `PreToolUse` hook rewrites before it runs. Only REST calls from inside a script escape it.
 - **strip-attribution covers fixed patterns.** If the attribution wording changes, it passes through until the hook's patterns are updated. See its README for what it doesn't catch.
 - **A failed clone means no hooks.** The session still starts. With branch protection that requires signed commits, pushes are then rejected.
 

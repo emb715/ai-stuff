@@ -133,3 +133,68 @@ test('PostToolUse output is additionalContext, never updatedInput', () => {
   assert.match(out.additionalContext, /pullNumber 7/);
   assert.equal(out.updatedInput, undefined);
 });
+
+const tmpFile = (name, text) => {
+  const file = join(mkdtempSync(join(tmpdir(), 'hook-test-')), name);
+  writeFileSync(file, text);
+  return file;
+};
+
+test('gh api inline -f body: attribution and footer removed', () => {
+  const out = rewrite(`gh api repos/o/r/pulls -f title=t -f head=h -f base=main -f body='${ATTR}## Summary${FOOT}'`);
+  assert.doesNotMatch(out, LEAK);
+  assert.match(out, /-f body='## Summary\n'$/);
+});
+
+test('gh api PATCH with --field body heredoc', () => {
+  const out = rewrite(`gh api -X PATCH repos/o/r/pulls/3 --field body="$(cat <<'EOF'\n${ATTR}Body${FOOT}EOF\n)"`);
+  assert.doesNotMatch(out, LEAK);
+  assert.match(out, /<<'EOF'\nBody\nEOF/);
+});
+
+test('gh api -F body=@file and quoted form get a cleaned temp copy', () => {
+  const file = tmpFile('b.md', `${ATTR}Body${FOOT}`);
+  for (const cmd of [`gh api repos/o/r/issues -F body=@${file}`, `gh api repos/o/r/issues -F 'body=@${file}'`]) {
+    const out = rewrite(cmd);
+    const tmp = out.match(/body=@'?([^'\s]+)/)[1];
+    assert.notEqual(tmp, file);
+    assert.equal(readFileSync(tmp, 'utf8'), 'Body\n');
+  }
+  assert.match(readFileSync(file, 'utf8'), LEAK);
+});
+
+test('gh api --input JSON file: only body field cleaned, JSON stays valid', () => {
+  const file = tmpFile('p.json', JSON.stringify({ title: 'Generated with Claude Code', head: 'h', body: `${ATTR}Body${FOOT}` }));
+  const out = rewrite(`gh api repos/o/r/pulls --input ${file}`);
+  const json = JSON.parse(readFileSync(out.match(/--input '([^']+)'/)[1], 'utf8'));
+  assert.deepEqual(json, { title: 'Generated with Claude Code', head: 'h', body: 'Body' });
+});
+
+test('gh api --input - heredoc with escaped newlines in JSON', () => {
+  const body = JSON.stringify({ body: `${ATTR}Body${FOOT}` });
+  const out = rewrite(`gh api repos/o/r/pulls -X POST --input - <<'EOF'\n${body}\nEOF`);
+  assert.doesNotMatch(out, LEAK);
+  assert.deepEqual(JSON.parse(out.split('\n')[1]), { body: 'Body' });
+});
+
+test('curl to api.github.com: inline -d JSON and -d @file cleaned', () => {
+  const inline = rewrite(`curl -X PATCH https://api.github.com/repos/o/r/pulls/3 -d '${JSON.stringify({ body: `Body${FOOT}` })}'`);
+  assert.doesNotMatch(inline, LEAK);
+  assert.match(inline, /-d '\{"body":"Body"\}'/);
+  const file = tmpFile('p.json', JSON.stringify({ body: `${ATTR}Body` }));
+  const out = rewrite(`curl -X POST https://api.github.com/repos/o/r/issues/1/comments --data-binary @${file}`);
+  assert.deepEqual(JSON.parse(readFileSync(out.match(/@'([^']+)'/)[1], 'utf8')), { body: 'Body' });
+});
+
+test('gh release notes and other gh api calls', () => {
+  assert.doesNotMatch(rewrite(`gh release create v1 --notes "Notes${FOOT}"`), LEAK);
+  const keep = 'gh api repos/o/r/pulls/3 --jq .body';
+  assert.equal(rewrite(keep), keep);
+  const notGh = `curl -d 'x${FOOT}' https://example.com`;
+  assert.equal(rewrite(notGh), notGh);
+});
+
+test('MCP server named GitHub (any case) is cleaned', () => {
+  const out = updatedInput({ tool_name: 'mcp__claude_ai_GitHub__create_pull_request', tool_input: { body: `${ATTR}x` } });
+  assert.deepEqual(out, { body: 'x' });
+});
