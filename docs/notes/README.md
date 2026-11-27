@@ -34,3 +34,4 @@ Notes without evidence are opinions. They belong in a blog, not here.
 |---|---|---|
 | [token-efficiency.md](token-efficiency.md) | Techniques for reducing token consumption across long sessions; quantified savings per technique | validated |
 | [commit-as-yourself.md](commit-as-yourself.md) | Make Claude Code commits carry your identity and a Verified signature, locally and in cloud sessions | validated |
+| [cloud-session-hooks.md](cloud-session-hooks.md) | Install the git-signing and strip-attribution hooks in a Claude Code cloud environment | validated |
