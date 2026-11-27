@@ -13,6 +13,10 @@ name: ndv-pr-review
 on:
   pull_request:
     types: [opened, synchronize, ready_for_review]
+    # A PR that only changes workflows is skipped: the action will not run
+    # a workflow file that differs from the default branch's copy anyway.
+    paths-ignore:
+      - ".github/workflows/**"
 permissions:
   id-token: write # the action trades it for its GitHub app token
   contents: read
