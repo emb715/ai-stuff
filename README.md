@@ -82,6 +82,7 @@ This table is a snapshot. The filesystem is authoritative — `ls` the content d
 |---|---|---|
 | [change-impact](tools/change-impact/) | Run change-impact-diagram skill automatically on PRs or locally; LLM-agnostic, marker-delimited PR upsert | validated |
 | [strip-attribution](tools/strip-attribution/) | Claude Code hook that removes Claude attribution from PR, issue and comment bodies (`gh` and GitHub MCP); plugin or settings installer, local and cloud | validated |
+| [git-signing](tools/git-signing/) | Claude Code SessionStart hook that signs commits with your own SSH key from an environment variable; cloud sessions commit Verified as you | validated |
 | [ndv-pr-review](tools/ndv-pr-review/) | Claude Code plugin: PR review by the ndv fleet, reviewers picked by layer x change-impact op, verified findings in one summary; local, headless and GitHub Action | validated |
 
 ### Experiments

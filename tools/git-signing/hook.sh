@@ -3,6 +3,7 @@
 # Reads the private key from GIT_SIGNING_KEY (raw OpenSSH key, with real or "\n"-escaped
 # newlines, or base64 of it) or GIT_SIGNING_KEY_B64 (base64). Writes it to
 # ~/.ssh/git_signing and points git's global config at it, replacing any runtime signer.
+# Also writes ~/.ssh/allowed_signers for the committer email so `git log %G?` verifies locally.
 # Silent no-op when no key is set. Never blocks the session: always exits 0.
 KEY="${GIT_SIGNING_KEY:-${GIT_SIGNING_KEY_B64:-}}"
 [ -n "$KEY" ] || exit 0
@@ -25,4 +26,9 @@ git config --global user.signingkey "$OUT.pub"
 git config --global gpg.ssh.program ssh-keygen
 git config --global commit.gpgsign true
 git config --global tag.gpgsign true
+EMAIL="${GIT_COMMITTER_EMAIL:-${GIT_AUTHOR_EMAIL:-$(git config --global user.email 2>/dev/null)}}"
+if [ -n "$EMAIL" ]; then
+  printf '%s %s\n' "$EMAIL" "$(cat "$OUT.pub")" > "$DIR/allowed_signers"
+  git config --global gpg.ssh.allowedSignersFile "$DIR/allowed_signers"
+fi
 exit 0

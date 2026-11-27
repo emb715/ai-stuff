@@ -33,4 +33,4 @@ Notes without evidence are opinions. They belong in a blog, not here.
 | Note | Summary | Status |
 |---|---|---|
 | [token-efficiency.md](token-efficiency.md) | Techniques for reducing token consumption across long sessions; quantified savings per technique | validated |
-| [commit-as-yourself.md](commit-as-yourself.md) | Make Claude Code commits carry your identity and a Verified signature, locally and in cloud sessions | draft |
+| [commit-as-yourself.md](commit-as-yourself.md) | Make Claude Code commits carry your identity and a Verified signature, locally and in cloud sessions | validated |

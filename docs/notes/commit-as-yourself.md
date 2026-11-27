@@ -1,8 +1,8 @@
 ---
 title: "Commit as Yourself from Claude Code Sessions"
-status: draft
+status: validated
 confidence: medium
-last_tested: 2026-11-25
+last_tested: 2026-11-27
 scope: global
 tooling:
   - "claude-code"
@@ -133,10 +133,13 @@ A setup script can't read the environment's variables, but a Claude Code `Sessio
 
 ## Evidence
 
+- 2026-11-27: a cloud session using this method pushed a commit GitHub marked Verified, with the owner as author and committer.
 - 2026-11-25: the owner confirmed the setup produced commits authored and signed as themselves.
 - 2026-11-25: Anthropic's [cloud environments](https://code.claude.com/docs/en/cloud-environments) and [Claude Desktop](https://code.claude.com/docs/en/desktop) docs were checked. Neither documents a built-in `GIT_SIGNING_KEY` variable or any commit identity or signing setting, so the variable name here is a convention the hook script defines. Cloud variables are plain `.env` `KEY=value` pairs that any command in the session can read. Desktop local environment variables are stored encrypted on the machine. Cloud commits get a `Claude-Session:` trailer, which the `attribution.sessionUrl` setting controls.
 
 To verify a setup, make a commit and run `git log -1 --format='%an <%ae> | %G?'`. `G` means a good signature, which needs the `allowed_signers` step. After pushing, GitHub should show Verified next to your avatar.
+
+A ready-made version of this hook, with an installer, is [`tools/git-signing`](../../tools/git-signing/).
 
 ## Failure Modes / Boundaries
 

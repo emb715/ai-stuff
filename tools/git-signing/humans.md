@@ -14,4 +14,6 @@ The owner put a signing key in a cloud environment variable and commits still ca
 
 ## Known gaps
 
-- No live cloud run yet: whether the runtime rewrites git config after SessionStart, and whether its git proxy accepts foreign signatures, are open.
+- Passphrase-protected keys are not supported.
+
+Promoted from `experiments/` to `tools/` on 2026-11-27 after a cloud session pushed a commit GitHub marked Verified.

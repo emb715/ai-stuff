@@ -7,7 +7,7 @@ SRC="$(cd "$(dirname "$0")" 2>/dev/null && pwd)/hook.sh"
 if [ ! -f "$SRC" ]; then
   TMP="$(mktemp -d)"
   git clone --quiet --depth 1 https://github.com/emb715/ai-stuff "$TMP/ai-stuff"
-  SRC="$TMP/ai-stuff/experiments/git-signing/hook.sh"
+  SRC="$TMP/ai-stuff/tools/git-signing/hook.sh"
 fi
 if ! command -v ssh-keygen >/dev/null 2>&1 && command -v apt-get >/dev/null 2>&1; then
   { apt-get install -y -qq openssh-client || { apt-get update -qq && apt-get install -y -qq openssh-client; }; } >/dev/null 2>&1 \

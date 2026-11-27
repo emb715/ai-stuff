@@ -51,3 +51,4 @@ Frontmatter required on the tool README (same standard as all artifacts):
 | [change-impact](change-impact/) | tool, cli, github-action, impact-analysis, mermaid, llm | validated |
 | [strip-attribution](strip-attribution/) | tool, claude-code, hooks, github | validated |
 | [ndv-pr-review](ndv-pr-review/) | tool, code-review, plugin, change-impact | validated |
+| [git-signing](git-signing/) | tool, claude-code, hooks, git, signing | validated |
