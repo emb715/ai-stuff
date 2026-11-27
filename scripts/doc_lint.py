@@ -40,6 +40,10 @@ EXCLUDE_GLOBS = [
     "skills/*/evals/**/*.md",
     "prompts/*/evals/**/*.md",
     "experiments/*/evals/**/*.md",
+    # Skills bundled inside a Claude Code plugin (experiment or tool) are consumable
+    # bodies (SKILL.md and its references), not repo records. The plugin README is the record.
+    "experiments/*/skills/**/*.md",
+    "tools/*/skills/**/*.md",
 ]
 
 # Files within three-file artifact folders that intentionally have no frontmatter.

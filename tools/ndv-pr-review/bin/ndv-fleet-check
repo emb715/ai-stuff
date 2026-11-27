@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Prints whether the ndv fleet is installed for Claude Code, and its version.
+# Read-only. Exit 0 when found, 1 when missing.
+set -u
+found=""
+for dir in ".claude" "$HOME/.claude"; do
+  if ls "$dir"/agents/ndv-*.md >/dev/null 2>&1; then
+    found="$dir"
+    break
+  fi
+done
+
+version="unknown"
+for pkg in "$(npm root -g 2>/dev/null)/neurodiveragents/package.json" "$HOME"/.npm/_npx/*/node_modules/neurodiveragents/package.json; do
+  if [ -f "$pkg" ]; then
+    v=$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' "$pkg" | head -1)
+    [ -n "$v" ] && version="$v" && break
+  fi
+done
+
+flow_skill="no"
+for dir in ".claude" "$HOME/.claude"; do
+  [ -f "$dir/skills/ndv-flow/SKILL.md" ] && flow_skill="yes" && break
+done
+
+if [ -n "$found" ]; then
+  echo "fleet: ok ($found/agents)"
+  echo "flow-skill: $flow_skill"
+  echo "version: $version"
+  [ "$flow_skill" = "yes" ] || exit 1
+  exit 0
+fi
+echo "fleet: missing"
+echo "version: $version"
+exit 1
