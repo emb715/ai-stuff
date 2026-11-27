@@ -25,7 +25,6 @@ Exploratory work, hypotheses, and trial logs. Everything in here is in-progress 
 | [design-skill](design-skill/) | Build guardrail plus taste audit for UI: tokens-first presets, `taste.csv`, and a rendered-page lint. Two eval rounds: consistency yes, taste no. | draft |
 | [router-hint](router-hint/) | A typed-question model reads each turn and adds one line naming the artifact router and its likely route. 84-run pilot: loading 13/16 to 16/16, no false hints. | draft |
 | [taste-loop](taste-loop/) | Diverge, look, select: three concepts per brief for the owner to pick from. Failed round 3: plain single shots did as well for less. | deprecated |
-| [git-signing](git-signing/) | SessionStart hook that loads your SSH signing key from an environment variable so cloud commits are signed as you. | draft |
 | [primitive-contract-docs](primitive-contract-docs/) | Hypothesis: per-primitive contract files document intent/obligations that rot slower than mechanism-level generated docs. | draft |
 | [workflow-engine](workflow-engine/) | MCP server + workflow schema sequencing prompt-factory phases, tracking state across sessions to cut coordination overhead. | draft |
 

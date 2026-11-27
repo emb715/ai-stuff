@@ -11,11 +11,10 @@ pass=0; fail=0
 check() { # name, env assignment
   H="$W/home-$1"; mkdir -p "$H"
   printf '[gpg "ssh"]\n\tprogram = /nonexistent/runtime-signer\n[user]\n\tname = Bot\n\temail = bot@example.com\n' > "$H/.gitconfig"
-  env HOME="$H" "$2=$3" sh "$HOOK"
+  env HOME="$H" GIT_COMMITTER_EMAIL=u@example.com "$2=$3" sh "$HOOK"
   R="$H/repo"; git init -q "$R"
-  printf 'u@example.com %s\n' "$(cat "$W/k.pub")" > "$H/allowed"
-  HOME="$H" git -C "$R" -c gpg.ssh.allowedSignersFile="$H/allowed" -c user.email=u@example.com commit -q --allow-empty -m t
-  s="$(HOME="$H" git -C "$R" -c gpg.ssh.allowedSignersFile="$H/allowed" log -1 --format=%G?)"
+  HOME="$H" git -C "$R" -c user.email=u@example.com commit -q --allow-empty -m t
+  s="$(HOME="$H" git -C "$R" log -1 --format=%G?)"
   if [ "$s" = G ]; then pass=$((pass+1)); echo "ok   $1"; else fail=$((fail+1)); echo "FAIL $1 (sig=$s)"; fi
 }
 check raw GIT_SIGNING_KEY "$RAW"
