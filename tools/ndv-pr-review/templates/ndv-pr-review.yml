@@ -1,0 +1,74 @@
+# Copy to .github/workflows/ndv-pr-review.yml in the repository you want reviewed.
+#
+# Auth: a Claude Code OAuth token. Run `claude setup-token`, then save the token
+# as the repository secret CLAUDE_CODE_OAUTH_TOKEN, on one line (a wrapped
+# terminal copy adds a line break and the action rejects it). Reviews bill the
+# subscription. Workload identity federation also signs in, but the run then
+# bills the organization's API credit as Claude Code usage, and promotional API
+# credit does not cover Claude Code.
+#
+# The workflow only runs once this file is on the default branch: the action
+# skips a run whose workflow file differs from the default branch's copy.
+name: ndv-pr-review
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+permissions:
+  id-token: write # the action trades it for its GitHub app token
+  contents: read
+  pull-requests: write
+  issues: write
+concurrency:
+  group: ndv-pr-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  review:
+    # Forks get no secrets and no write token, so skip them.
+    if: github.event.pull_request.draft == false && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      # Add the toolchain your tests need (setup-go, setup-python, ...) so the
+      # review can run the suite on base and head, and allow its test command
+      # in claude_args below.
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      # The review reads the PR and posts with gh. Hosted runners ship it; a
+      # self-hosted runner may not, so fetch a copy into the job.
+      - name: Make the GitHub CLI available
+        run: |
+          if command -v gh >/dev/null; then exit 0; fi
+          case "$(uname -m)" in x86_64) arch=amd64 ;; aarch64|arm64) arch=arm64 ;; *) echo "unsupported arch $(uname -m)"; exit 1 ;; esac
+          v=2.63.0
+          curl -fsSL "https://github.com/cli/cli/releases/download/v${v}/gh_${v}_linux_${arch}.tar.gz" | tar -xz -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/gh_${v}_linux_${arch}/bin" >> "$GITHUB_PATH"
+
+      - name: Install the ndv fleet (latest)
+        run: npx -y neurodiveragents@latest install claude --global --all
+
+      # The skills go into the user's skills folder. Loading the plugin with
+      # --plugin-dir did not load it inside the action's run.
+      - name: Install the ndv-pr-review skill
+        run: |
+          git clone --depth 1 https://github.com/emb715/ai-stuff.git "$RUNNER_TEMP/ai-stuff"
+          plugin="$RUNNER_TEMP/ai-stuff/tools/ndv-pr-review"
+          mkdir -p "$HOME/.claude/skills"
+          for d in "$plugin"/skills/*/; do
+            name="$(basename "$d")"
+            rm -rf "$HOME/.claude/skills/$name"
+            cp -r "$d" "$HOME/.claude/skills/$name"
+          done
+          echo "$plugin/bin" >> "$GITHUB_PATH"
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: /ndv-pr-review ${{ github.event.pull_request.number }} --post
+          claude_args: >-
+            --allowedTools "Agent,Skill,Read,Grep,Glob,Bash(git:*),Bash(gh:*),Bash(ndv-fleet-check:*),Bash(npx -y neurodiveragents@latest:*),Bash(npm ci:*),Bash(npm test:*),Bash(npm run test:*),Bash(node:*),mcp__github_inline_comment__create_inline_comment"
+        env:
+          GH_TOKEN: ${{ github.token }}
