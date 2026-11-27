@@ -14,7 +14,8 @@ Built first in the neurodiveragents repo as a project-level Bash hook (closed PR
 - Fail open. A broken hook should never block a PR.
 - `--body-file` gets a temp copy instead of editing the user's file in place.
 - The MCP side cleans every string field named `body`, at any depth, so review tools that nest comment bodies are covered without listing tool names.
-- Matcher `Bash|mcp__.*github.*` keeps the hook off every other tool call. MCP server names differ between setups (`mcp__github__`, plugin-scoped names), hence the loose match.
+- Matcher `Bash|mcp__.*[Gg]it[Hh]ub.*` keeps the hook off every other tool call. MCP server names differ between setups (`mcp__github__`, plugin-scoped names, connectors named `GitHub`), hence the loose match. Matchers are case-sensitive regexes, so both cases are spelled out.
+- `gh api` and `curl` to `api.github.com` are covered because sessions that can't use `gh pr create` fall back to the REST API. Body files that are JSON are parsed and cleaned field by field so the payload stays valid.
 - Two install paths because plugins are the clean local install, but a cloud setup script can only write files; `install.sh` writes user settings directly and serves both.
 
 ## Maintenance
@@ -24,6 +25,8 @@ Built first in the neurodiveragents repo as a project-level Bash hook (closed PR
 
 ## Known gaps
 
-- `gh api` and direct REST calls are not handled.
+- REST calls from scripts (Python, Node) and GitHub Enterprise hosts are not handled.
+- The footer the GitHub MCP server adds on `create_pull_request` is removed only when Claude follows the PostToolUse context.
+- Environments without the setup line have no hook at all. This was the likely cause of a footer reported on 2026-11-27 from a session in another project.
 
 Promoted from `experiments/` to `tools/` on 2026-11-25 after one local plugin run and one cloud environment run both produced clean bodies.

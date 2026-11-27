@@ -1,5 +1,5 @@
 {
   "name": "strip-attribution",
-  "version": "1.2.0",
-  "description": "PreToolUse hook that removes Claude attribution from PR, issue and comment bodies and commit messages (gh, git commit, GitHub MCP tools)."
+  "version": "1.3.0",
+  "description": "PreToolUse hook that removes Claude attribution from PR, issue and comment bodies and commit messages (gh, gh api, curl to the GitHub API, git commit, GitHub MCP tools)."
 }

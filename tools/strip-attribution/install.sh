@@ -21,10 +21,10 @@ const command = `node "${home}/hooks/strip-attribution.mjs"`;
 s.hooks ??= {};
 s.hooks.PreToolUse = (s.hooks.PreToolUse ?? []).filter(
   (g) => !(g.hooks ?? []).some((h) => String(h.command).includes("strip-attribution.mjs")));
-s.hooks.PreToolUse.push({ matcher: "Bash|mcp__.*github.*", hooks: [{ type: "command", command, timeout: 10 }] });
+s.hooks.PreToolUse.push({ matcher: "Bash|mcp__.*[Gg]it[Hh]ub.*", hooks: [{ type: "command", command, timeout: 10 }] });
 s.hooks.PostToolUse = (s.hooks.PostToolUse ?? []).filter(
   (g) => !(g.hooks ?? []).some((h) => String(h.command).includes("strip-attribution.mjs")));
-s.hooks.PostToolUse.push({ matcher: "mcp__.*github.*create_pull_request", hooks: [{ type: "command", command, timeout: 10 }] });
+s.hooks.PostToolUse.push({ matcher: "mcp__.*[Gg]it[Hh]ub.*create_pull_request", hooks: [{ type: "command", command, timeout: 10 }] });
 writeFileSync(file, `${JSON.stringify(s, null, 2)}\n`);
 '
 echo "strip-attribution hook installed in $CLAUDE_HOME/settings.json"
